@@ -1,0 +1,103 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.Infrastructure", "Infrastructure\Postex.Infrastructure\Postex.Infrastructure\Postex.Infrastructure.csproj", "{4C7BC079-D2D0-477D-BEB5-46692A01429C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.SharedKernel", "SharedKernel\Postex.SharedKernel\Postex.SharedKernel.csproj", "{8631A5EF-1240-40DB-8762-651C3F92FF74}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.Application", "Application\Postex.Application\Postex.Application.csproj", "{B5C241DE-0A86-471A-9042-1E1DCB7A9F47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.ContractService", "Services\Postex.ContractService\Postex.ContractService.csproj", "{A944DE28-6262-4DDF-B8C2-B03BD724D9D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{B953F851-0D3D-4CC5-8722-4C1FAD44C195}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.NotificationService", "Services\Postex.NotificationService\Postex.NotificationService.csproj", "{64B609B3-C190-44B2-9659-9B42172C21D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.AddressService", "Postex.AddressService\Postex.AddressService.csproj", "{4F4D22F0-B30E-41A5-B712-1CE5409B9549}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.TrackingService", "Services\TrackingService\Postex.TrackingService.csproj", "{0703F598-AE03-4636-B5CE-BF7AA464220D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.ProductService", "Services\Postex.ProductService\Postex.ProductService.csproj", "{66F5B912-69B7-4331-999C-F01EB4AE4DB3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Address", "Address", "{67161FD0-70D2-4BFE-82E7-D334954DF83B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.AddressService.Domain", "Services\AddressService\Postex.AddressService.Domain\Postex.AddressService.Domain.csproj", "{0F24C02A-3636-49DD-A6A7-4AC7BC8344EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contract", "Contract", "{7E19A4D3-3D30-4718-9A9D-47C4259E4F5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.Contract.Domain", "Postex.Contract.Domain\Postex.Contract.Domain.csproj", "{082E1843-8CC3-4CA7-9C97-E876B506AB03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.AddressService.Infrastructure", "Postex.AddressService.Infrastructure\Postex.AddressService.Infrastructure.csproj", "{B03E52E8-4F6B-4018-8A46-B46733C29D77}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notification", "Notification", "{05ADD289-5143-4D3D-8674-44B9022A6937}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C7BC079-D2D0-477D-BEB5-46692A01429C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C7BC079-D2D0-477D-BEB5-46692A01429C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C7BC079-D2D0-477D-BEB5-46692A01429C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C7BC079-D2D0-477D-BEB5-46692A01429C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8631A5EF-1240-40DB-8762-651C3F92FF74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8631A5EF-1240-40DB-8762-651C3F92FF74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8631A5EF-1240-40DB-8762-651C3F92FF74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8631A5EF-1240-40DB-8762-651C3F92FF74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5C241DE-0A86-471A-9042-1E1DCB7A9F47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5C241DE-0A86-471A-9042-1E1DCB7A9F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5C241DE-0A86-471A-9042-1E1DCB7A9F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5C241DE-0A86-471A-9042-1E1DCB7A9F47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A944DE28-6262-4DDF-B8C2-B03BD724D9D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A944DE28-6262-4DDF-B8C2-B03BD724D9D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A944DE28-6262-4DDF-B8C2-B03BD724D9D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A944DE28-6262-4DDF-B8C2-B03BD724D9D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64B609B3-C190-44B2-9659-9B42172C21D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64B609B3-C190-44B2-9659-9B42172C21D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64B609B3-C190-44B2-9659-9B42172C21D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64B609B3-C190-44B2-9659-9B42172C21D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F4D22F0-B30E-41A5-B712-1CE5409B9549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F4D22F0-B30E-41A5-B712-1CE5409B9549}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F4D22F0-B30E-41A5-B712-1CE5409B9549}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F4D22F0-B30E-41A5-B712-1CE5409B9549}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0703F598-AE03-4636-B5CE-BF7AA464220D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0703F598-AE03-4636-B5CE-BF7AA464220D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0703F598-AE03-4636-B5CE-BF7AA464220D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0703F598-AE03-4636-B5CE-BF7AA464220D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66F5B912-69B7-4331-999C-F01EB4AE4DB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66F5B912-69B7-4331-999C-F01EB4AE4DB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66F5B912-69B7-4331-999C-F01EB4AE4DB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66F5B912-69B7-4331-999C-F01EB4AE4DB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F24C02A-3636-49DD-A6A7-4AC7BC8344EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F24C02A-3636-49DD-A6A7-4AC7BC8344EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F24C02A-3636-49DD-A6A7-4AC7BC8344EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F24C02A-3636-49DD-A6A7-4AC7BC8344EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{082E1843-8CC3-4CA7-9C97-E876B506AB03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{082E1843-8CC3-4CA7-9C97-E876B506AB03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{082E1843-8CC3-4CA7-9C97-E876B506AB03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{082E1843-8CC3-4CA7-9C97-E876B506AB03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B03E52E8-4F6B-4018-8A46-B46733C29D77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B03E52E8-4F6B-4018-8A46-B46733C29D77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B03E52E8-4F6B-4018-8A46-B46733C29D77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B03E52E8-4F6B-4018-8A46-B46733C29D77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A944DE28-6262-4DDF-B8C2-B03BD724D9D1} = {7E19A4D3-3D30-4718-9A9D-47C4259E4F5A}
+		{64B609B3-C190-44B2-9659-9B42172C21D7} = {05ADD289-5143-4D3D-8674-44B9022A6937}
+		{4F4D22F0-B30E-41A5-B712-1CE5409B9549} = {67161FD0-70D2-4BFE-82E7-D334954DF83B}
+		{0703F598-AE03-4636-B5CE-BF7AA464220D} = {B953F851-0D3D-4CC5-8722-4C1FAD44C195}
+		{66F5B912-69B7-4331-999C-F01EB4AE4DB3} = {B953F851-0D3D-4CC5-8722-4C1FAD44C195}
+		{0F24C02A-3636-49DD-A6A7-4AC7BC8344EA} = {67161FD0-70D2-4BFE-82E7-D334954DF83B}
+		{082E1843-8CC3-4CA7-9C97-E876B506AB03} = {7E19A4D3-3D30-4718-9A9D-47C4259E4F5A}
+		{B03E52E8-4F6B-4018-8A46-B46733C29D77} = {67161FD0-70D2-4BFE-82E7-D334954DF83B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C68AB3D0-1A10-4000-9B35-E35F513BF374}
+	EndGlobalSection
+EndGlobal
