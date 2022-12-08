@@ -1,8 +1,7 @@
-﻿using Couriers.Framwork.Utilities;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace Couriers.Framwork.Api
+namespace Postex.SharedKernel.Api
 {
     public class ApiResult
     {
@@ -17,7 +16,7 @@ namespace Couriers.Framwork.Api
         {
             IsSuccess = isSuccess;
             StatusCode = statusCode;
-            Message = message ?? statusCode.ToDisplay();
+            Message = message;// ?? statusCode.ToDisplay();
         }
 
         #region Implicit Operators

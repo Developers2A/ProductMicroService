@@ -1,9 +1,12 @@
-﻿namespace Postex.Infrastructure.RestClient
+﻿using Postex.Application.Domain;
+using RestSharp;
+
+namespace Postex.Infrastructure.RestClient
 {
     internal interface IApiRestClient
     {
         RestClientType ClientType { get; }
-        RestClientConfig RestClientConfig { get; set; }
+        //RestClientConfig RestClientConfig { get; set; }
 
         void AddDefaultHeader(string username, string password);
         RestRequest CreateRequest(string service);

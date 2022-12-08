@@ -9,29 +9,41 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.SharedKernel", "Shar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.Application", "Application\Postex.Application\Postex.Application.csproj", "{B5C241DE-0A86-471A-9042-1E1DCB7A9F47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.ContractService", "Services\Postex.ContractService\Postex.ContractService.csproj", "{A944DE28-6262-4DDF-B8C2-B03BD724D9D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.ContractService", "Services\Postex.ContractService\Postex.ContractService.csproj", "{A944DE28-6262-4DDF-B8C2-B03BD724D9D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{B953F851-0D3D-4CC5-8722-4C1FAD44C195}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.NotificationService", "Services\Postex.NotificationService\Postex.NotificationService.csproj", "{64B609B3-C190-44B2-9659-9B42172C21D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.NotificationService", "Services\Postex.NotificationService\Postex.NotificationService.csproj", "{64B609B3-C190-44B2-9659-9B42172C21D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.AddressService", "Postex.AddressService\Postex.AddressService.csproj", "{4F4D22F0-B30E-41A5-B712-1CE5409B9549}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.AddressService", "Postex.AddressService\Postex.AddressService.csproj", "{4F4D22F0-B30E-41A5-B712-1CE5409B9549}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.TrackingService", "Services\TrackingService\Postex.TrackingService.csproj", "{0703F598-AE03-4636-B5CE-BF7AA464220D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.TrackingService", "Services\TrackingService\Postex.TrackingService.csproj", "{0703F598-AE03-4636-B5CE-BF7AA464220D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.ProductService", "Services\Postex.ProductService\Postex.ProductService.csproj", "{66F5B912-69B7-4331-999C-F01EB4AE4DB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.ProductService", "Services\Postex.ProductService\Postex.ProductService.csproj", "{66F5B912-69B7-4331-999C-F01EB4AE4DB3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Address", "Address", "{67161FD0-70D2-4BFE-82E7-D334954DF83B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.AddressService.Domain", "Services\AddressService\Postex.AddressService.Domain\Postex.AddressService.Domain.csproj", "{0F24C02A-3636-49DD-A6A7-4AC7BC8344EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.AddressService.Domain", "Services\AddressService\Postex.AddressService.Domain\Postex.AddressService.Domain.csproj", "{0F24C02A-3636-49DD-A6A7-4AC7BC8344EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contract", "Contract", "{7E19A4D3-3D30-4718-9A9D-47C4259E4F5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.Contract.Domain", "Postex.Contract.Domain\Postex.Contract.Domain.csproj", "{082E1843-8CC3-4CA7-9C97-E876B506AB03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.Contract.Domain", "Postex.Contract.Domain\Postex.Contract.Domain.csproj", "{082E1843-8CC3-4CA7-9C97-E876B506AB03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.AddressService.Infrastructure", "Postex.AddressService.Infrastructure\Postex.AddressService.Infrastructure.csproj", "{B03E52E8-4F6B-4018-8A46-B46733C29D77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.AddressService.Infrastructure", "Postex.AddressService.Infrastructure\Postex.AddressService.Infrastructure.csproj", "{B03E52E8-4F6B-4018-8A46-B46733C29D77}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notification", "Notification", "{05ADD289-5143-4D3D-8674-44B9022A6937}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Product", "Product", "{7E6D07B5-2315-49F5-BAA8-9C80EEAA5B73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{503A475E-8CF4-41FD-B358-62DBB1BA07BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Domain", "Product\Product.Domain\Product.Domain.csproj", "{DE7C4A33-3D9C-48DB-88E9-EE217D2B2B14}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Infrastructure", "Product\Product.Infrastructure\Product.Infrastructure.csproj", "{F92B3703-74D6-4BD8-9788-D4BC6364BF1B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Application", "Product\Product.Application\Product.Application.csproj", "{0F51528B-9EA9-4848-B747-9A1F8D46FF88}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Api", "Product\Product.Api\Product.Api.csproj", "{B309ADA1-B3C7-488C-B3AF-7C779B4BF0AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,11 +95,30 @@ Global
 		{B03E52E8-4F6B-4018-8A46-B46733C29D77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B03E52E8-4F6B-4018-8A46-B46733C29D77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B03E52E8-4F6B-4018-8A46-B46733C29D77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE7C4A33-3D9C-48DB-88E9-EE217D2B2B14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE7C4A33-3D9C-48DB-88E9-EE217D2B2B14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE7C4A33-3D9C-48DB-88E9-EE217D2B2B14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE7C4A33-3D9C-48DB-88E9-EE217D2B2B14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F92B3703-74D6-4BD8-9788-D4BC6364BF1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F92B3703-74D6-4BD8-9788-D4BC6364BF1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F92B3703-74D6-4BD8-9788-D4BC6364BF1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F92B3703-74D6-4BD8-9788-D4BC6364BF1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F51528B-9EA9-4848-B747-9A1F8D46FF88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F51528B-9EA9-4848-B747-9A1F8D46FF88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F51528B-9EA9-4848-B747-9A1F8D46FF88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F51528B-9EA9-4848-B747-9A1F8D46FF88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B309ADA1-B3C7-488C-B3AF-7C779B4BF0AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B309ADA1-B3C7-488C-B3AF-7C779B4BF0AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B309ADA1-B3C7-488C-B3AF-7C779B4BF0AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B309ADA1-B3C7-488C-B3AF-7C779B4BF0AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{4C7BC079-D2D0-477D-BEB5-46692A01429C} = {503A475E-8CF4-41FD-B358-62DBB1BA07BC}
+		{8631A5EF-1240-40DB-8762-651C3F92FF74} = {503A475E-8CF4-41FD-B358-62DBB1BA07BC}
+		{B5C241DE-0A86-471A-9042-1E1DCB7A9F47} = {503A475E-8CF4-41FD-B358-62DBB1BA07BC}
 		{A944DE28-6262-4DDF-B8C2-B03BD724D9D1} = {7E19A4D3-3D30-4718-9A9D-47C4259E4F5A}
 		{64B609B3-C190-44B2-9659-9B42172C21D7} = {05ADD289-5143-4D3D-8674-44B9022A6937}
 		{4F4D22F0-B30E-41A5-B712-1CE5409B9549} = {67161FD0-70D2-4BFE-82E7-D334954DF83B}
@@ -96,6 +127,10 @@ Global
 		{0F24C02A-3636-49DD-A6A7-4AC7BC8344EA} = {67161FD0-70D2-4BFE-82E7-D334954DF83B}
 		{082E1843-8CC3-4CA7-9C97-E876B506AB03} = {7E19A4D3-3D30-4718-9A9D-47C4259E4F5A}
 		{B03E52E8-4F6B-4018-8A46-B46733C29D77} = {67161FD0-70D2-4BFE-82E7-D334954DF83B}
+		{DE7C4A33-3D9C-48DB-88E9-EE217D2B2B14} = {7E6D07B5-2315-49F5-BAA8-9C80EEAA5B73}
+		{F92B3703-74D6-4BD8-9788-D4BC6364BF1B} = {7E6D07B5-2315-49F5-BAA8-9C80EEAA5B73}
+		{0F51528B-9EA9-4848-B747-9A1F8D46FF88} = {7E6D07B5-2315-49F5-BAA8-9C80EEAA5B73}
+		{B309ADA1-B3C7-488C-B3AF-7C779B4BF0AB} = {7E6D07B5-2315-49F5-BAA8-9C80EEAA5B73}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C68AB3D0-1A10-4000-9B35-E35F513BF374}

@@ -8,14 +8,29 @@
 
   <ItemGroup>
     <Folder Include="File\" />
-    <Folder Include="Logging\" />
-    <Folder Include="Services\" />
     <Folder Include="Persistence\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="RestSharp" Version="108.0.3" />
+	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.9" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+	  <PackageReference Include="Pluralize.NET" Version="1.0.2" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.1.5" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.2" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.1.5" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.ReDoc" Version="6.1.5" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.3.0" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Application\Postex.Application\Postex.Application.csproj" />
+    <ProjectReference Include="..\..\..\SharedKernel\Postex.SharedKernel\Postex.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

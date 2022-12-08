@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Postex.Application.Domain;
+using RestSharp;
 
 namespace Postex.Infrastructure.RestClient
 {
     public class ApiRestClient : IApiRestClient
     {
-        private static readonly ILogger _logger = LoggerFactory.CreateStrategyLogger("InquiryLogger");
+        //private static readonly ILogger _logger = LoggerFactory.CreateStrategyLogger("InquiryLogger");
 
         private RestSharp.RestClient _restClient { get; set; }
         public RestClientType ClientType { get; private set; }
@@ -47,12 +44,12 @@ namespace Postex.Infrastructure.RestClient
             try
             {
                 response = _restClient.ExecuteAsync<T>(request, method);
-                _logger.Trace(999005, request, response);
+                //_logger.Trace(999005, request, response);
                 return response;
             }
             catch (Exception ex)
             {
-                _logger.Error(999006, ex, request, response);
+                //_logger.Error(999006, ex, request, response);
                 throw;
             }
         }
@@ -64,13 +61,13 @@ namespace Postex.Infrastructure.RestClient
 
         public RestRequest CreateRequest(string service)
         {
-            var timeout = RestClientConfig.TimeOutInMs;
-            if (RestClientConfig.Services != null && RestClientConfig.Services.Count > 0)
-            {
-                var serviceConfig = RestClientConfig.Services.Where(x => x.Name.Trim().ToUpper() == service.Trim().ToUpper()).FirstOrDefault();
-                if (serviceConfig != null)
-                    timeout = serviceConfig.TimeOutInMs;
-            }
+            var timeout = 10;
+            //if (RestClientConfig.Services != null && RestClientConfig.Services.Count > 0)
+            //{
+            //    var serviceConfig = RestClientConfig.Services.Where(x => x.Name.Trim().ToUpper() == service.Trim().ToUpper()).FirstOrDefault();
+            //    if (serviceConfig != null)
+            //        timeout = serviceConfig.TimeOutInMs;
+            //}
 
             return new RestRequest(service)
             {

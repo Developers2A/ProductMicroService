@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Postex.Application.Domain;
+using RestSharp;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postex.Infrastructure.RestClient
 {
@@ -32,32 +29,32 @@ namespace Postex.Infrastructure.RestClient
 
         private static ApiRestClient CreateNewClient(RestClientType type)
         {
-            var apiConfig = ApiClientConfig.GetConfig(type);
+            //var apiConfig = ApiClientConfig.GetConfig(type);
 
-            var clientOption = new RestClientOptions(apiConfig.BaseUrl)
+            var clientOption = new RestClientOptions("")
             {
-                MaxTimeout = apiConfig.TimeOutInMs,
+                MaxTimeout = 10,
             };
 
             var client = new ApiRestClient(type, clientOption)
             {
-                RestClientConfig = apiConfig
+                //RestClientConfig = apiConfig
             };
 
-            ConfigureClient(client, apiConfig);
+            ConfigureClient(client, null);
 
             return client;
         }
 
         private static void ConfigureClient(ApiRestClient client, RestClientConfig apiConfig)
         {
-            if (apiConfig.Headers != null)
-            {
-                foreach (var item in apiConfig.Headers)
-                {
-                    client.AddDefaultHeader(item.Key, item.Value);
-                }
-            }
+            //if (apiConfig.Headers != null)
+            //{
+            //    foreach (var item in apiConfig.Headers)
+            //    {
+            //        client.AddDefaultHeader(item.Key, item.Value);
+            //    }
+            //}
         }
     }
 }

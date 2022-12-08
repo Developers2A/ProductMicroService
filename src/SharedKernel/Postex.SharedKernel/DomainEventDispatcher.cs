@@ -1,7 +1,7 @@
-﻿using Postex.SharedKernel.Interfaces;
-using MediatR;
+﻿using MediatR;
+using Postex.SharedKernel.Interfaces;
 
-namespace Clean.Architecture.SharedKernel
+namespace Postex.SharedKernel
 {
     public class DomainEventDispatcher : IDomainEventDispatcher
     {
