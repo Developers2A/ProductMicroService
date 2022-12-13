@@ -1,6 +1,6 @@
 ﻿using Postex.SharedKernel.Common;
 using Product.Application.Contracts;
-using Product.Application.Dtos.Post;
+using Product.Application.Dtos.CourierServices.Post;
 
 namespace Product.Application.Features.CourierServices.Post.Commands.DeleteOrder
 {

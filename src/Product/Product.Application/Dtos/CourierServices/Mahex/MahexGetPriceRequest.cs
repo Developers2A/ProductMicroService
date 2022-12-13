@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
-using Product.Application.Dtos.Mahex.Common;
+using Product.Application.Dtos.CourierServices.Mahex.Common;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Product.Application.Dtos.Mahex
+namespace Product.Application.Dtos.CourierServices.Mahex
 {
     public class MahexGetPriceRequest
     {

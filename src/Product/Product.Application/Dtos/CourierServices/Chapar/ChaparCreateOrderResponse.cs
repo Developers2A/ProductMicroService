@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Product.Application.Dtos.Chapar
+namespace Product.Application.Dtos.CourierServices.Chapar
 {
     public class ChaparCreateOrderResponse
     {

@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Product.Application.Dtos.Mahex.Common;
+using Product.Application.Dtos.CourierServices.Mahex.Common;
 using System.Collections.Generic;
 
-namespace Product.Application.Dtos.Mahex
+namespace Product.Application.Dtos.CourierServices.Mahex
 {
     public class MahexTrackResponse
     {

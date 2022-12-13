@@ -3,8 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
-using Product.Application.Dtos.Chapar;
-using Product.Application.Dtos.Chapar.Common;
+using Product.Application.Dtos.CourierServices.Chapar;
+using Product.Application.Dtos.CourierServices.Chapar.Common;
 
 namespace Product.Application.Features.CourierServices.Chapar.Commands.CreateOrder
 {

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Postex.SharedKernel.Settings;
-using Product.Application.Dtos.Post;
+using Product.Application.Dtos.CourierServices.Post;
 using System.Net.Http.Headers;
 
 namespace Product.Application.Features.CourierServices.Post.Queries.GetToken

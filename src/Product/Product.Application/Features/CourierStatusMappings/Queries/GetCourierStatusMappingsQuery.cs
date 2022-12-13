@@ -2,8 +2,8 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Postex.SharedKernel.Interfaces;
+using Product.Application.Dtos.Couriers;
 using Product.Domain.Couriers;
-using ProductService.Application.Dtos.Couriers;
 
 namespace Product.Application.Features.CourierStatusMappings.Queries
 {

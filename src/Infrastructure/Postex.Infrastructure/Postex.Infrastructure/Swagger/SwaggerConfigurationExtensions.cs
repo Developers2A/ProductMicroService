@@ -4,13 +4,12 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Postex.SharedKernel.Utilities;
-using ServiceProvider.Infrastructure.Core.Swagger;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
 
-namespace ServiceProvider.Infrastracture.Core.Swagger
+namespace Postex.Infrastructure.Swagger
 {
     public static class SwaggerConfigurationExtensions
     {

@@ -5,9 +5,10 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Postex.SharedKernel.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace ProductService.WebApi.Swagger
+namespace Product.Api.Swagger
 {
     public static class SwaggerMiddlerwareExtension
     {

@@ -3,8 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
-using Product.Application.Dtos.Post;
-using Product.Application.Features.CourierServices.Post.Queries.GetToken;
+using Product.Application.Dtos.CourierServices.Post;
 using System.Text;
 
 namespace Product.Application.Features.CourierServices.Mahex.Commands.CreateOrder
@@ -13,22 +12,18 @@ namespace Product.Application.Features.CourierServices.Mahex.Commands.CreateOrde
     {
         private readonly IConfiguration _configuration;
         private readonly CourierConfig _gateway;
-        private readonly IMediator _mediator;
 
         public CreateMahexOrderCommandHandler(IConfiguration configuration, IMediator mediator)
         {
             _configuration = configuration;
             _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Post;
-            _mediator = mediator;
         }
 
         public async Task<BaseResponse<PostCreateOrderResponse>> Handle(CreateMahexOrderCommand request, CancellationToken cancellationToken)
         {
-            BaseResponse<PostCreateOrderResponse> result = new();
             try
             {
-                string token = await _mediator.Send(new GetPostTokenQuery());
-                HttpResponseMessage response = await SetHttpRequest(token, request);
+                HttpResponseMessage response = await SetHttpRequest(request);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -36,37 +31,24 @@ namespace Product.Application.Features.CourierServices.Mahex.Commands.CreateOrde
                 }
 
                 var res = await response.Content.ReadAsStringAsync();
-                try
-                {
-                    var resModel = JsonConvert.DeserializeObject<PostResponse<PostCreateOrderResponse>>(res);
-                    if (resModel!.ResCode == 0)
-                    {
-                        return new(true, "success", resModel.Data);
-                    }
 
-                    return new(false, "fail", resModel.Data);
-                }
-                catch
+                var resModel = JsonConvert.DeserializeObject<PostResponse<PostCreateOrderResponse>>(res);
+                if (resModel!.ResCode == 0)
                 {
-                    var resModel = JsonConvert.DeserializeObject<PostEmptyResponse>(res);
-                    if (resModel!.ResCode == 2)
-                    {
-                        return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel!.Data.Select(x => x.ErrorMessage)), null);
-                    }
-                    return new(false, resModel!.ResMsg);
-
-                    // return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel.Data.Select(x => (string)x)));
+                    return new(true, "success", resModel!.Data);
                 }
+
+                return new(false, resModel!.ResMsg!);
             }
             catch (Exception ex)
             {
-                return new(false, "An error has occurred in the Service Post " + ex.Message);
+                return new(false, "An error has occurred in the Service Mahex " + ex.Message);
             }
         }
 
-        private async Task<HttpResponseMessage> SetHttpRequest(string token, CreateMahexOrderCommand request)
+        private async Task<HttpResponseMessage> SetHttpRequest(CreateMahexOrderCommand request)
         {
-            HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl, token);
+            HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl);
 
             var serializedModel = JsonConvert.SerializeObject(request);
             var content = new StringContent(serializedModel,

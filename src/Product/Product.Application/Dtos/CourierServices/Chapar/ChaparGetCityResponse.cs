@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Product.Application.Dtos.Chapar
+﻿namespace Product.Application.Dtos.CourierServices.Chapar
 {
     public class ChaparGetCityResponse
     {
@@ -12,8 +10,8 @@ namespace Product.Application.Dtos.Chapar
     public class ChaparCity
     {
         public string state_no { get; set; }
-        public string no { get; set; }
-        public string name { get; set; }
+        public string No { get; set; }
+        public string Name { get; set; }
     }
 
     public class ObjectsGetCity

@@ -5,7 +5,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using Microsoft.AspNetCore.Authorization;
 
-namespace ServiceProvider.Infrastracture.Core.Swagger
+namespace Postex.Infrastructure.Swagger
 {
     public class UnauthorizedResponsesOperationFilter : IOperationFilter
     {

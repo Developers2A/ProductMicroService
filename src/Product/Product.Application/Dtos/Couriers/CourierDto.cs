@@ -1,9 +1,12 @@
-﻿namespace ProductService.Application.Dtos.Couriers
+﻿using Product.Domain.Enums;
+
+namespace Product.Application.Dtos.Couriers
 {
     public class CourierDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public CourierCode Code { get; set; }
         public bool ForeignPost { get; set; }
         public bool DomesticPost { get; set; }
         public bool HasCollection { get; set; }
@@ -22,6 +25,12 @@
         public bool ChangePrice { get; set; }
         public float ChangePercent { get; set; }
         public string Company { get; set; }
+        public bool PriceHasDiscount { get; set; } //مبلغ اعلامی با کسر تخفیف است یا خیر 
+        public double DiscountPercent { get; set; } //درصد تخفیف 
+        public bool PriceHasTax { get; set; } //قیمت اعلامی با مالیات است یا خیر
+        public long FixBasePrice { get; set; }
+        public double PostexPercent { get; set; }
+        public long PostexFixPrice { get; set; }
         public bool IsActive { get; set; }
     }
 }

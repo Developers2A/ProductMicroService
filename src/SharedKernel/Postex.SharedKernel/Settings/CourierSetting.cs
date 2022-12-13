@@ -3,7 +3,7 @@
     public class CourierSetting
     {
         public CourierConfig Link { get; set; }
-        public CourierConfig Taarof { get; set; }
+        public CourierConfig Taroff { get; set; }
         public CourierConfig Peykhub { get; set; }
         public CourierConfig Speed { get; set; }
         public CourierConfig Mahex { get; set; }

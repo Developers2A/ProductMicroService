@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Product.Application.Dtos.Mahex.Common;
+using Product.Application.Dtos.CourierServices.Mahex.Common;
 
-namespace Product.Application.Dtos.Mahex
+namespace Product.Application.Dtos.CourierServices.Mahex
 {
     public class MahexCreateOrderResponse
     {

@@ -1,4 +1,4 @@
-﻿using Postex.SharedKernel.Pagination;
+﻿using Postex.SharedKernel.Paginations;
 
 namespace Postex.SharedKernel.Interfaces
 {

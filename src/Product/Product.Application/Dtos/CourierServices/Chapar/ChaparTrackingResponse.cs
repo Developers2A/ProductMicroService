@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Product.Application.Dtos.Chapar
+namespace Product.Application.Dtos.CourierServices.Chapar
 {
     /// <summary>
     /// مدل خروجی متد پیگیری بارنامه یا کالا 

@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Postex.SharedKernel.Api;
 using Product.Application.Dtos.Trackings;
-using Product.Application.Features.Tracks.Queries.Track;
-using ProductService.WebApi.Endpoint;
+using Product.Application.Features.CourierServices.Common.Queries.Track;
 
-namespace ServiceProvider.Api.Controllers
+namespace Product.Api.Controllers.v1
 {
     [ApiVersion("1")]
     [AllowAnonymous]

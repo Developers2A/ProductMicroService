@@ -1,0 +1,65 @@
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Postex.SharedKernel.Api;
+using Product.Application.Dtos.Couriers;
+using Product.Application.Dtos.CourierServices.Common;
+using Product.Application.Dtos.Trackings;
+using Product.Application.Features.Couriers.Queries;
+using Product.Application.Features.CourierServices.Common.Queries.GetCities;
+using Product.Application.Features.CourierServices.Common.Queries.GetPrice;
+using Product.Application.Features.CourierServices.Common.Queries.GetStates;
+using Product.Application.Features.CourierServices.Common.Queries.Track;
+
+namespace Product.Api.Controllers.v1
+{
+    [ApiVersion("1")]
+    [AllowAnonymous]
+    public class CommonController : BaseApiControllerWithDefaultRoute
+    {
+        private readonly IMediator _mediator;
+
+        public CommonController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpPost("couriers")]
+        public async Task<ApiResult<List<CourierDto>>> GetCouriers(GetCouriersQuery request)
+        {
+            return await _mediator.Send(request);
+        }
+
+        [HttpPost("states")]
+        public async Task<ApiResult<List<CourierStateDto>>> GetStates(GetCourierStatesQuery request)
+        {
+            return await _mediator.Send(request);
+        }
+
+        [HttpPost("cities")]
+        public async Task<ApiResult<List<CourierCityDto>>> GetCities(GetCourierCitiesQuery request)
+        {
+            return await _mediator.Send(request);
+        }
+
+        [HttpPost("price")]
+        public async Task<ApiResult<GetPriceResponse>> Price(GetPriceQuery request)
+        {
+            var result = await _mediator.Send(request);
+            return new ApiResult<GetPriceResponse>(result.IsSuccess, result.Data, result.Message);
+        }
+
+        [HttpPost("track")]
+        public async Task<ApiResult<TrackingMapResponse>> Track(GetTrackQuery request)
+        {
+            var result = await _mediator.Send(request);
+            return new ApiResult<TrackingMapResponse>(result.IsSuccess, result.Data, result.Message);
+        }
+
+        [HttpPost("create-order")]
+        public async Task<ApiResult<List<CourierCityDto>>> CreateOrder(GetCourierCitiesQuery request)
+        {
+            return await _mediator.Send(request);
+        }
+    }
+}

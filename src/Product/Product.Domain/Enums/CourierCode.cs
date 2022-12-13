@@ -4,6 +4,7 @@ namespace Product.Domain.Enums
 {
     public enum CourierCode
     {
+        [Description("همه ")] All = 0,
         [Description("پیک هاب")] Paykhub = 1,
         [Description("کالارسان")] Kalaresan = 2,
         [Description("چاپار")] Chapar = 3,

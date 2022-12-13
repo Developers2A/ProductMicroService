@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Product.Application.Dtos.Chapar.Common
+namespace Product.Application.Dtos.CourierServices.Chapar.Common
 {
     public class ChaparUser
     {

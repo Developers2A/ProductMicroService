@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceProvider.Infrastructure.Core.Swagger
+namespace Postex.Infrastructure.Swagger
 {
     public class IgnoreSwaggerSchemaFilter : ISchemaFilter
     {

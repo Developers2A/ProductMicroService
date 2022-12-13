@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Product.Application.Dtos.Chapar.Common;
+using Product.Application.Dtos.CourierServices.Chapar.Common;
 using System.Collections.Generic;
 
-namespace Product.Application.Dtos.Chapar
+namespace Product.Application.Dtos.CourierServices.Chapar
 {
     public class ChaparHistoryReportResponse
     {

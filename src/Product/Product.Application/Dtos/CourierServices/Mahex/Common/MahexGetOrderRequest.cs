@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Product.Application.Dtos.Mahex.Common
+namespace Product.Application.Dtos.CourierServices.Mahex.Common
 {
     public class MahexGetOrderRequest
     {

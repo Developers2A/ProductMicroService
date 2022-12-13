@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Postex.SharedKernel.Common;
 using Product.Application.Contracts;
-using Product.Application.Dtos.Mahex.Common;
-using Product.Application.Dtos.Post;
+using Product.Application.Dtos.CourierServices.Mahex.Common;
+using Product.Application.Dtos.CourierServices.Post;
 
 namespace Product.Application.Features.CourierServices.Mahex.Commands.CreateOrder
 {

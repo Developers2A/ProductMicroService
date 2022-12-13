@@ -1,4 +1,4 @@
-﻿namespace ProductService.Application.Dtos.Couriers
+﻿namespace Product.Application.Dtos.Couriers
 {
     public class CourierInsuranceDto
     {

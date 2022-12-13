@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Product.Application.Dtos.Post
+namespace Product.Application.Dtos.CourierServices.Post
 {
     public class PostOrderStatusResponse
     {

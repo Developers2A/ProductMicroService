@@ -1,33 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Postex.SharedKernel.Api
 {
     public class ApiResult
     {
         public bool IsSuccess { get; set; }
-
-        public ApiResultStatusCode StatusCode { get; set; }
-
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Message { get; set; }
 
-        public ApiResult(bool isSuccess, ApiResultStatusCode statusCode, string message = null)
+        public ApiResult(bool isSuccess, string message = null)
         {
             IsSuccess = isSuccess;
-            StatusCode = statusCode;
-            Message = message;// ?? statusCode.ToDisplay();
+            Message = message;
         }
 
         #region Implicit Operators
         public static implicit operator ApiResult(OkResult result)
         {
-            return new ApiResult(true, ApiResultStatusCode.Success);
+            return new ApiResult(true);
         }
 
         public static implicit operator ApiResult(BadRequestResult result)
         {
-            return new ApiResult(false, ApiResultStatusCode.BadRequest);
+            return new ApiResult(false);
         }
 
         public static implicit operator ApiResult(BadRequestObjectResult result)
@@ -38,56 +32,45 @@ namespace Postex.SharedKernel.Api
                 var errorMessages = errors.SelectMany(p => (string[])p.Value).Distinct();
                 message = string.Join(" | ", errorMessages);
             }
-            return new ApiResult(false, ApiResultStatusCode.BadRequest, message);
+            return new ApiResult(false, message);
         }
 
         public static implicit operator ApiResult(ContentResult result)
         {
-            return new ApiResult(true, ApiResultStatusCode.Success, result.Content);
+            return new ApiResult(true, result.Content);
         }
 
         public static implicit operator ApiResult(NotFoundResult result)
         {
-            return new ApiResult(false, ApiResultStatusCode.NotFound);
+            return new ApiResult(false);
         }
         #endregion
     }
 
     public class ApiResult<TData> : ApiResult
     {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TData Data { get; set; }
 
-        public ApiResult(bool isSuccess, ApiResultStatusCode statusCode, TData data, string message = null)
-            : base(isSuccess, statusCode, message)
+        public ApiResult(bool isSuccess, TData data, string message = null)
+            : base(isSuccess, message)
         {
             Data = data;
         }
 
-        public ApiResult(bool isSuccess, ApiResultStatusCode statusCode, string message = null)
-            : base(isSuccess, statusCode, message)
+        public ApiResult(bool isSuccess, string message = null)
+            : base(isSuccess, message)
         {
         }
 
         #region Implicit Operators
         public static implicit operator ApiResult<TData>(TData data)
         {
-            return new ApiResult<TData>(true, ApiResultStatusCode.Success, data);
-        }
-
-        public static implicit operator ApiResult<TData>(OkResult result)
-        {
-            return new ApiResult<TData>(true, ApiResultStatusCode.Success);
+            return new ApiResult<TData>(true, data);
         }
 
         public static implicit operator ApiResult<TData>(OkObjectResult result)
         {
-            return new ApiResult<TData>(true, ApiResultStatusCode.Success, (TData)result.Value);
-        }
-
-        public static implicit operator ApiResult<TData>(BadRequestResult result)
-        {
-            return new ApiResult<TData>(false, ApiResultStatusCode.BadRequest);
+            return new ApiResult<TData>(true, (TData)result.Value);
         }
 
         public static implicit operator ApiResult<TData>(BadRequestObjectResult result)
@@ -98,22 +81,17 @@ namespace Postex.SharedKernel.Api
                 var errorMessages = errors.SelectMany(p => (string[])p.Value).Distinct();
                 message = string.Join(" | ", errorMessages);
             }
-            return new ApiResult<TData>(false, ApiResultStatusCode.BadRequest, message);
+            return new ApiResult<TData>(false, message);
         }
 
         public static implicit operator ApiResult<TData>(ContentResult result)
         {
-            return new ApiResult<TData>(true, ApiResultStatusCode.Success, result.Content);
-        }
-
-        public static implicit operator ApiResult<TData>(NotFoundResult result)
-        {
-            return new ApiResult<TData>(false, ApiResultStatusCode.NotFound);
+            return new ApiResult<TData>(true, result.Content);
         }
 
         public static implicit operator ApiResult<TData>(NotFoundObjectResult result)
         {
-            return new ApiResult<TData>(false, ApiResultStatusCode.NotFound, (TData)result.Value);
+            return new ApiResult<TData>(false, (TData)result.Value);
         }
         #endregion
     }

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Settings;
-using Product.Application.Dtos.Post;
+using Product.Application.Dtos.CourierServices.Post;
 using Product.Application.Features.CourierServices.Post.Queries.GetToken;
 using System.Text;
 

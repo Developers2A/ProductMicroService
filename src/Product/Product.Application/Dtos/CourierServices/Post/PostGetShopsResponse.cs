@@ -1,8 +1,8 @@
-﻿namespace Product.Application.Dtos.Post
+﻿namespace Product.Application.Dtos.CourierServices.Post
 {
     public class PostGetShopsResponse
     {
-        public List<PostShop> DataItems { get; set; }
+        public List<Shop> DataItems { get; set; }
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }
         public int TotalItemCount { get; set; }
@@ -10,7 +10,7 @@
         public int ItemEnd { get; set; }
     }
 
-    public class PostShop
+    public class Shop
     {
         public int ID { get; set; }
         public string PostalCode { get; set; }

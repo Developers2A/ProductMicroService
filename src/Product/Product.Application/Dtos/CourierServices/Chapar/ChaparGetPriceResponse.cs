@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Product.Application.Dtos.Chapar
+namespace Product.Application.Dtos.CourierServices.Chapar
 {
     public class ChaparGetPriceResponse
     {

@@ -23,4 +23,11 @@
 	  <ProjectReference Include="..\Product.Domain\Product.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Features\CourierServices\Pde\Commands\" />
+	  <Folder Include="Features\CourierServices\Pde\Queries\" />
+	  <Folder Include="Features\CourierServices\Yarbox\Commands\" />
+	  <Folder Include="Features\CourierServices\Yarbox\Queries\" />
+	</ItemGroup>
+
 </Project>

@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
 using Microsoft.EntityFrameworkCore;
 using Postex.SharedKernel.Interfaces;
-using Postex.SharedKernel.Pagination;
+using Postex.SharedKernel.Paginations;
 using Product.Infrastructure.Data;
 
 namespace Product.Infrastructure.Repositories
@@ -108,12 +108,10 @@ namespace Product.Infrastructure.Repositories
             return dbContext.Set<TEntity>().ToListAsync(cancellationToken);
         }
 
-
         public Task<TEntity> GetAsync(CancellationToken cancellationToken)
         {
             return dbContext.Set<TEntity>().FirstOrDefaultAsync(cancellationToken);
         }
-
 
         public async Task<TEntity> GetByIdAsync(int id, CancellationToken cancellationToken)
         {

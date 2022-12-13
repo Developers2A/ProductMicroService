@@ -4,7 +4,7 @@ using Pluralize.NET;
 using Postex.SharedKernel.Utilities;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace ServiceProvider.Infrastracture.Core.Swagger
+namespace Postex.Infrastructure.Swagger
 {
     public class ApplySummariesOperationFilter : IOperationFilter
     {
@@ -67,7 +67,7 @@ namespace ServiceProvider.Infrastracture.Core.Swagger
             {
                 foreach (var name in new[] { "Get", "Read", "Select" })
                 {
-                    if ((actionName.Equals(name, StringComparison.OrdinalIgnoreCase) && parameterCount == 0) ||
+                    if (actionName.Equals(name, StringComparison.OrdinalIgnoreCase) && parameterCount == 0 ||
                         actionName.Equals($"{name}All", StringComparison.OrdinalIgnoreCase) ||
                         actionName.Equals($"{name}{pluralizeName}", StringComparison.OrdinalIgnoreCase) ||
                         actionName.Equals($"{name}All{singularizeName}", StringComparison.OrdinalIgnoreCase) ||

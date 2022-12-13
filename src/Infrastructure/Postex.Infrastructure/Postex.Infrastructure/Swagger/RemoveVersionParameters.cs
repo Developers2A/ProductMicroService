@@ -2,7 +2,7 @@
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Linq;
 
-namespace ServiceProvider.Infrastracture.Core.Swagger
+namespace Postex.Infrastructure.Swagger
 {
     public class RemoveVersionParameters : IOperationFilter
     {

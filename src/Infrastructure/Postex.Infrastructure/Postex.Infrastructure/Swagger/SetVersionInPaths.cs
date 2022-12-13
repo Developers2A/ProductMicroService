@@ -1,7 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace ServiceProvider.Infrastracture.Core.Swagger
+namespace Postex.Infrastructure.Swagger
 {
     public class SetVersionInPaths : IDocumentFilter
     {
