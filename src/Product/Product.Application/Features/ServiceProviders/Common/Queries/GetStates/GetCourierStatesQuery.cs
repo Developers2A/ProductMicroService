@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
 using Product.Application.Dtos.CourierServices.Common;
-using Product.Application.Features.CourierServices.Chapar.Queries.GetStates;
-using Product.Application.Features.CourierServices.Post.Queries.GetStates;
-using Product.Application.Features.CourierServices.Taroff.Queries.GetStates;
+using Product.Application.Features.ServiceProviders.Chapar.Queries.GetStates;
+using Product.Application.Features.ServiceProviders.Post.Queries.GetStates;
+using Product.Application.Features.ServiceProviders.Taroff.Queries.GetStates;
 using Product.Domain.Enums;
 
 namespace Product.Application.Features.ServiceProviders.Common.Queries.GetStates

@@ -16,7 +16,7 @@ namespace Product.Application.Features.ServiceProviders.Mahex.Queries.GetPrice
         public GetMahexPriceQueryHandler(IConfiguration configuration)
         {
             _configuration = configuration;
-            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Post;
+            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Mahex;
         }
 
         public async Task<BaseResponse<MahexGetPriceResponse>> Handle(GetMahexPriceQuery request, CancellationToken cancellationToken)

@@ -3,10 +3,10 @@ using Postex.SharedKernel.Common;
 using Product.Application.Dtos.CourierServices.Chapar.Common;
 using Product.Application.Dtos.CourierServices.Common;
 using Product.Application.Dtos.CourierServices.Mahex.Common;
-using Product.Application.Features.CourierServices.Post.Commands.CreateOrder;
 using Product.Application.Features.ServiceProviders.Chapar.Commands.CreateOrder;
 using Product.Application.Features.ServiceProviders.Kbk.Commands.CreateOrder;
 using Product.Application.Features.ServiceProviders.Mahex.Commands.CreateOrder;
+using Product.Application.Features.ServiceProviders.Post.Commands.CreateOrder;
 using Product.Application.Features.ServiceProviders.Post.Queries.GetPrice;
 using Product.Domain.Enums;
 

@@ -3,14 +3,14 @@ using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Utilities;
 using Product.Application.Dtos.Couriers;
 using Product.Application.Dtos.Trackings;
-using Product.Application.Features.CourierServices.Chapar.Queries.Track;
-using Product.Application.Features.CourierServices.Link.Queries.Track;
-using Product.Application.Features.CourierServices.Mahex.Queries.Track;
-using Product.Application.Features.CourierServices.PishroPost.Queries.Track;
-using Product.Application.Features.CourierServices.Post.Queries.Track;
-using Product.Application.Features.CourierServices.Speed.Queries.Track;
-using Product.Application.Features.CourierServices.Taroff.Queries.Track;
 using Product.Application.Features.CourierStatusMappings.Queries;
+using Product.Application.Features.ServiceProviders.Chapar.Queries.Track;
+using Product.Application.Features.ServiceProviders.Link.Queries.Track;
+using Product.Application.Features.ServiceProviders.Mahex.Queries.Track;
+using Product.Application.Features.ServiceProviders.PishroPost.Queries.Track;
+using Product.Application.Features.ServiceProviders.Post.Queries.Track;
+using Product.Application.Features.ServiceProviders.Speed.Queries.Track;
+using Product.Application.Features.ServiceProviders.Taroff.Queries.Track;
 using Product.Domain.Enums;
 
 namespace Product.Application.Features.ServiceProviders.Common.Queries.Track

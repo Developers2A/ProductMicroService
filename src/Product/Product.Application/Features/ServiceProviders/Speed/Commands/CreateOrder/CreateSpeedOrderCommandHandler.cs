@@ -3,9 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
-using Product.Application.Dtos.CourierServices.Post;
 using Product.Application.Dtos.CourierServices.Speed.Dtos;
-using Product.Application.Features.CourierServices.Post.Queries.GetToken;
 using System.Text;
 
 namespace Product.Application.Features.ServiceProviders.Speed.Commands.CreateOrder
@@ -14,22 +12,18 @@ namespace Product.Application.Features.ServiceProviders.Speed.Commands.CreateOrd
     {
         private readonly IConfiguration _configuration;
         private readonly CourierConfig _gateway;
-        private readonly IMediator _mediator;
 
-        public CreateSpeedOrderCommandHandler(IConfiguration configuration, IMediator mediator)
+        public CreateSpeedOrderCommandHandler(IConfiguration configuration)
         {
             _configuration = configuration;
-            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Post;
-            _mediator = mediator;
+            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Speed;
         }
 
         public async Task<BaseResponse<SpeedCreateOrderResponse>> Handle(CreateSpeedOrderCommand request, CancellationToken cancellationToken)
         {
-            BaseResponse<SpeedCreateOrderResponse> result = new();
             try
             {
-                string token = await _mediator.Send(new GetPostTokenQuery());
-                HttpResponseMessage response = await SetHttpRequest(token, request);
+                HttpResponseMessage response = await SetHttpRequest(request);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -37,35 +31,24 @@ namespace Product.Application.Features.ServiceProviders.Speed.Commands.CreateOrd
                 }
 
                 var res = await response.Content.ReadAsStringAsync();
-                try
-                {
-                    var resModel = JsonConvert.DeserializeObject<SpeedCreateOrderResponse>(res);
-                    if (resModel!.ErrorCode == 0)
-                    {
-                        return new(true, "success", resModel);
-                    }
 
-                    return new(false, resModel.Error);
-                }
-                catch
+                var resModel = JsonConvert.DeserializeObject<SpeedCreateOrderResponse>(res);
+                if (resModel!.ErrorCode == 0)
                 {
-                    var resModel = JsonConvert.DeserializeObject<PostEmptyResponse>(res);
-                    if (resModel!.ResCode == 2)
-                    {
-                        return new(false, resModel.Data != null ? string.Join<string>(",", resModel.Data!.Select(x => x.ErrorMessage)) : resModel.ResMsg!);
-                    }
-                    return new(false, resModel.ResMsg!);
+                    return new(true, "success", resModel);
                 }
+
+                return new(false, resModel.Error);
             }
             catch (Exception ex)
             {
-                return new(false, "An error has occurred in the Service Post " + ex.Message);
+                return new(false, "An error has occurred in the Service Speed " + ex.Message);
             }
         }
 
-        private async Task<HttpResponseMessage> SetHttpRequest(string token, CreateSpeedOrderCommand request)
+        private async Task<HttpResponseMessage> SetHttpRequest(CreateSpeedOrderCommand request)
         {
-            HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl, token);
+            HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl);
             request.Key = _gateway.Token;
             var serializedModel = JsonConvert.SerializeObject(request);
             var content = new StringContent(serializedModel,

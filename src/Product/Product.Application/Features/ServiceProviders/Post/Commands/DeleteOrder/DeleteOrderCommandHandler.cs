@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
 using Product.Application.Dtos.CourierServices.Post;
-using Product.Application.Features.CourierServices.Post.Queries.GetToken;
+using Product.Application.Features.ServiceProviders.Post.Queries.GetToken;
 using System.Text;
 
 namespace Product.Application.Features.ServiceProviders.Post.Commands.DeleteOrder

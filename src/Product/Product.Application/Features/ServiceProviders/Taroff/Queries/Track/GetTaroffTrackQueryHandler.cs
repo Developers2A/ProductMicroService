@@ -8,12 +8,12 @@ using System.Text;
 
 namespace Product.Application.Features.ServiceProviders.Taroff.Queries.Track
 {
-    public class GetPostTokenQueryHandler : IRequestHandler<GetTaroffTrackQuery, BaseResponse<TaroffTrackResponse>>
+    public class GetTaroffTrackQueryHandler : IRequestHandler<GetTaroffTrackQuery, BaseResponse<TaroffTrackResponse>>
     {
         private readonly IConfiguration _configuration;
         private readonly CourierConfig _gateway;
 
-        public GetPostTokenQueryHandler(IConfiguration configuration)
+        public GetTaroffTrackQueryHandler(IConfiguration configuration)
         {
             _configuration = configuration;
             _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Taroff;

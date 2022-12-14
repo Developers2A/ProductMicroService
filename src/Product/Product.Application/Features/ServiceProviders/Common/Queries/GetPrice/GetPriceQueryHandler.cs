@@ -4,11 +4,11 @@ using Product.Application.Dtos.Couriers;
 using Product.Application.Dtos.CourierServices.Common;
 using Product.Application.Dtos.CourierServices.Mahex.Common;
 using Product.Application.Features.CourierCityMappings.Queries;
-using Product.Application.Features.CourierServices.Chapar.Queries.GetPrice;
-using Product.Application.Features.CourierServices.Mahex.Queries.GetPrice;
-using Product.Application.Features.CourierServices.Post.Queries.GetPrice;
 using Product.Application.Features.PostShops.Queries;
+using Product.Application.Features.ServiceProviders.Chapar.Queries.GetPrice;
 using Product.Application.Features.ServiceProviders.Kbk.Queries.GetPrice;
+using Product.Application.Features.ServiceProviders.Mahex.Queries.GetPrice;
+using Product.Application.Features.ServiceProviders.Post.Queries.GetPrice;
 using Product.Application.Features.ValueAddedPrices.Queries;
 using Product.Domain.Enums;
 

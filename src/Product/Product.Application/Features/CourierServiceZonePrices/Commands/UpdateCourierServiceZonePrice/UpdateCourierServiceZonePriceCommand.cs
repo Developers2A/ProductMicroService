@@ -10,6 +10,6 @@ namespace Product.Application.Features.CourierServiceZonePrices.Commands.UpdateC
         public int CityDestinationId { get; set; }
         public int CityOrigionId { get; set; }
         public int ZoneId { get; set; }
-        public string SLA { get; set; }
+        public string? SLA { get; set; }
     }
 }

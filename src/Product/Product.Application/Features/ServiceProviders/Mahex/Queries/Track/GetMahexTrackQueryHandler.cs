@@ -16,7 +16,7 @@ namespace Product.Application.Features.ServiceProviders.Mahex.Queries.Track
         public GetMahexTrackQueryHandler(IConfiguration configuration)
         {
             _configuration = configuration;
-            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Post;
+            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Mahex;
         }
 
         public async Task<BaseResponse<MahexTrackResponse>> Handle(GetMahexTrackQuery request, CancellationToken cancellationToken)

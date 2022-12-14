@@ -3,9 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
-using Product.Application.Dtos.CourierServices.Post;
 using Product.Application.Dtos.CourierServices.Speed.Dtos;
-using Product.Application.Features.CourierServices.Post.Queries.GetToken;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -15,22 +13,18 @@ namespace Product.Application.Features.ServiceProviders.Speed.Queries.GetPrice
     {
         private readonly IConfiguration _configuration;
         private readonly CourierConfig _gateway;
-        private readonly IMediator _mediator;
 
         public GetSpeedPriceQueryHandler(IConfiguration configuration, IMediator mediator)
         {
             _configuration = configuration;
-            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Post;
-            _mediator = mediator;
+            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Speed;
         }
 
         public async Task<BaseResponse<SpeedGetPriceResponse>> Handle(GetSpeedPriceQuery request, CancellationToken cancellationToken)
         {
-            BaseResponse<PostGetPriceResponse> result = new();
             try
             {
-                string token = await _mediator.Send(new GetPostTokenQuery());
-                HttpResponseMessage response = await SetHttpRequest(token, request);
+                HttpResponseMessage response = await SetHttpRequest(request);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -40,7 +34,7 @@ namespace Product.Application.Features.ServiceProviders.Speed.Queries.GetPrice
                 var res = await response.Content.ReadAsStringAsync();
 
                 var resModel = JsonConvert.DeserializeObject<SpeedGetPriceResponse>(res);
-                if (resModel.ErrorCode == 0)
+                if (resModel!.ErrorCode == 0)
                 {
                     return new(true, "success", resModel);
                 }
@@ -52,10 +46,9 @@ namespace Product.Application.Features.ServiceProviders.Speed.Queries.GetPrice
             }
         }
 
-        private async Task<HttpResponseMessage> SetHttpRequest(string token, GetSpeedPriceQuery request)
+        private async Task<HttpResponseMessage> SetHttpRequest(GetSpeedPriceQuery request)
         {
             var client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl);
-
             client.DefaultRequestHeaders
                 .Accept
                 .Add(new MediaTypeWithQualityHeaderValue("application/json"));

@@ -16,7 +16,7 @@ namespace Product.Application.Features.ServiceProviders.Mahex.Commands.CreateOrd
         public CreateMahexOrderCommandHandler(IConfiguration configuration, IMediator mediator)
         {
             _configuration = configuration;
-            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Post;
+            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Mahex;
         }
 
         public async Task<BaseResponse<PostCreateOrderResponse>> Handle(CreateMahexOrderCommand request, CancellationToken cancellationToken)

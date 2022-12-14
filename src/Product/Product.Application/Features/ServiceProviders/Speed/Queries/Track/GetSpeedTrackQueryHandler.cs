@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
-using Product.Application.Dtos.CourierServices.Post;
 using Product.Application.Dtos.CourierServices.Speed.Dtos;
 using System.Net.Http.Headers;
 using System.Text;
@@ -23,7 +22,6 @@ namespace Product.Application.Features.ServiceProviders.Speed.Queries.Track
 
         public async Task<BaseResponse<SpeedTrackResponse>> Handle(GetSpeedTrackQuery request, CancellationToken cancellationToken)
         {
-            BaseResponse<PostTrackResponse> result = new();
             try
             {
                 HttpResponseMessage response = await SetHttpRequest(request);
@@ -68,7 +66,7 @@ namespace Product.Application.Features.ServiceProviders.Speed.Queries.Track
                 Encoding.UTF8,
                 "application/json");
 
-            var pUrl = new Uri($"{_gateway.BaseUrl}/Priceinquiry");
+            var pUrl = new Uri($"{_gateway.BaseUrl}/EventCheck");
             return await client.PostAsync(pUrl, content);
         }
     }

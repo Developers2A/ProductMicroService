@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
 using Product.Application.Dtos.CourierServices.Common;
-using Product.Application.Features.CourierServices.Chapar.Queries.GetCities;
-using Product.Application.Features.CourierServices.Post.Queries.GetCities;
-using Product.Application.Features.CourierServices.Taroff.Queries.GetCities;
+using Product.Application.Features.ServiceProviders.Chapar.Queries.GetCities;
+using Product.Application.Features.ServiceProviders.Post.Queries.GetCities;
+using Product.Application.Features.ServiceProviders.Taroff.Queries.GetCities;
 using Product.Domain.Enums;
 
 namespace Product.Application.Features.ServiceProviders.Common.Queries.GetCities
