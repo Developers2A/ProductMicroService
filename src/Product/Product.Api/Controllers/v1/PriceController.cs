@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Postex.SharedKernel.Api;
 using Product.Application.Dtos.CollectionDistributions;
-using Product.Application.Features.CourierZoneSLAPrices.Queries;
+using Product.Application.Features.CourierServiceZonePrices.Queries;
 
 namespace Product.Api.Controllers.v1
 {

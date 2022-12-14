@@ -41,6 +41,6 @@ namespace Product.Application.Dtos.CourierServices.Mahex.Common
         public string Street { get; set; }
 
         [JsonProperty("remarks")]
-        public string remarks { get; set; }
+        public string Remarks { get; set; }
     }
 }

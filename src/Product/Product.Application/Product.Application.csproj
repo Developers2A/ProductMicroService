@@ -28,6 +28,7 @@
 	  <Folder Include="Features\CourierServices\Pde\Queries\" />
 	  <Folder Include="Features\CourierServices\Yarbox\Commands\" />
 	  <Folder Include="Features\CourierServices\Yarbox\Queries\" />
+	  <Folder Include="Mappings\Common\" />
 	</ItemGroup>
 
 </Project>

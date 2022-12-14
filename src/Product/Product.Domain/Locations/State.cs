@@ -9,7 +9,7 @@ namespace Product.Domain.Locations
         public string Code { get; set; }
         public string EnglishName { get; set; }
         public ICollection<City> Cities { get; set; }
-        public ICollection<CourierZoneSLA> StateFromCourierZoneSLAs { get; set; }
-        public ICollection<CourierZoneSLA> StateToCourierZoneSLAs { get; set; }
+        public ICollection<CourierServiceZone> StateFromCourierServiceZones { get; set; }
+        public ICollection<CourierServiceZone> StateToCourierServiceZones { get; set; }
     }
 }

@@ -6,6 +6,6 @@ namespace Product.Domain.Couriers
     {
         public int PostageWeight { get; set; }
         public string Code { get; set; }
-        public ICollection<CourierZoneSLAPrice> CourierZoneSLAPrices { get; set; }
+        public ICollection<CourierServiceZonePrice> CourierServiceZonePrices { get; set; }
     }
 }

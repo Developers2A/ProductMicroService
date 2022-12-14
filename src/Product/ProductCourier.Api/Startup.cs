@@ -16,11 +16,6 @@ namespace Product.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDBContext>(options =>
-            //{
-            //    options
-            //        .UseSqlServer(configuration["ConnectionStrings:SqlServer"]);
-            //});
             services.AddPersistance(Configuration);
             services.AddCors();
             services.AddControllers();

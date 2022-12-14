@@ -7,19 +7,19 @@ namespace Product.Application.Features.BoxPrices.Commands.UpdateBoxPrice
 {
     public class UpdateBoxPriceCommandHandler : IRequestHandler<UpdateBoxPriceCommand>
     {
-        private readonly IWriteRepository<BoxPrice> _slaWriteRepository;
-        private readonly IReadRepository<BoxPrice> _slaReadRepository;
+        private readonly IWriteRepository<BoxPrice> _boxPriceWriteRepository;
+        private readonly IReadRepository<BoxPrice> _boxPriceReadRepository;
 
-        public UpdateBoxPriceCommandHandler(IWriteRepository<BoxPrice> slaWriteRepository,
-            IReadRepository<BoxPrice> slaReadRepository)
+        public UpdateBoxPriceCommandHandler(IWriteRepository<BoxPrice> boxPriceWriteRepository,
+            IReadRepository<BoxPrice> boxPriceReadRepository)
         {
-            _slaWriteRepository = slaWriteRepository;
-            _slaReadRepository = slaReadRepository;
+            _boxPriceWriteRepository = boxPriceWriteRepository;
+            _boxPriceReadRepository = boxPriceReadRepository;
         }
 
         public async Task<Unit> Handle(UpdateBoxPriceCommand request, CancellationToken cancellationToken)
         {
-            BoxPrice boxPrice = await _slaReadRepository.GetByIdAsync(request.Id, cancellationToken);
+            BoxPrice boxPrice = await _boxPriceReadRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (boxPrice == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
@@ -27,8 +27,8 @@ namespace Product.Application.Features.BoxPrices.Commands.UpdateBoxPrice
             boxPrice.Name = request.Name;
             boxPrice.SellPrice = request.SellPrice;
 
-            await _slaWriteRepository.UpdateAsync(boxPrice);
-            await _slaWriteRepository.SaveChangeAsync();
+            await _boxPriceWriteRepository.UpdateAsync(boxPrice);
+            await _boxPriceWriteRepository.SaveChangeAsync();
 
             return Unit.Value;
         }

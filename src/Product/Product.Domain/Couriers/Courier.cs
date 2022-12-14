@@ -57,8 +57,8 @@ namespace Product.Domain.Couriers
         public ICollection<CourierInsurance> CourierInsurances { get; set; }
         public ICollection<CourierLimitValue> CourierLimitValues { get; set; }
 
-        public ICollection<SLA> SLAs { get; set; }
-        public ICollection<CourierZoneSLA> CourierZoneSLAs { get; set; }
+        public ICollection<CourierService> CourierServices { get; set; }
+        public ICollection<CourierServiceZone> CourierServiceZones { get; set; }
         public ICollection<CourierApi> CourierApis { get; set; }
         public ICollection<CourierCityType> CourierCityTypes { get; set; }
     }

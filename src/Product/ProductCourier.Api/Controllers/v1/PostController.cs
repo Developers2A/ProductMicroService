@@ -3,18 +3,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Postex.SharedKernel.Api;
 using Product.Application.Dtos.CourierServices.Post;
-using Product.Application.Features.CourierServices.Post.Commands.CreateOrder;
-using Product.Application.Features.CourierServices.Post.Commands.CreateShop;
-using Product.Application.Features.CourierServices.Post.Commands.DeleteOrder;
 using Product.Application.Features.CourierServices.Post.Commands.ReadyToCollectOrder;
 using Product.Application.Features.CourierServices.Post.Commands.SuspendOrder;
-using Product.Application.Features.CourierServices.Post.Commands.UpdateOrder;
-using Product.Application.Features.CourierServices.Post.Queries.GetNodes;
-using Product.Application.Features.CourierServices.Post.Queries.GetPrice;
-using Product.Application.Features.CourierServices.Post.Queries.GetShops;
 using Product.Application.Features.CourierServices.Post.Queries.GetStatus;
-using Product.Application.Features.CourierServices.Post.Queries.GetUnits;
-using Product.Application.Features.CourierServices.Post.Queries.Track;
+using Product.Application.Features.ServiceProviders.Post.Commands.CreateOrder;
+using Product.Application.Features.ServiceProviders.Post.Commands.CreateShop;
+using Product.Application.Features.ServiceProviders.Post.Commands.DeleteOrder;
+using Product.Application.Features.ServiceProviders.Post.Commands.UpdateOrder;
+using Product.Application.Features.ServiceProviders.Post.Queries.GetNodes;
+using Product.Application.Features.ServiceProviders.Post.Queries.GetPrice;
+using Product.Application.Features.ServiceProviders.Post.Queries.GetShops;
+using Product.Application.Features.ServiceProviders.Post.Queries.GetUnits;
+using Product.Application.Features.ServiceProviders.Post.Queries.Track;
 
 namespace Product.Api.Controllers.v1
 {

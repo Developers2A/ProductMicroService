@@ -6,7 +6,6 @@ using Product.Domain.Locations;
 using Product.Domain.Posts;
 using Product.Domain.Users;
 using Product.Domain.ValueAddedPrices;
-using Product.Infrastructure.Data.Configurations;
 
 namespace Product.Infrastructure.Data
 {
@@ -39,7 +38,7 @@ namespace Product.Infrastructure.Data
             modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
             modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
-            modelBuilder.ApplyConfiguration(new BoxPriceConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         }
 
         public override int SaveChanges()

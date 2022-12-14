@@ -7,6 +7,6 @@ namespace Product.Domain.Locations
     {
         public string Name { get; set; }
         public string Code { get; set; }
-        public ICollection<CourierZoneSLA> CourierZoneSLAs { get; set; }
+        public ICollection<CourierServiceZone> CourierServiceZones { get; set; }
     }
 }

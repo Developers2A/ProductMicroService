@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Postex.SharedKernel.Api;
 using Product.Application.Dtos.Trackings;
-using Product.Application.Features.CourierServices.Common.Queries.Track;
+using Product.Application.Features.ServiceProviders.Common.Queries.Track;
 
 namespace Product.Api.Controllers.v1
 {
