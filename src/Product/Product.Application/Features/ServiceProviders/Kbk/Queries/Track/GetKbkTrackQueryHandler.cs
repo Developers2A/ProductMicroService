@@ -16,7 +16,7 @@ namespace Product.Application.Features.ServiceProviders.Kbk.Queries.Track
         public GetKbkTrackQueryHandler(IConfiguration configuration)
         {
             _configuration = configuration;
-            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Chapar;
+            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Kbk;
         }
 
         public async Task<BaseResponse<KbkTrackResponse>> Handle(GetKbkTrackQuery request, CancellationToken cancellationToken)

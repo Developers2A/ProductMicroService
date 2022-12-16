@@ -42,10 +42,10 @@ namespace Product.Application.Features.ServiceProviders.Post.Queries.GetShops
                     var resModel = JsonConvert.DeserializeObject<PostResponse<PostGetShopsResponse>>(res);
                     if (resModel!.ResCode == 0)
                     {
-                        return new(true, "success", resModel.Data);
+                        return new(true, "success", resModel.Data!);
                     }
 
-                    return new(false, "fail", resModel.Data);
+                    return new(false, resModel.ResMsg!);
                 }
                 catch
                 {
@@ -54,6 +54,7 @@ namespace Product.Application.Features.ServiceProviders.Post.Queries.GetShops
                     {
                         return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel.Data!.Select(x => x.ErrorMessage)));
                     }
+                    return new(false, resModel.ResMsg!);
                 }
             }
             catch (Exception ex)

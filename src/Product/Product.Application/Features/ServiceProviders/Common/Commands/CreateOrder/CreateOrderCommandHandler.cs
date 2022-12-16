@@ -8,7 +8,6 @@ using Product.Application.Features.ServiceProviders.Kbk.Commands.CreateOrder;
 using Product.Application.Features.ServiceProviders.Mahex.Commands.CreateOrder;
 using Product.Application.Features.ServiceProviders.Post.Commands.CreateOrder;
 using Product.Application.Features.ServiceProviders.Post.Queries.GetPrice;
-using Product.Domain.Enums;
 
 namespace Product.Application.Features.ServiceProviders.Common.Commands.CreateOrder
 {
@@ -25,24 +24,24 @@ namespace Product.Application.Features.ServiceProviders.Common.Commands.CreateOr
         public async Task<BaseResponse<CreateOrderResponse>> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
         {
             _command = command;
-            if (_command.CourierCode == (int)CourierCode.Post)
-            {
-                await CreatePostOrder();
-            }
-            if (_command.CourierCode == (int)CourierCode.Mahex)
-            {
-                await CreateMahexOrder();
-            }
+            //if (_command.CourierCode == (int)CourierCode.Post)
+            //{
+            //    await CreatePostOrder();
+            //}
+            //if (_command.CourierCode == (int)CourierCode.Mahex)
+            //{
+            //    await CreateMahexOrder();
+            //}
 
-            if (_command.CourierCode == (int)CourierCode.Chapar)
-            {
-                await CreateChaparOrder();
-            }
+            //if (_command.CourierCode == (int)CourierCode.Chapar)
+            //{
+            //    await CreateChaparOrder();
+            //}
 
-            if (_command.CourierCode == (int)CourierCode.Kalaresan)
-            {
-                await CreateChaparOrder();
-            }
+            //if (_command.CourierCode == (int)CourierCode.Kalaresan)
+            //{
+            //    await CreateChaparOrder();
+            //}
 
             return new BaseResponse<CreateOrderResponse>();
         }
@@ -51,12 +50,16 @@ namespace Product.Application.Features.ServiceProviders.Common.Commands.CreateOr
         {
             var createPostOrderCommand = new CreatePostOrderCommand()
             {
-                CustomerName = _command.Reciver_FristName,
-                CustomerFamily = _command.Reciver_LastName,
-                CustomerAddress = _command.Reciver_Address,
-                ParcelContent = _command.GoodsType,
-                CustomerMobile = _command.Reciver_Mobile,
-                CustomerPostalCode = _command.Reciver_PostCode,
+                CustomerName = _command.ReceiverFristName,
+                CustomerFamily = _command.ReceiverLastName,
+                CustomerAddress = _command.ReceiverAddress,
+                ParcelContent = _command.Content,
+                CustomerMobile = _command.ReceiverMobile,
+                CustomerPostalCode = _command.ReceiverPostCode,
+                ClientOrderID = _command.ParcelId,
+                CustomerEmail = _command.ReceiverEmail,
+                CustomerNID = _command.ReceiverNationalCode,
+                ParcelCategoryID = 0, //
             };
 
             var getPostPrice = await _mediator.Send(CreatePostGetPriceQuery());
@@ -66,10 +69,14 @@ namespace Product.Application.Features.ServiceProviders.Common.Commands.CreateOr
                 createPostOrderCommand.Price = new PostPriceRequest()
                 {
                     ParcelValue = _command.ApproximateValue,
-                    ToCityID = _command.Reciver_TownId,
+                    ToCityID = _command.ReceiverCityId,
                     Weight = _command.Weight,
                     SMSService = _command.NotifBySms,
-                    ShopID = _command.ShopId,
+                    ShopID = 0, //_command.ShopId, //
+                    PayTypeID = 0,//
+                    CollectNeed = true, //
+                    NonStandardPackage = false, //
+                    ServiceTypeID = 0 // pishtaz va ...
                 };
                 await _mediator.Send(createPostOrderCommand);
             }
@@ -80,10 +87,10 @@ namespace Product.Application.Features.ServiceProviders.Common.Commands.CreateOr
             return new GetPostPriceQuery()
             {
                 ParcelValue = _command.ApproximateValue,
-                ToCityID = _command.Reciver_TownId,
+                ToCityID = _command.ReceiverCityId,
                 Weight = _command.Weight,
                 SMSService = _command.NotifBySms,
-                ShopID = _command.ShopId,
+                ShopID = 0 // _command.ShopId,
             };
         }
 
@@ -98,30 +105,42 @@ namespace Product.Application.Features.ServiceProviders.Common.Commands.CreateOr
             {
                 ToAddress = new MahexAddressDetails()
                 {
-                    FirstName = _command.Reciver_FristName,
-                    LastName = _command.Reciver_LastName,
-                    Mobile = _command.Reciver_Mobile,
-                    Street = _command.Reciver_Address,
-                    PostalCode = _command.Reciver_PostCode
+                    FirstName = _command.ReceiverFristName,
+                    LastName = _command.ReceiverLastName,
+                    Mobile = _command.ReceiverMobile,
+                    Street = _command.ReceiverAddress,
+                    PostalCode = _command.ReceiverPostCode,
+                    ClientId = "", //
+                    NationalId = _command.ReceiverNationalCode,
+                    Organization = _command.ReceiverCompany,
+                    Type = "",//
+                    Phone = _command.ReceiverPhone,
                 },
                 FromAddress = new MahexAddressDetails()
                 {
-                    FirstName = _command.Sender_FristName,
-                    LastName = _command.Sender_LastName,
-                    Mobile = _command.Sender_Mobile,
-                    Street = _command.Sender_Address,
-                    PostalCode = _command.Sender_PostCode,
+                    FirstName = _command.SenderFristName,
+                    LastName = _command.SenderLastName,
+                    Mobile = _command.SenderMobile,
+                    Street = _command.SenderAddress,
+                    PostalCode = _command.SenderPostCode,
+                    ClientId = "", //
+                    NationalId = _command.SenderNationalCode,//
+                    Organization = _command.SenderCompany,
+                    Type = "",//
                 },
                 Parcels = new List<MahexGetPriceParcel>()
                 {
                     new MahexGetPriceParcel()
                     {
                         Weight = _command.Weight,
-                        Content = _command.GoodsType,
+                        Content = _command.Content,
                         DeclaredValue = _command.ApproximateValue,
+                        Height = _command.Height , // from box type
+                        Length = _command.Length,
+                        Width = _command.Width,
+                        PackageType = ""//
                     }
                 },
-
             };
         }
 
@@ -140,26 +159,36 @@ namespace Product.Application.Features.ServiceProviders.Common.Commands.CreateOr
                     {
                         sender = new ChaparSenderReceiver()
                         {
-                            address = _command.Sender_Address,
-                            mobile = _command.Sender_Mobile,
-                            person = _command.Sender_FristName + " " + _command.Sender_LastName,
-                            telephone = _command.Sender_Mobile,
-                            city_no = ""
+                            address = _command.SenderAddress,
+                            mobile = _command.SenderMobile,
+                            person = _command.SenderFristName + " " + _command.SenderLastName,
+                            telephone = _command.SenderMobile,
+                            city_no = "",
+                            postcode = _command.SenderPostCode
                         },
                         receiver = new ChaparSenderReceiver()
                         {
-                            address = _command.Reciver_Address,
-                            mobile = _command.Reciver_Mobile,
-                            person = _command.Reciver_FristName + " " + _command.Reciver_LastName,
-                            telephone = _command.Reciver_Mobile,
-                            city_no = ""
+                            address = _command.ReceiverAddress,
+                            mobile = _command.ReceiverMobile,
+                            person = _command.ReceiverFristName + " " + _command.ReceiverLastName,
+                            telephone = _command.ReceiverMobile,
+                            city_no = "",
+                            postcode = _command.ReceiverPostCode
                         },
                         cn = new CnBulkImport()
                         {
                             weight = _command.Weight.ToString(),
-                            content = _command.GoodsType,
+                            content = _command.Content,
                             value = _command.ApproximateValue.ToString(),
-                            assinged_pieces = _command.GoodsType,
+                            assinged_pieces = _command.Content,
+                            inv_value = 0 , //
+                            payment_term = 0, //
+                            payment_terms = 0,//
+                            height = Convert.ToInt32(_command.Height), // from boxtype
+                            length =  Convert.ToInt32(_command.Length),
+                            width = Convert.ToInt32(_command.Width),
+                            service = "", //
+                            date = ""//
                         }
                     }
                 }
@@ -175,12 +204,21 @@ namespace Product.Application.Features.ServiceProviders.Common.Commands.CreateOr
         {
             return new CreateKbkOrderCommand()
             {
-                senderName = _command.Sender_FristName + " " + _command.Sender_LastName,
-                senderPhone = _command.Sender_Mobile,
-                senderAddr = _command.Sender_Address,
-                receiverName = _command.Reciver_FristName + " " + _command.Reciver_LastName,
-                receiverPhone = _command.Reciver_Mobile,
-                receiverAddr = _command.Reciver_Address,
+                senderName = _command.SenderFristName + " " + _command.SenderLastName,
+                senderPhone = _command.SenderMobile,
+                senderAddr = _command.SenderAddress,
+                receiverName = _command.ReceiverFristName + " " + _command.ReceiverLastName,
+                receiverPhone = _command.ReceiverMobile,
+                receiverAddr = _command.ReceiverAddress,
+                Detail = new List<KbkPriceDetailsResponse>()
+                {
+                    new KbkPriceDetailsResponse()
+                    {
+                        count = 1,
+                        desc = _command.Content,
+                        size = _command.BoxType , // getsize here
+                    }
+                }
             };
         }
     }

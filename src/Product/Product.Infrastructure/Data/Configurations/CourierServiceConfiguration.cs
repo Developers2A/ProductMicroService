@@ -4,10 +4,11 @@ using Product.Domain.Couriers;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class CourierServiceConfiguration : IEntityTypeConfiguration<CourierService>
+    public class CourierServiceConfiguration : BaseEntityConfiguration<CourierService>
     {
-        public void Configure(EntityTypeBuilder<CourierService> builder)
+        public override void Configure(EntityTypeBuilder<CourierService> builder)
         {
+            base.Configure(builder);
             builder.ToTable("CourierServices");
 
             builder.Property(i => i.Name)
@@ -15,6 +16,10 @@ namespace Product.Infrastructure.Data.Configurations
 
             builder.Property(i => i.Days)
                 .HasMaxLength(200);
+
+            builder.HasOne(i => i.Courier)
+                .WithMany(i => i.CourierServices)
+                .HasForeignKey(i => i.CourierId);
         }
     }
 }

@@ -9,6 +9,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Features\CourierServices\Pde\**" />
+	  <Compile Remove="Features\CourierServices\Yarbox\**" />
+	  <EmbeddedResource Remove="Features\CourierServices\Pde\**" />
+	  <EmbeddedResource Remove="Features\CourierServices\Yarbox\**" />
+	  <None Remove="Features\CourierServices\Pde\**" />
+	  <None Remove="Features\CourierServices\Yarbox\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	
 		<PackageReference Include="AutoMapper" Version="11.0.1" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
@@ -24,10 +33,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Features\CourierServices\Pde\Commands\" />
-	  <Folder Include="Features\CourierServices\Pde\Queries\" />
-	  <Folder Include="Features\CourierServices\Yarbox\Commands\" />
-	  <Folder Include="Features\CourierServices\Yarbox\Queries\" />
 	  <Folder Include="Mappings\Common\" />
 	</ItemGroup>
 

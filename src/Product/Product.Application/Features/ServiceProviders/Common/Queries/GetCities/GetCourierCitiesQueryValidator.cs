@@ -6,7 +6,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.GetCities
     {
         public GetCourierCitiesQueryValidator()
         {
-            RuleFor(p => p.CourierId)
+            RuleFor(p => p.CourierCode)
                   .NotNull().NotEmpty().GreaterThan(0).WithMessage(" کوریر الزامی میباشد");
             RuleFor(p => p.StateId)
                   .NotNull().NotEmpty().GreaterThan(0).WithMessage(" شناسه استان الزامی میباشد");

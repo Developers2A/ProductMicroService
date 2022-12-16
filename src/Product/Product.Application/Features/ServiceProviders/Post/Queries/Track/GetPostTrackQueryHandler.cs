@@ -23,7 +23,6 @@ namespace Product.Application.Features.ServiceProviders.Post.Queries.Track
 
         public async Task<BaseResponse<PostTrackResponse>> Handle(GetPostTrackQuery request, CancellationToken cancellationToken)
         {
-            BaseResponse<PostTrackResponse> result = new();
             try
             {
                 string token = await _mediator.Send(new GetPostTokenQuery());
@@ -40,19 +39,19 @@ namespace Product.Application.Features.ServiceProviders.Post.Queries.Track
                     var resModel = JsonConvert.DeserializeObject<PostResponse<PostTrackResponse>>(res);
                     if (resModel!.ResCode == 0)
                     {
-                        return new(true, "success", resModel.Data);
+                        return new(true, "success", resModel.Data!);
                     }
 
-                    return new(false, "fail", resModel.Data);
+                    return new(false, resModel.ResMsg!);
                 }
                 catch
                 {
                     var resModel = JsonConvert.DeserializeObject<PostEmptyResponse>(res);
                     if (resModel!.ResCode == 2)
                     {
-                        return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel!.Data.Select(x => x.ErrorMessage)), null);
+                        return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel.Data!.Select(x => x.ErrorMessage)), null);
                     }
-                    return new(false, resModel!.ResMsg);
+                    return new(false, resModel.ResMsg!);
                 }
             }
             catch (Exception ex)

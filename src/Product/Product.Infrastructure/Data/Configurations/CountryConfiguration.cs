@@ -4,10 +4,12 @@ using Product.Domain.Locations;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class CountryConfiguration : IEntityTypeConfiguration<Country>
+    public class CountryConfiguration : BaseEntityConfiguration<Country>
     {
-        public void Configure(EntityTypeBuilder<Country> builder)
+        public override void Configure(EntityTypeBuilder<Country> builder)
         {
+            base.Configure(builder);
+
             builder.ToTable("Countries");
 
             builder.Property(i => i.Name)

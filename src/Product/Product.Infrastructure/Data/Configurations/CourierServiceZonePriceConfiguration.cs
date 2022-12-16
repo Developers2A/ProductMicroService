@@ -4,10 +4,11 @@ using Product.Domain.Couriers;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class CourierServiceZonePriceConfiguration : IEntityTypeConfiguration<CourierServiceZonePrice>
+    public class CourierServiceZonePriceConfiguration : BaseEntityConfiguration<CourierServiceZonePrice>
     {
-        public void Configure(EntityTypeBuilder<CourierServiceZonePrice> builder)
+        public override void Configure(EntityTypeBuilder<CourierServiceZonePrice> builder)
         {
+            base.Configure(builder);
             builder.ToTable("CourierServiceZonePrices");
         }
     }

@@ -4,10 +4,11 @@ using Product.Domain.Couriers;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class WeightConfiguration : IEntityTypeConfiguration<Weight>
+    public class WeightConfiguration : BaseEntityConfiguration<Weight>
     {
-        public void Configure(EntityTypeBuilder<Weight> builder)
+        public override void Configure(EntityTypeBuilder<Weight> builder)
         {
+            base.Configure(builder);
             builder.ToTable("Weights");
 
             builder.Property(i => i.Code)

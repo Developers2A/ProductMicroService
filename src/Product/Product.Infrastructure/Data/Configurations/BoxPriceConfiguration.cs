@@ -4,10 +4,12 @@ using Product.Domain.ValueAddedPrices;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class BoxPriceConfiguration : IEntityTypeConfiguration<BoxPrice>
+    public class BoxPriceConfiguration : BaseEntityConfiguration<BoxPrice>
     {
-        public void Configure(EntityTypeBuilder<BoxPrice> builder)
+        public override void Configure(EntityTypeBuilder<BoxPrice> builder)
         {
+            base.Configure(builder);
+
             builder.ToTable("BoxPrices");
 
             builder.Property(i => i.Name)

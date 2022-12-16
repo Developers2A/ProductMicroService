@@ -17,7 +17,7 @@ namespace Product.Application.Features.ServiceProviders.Link.Queries.Track
         public GetLinkTrackQueryHandler(IConfiguration configuration)
         {
             _configuration = configuration;
-            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Chapar;
+            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Link;
         }
 
         public async Task<BaseResponse<LinkTrackResponse>> Handle(GetLinkTrackQuery request, CancellationToken cancellationToken)

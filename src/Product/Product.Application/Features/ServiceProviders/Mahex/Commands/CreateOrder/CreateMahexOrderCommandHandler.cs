@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
 using Product.Application.Dtos.CourierServices.Post;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace Product.Application.Features.ServiceProviders.Mahex.Commands.CreateOrder
@@ -49,13 +50,14 @@ namespace Product.Application.Features.ServiceProviders.Mahex.Commands.CreateOrd
         private async Task<HttpResponseMessage> SetHttpRequest(CreateMahexOrderCommand request)
         {
             HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", _gateway.Token);
 
             var serializedModel = JsonConvert.SerializeObject(request);
             var content = new StringContent(serializedModel,
                 Encoding.UTF8,
                 "application/json");
 
-            var pUrl = new Uri($"{_gateway.BaseUrl}Parcel/New");
+            var pUrl = new Uri($"{_gateway.BaseUrl}/shipments");
             var response = await client.PostAsync(pUrl, content);
             return response;
         }

@@ -4,10 +4,11 @@ using Product.Domain.Locations;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class CityConfiguration : IEntityTypeConfiguration<City>
+    public class CityConfiguration : BaseEntityConfiguration<City>
     {
-        public void Configure(EntityTypeBuilder<City> builder)
+        public override void Configure(EntityTypeBuilder<City> builder)
         {
+            base.Configure(builder);
             builder.ToTable("Cities");
 
             builder.Property(i => i.Name)
@@ -15,6 +16,9 @@ namespace Product.Infrastructure.Data.Configurations
 
             builder.Property(i => i.EnglishName)
                 .HasMaxLength(200);
+
+            builder.Property(i => i.RowVersion)
+                .IsRowVersion();
 
             builder.HasOne(i => i.State)
                .WithMany(i => i.Cities)

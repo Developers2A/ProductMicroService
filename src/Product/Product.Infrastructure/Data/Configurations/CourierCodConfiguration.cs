@@ -4,10 +4,11 @@ using Product.Domain.Couriers;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class CourierCodConfiguration : IEntityTypeConfiguration<CourierCod>
+    public class CourierCodConfiguration : BaseEntityConfiguration<CourierCod>
     {
-        public void Configure(EntityTypeBuilder<CourierCod> builder)
+        public override void Configure(EntityTypeBuilder<CourierCod> builder)
         {
+            base.Configure(builder);
             builder.ToTable("CourierCods");
             builder.Property(i => i.Name)
                .HasMaxLength(200);

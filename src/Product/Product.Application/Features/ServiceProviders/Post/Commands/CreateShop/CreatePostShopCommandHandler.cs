@@ -44,7 +44,7 @@ namespace Product.Application.Features.ServiceProviders.Post.Commands.CreateShop
                         return new(true, "success", resModel.Data);
                     }
 
-                    result = new(false, resModel!.ResMsg, resModel.Data);
+                    result = new(false, resModel!.ResMsg!);
                 }
                 catch
                 {
@@ -53,7 +53,7 @@ namespace Product.Application.Features.ServiceProviders.Post.Commands.CreateShop
                     {
                         return new(false, resModel.ResMsg + "," + resModel.Data != null ? string.Join<string>(",", resModel.Data!.Select(x => x.ErrorMessage)) : "");
                     }
-                    return new(false, resModel.ResMsg);
+                    return new(false, resModel.ResMsg!);
                 }
             }
             catch (Exception ex)

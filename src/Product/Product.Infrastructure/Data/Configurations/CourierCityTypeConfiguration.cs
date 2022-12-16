@@ -4,11 +4,20 @@ using Product.Domain.Couriers;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class CourierCityTypeConfiguration : IEntityTypeConfiguration<CourierCityType>
+    public class CourierCityTypeConfiguration : BaseEntityConfiguration<CourierCityType>
     {
-        public void Configure(EntityTypeBuilder<CourierCityType> builder)
+        public override void Configure(EntityTypeBuilder<CourierCityType> builder)
         {
+            base.Configure(builder);
             builder.ToTable("CourierCityTypes");
+
+            builder.HasOne(i => i.City)
+               .WithMany(i => i.CourierCityTypes)
+               .HasForeignKey(i => i.CityId);
+
+            builder.HasOne(i => i.Courier)
+                .WithMany(i => i.CourierCityTypes)
+                .HasForeignKey(i => i.CourierId);
         }
     }
 }

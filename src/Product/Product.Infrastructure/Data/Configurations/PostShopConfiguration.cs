@@ -4,10 +4,11 @@ using Product.Domain.Posts;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class PostShopConfiguration : IEntityTypeConfiguration<PostShop>
+    public class PostShopConfiguration : BaseEntityConfiguration<PostShop>
     {
-        public void Configure(EntityTypeBuilder<PostShop> builder)
+        public override void Configure(EntityTypeBuilder<PostShop> builder)
         {
+            base.Configure(builder);
             builder.ToTable("PostShops");
         }
     }

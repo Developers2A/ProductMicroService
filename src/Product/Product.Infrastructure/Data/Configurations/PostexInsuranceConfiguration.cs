@@ -4,10 +4,11 @@ using Product.Domain.ValueAddedPrices;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class PostexInsuranceConfiguration : IEntityTypeConfiguration<PostexInsurance>
+    public class PostexInsuranceConfiguration : BaseEntityConfiguration<PostexInsurance>
     {
-        public void Configure(EntityTypeBuilder<PostexInsurance> builder)
+        public override void Configure(EntityTypeBuilder<PostexInsurance> builder)
         {
+            base.Configure(builder);
             builder.ToTable("PostexInsurances");
             builder.Property(i => i.Name)
                .HasMaxLength(200);

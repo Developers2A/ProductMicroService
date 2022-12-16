@@ -7,9 +7,10 @@ namespace Product.Application.Features.ServiceProviders.Taroff.Commands.CancelOr
 {
     public class CancelTaroffOrderCommand : ITransactionRequest<BaseResponse<TaroffCancelResponse>>
     {
+        [JsonProperty("token")]
         public string Token { get; set; }
 
-        [JsonProperty("orderId")]
+        [JsonProperty("orderid")]
         public int OrderId { get; set; }
     }
 }

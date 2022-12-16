@@ -16,6 +16,9 @@ namespace Product.Application.Dtos.CourierServices.Taroff.Dtos
         [JsonProperty("statetitle")]
         public string StateTitle { get; set; }
 
+        [JsonProperty("shopcode")]
+        public object ShopCode { get; set; }
+
         [JsonProperty("shopshare")]
         public object ShopShare { get; set; }
 

@@ -4,19 +4,17 @@ using Product.Domain.Couriers;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class StatusConfiguration : IEntityTypeConfiguration<Status>
+    public class StatusConfiguration : BaseEntityConfiguration<Status>
     {
-        public void Configure(EntityTypeBuilder<Status> builder)
+        public override void Configure(EntityTypeBuilder<Status> builder)
         {
+            base.Configure(builder);
             builder.ToTable("Statuses");
 
             builder.Property(i => i.Name)
                 .HasMaxLength(200);
 
             builder.Property(i => i.Description)
-                .HasMaxLength(200);
-
-            builder.Property(i => i.Order)
                 .HasMaxLength(200);
 
             builder.Property(i => i.Code)

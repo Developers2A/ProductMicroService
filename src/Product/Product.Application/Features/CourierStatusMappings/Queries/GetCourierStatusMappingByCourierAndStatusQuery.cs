@@ -26,10 +26,10 @@ namespace Product.Application.Features.CourierStatusMappings.Queries
 
             public async Task<CourierStatusMappingDto> Handle(GetCourierStatusMappingByCourierAndStatusQuery request, CancellationToken cancellationToken)
             {
-                var courierCityMappingQuery = _courierStatusMappingReadRepository.TableNoTracking.Include(x => x.Status)
+                var courierStatusMappingQuery = _courierStatusMappingReadRepository.TableNoTracking.Include(x => x.Status)
                     .Include(x => x.CourierApi).ThenInclude(x => x.Courier)
                     .Where(x => x.CourierApi.Courier.Code == request.Courier && x.Code == request.CourierStatus);
-                var courierStatusMapping = await courierCityMappingQuery.FirstOrDefaultAsync();
+                var courierStatusMapping = await courierStatusMappingQuery.FirstOrDefaultAsync();
                 return _mapper.Map<CourierStatusMappingDto>(courierStatusMapping);
             }
         }

@@ -24,7 +24,6 @@ namespace Product.Application.Features.ServiceProviders.Post.Commands.SuspendOrd
 
         public async Task<BaseResponse<List<PostSuspendOrderResponse>>> Handle(SuspendOrderCommand request, CancellationToken cancellationToken)
         {
-            BaseResponse<List<PostSuspendOrderResponse>> result = new();
             try
             {
                 string token = await _mediator.Send(new GetPostTokenQuery());
@@ -41,21 +40,19 @@ namespace Product.Application.Features.ServiceProviders.Post.Commands.SuspendOrd
                     var resModel = JsonConvert.DeserializeObject<PostResponse<List<PostSuspendOrderResponse>>>(res);
                     if (resModel!.ResCode == 0)
                     {
-                        return new(true, "success", resModel.Data);
+                        return new(true, "success", resModel!.Data);
                     }
 
-                    return new(false, "fail", resModel.Data);
+                    return new(false, resModel.ResMsg!);
                 }
                 catch
                 {
                     var resModel = JsonConvert.DeserializeObject<PostEmptyResponse>(res);
                     if (resModel!.ResCode == 2)
                     {
-                        return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel!.Data.Select(x => x.ErrorMessage)), null);
+                        return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel.Data!.Select(x => x.ErrorMessage)), null);
                     }
-                    return new(false, resModel!.ResMsg);
-
-                    // return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel.Data.Select(x => (string)x)));
+                    return new(false, resModel.ResMsg!);
                 }
             }
             catch (Exception ex)
@@ -68,7 +65,7 @@ namespace Product.Application.Features.ServiceProviders.Post.Commands.SuspendOrd
         {
             HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl, token);
 
-            var serializedModel = JsonConvert.SerializeObject(request);
+            var serializedModel = JsonConvert.SerializeObject(request.ParcelCodes);
             var content = new StringContent(serializedModel,
                 Encoding.UTF8,
                 "application/json");

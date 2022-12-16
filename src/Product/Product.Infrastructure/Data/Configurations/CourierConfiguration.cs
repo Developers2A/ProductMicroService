@@ -4,10 +4,12 @@ using Product.Domain.Couriers;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class CourierConfiguration : IEntityTypeConfiguration<Courier>
+    public class CourierConfiguration : BaseEntityConfiguration<Courier>
     {
-        public void Configure(EntityTypeBuilder<Courier> builder)
+        public override void Configure(EntityTypeBuilder<Courier> builder)
         {
+            base.Configure(builder);
+
             builder.ToTable("Couriers");
 
             builder.Property(i => i.Name)

@@ -30,7 +30,7 @@ namespace Product.Domain.Posts
         public string? ManagerFirstName { get; set; }
         public string? ManagerLastName { get; set; }
         public string? ManagerFatherName { get; set; }
-        public string ManagerCertNumber { get; set; }
+        public string? ManagerCertNumber { get; set; }
         public string? ManagerCertSeries { get; set; }
         public string? ManagerCertSerial { get; set; }
         public DateTime ShopCreateDate { get; set; }
@@ -38,7 +38,7 @@ namespace Product.Domain.Posts
         public string? PostUnit { get; set; }
         public string? Province { get; set; }
         public string? City { get; set; }
-        public string Postnode { get; set; }
+        public string? Postnode { get; set; }
         public int CompanyPricePlanID { get; set; }
         public int CompanyDiscountPercent { get; set; }
         public int ShopDiscountPercent { get; set; }

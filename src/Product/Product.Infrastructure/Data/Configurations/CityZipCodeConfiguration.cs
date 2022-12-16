@@ -4,11 +4,14 @@ using ServiceProvider.Domain.Couriers;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class CityZipCodeConfiguration : IEntityTypeConfiguration<CityZipCode>
+    public class CityZipCodeConfiguration : BaseEntityConfiguration<CityZipCode>
     {
-        public void Configure(EntityTypeBuilder<CityZipCode> builder)
+        public override void Configure(EntityTypeBuilder<CityZipCode> builder)
         {
+            base.Configure(builder);
+
             builder.ToTable("CityZipCodes");
+
             builder.Property(i => i.ZipCode)
                .HasMaxLength(200);
             builder.Property(i => i.ParcelCode)

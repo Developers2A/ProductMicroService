@@ -4,10 +4,11 @@ using Product.Domain.ValueAddedPrices;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class PostexCodConfiguration : IEntityTypeConfiguration<PostexCod>
+    public class PostexCodConfiguration : BaseEntityConfiguration<PostexCod>
     {
-        public void Configure(EntityTypeBuilder<PostexCod> builder)
+        public override void Configure(EntityTypeBuilder<PostexCod> builder)
         {
+            base.Configure(builder);
             builder.ToTable("PostexCods");
             builder.Property(i => i.Name)
                .HasMaxLength(200);

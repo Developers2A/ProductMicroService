@@ -5,6 +5,7 @@ using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
 using Product.Application.Dtos.CourierServices.Post;
 using Product.Application.Features.ServiceProviders.Post.Queries.GetToken;
+using System.Text;
 
 namespace Product.Application.Features.ServiceProviders.Post.Queries.GetPrice
 {
@@ -23,7 +24,6 @@ namespace Product.Application.Features.ServiceProviders.Post.Queries.GetPrice
 
         public async Task<BaseResponse<PostGetPriceResponse>> Handle(GetPostPriceQuery request, CancellationToken cancellationToken)
         {
-            BaseResponse<PostGetPriceResponse> result = new();
             try
             {
                 string token = await _mediator.Send(new GetPostTokenQuery());
@@ -38,37 +38,38 @@ namespace Product.Application.Features.ServiceProviders.Post.Queries.GetPrice
                 try
                 {
                     var resModel = JsonConvert.DeserializeObject<PostResponse<PostGetPriceResponse>>(res);
-                    if (resModel != null)
+                    if (resModel!.ResCode == 0)
                     {
-                        return new(true, "success", resModel.Data);
+                        return new(true, "success", resModel.Data!);
                     }
-                    return new(false, "fail", resModel!.Data);
+                    return new(false, resModel.ResMsg!);
                 }
                 catch
                 {
                     var resModel = JsonConvert.DeserializeObject<PostEmptyResponse>(res);
-                    if (resModel!.ResCode == 0)
-                    {
-                        return new(true, "success");
-                    }
-                    else if (resModel!.ResCode == 2)
+                    if (resModel!.ResCode == 2)
                     {
                         return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel.Data!.Select(x => x.ErrorMessage)));
                     }
+                    return new(false, resModel.ResMsg!);
                 }
             }
             catch (Exception ex)
             {
                 return new(false, "An error has occurred in the Service Post " + ex.Message);
             }
-            return new(false, "fail");
         }
 
         private async Task<HttpResponseMessage> SetHttpRequest(string token, GetPostPriceQuery request)
         {
             HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl, token);
             var pUrl = new Uri($"{_gateway.BaseUrl}Parcel/Price");
-            var response = await client.GetAsync(pUrl);
+            var serializedModel = JsonConvert.SerializeObject(request);
+            var content = new StringContent(serializedModel,
+                Encoding.UTF8,
+                "application/json");
+
+            var response = await client.PostAsync(pUrl, content);
             return response;
         }
     }

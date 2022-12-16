@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
 using Product.Application.Dtos.CourierServices.Mahex;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace Product.Application.Features.ServiceProviders.Mahex.Queries.GetPrice
@@ -39,6 +40,8 @@ namespace Product.Application.Features.ServiceProviders.Mahex.Queries.GetPrice
         private async Task<HttpResponseMessage> SetHttpRequest(GetMahexPriceQuery request)
         {
             HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl);
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Basic", _gateway.Token);
 
             var serializedModel = JsonConvert.SerializeObject(request);
             var content = new StringContent(serializedModel,

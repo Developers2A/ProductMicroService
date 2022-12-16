@@ -4,10 +4,11 @@ using Product.Domain.Couriers;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class CourierLimitValueConfiguration : IEntityTypeConfiguration<CourierLimitValue>
+    public class CourierLimitValueConfiguration : BaseEntityConfiguration<CourierLimitValue>
     {
-        public void Configure(EntityTypeBuilder<CourierLimitValue> builder)
+        public override void Configure(EntityTypeBuilder<CourierLimitValue> builder)
         {
+            base.Configure(builder);
             builder.ToTable("CourierLimitValues");
 
             builder.HasOne(i => i.Courier)

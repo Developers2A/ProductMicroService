@@ -24,8 +24,8 @@ namespace Product.Application.Features.ServiceProviders.Mahex.Queries.Track
             try
             {
                 var client = SetHttpRequest();
-
                 var pUrl = new Uri($"{_gateway.BaseUrl}");
+
                 if (!string.IsNullOrEmpty(request.WaybillNumber))
                 {
                     pUrl = new Uri($"{_gateway.BaseUrl}/track/{request.WaybillNumber}");

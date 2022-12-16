@@ -2,6 +2,8 @@
 {
     public class PostEditOrderResponse
     {
-        public bool ParcelCode { get; set; }
+        public int ResCode { get; set; }
+        public string? ResMsg { get; set; }
+        public bool Data { get; set; }
     }
 }

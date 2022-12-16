@@ -6,7 +6,7 @@ namespace Product.Application.Features.ServiceProviders.Link.Queries.Track
     {
         public GetLinkrackQueryValidator()
         {
-            RuleFor(p => p.ShipmentCode)
+            RuleFor(p => p.TrackingCode)
               .NotNull().NotEmpty().WithMessage(" کد سفارش الزامی می باشد");
         }
     }

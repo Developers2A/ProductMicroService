@@ -51,7 +51,7 @@ namespace Product.Domain.Couriers
         /// مبلغ اضافه پستکس به مبلغ نهایی
         /// </summary>
         public long PostexFixPrice { get; set; }
-        public string Company { get; set; }
+        public string? Company { get; set; }
         public bool IsActive { get; set; }
         public ICollection<CourierCod> CourierCods { get; set; }
         public ICollection<CourierInsurance> CourierInsurances { get; set; }
@@ -61,5 +61,6 @@ namespace Product.Domain.Couriers
         public ICollection<CourierServiceZone> CourierServiceZones { get; set; }
         public ICollection<CourierApi> CourierApis { get; set; }
         public ICollection<CourierCityType> CourierCityTypes { get; set; }
+        public ICollection<CourierCityMapping> CourierCityMappings { get; set; }
     }
 }

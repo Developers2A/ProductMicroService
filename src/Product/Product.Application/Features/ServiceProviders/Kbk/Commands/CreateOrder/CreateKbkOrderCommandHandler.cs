@@ -17,7 +17,7 @@ namespace Product.Application.Features.ServiceProviders.Kbk.Commands.CreateOrder
         public CreateKbkOrderCommandHandler(IConfiguration configuration)
         {
             _configuration = configuration;
-            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Chapar;
+            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Kbk;
         }
 
         public async Task<BaseResponse<KbkCreateOrderResponse>> Handle(CreateKbkOrderCommand request, CancellationToken cancellationToken)

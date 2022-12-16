@@ -4,10 +4,11 @@ using Product.Domain.Couriers;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class ParcelCitiyConfiguration : IEntityTypeConfiguration<CourierCityTypePrice>
+    public class ParcelCitiyConfiguration : BaseEntityConfiguration<CourierCityTypePrice>
     {
-        public void Configure(EntityTypeBuilder<CourierCityTypePrice> builder)
+        public override void Configure(EntityTypeBuilder<CourierCityTypePrice> builder)
         {
+            base.Configure(builder);
             builder.ToTable("CourierCityTypePrices");
         }
     }

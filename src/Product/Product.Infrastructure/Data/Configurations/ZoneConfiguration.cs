@@ -4,10 +4,11 @@ using Product.Domain.Locations;
 
 namespace Product.Infrastructure.Data.Configurations
 {
-    public class ZoneConfiguration : IEntityTypeConfiguration<Zone>
+    public class ZoneConfiguration : BaseEntityConfiguration<Zone>
     {
-        public void Configure(EntityTypeBuilder<Zone> builder)
+        public override void Configure(EntityTypeBuilder<Zone> builder)
         {
+            base.Configure(builder);
             builder.ToTable("Zones");
 
             builder.Property(i => i.Name)

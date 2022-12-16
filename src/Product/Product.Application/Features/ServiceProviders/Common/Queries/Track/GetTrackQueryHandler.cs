@@ -26,7 +26,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
 
         public async Task<BaseResponse<TrackingMapResponse>> Handle(GetTrackQuery request, CancellationToken cancellationToken)
         {
-            if (request.Courier == (int)CourierCode.Post)
+            if (request.CourierCode == (int)CourierCode.Post)
             {
                 var result = await _mediator.Send(new GetPostTrackQuery()
                 {
@@ -34,35 +34,35 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
                 });
             }
 
-            if (request.Courier == (int)CourierCode.Chapar)
+            if (request.CourierCode == (int)CourierCode.Chapar)
             {
-                return await MapToChapar(request);
+                return await ChaparTrack(request);
             }
 
-            if (request.Courier == (int)CourierCode.Mahex)
+            if (request.CourierCode == (int)CourierCode.Mahex)
             {
-                return await MapToMahex(request);
+                return await MahexTrack(request);
             }
-            if (request.Courier == (int)CourierCode.Link)
+            if (request.CourierCode == (int)CourierCode.Link)
             {
-                return await MapToLink(request);
+                return await LinkTrack(request);
             }
-            if (request.Courier == (int)CourierCode.Taroff)
+            if (request.CourierCode == (int)CourierCode.Taroff)
             {
-                return await MapToLink(request);
+                return await TaroffTrack(request);
             }
-            if (request.Courier == (int)CourierCode.PishroPost)
+            if (request.CourierCode == (int)CourierCode.PishroPost)
             {
-                return await MapToPishroPost(request);
+                return await PishroPostTrack(request);
             }
-            if (request.Courier == (int)CourierCode.Speed)
+            if (request.CourierCode == (int)CourierCode.Speed)
             {
-                return await MapToSpeed(request);
+                return await SpeedTrack(request);
             }
             return new(false, "not found");
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> MapToChapar(GetTrackQuery request)
+        public async Task<BaseResponse<TrackingMapResponse>> ChaparTrack(GetTrackQuery request)
         {
             var trackRequest = new GetChaparTrackQuery()
             {
@@ -111,7 +111,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
             return courierStatusMapping;
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> MapToMahex(GetTrackQuery request)
+        public async Task<BaseResponse<TrackingMapResponse>> MahexTrack(GetTrackQuery request)
         {
             var trackRequest = new GetMahexTrackQuery()
             {
@@ -159,11 +159,11 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
             });
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> MapToLink(GetTrackQuery request)
+        public async Task<BaseResponse<TrackingMapResponse>> LinkTrack(GetTrackQuery request)
         {
             var trackRequest = new GetLinkTrackQuery()
             {
-                ShipmentCode = request.TrackingCode
+                TrackingCode = request.TrackingCode
             };
 
             var result = await _mediator.Send(trackRequest);
@@ -193,7 +193,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
             }
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> MapToTaroff(GetTrackQuery request)
+        public async Task<BaseResponse<TrackingMapResponse>> TaroffTrack(GetTrackQuery request)
         {
             var trackRequest = new GetTaroffTrackQuery()
             {
@@ -226,7 +226,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
             }
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> MapToPishroPost(GetTrackQuery request)
+        public async Task<BaseResponse<TrackingMapResponse>> PishroPostTrack(GetTrackQuery request)
         {
             var trackRequest = new GetPishroPostTrackQuery()
             {
@@ -263,7 +263,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
             });
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> MapToSpeed(GetTrackQuery request)
+        public async Task<BaseResponse<TrackingMapResponse>> SpeedTrack(GetTrackQuery request)
         {
             var trackRequest = new GetSpeedTrackQuery()
             {
@@ -291,7 +291,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
             var tracking = await GetPostexStatus(CourierCode.Speed, status);
             if (tracking == null)
             {
-                return new(false, "Pishro Post Mappping is not set in database");
+                return new(false, "Speed Mappping is not set in database");
             }
             return new(true, "success", new TrackingMapResponse()
             {

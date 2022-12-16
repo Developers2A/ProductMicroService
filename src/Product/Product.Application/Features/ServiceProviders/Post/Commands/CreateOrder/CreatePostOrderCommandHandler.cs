@@ -24,7 +24,6 @@ namespace Product.Application.Features.ServiceProviders.Post.Commands.CreateOrde
 
         public async Task<BaseResponse<PostCreateOrderResponse>> Handle(CreatePostOrderCommand request, CancellationToken cancellationToken)
         {
-            BaseResponse<PostCreateOrderResponse> result = new();
             try
             {
                 string token = await _mediator.Send(new GetPostTokenQuery());

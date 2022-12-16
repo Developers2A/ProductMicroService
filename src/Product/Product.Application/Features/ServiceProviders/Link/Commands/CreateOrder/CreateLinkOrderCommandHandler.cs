@@ -17,7 +17,7 @@ namespace Product.Application.Features.ServiceProviders.Link.Commands.CreateOrde
         public CreateLinkOrderCommandHandler(IConfiguration configuration)
         {
             _configuration = configuration;
-            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Bsw;
+            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Link;
         }
 
         public async Task<BaseResponse<LinkCreateOrderResponse>> Handle(CreateLinkOrderCommand request, CancellationToken cancellationToken)

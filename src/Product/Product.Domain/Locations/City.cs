@@ -1,4 +1,5 @@
 ﻿using Postex.SharedKernel.Domain;
+using Product.Domain.Couriers;
 using ServiceProvider.Domain.Couriers;
 
 namespace Product.Domain.Locations
@@ -9,8 +10,10 @@ namespace Product.Domain.Locations
         public State State { get; set; }
         public string Name { get; set; }
         public int Code { get; set; }
-        public string EnglishName { get; set; }
+        public string? EnglishName { get; set; }
 
         public ICollection<CityZipCode> CityZipCodes { get; set; }
+        public ICollection<CourierCityMapping> CourierCityMappings { get; set; }
+        public ICollection<CourierCityType> CourierCityTypes { get; set; }
     }
 }

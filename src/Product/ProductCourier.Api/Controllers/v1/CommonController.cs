@@ -26,9 +26,9 @@ namespace Product.Api.Controllers.v1
         }
 
         [HttpGet("couriers")]
-        public async Task<ApiResult<List<CourierDto>>> GetCouriers()
+        public async Task<ApiResult<List<CourierCommonDto>>> GetCouriers()
         {
-            return await _mediator.Send(new GetCouriersQuery() { });
+            return await _mediator.Send(new GetCouriersCommonQuery() { });
         }
 
         [HttpPost("states")]

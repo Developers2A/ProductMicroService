@@ -6,29 +6,36 @@ namespace Product.Application.Features.ServiceProviders.Common.Commands.CreateOr
 {
     public class CreateOrderCommand : ITransactionRequest<BaseResponse<CreateOrderResponse>>
     {
-        public int CourierCode { get; set; }
-        public int ShopId { get; set; } // service type like chapar express or ... and pishtaz or ... cod ??
-        public string GoodsType { get; set; }
+        public int ServiceId { get; set; }
+        public string ParcelId { get; set; }
+        public string Content { get; set; }
         public int ApproximateValue { get; set; }
-        public int CodGoodsPrice { get; set; }
+        public int CodPrice { get; set; }
         public int Weight { get; set; }
-        public string InsuranceName { get; set; }
         public bool NeedCarton { get; set; }
         public string CartonSizeName { get; set; }
-        public string Sender_FristName { get; set; }
-        public string Sender_LastName { get; set; }
-        public string Sender_Mobile { get; set; }
-        public int Sender_StateId { get; set; }
-        public int Sender_TownId { get; set; }
-        public string Sender_PostCode { get; set; }
-        public string Sender_Address { get; set; }
-        public string Reciver_FristName { get; set; }
-        public string Reciver_LastName { get; set; }
-        public string Reciver_Mobile { get; set; }
-        public int Reciver_StateId { get; set; }
-        public int Reciver_TownId { get; set; }
-        public string Reciver_PostCode { get; set; }
-        public string Reciver_Address { get; set; }
+        public string SenderFristName { get; set; }
+        public string SenderLastName { get; set; }
+        public string SenderMobile { get; set; }
+        public string SenderPhone { get; set; }
+        public int SenderStateId { get; set; }
+        public int SenderCityId { get; set; }
+        public string SenderPostCode { get; set; }
+        public string SenderAddress { get; set; }
+        public string SenderCompany { get; set; }
+        public string SenderNationalCode { get; set; }
+
+        public string ReceiverFristName { get; set; }
+        public string ReceiverLastName { get; set; }
+        public string ReceiverMobile { get; set; }
+        public string ReceiverPhone { get; set; }
+        public int ReceiverStateId { get; set; }
+        public int ReceiverCityId { get; set; }
+        public string ReceiverPostCode { get; set; }
+        public string ReceiverAddress { get; set; }
+        public string ReceiverEmail { get; set; }
+        public string ReceiverNationalCode { get; set; }
+        public string ReceiverCompany { get; set; }
         public bool IsCOD { get; set; }
         public bool HasAccessToPrinter { get; set; }
         public int BoxType { get; set; }
@@ -37,9 +44,10 @@ namespace Product.Application.Features.ServiceProviders.Common.Commands.CreateOr
         public string SenderLon { get; set; }
         public string Reciverlat { get; set; }
         public string Reciverlon { get; set; }
-        public string RefrenceNo { get; set; }
-        public int OrderSource { get; set; }
         public bool NotifBySms { get; set; }
         public bool IsFreePost { get; set; }
+        public decimal Width { get; set; }
+        public decimal Height { get; set; }
+        public decimal Length { get; set; }
     }
 }

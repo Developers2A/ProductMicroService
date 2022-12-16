@@ -24,7 +24,6 @@ namespace Product.Application.Features.ServiceProviders.Post.Commands.UpdateOrde
 
         public async Task<BaseResponse<PostEditOrderResponse>> Handle(UpdatePostOrderCommand request, CancellationToken cancellationToken)
         {
-            BaseResponse<PostEditOrderResponse> result = new();
             try
             {
                 string token = await _mediator.Send(new GetPostTokenQuery());
@@ -38,24 +37,22 @@ namespace Product.Application.Features.ServiceProviders.Post.Commands.UpdateOrde
                 var res = await response.Content.ReadAsStringAsync();
                 try
                 {
-                    var resModel = JsonConvert.DeserializeObject<PostResponse<PostEditOrderResponse>>(res);
+                    var resModel = JsonConvert.DeserializeObject<PostEditOrderResponse>(res);
                     if (resModel!.ResCode == 0)
                     {
-                        return new(true, "success", resModel.Data);
+                        return new(true, "success");
                     }
 
-                    return new(false, "fail", resModel.Data);
+                    return new(false, resModel.ResMsg!);
                 }
                 catch
                 {
                     var resModel = JsonConvert.DeserializeObject<PostEmptyResponse>(res);
                     if (resModel!.ResCode == 2)
                     {
-                        return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel!.Data.Select(x => x.ErrorMessage)), null);
+                        return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel.Data!.Select(x => x.ErrorMessage)), null);
                     }
-                    return new(false, resModel!.ResMsg);
-
-                    //return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel.Data.Select(x => (string)x)), null);
+                    return new(false, resModel.ResMsg!);
                 }
             }
             catch (Exception ex)

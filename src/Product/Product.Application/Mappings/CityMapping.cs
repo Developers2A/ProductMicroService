@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Product.Application.Dtos.Commons;
 using Product.Application.Dtos.CourierServices.Chapar;
 using Product.Application.Dtos.CourierServices.Common;
 using Product.Application.Dtos.CourierServices.Post;
 using Product.Application.Dtos.CourierServices.Taroff.Dtos;
+using Product.Domain.Locations;
 
 namespace Product.Application.Mappings
 {
@@ -10,6 +12,9 @@ namespace Product.Application.Mappings
     {
         public CityMapping()
         {
+            CreateMap<City, CityDto>();
+            CreateMap<State, StateDto>();
+
             CreateMap<PostGetStatesResponse, CourierStateDto>()
                 .ForMember(dest => dest.Name,
                     opts => opts.MapFrom(src => src.Title));

@@ -56,7 +56,7 @@ namespace Product.Application.Features.ServiceProviders.Taroff.Queries.Track
                 Encoding.UTF8,
                 "application/json");
 
-            var pUrl = new Uri($"{_gateway.BaseUrl}/City/Cities");
+            var pUrl = new Uri($"{_gateway.BaseUrl}/Order/GetState");
             return await client.PostAsync(pUrl, content);
         }
     }

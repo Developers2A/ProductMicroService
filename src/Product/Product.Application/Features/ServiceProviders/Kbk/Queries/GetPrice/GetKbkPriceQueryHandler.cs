@@ -16,7 +16,7 @@ namespace Product.Application.Features.ServiceProviders.Kbk.Queries.GetPrice
         public GetKbkPriceQueryHandler(IConfiguration configuration)
         {
             _configuration = configuration;
-            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Chapar;
+            _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Kbk;
         }
 
         public async Task<BaseResponse<KbkGetPriceResponse>> Handle(GetKbkPriceQuery request, CancellationToken cancellationToken)

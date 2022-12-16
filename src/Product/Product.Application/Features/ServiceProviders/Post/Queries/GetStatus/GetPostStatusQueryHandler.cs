@@ -5,6 +5,7 @@ using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
 using Product.Application.Dtos.CourierServices.Post;
 using Product.Application.Features.ServiceProviders.Post.Queries.GetToken;
+using System.Text;
 
 namespace Product.Application.Features.ServiceProviders.Post.Queries.GetStatus
 {
@@ -23,7 +24,6 @@ namespace Product.Application.Features.ServiceProviders.Post.Queries.GetStatus
 
         public async Task<BaseResponse<List<PostOrderStatusResponse>>> Handle(GetPostStatusQuery request, CancellationToken cancellationToken)
         {
-            BaseResponse<List<PostOrderStatusResponse>> result = new();
             try
             {
                 string token = await _mediator.Send(new GetPostTokenQuery());
@@ -40,19 +40,19 @@ namespace Product.Application.Features.ServiceProviders.Post.Queries.GetStatus
                     var resModel = JsonConvert.DeserializeObject<PostResponse<List<PostOrderStatusResponse>>>(res);
                     if (resModel!.ResCode == 0)
                     {
-                        return new(true, "success", resModel.Data);
+                        return new(true, "success", resModel.Data!);
                     }
 
-                    return new(false, "fail", resModel.Data);
+                    return new(false, resModel.ResMsg!);
                 }
                 catch
                 {
                     var resModel = JsonConvert.DeserializeObject<PostEmptyResponse>(res);
                     if (resModel!.ResCode == 2)
                     {
-                        return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel!.Data.Select(x => x.ErrorMessage)), null);
+                        return new(false, resModel.ResMsg + "," + string.Join<string>(",", resModel.Data!.Select(x => x.ErrorMessage)), null);
                     }
-                    return new(false, resModel!.ResMsg);
+                    return new(false, resModel.ResMsg!);
                 }
             }
             catch (Exception ex)
@@ -64,8 +64,13 @@ namespace Product.Application.Features.ServiceProviders.Post.Queries.GetStatus
         private async Task<HttpResponseMessage> SetHttpRequest(string token, GetPostStatusQuery request)
         {
             HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl, token);
+            var serializedModel = JsonConvert.SerializeObject(request.ParcelCodes);
+            var content = new StringContent(serializedModel,
+                Encoding.UTF8,
+                "application/json");
+
             var pUrl = new Uri($"{_gateway.BaseUrl}Parcel/Status");
-            var response = await client.GetAsync(pUrl);
+            var response = await client.PostAsync(pUrl, content);
             return response;
         }
     }

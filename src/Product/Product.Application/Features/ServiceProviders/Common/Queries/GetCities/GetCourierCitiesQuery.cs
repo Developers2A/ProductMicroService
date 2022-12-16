@@ -5,7 +5,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.GetCities
 {
     public class GetCourierCitiesQuery : IRequest<List<CourierCityDto>>
     {
-        public int CourierId { get; set; }
+        public int CourierCode { get; set; }
         public int StateId { get; set; }
     }
 }
