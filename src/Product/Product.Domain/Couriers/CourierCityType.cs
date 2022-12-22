@@ -10,14 +10,14 @@ namespace Product.Domain.Couriers
         {
         }
 
-        public CourierCityType(int courierId, int cityId, CityType cityType)
+        public CourierCityType(int courierId, int cityId, CityTypeCode cityType)
         {
             CourierId = courierId;
             CityId = cityId;
             CityType = cityType;
         }
 
-        public void Edit(int courierId, int cityId, CityType cityType)
+        public void Edit(int courierId, int cityId, CityTypeCode cityType)
         {
             CourierId = courierId;
             CityId = cityId;
@@ -25,9 +25,9 @@ namespace Product.Domain.Couriers
         }
 
         public int CourierId { get; set; }
-        public Courier Courier { get; set; }
+        public CourierService Courier { get; set; }
         public int CityId { get; set; }
         public City City { get; set; }
-        public CityType CityType { get; set; }
+        public CityTypeCode CityType { get; set; }
     }
 }

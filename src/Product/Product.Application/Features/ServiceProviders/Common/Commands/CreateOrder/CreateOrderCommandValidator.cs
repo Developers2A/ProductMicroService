@@ -6,8 +6,12 @@ namespace Product.Application.Features.ServiceProviders.Common.Commands.CreateOr
     {
         public CreateOrderCommandValidator()
         {
-            //RuleFor(p => p.CustomerName)
-            //      .NotNull().NotEmpty().WithMessage(" نام مشتری الزامی میباشد");
+            RuleFor(p => p.ReceiverFristName)
+                .NotNull().NotEmpty().WithMessage(" نام دریافت کننده الزامی میباشد");
+            RuleFor(p => p.ReceiverLastName)
+                .NotNull().NotEmpty().WithMessage(" نام خانوادگی دریافت کننده الزامی میباشد");
+            RuleFor(p => p.ReceiverMobile)
+                .NotNull().NotEmpty().WithMessage(" شماره موبایل دریافت کننده الزامی میباشد");
         }
     }
 }

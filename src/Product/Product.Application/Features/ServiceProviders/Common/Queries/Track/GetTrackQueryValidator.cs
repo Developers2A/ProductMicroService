@@ -8,7 +8,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
         {
             RuleFor(p => p.CourierCode)
                 .NotNull().NotEmpty().GreaterThan(0).WithMessage(" کوریر الزامی می باشد");
-            RuleFor(p => p.TrackingCode)
+            RuleFor(p => p.TrackCode)
                 .NotNull().NotEmpty().WithMessage(" کد بسته الزامی می باشد");
         }
     }

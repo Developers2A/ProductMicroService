@@ -14,6 +14,8 @@ namespace Product.Application.Mappings
         {
             CreateMap<City, CityDto>();
             CreateMap<State, StateDto>();
+            CreateMap<City, CityCommonDto>();
+            CreateMap<State, StateCommonDto>();
 
             CreateMap<PostGetStatesResponse, CourierStateDto>()
                 .ForMember(dest => dest.Name,

@@ -12,7 +12,7 @@ namespace Product.Application.Dtos.CollectionDistributions
         public decimal DistributionPrice { get; set; }
         public decimal BuyPrice { get; set; }
         public decimal SellPrice { get; set; }
-        public CityType DestinationCityTypeId { get; set; }
+        public CityTypeCode DestinationCityTypeId { get; set; }
         public string ShipmentId { get; set; }
         public bool IsNew { get; set; }
         public bool IsCanceled { get; set; }

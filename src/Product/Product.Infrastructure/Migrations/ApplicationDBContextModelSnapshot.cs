@@ -163,12 +163,6 @@ namespace Product.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("BetweenCity")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CodPayment")
-                        .HasColumnType("bit");
-
                     b.Property<int>("Code")
                         .HasColumnType("int");
 
@@ -181,42 +175,6 @@ namespace Product.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<double>("DiscountPercent")
-                        .HasColumnType("float");
-
-                    b.Property<bool>("Document")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("DomesticPost")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("FixBasePrice")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("ForeignPost")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Fragile")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("FreeShipping")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasApi")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasCollection")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasDistribution")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Heavy")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("InnerCity")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -235,27 +193,6 @@ namespace Product.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<bool>("NeedLatLon")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Parcel")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("PostPaid")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("PostexFixPrice")
-                        .HasColumnType("bigint");
-
-                    b.Property<double>("PostexPercent")
-                        .HasColumnType("float");
-
-                    b.Property<bool>("PriceHasDiscount")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("PriceHasTax")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("RemovedOn")
                         .HasColumnType("datetime2");
 
@@ -268,58 +205,6 @@ namespace Product.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Couriers", (string)null);
-                });
-
-            modelBuilder.Entity("Product.Domain.Couriers.CourierApi", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CourierId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime?>("RemovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("Version")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourierId");
-
-                    b.ToTable("CourierApis", (string)null);
                 });
 
             modelBuilder.Entity("Product.Domain.Couriers.CourierCityMapping", b =>
@@ -337,6 +222,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CourierId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CourierServiceId")
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
@@ -374,6 +262,8 @@ namespace Product.Infrastructure.Migrations
 
                     b.HasIndex("CourierId");
 
+                    b.HasIndex("CourierServiceId");
+
                     b.ToTable("CourierCityMappings", (string)null);
                 });
 
@@ -392,6 +282,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CourierId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CourierId1")
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
@@ -423,6 +316,8 @@ namespace Product.Infrastructure.Migrations
                     b.HasIndex("CityId");
 
                     b.HasIndex("CourierId");
+
+                    b.HasIndex("CourierId1");
 
                     b.ToTable("CourierCityTypes", (string)null);
                 });
@@ -710,6 +605,15 @@ namespace Product.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("BetweenCity")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("CodPayment")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
                     b.Property<int>("CourierId")
                         .HasColumnType("int");
 
@@ -721,8 +625,46 @@ namespace Product.Infrastructure.Migrations
 
                     b.Property<string>("Days")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("DiscountPercent")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("Document")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("DomesticPost")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("FixBasePrice")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("ForeignPost")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Fragile")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("FreeShipping")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasApi")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasCollection")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasDistribution")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Heavy")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("InnerCity")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
@@ -737,6 +679,27 @@ namespace Product.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("NeedLatLon")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Parcel")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("PostPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("PostexFixPrice")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("PostexPercent")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("PriceHasDiscount")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("PriceHasTax")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("RemovedOn")
                         .HasColumnType("datetime2");
@@ -754,153 +717,6 @@ namespace Product.Infrastructure.Migrations
                     b.ToTable("CourierServices", (string)null);
                 });
 
-            modelBuilder.Entity("Product.Domain.Couriers.CourierServiceZone", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("CityFromId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CityToId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CountryToId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CourierId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CourierServiceId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Days")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ForeignPostType")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("HasCollection")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasDistribution")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("RemovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int>("StateFromId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StateToId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ZoneId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityFromId");
-
-                    b.HasIndex("CityToId");
-
-                    b.HasIndex("CountryToId");
-
-                    b.HasIndex("CourierId");
-
-                    b.HasIndex("CourierServiceId");
-
-                    b.HasIndex("StateFromId");
-
-                    b.HasIndex("StateToId");
-
-                    b.HasIndex("ZoneId");
-
-                    b.ToTable("CourierServiceZones", (string)null);
-                });
-
-            modelBuilder.Entity("Product.Domain.Couriers.CourierServiceZonePrice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<decimal>("BuyPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("CourierServiceZoneId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("RemovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<decimal>("SellPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("VolumeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WeightId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourierServiceZoneId");
-
-                    b.HasIndex("WeightId");
-
-                    b.ToTable("CourierServiceZonePrices", (string)null);
-                });
-
             modelBuilder.Entity("Product.Domain.Couriers.CourierStatusMapping", b =>
                 {
                     b.Property<int>("Id")
@@ -914,7 +730,7 @@ namespace Product.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("CourierApiId")
+                    b.Property<int>("CourierId")
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
@@ -949,9 +765,12 @@ namespace Product.Infrastructure.Migrations
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Version")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CourierApiId");
+                    b.HasIndex("CourierId");
 
                     b.HasIndex("StatusId");
 
@@ -1254,6 +1073,226 @@ namespace Product.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Zones", (string)null);
+                });
+
+            modelBuilder.Entity("Product.Domain.Offlines.CourierZone", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourierId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RemovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourierId");
+
+                    b.ToTable("CourierZones", (string)null);
+                });
+
+            modelBuilder.Entity("Product.Domain.Offlines.CourierZoneCityMapping", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourierZoneId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RemovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CourierZoneId");
+
+                    b.ToTable("CourierZoneCityMappings", (string)null);
+                });
+
+            modelBuilder.Entity("Product.Domain.Offlines.CourierZonePrice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("BuyPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("CourierServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FromCourierZoneId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RemovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<bool>("SameState")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("SellPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ToCourierZoneId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourierServiceId");
+
+                    b.HasIndex("FromCourierZoneId");
+
+                    b.HasIndex("ToCourierZoneId");
+
+                    b.ToTable("CourierZonePrices", (string)null);
+                });
+
+            modelBuilder.Entity("Product.Domain.Offlines.CourierZonePriceTemplate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CourierServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FromCity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FromCourierZoneId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RemovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<bool>("SameState")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ToCity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToCourierZoneId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourierServiceId");
+
+                    b.ToTable("CourierZonePriceTemplates", (string)null);
                 });
 
             modelBuilder.Entity("Product.Domain.Posts.PostShop", b =>
@@ -1803,17 +1842,6 @@ namespace Product.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Product.Domain.Couriers.CourierApi", b =>
-                {
-                    b.HasOne("Product.Domain.Couriers.Courier", "Courier")
-                        .WithMany("CourierApis")
-                        .HasForeignKey("CourierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Courier");
-                });
-
             modelBuilder.Entity("Product.Domain.Couriers.CourierCityMapping", b =>
                 {
                     b.HasOne("Product.Domain.Locations.City", "City")
@@ -1828,6 +1856,10 @@ namespace Product.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Product.Domain.Couriers.CourierService", null)
+                        .WithMany("CourierCityMappings")
+                        .HasForeignKey("CourierServiceId");
+
                     b.Navigation("City");
 
                     b.Navigation("Courier");
@@ -1841,11 +1873,15 @@ namespace Product.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Product.Domain.Couriers.Courier", "Courier")
+                    b.HasOne("Product.Domain.Couriers.CourierService", "Courier")
                         .WithMany("CourierCityTypes")
                         .HasForeignKey("CourierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Product.Domain.Couriers.Courier", null)
+                        .WithMany("CourierCityTypes")
+                        .HasForeignKey("CourierId1");
 
                     b.Navigation("City");
 
@@ -1865,7 +1901,7 @@ namespace Product.Infrastructure.Migrations
 
             modelBuilder.Entity("Product.Domain.Couriers.CourierCod", b =>
                 {
-                    b.HasOne("Product.Domain.Couriers.Courier", "Courier")
+                    b.HasOne("Product.Domain.Couriers.CourierService", "Courier")
                         .WithMany("CourierCods")
                         .HasForeignKey("CourierId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1876,7 +1912,7 @@ namespace Product.Infrastructure.Migrations
 
             modelBuilder.Entity("Product.Domain.Couriers.CourierInsurance", b =>
                 {
-                    b.HasOne("Product.Domain.Couriers.Courier", "Courier")
+                    b.HasOne("Product.Domain.Couriers.CourierService", "Courier")
                         .WithMany("CourierInsurances")
                         .HasForeignKey("CourierId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1891,7 +1927,7 @@ namespace Product.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("CityId");
 
-                    b.HasOne("Product.Domain.Couriers.Courier", "Courier")
+                    b.HasOne("Product.Domain.Couriers.CourierService", "Courier")
                         .WithMany("CourierLimitValues")
                         .HasForeignKey("CourierId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1921,89 +1957,11 @@ namespace Product.Infrastructure.Migrations
                     b.Navigation("Courier");
                 });
 
-            modelBuilder.Entity("Product.Domain.Couriers.CourierServiceZone", b =>
-                {
-                    b.HasOne("Product.Domain.Locations.City", "CityFrom")
-                        .WithMany()
-                        .HasForeignKey("CityFromId");
-
-                    b.HasOne("Product.Domain.Locations.City", "CityTo")
-                        .WithMany()
-                        .HasForeignKey("CityToId");
-
-                    b.HasOne("Product.Domain.Locations.Country", "CountryTo")
-                        .WithMany("CourierServiceZones")
-                        .HasForeignKey("CountryToId");
-
-                    b.HasOne("Product.Domain.Couriers.Courier", "Courier")
-                        .WithMany("CourierServiceZones")
-                        .HasForeignKey("CourierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Product.Domain.Couriers.CourierService", "CourierService")
-                        .WithMany("CourierServiceZones")
-                        .HasForeignKey("CourierServiceId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Product.Domain.Locations.State", "StateFrom")
-                        .WithMany("StateFromCourierServiceZones")
-                        .HasForeignKey("StateFromId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Product.Domain.Locations.State", "StateTo")
-                        .WithMany("StateToCourierServiceZones")
-                        .HasForeignKey("StateToId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Product.Domain.Locations.Zone", "Zone")
-                        .WithMany("CourierServiceZones")
-                        .HasForeignKey("ZoneId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("CityFrom");
-
-                    b.Navigation("CityTo");
-
-                    b.Navigation("CountryTo");
-
-                    b.Navigation("Courier");
-
-                    b.Navigation("CourierService");
-
-                    b.Navigation("StateFrom");
-
-                    b.Navigation("StateTo");
-
-                    b.Navigation("Zone");
-                });
-
-            modelBuilder.Entity("Product.Domain.Couriers.CourierServiceZonePrice", b =>
-                {
-                    b.HasOne("Product.Domain.Couriers.CourierServiceZone", "CourierServiceZone")
-                        .WithMany("CourierServiceZonePrices")
-                        .HasForeignKey("CourierServiceZoneId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Product.Domain.Couriers.Weight", "Weight")
-                        .WithMany("CourierServiceZonePrices")
-                        .HasForeignKey("WeightId");
-
-                    b.Navigation("CourierServiceZone");
-
-                    b.Navigation("Weight");
-                });
-
             modelBuilder.Entity("Product.Domain.Couriers.CourierStatusMapping", b =>
                 {
-                    b.HasOne("Product.Domain.Couriers.CourierApi", "CourierApi")
+                    b.HasOne("Product.Domain.Couriers.Courier", "Courier")
                         .WithMany("CourierStatusMappings")
-                        .HasForeignKey("CourierApiId")
+                        .HasForeignKey("CourierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -2013,7 +1971,7 @@ namespace Product.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CourierApi");
+                    b.Navigation("Courier");
 
                     b.Navigation("Status");
                 });
@@ -2029,6 +1987,74 @@ namespace Product.Infrastructure.Migrations
                     b.Navigation("State");
                 });
 
+            modelBuilder.Entity("Product.Domain.Offlines.CourierZone", b =>
+                {
+                    b.HasOne("Product.Domain.Couriers.Courier", "Courier")
+                        .WithMany("CourierZones")
+                        .HasForeignKey("CourierId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Courier");
+                });
+
+            modelBuilder.Entity("Product.Domain.Offlines.CourierZoneCityMapping", b =>
+                {
+                    b.HasOne("Product.Domain.Locations.City", "City")
+                        .WithMany("CourierZoneCityMappings")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Product.Domain.Offlines.CourierZone", "CourierZone")
+                        .WithMany("CourierZoneCityMappings")
+                        .HasForeignKey("CourierZoneId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("CourierZone");
+                });
+
+            modelBuilder.Entity("Product.Domain.Offlines.CourierZonePrice", b =>
+                {
+                    b.HasOne("Product.Domain.Couriers.CourierService", "CourierService")
+                        .WithMany()
+                        .HasForeignKey("CourierServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Product.Domain.Offlines.CourierZone", "FromCourierZone")
+                        .WithMany("FromCourierZonePrices")
+                        .HasForeignKey("FromCourierZoneId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Product.Domain.Offlines.CourierZone", "ToCourierZone")
+                        .WithMany("ToCourierZonePrices")
+                        .HasForeignKey("ToCourierZoneId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CourierService");
+
+                    b.Navigation("FromCourierZone");
+
+                    b.Navigation("ToCourierZone");
+                });
+
+            modelBuilder.Entity("Product.Domain.Offlines.CourierZonePriceTemplate", b =>
+                {
+                    b.HasOne("Product.Domain.Couriers.CourierService", "CourierService")
+                        .WithMany("CourierZonePriceTemplates")
+                        .HasForeignKey("CourierServiceId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CourierService");
+                });
+
             modelBuilder.Entity("ServiceProvider.Domain.Couriers.CityZipCode", b =>
                 {
                     b.HasOne("Product.Domain.Locations.City", "City")
@@ -2042,8 +2068,24 @@ namespace Product.Infrastructure.Migrations
 
             modelBuilder.Entity("Product.Domain.Couriers.Courier", b =>
                 {
-                    b.Navigation("CourierApis");
+                    b.Navigation("CourierCityMappings");
 
+                    b.Navigation("CourierCityTypes");
+
+                    b.Navigation("CourierServices");
+
+                    b.Navigation("CourierStatusMappings");
+
+                    b.Navigation("CourierZones");
+                });
+
+            modelBuilder.Entity("Product.Domain.Couriers.CourierLimit", b =>
+                {
+                    b.Navigation("CourierLimitValues");
+                });
+
+            modelBuilder.Entity("Product.Domain.Couriers.CourierService", b =>
+                {
                     b.Navigation("CourierCityMappings");
 
                     b.Navigation("CourierCityTypes");
@@ -2054,39 +2096,12 @@ namespace Product.Infrastructure.Migrations
 
                     b.Navigation("CourierLimitValues");
 
-                    b.Navigation("CourierServiceZones");
-
-                    b.Navigation("CourierServices");
-                });
-
-            modelBuilder.Entity("Product.Domain.Couriers.CourierApi", b =>
-                {
-                    b.Navigation("CourierStatusMappings");
-                });
-
-            modelBuilder.Entity("Product.Domain.Couriers.CourierLimit", b =>
-                {
-                    b.Navigation("CourierLimitValues");
-                });
-
-            modelBuilder.Entity("Product.Domain.Couriers.CourierService", b =>
-                {
-                    b.Navigation("CourierServiceZones");
-                });
-
-            modelBuilder.Entity("Product.Domain.Couriers.CourierServiceZone", b =>
-                {
-                    b.Navigation("CourierServiceZonePrices");
+                    b.Navigation("CourierZonePriceTemplates");
                 });
 
             modelBuilder.Entity("Product.Domain.Couriers.Status", b =>
                 {
                     b.Navigation("CourierStatusMappings");
-                });
-
-            modelBuilder.Entity("Product.Domain.Couriers.Weight", b =>
-                {
-                    b.Navigation("CourierServiceZonePrices");
                 });
 
             modelBuilder.Entity("Product.Domain.Locations.City", b =>
@@ -2096,25 +2111,22 @@ namespace Product.Infrastructure.Migrations
                     b.Navigation("CourierCityMappings");
 
                     b.Navigation("CourierCityTypes");
-                });
 
-            modelBuilder.Entity("Product.Domain.Locations.Country", b =>
-                {
-                    b.Navigation("CourierServiceZones");
+                    b.Navigation("CourierZoneCityMappings");
                 });
 
             modelBuilder.Entity("Product.Domain.Locations.State", b =>
                 {
                     b.Navigation("Cities");
-
-                    b.Navigation("StateFromCourierServiceZones");
-
-                    b.Navigation("StateToCourierServiceZones");
                 });
 
-            modelBuilder.Entity("Product.Domain.Locations.Zone", b =>
+            modelBuilder.Entity("Product.Domain.Offlines.CourierZone", b =>
                 {
-                    b.Navigation("CourierServiceZones");
+                    b.Navigation("CourierZoneCityMappings");
+
+                    b.Navigation("FromCourierZonePrices");
+
+                    b.Navigation("ToCourierZonePrices");
                 });
 #pragma warning restore 612, 618
         }

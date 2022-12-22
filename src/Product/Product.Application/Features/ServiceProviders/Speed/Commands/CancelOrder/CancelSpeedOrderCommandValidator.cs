@@ -6,8 +6,8 @@ namespace Product.Application.Features.ServiceProviders.Speed.Commands.CancelOrd
     {
         public CancelSpeedOrderCommandValidator()
         {
-            //  RuleFor(p => p.CustomerName)
-            //      .NotNull().NotEmpty().WithMessage(" نام مشتری الزامی میباشد");
+            RuleFor(p => p.Barcode)
+                .NotNull().NotEmpty().GreaterThan(0).WithMessage(" بارکد الزامی میباشد");
         }
     }
 }

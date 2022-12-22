@@ -6,7 +6,7 @@ namespace Product.Domain.Couriers
     {
         public string Name { get; set; }
         public int CourierId { get; set; }
-        public Courier Courier { get; set; }
+        public CourierService Courier { get; set; }
         public int FromValue { get; set; }
         public int ToValue { get; set; }
         public int FixedValue { get; set; }

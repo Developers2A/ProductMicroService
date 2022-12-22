@@ -12,31 +12,30 @@ namespace Product.Application.Features.CourierCityTypePrices.Commands
         public int Id { get; set; }
         public decimal BuyPrice { get; set; }
         public decimal SellPrice { get; set; }
-        public int CourierCityTypeId { get; set; }
         public double Volume { get; set; }
 
         private class Handler : IRequestHandler<UpdateCourierCityTypePriceCommand>
         {
-            private readonly IWriteRepository<CourierCityTypePrice> _parcelCityWriteRepository;
-            private readonly IReadRepository<CourierCityTypePrice> _parcelCityReadRepository;
+            private readonly IWriteRepository<CourierCityTypePrice> _courierCityTypePriceWriteRepository;
+            private readonly IReadRepository<CourierCityTypePrice> _courierCityTypePriceReadRepository;
 
             public Handler(IWriteRepository<CourierCityTypePrice> parcelCityRepository,
                 IMediator mediator, IReadRepository<CourierCityTypePrice> parcelCityReadRepository)
             {
-                _parcelCityWriteRepository = parcelCityRepository;
-                _parcelCityReadRepository = parcelCityReadRepository;
+                _courierCityTypePriceWriteRepository = parcelCityRepository;
+                _courierCityTypePriceReadRepository = parcelCityReadRepository;
             }
 
             public async Task<Unit> Handle(UpdateCourierCityTypePriceCommand request, CancellationToken cancellationToken)
             {
-                CourierCityTypePrice boxSize = await _parcelCityReadRepository.GetByIdAsync(request.Id, cancellationToken);
+                CourierCityTypePrice courierCityTypePrice = await _courierCityTypePriceReadRepository.GetByIdAsync(request.Id, cancellationToken);
 
-                if (boxSize == null)
+                if (courierCityTypePrice == null)
                     throw new AppException("اطلاعات مورد نظر یافت شد");
 
-                boxSize.Edit(request.BuyPrice, request.SellPrice, request.Volume);
-                await _parcelCityWriteRepository.UpdateAsync(boxSize);
-                await _parcelCityWriteRepository.SaveChangeAsync();
+                courierCityTypePrice.Edit(request.BuyPrice, request.SellPrice, request.Volume);
+                await _courierCityTypePriceWriteRepository.UpdateAsync(courierCityTypePrice);
+                await _courierCityTypePriceWriteRepository.SaveChangeAsync();
 
                 return Unit.Value;
             }
@@ -45,17 +44,17 @@ namespace Product.Application.Features.CourierCityTypePrices.Commands
         {
             public EditParcelCityCommandValidator()
             {
-                RuleFor(p => p.CourierCityTypeId)
-                 .NotEmpty().WithMessage(" نوع شهر الزامی میباشد");
+                RuleFor(p => p.Id)
+                    .NotEmpty().NotNull().GreaterThan(0).WithMessage(" شناسه الزامی میباشد");
 
                 RuleFor(p => p.Volume)
-                  .NotEmpty().WithMessage("حجم الزامی میباشد");
+                    .NotEmpty().NotNull().GreaterThan(0).WithMessage("حجم الزامی میباشد");
 
                 RuleFor(p => p.SellPrice)
-                  .NotEmpty().WithMessage("قیمت فروش الزامی میباشد");
+                    .NotEmpty().NotNull().GreaterThan(0).WithMessage("قیمت فروش الزامی میباشد");
 
                 RuleFor(p => p.BuyPrice)
-                  .NotEmpty().WithMessage("قیمت خرید الزامی میباشد");
+                    .NotEmpty().NotNull().GreaterThan(0).WithMessage("قیمت خرید الزامی میباشد");
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Product.Application.Features.CourierCityTypePrices.Commands
         public int CourierId { get; set; }
         public decimal BuyPrice { get; set; }
         public decimal SellPrice { get; set; }
-        public CityType CityType { get; set; }
+        public CityTypeCode CityType { get; set; }
         public double Volume { get; set; }
 
         private class Handler : IRequestHandler<CreateCourierCityTypePriceCommand>
@@ -37,17 +37,20 @@ namespace Product.Application.Features.CourierCityTypePrices.Commands
         {
             public CreateParcelCityCommandValidator()
             {
+                RuleFor(p => p.CourierId)
+                    .NotEmpty().NotNull().GreaterThan(0).WithMessage(" شناسه کوریر الزامی میباشد");
+
                 RuleFor(p => p.CityType)
-                  .NotEmpty().WithMessage(" نوع شهر الزامی میباشد");
+                  .NotEmpty().NotNull().WithMessage(" نوع شهر الزامی میباشد");
 
                 RuleFor(p => p.Volume)
-                  .NotEmpty().WithMessage("حجم الزامی میباشد");
+                  .NotEmpty().NotNull().GreaterThan(0).WithMessage("حجم الزامی میباشد");
 
                 RuleFor(p => p.SellPrice)
-                  .NotEmpty().WithMessage("قیمت فروش الزامی میباشد");
+                  .NotEmpty().NotNull().GreaterThan(0).WithMessage("قیمت فروش الزامی میباشد");
 
                 RuleFor(p => p.BuyPrice)
-                  .NotEmpty().WithMessage("قیمت خرید الزامی میباشد");
+                  .NotEmpty().NotNull().GreaterThan(0).WithMessage("قیمت خرید الزامی میباشد");
             }
         }
     }

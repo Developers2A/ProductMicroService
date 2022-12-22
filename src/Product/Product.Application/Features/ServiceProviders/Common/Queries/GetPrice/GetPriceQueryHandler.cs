@@ -172,7 +172,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.GetPrice
             else
             {
                 double changePrice = price;
-                changePrice = price * courier.PostexPercent / 100; // 4800
+                changePrice = 0;// price * courier.PostexPercent / 100; // 4800
                 taxChangePercent = changePrice * 9 / 100; // 432  
                 changePrice = price + changePrice + taxChangePercent;
 
@@ -189,15 +189,15 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.GetPrice
             }
             else
             {
-                double A = courier.DiscountPercent; // 20
+                double A = 20;// courier.DiscountPercent; // 20
                 var B = price; // totalprice
                 double C = insurancePrice;
-                long D = courier.FixBasePrice;
-                double E = courier.PriceHasTax ? B / 1.09 : B; // totalPrice : hastax = true ;
+                long D = 0; // courier.FixBasePrice;
+                double E = 0;// courier.PriceHasTax ? B / 1.09 : B; // totalPrice : hastax = true ;
                 double F = E - C - D;
-                double G = courier.PriceHasDiscount ? 100 / (100 - A) * F : F;
-                var I = courier.PostexPercent;
-                var J = courier.PostexFixPrice;
+                double G = 0;// courier.PriceHasDiscount ? 100 / (100 - A) * F : F;
+                var I = 0; // courier.PostexPercent;
+                var J = 0; // courier.PostexFixPrice;
 
                 var X = (G + G * I / 100 + C + D) * 0.09 + J;
 

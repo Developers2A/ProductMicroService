@@ -7,8 +7,8 @@
         public DateTime CreatedOn { get; set; }
         public TKey? CreatedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
+        public TKey? ModifiedBy { get; set; }
         public bool IsRemoved { get; set; }
         public DateTime? RemovedOn { get; set; }
-        public TKey? ModifiedBy { get; set; }
     }
 }

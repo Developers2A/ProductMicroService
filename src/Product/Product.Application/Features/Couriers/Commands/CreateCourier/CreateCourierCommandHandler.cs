@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Postex.SharedKernel.Interfaces;
 using Product.Domain.Couriers;
 
@@ -8,17 +7,18 @@ namespace Product.Application.Features.Couriers.Commands.CreateCourier
     public class CreateCourierCommandHandler : IRequestHandler<CreateCourierCommand>
     {
         private readonly IWriteRepository<Courier> _courierWriteRepository;
-        private readonly IMapper _mapper;
 
-        public CreateCourierCommandHandler(IWriteRepository<Courier> courierWriteRepository, IMapper mapper)
+        public CreateCourierCommandHandler(IWriteRepository<Courier> courierServiceWriteRepository)
         {
-            _courierWriteRepository = courierWriteRepository ?? throw new ArgumentNullException(nameof(courierWriteRepository));
-            _mapper = mapper;
+            _courierWriteRepository = courierServiceWriteRepository ?? throw new ArgumentNullException(nameof(courierServiceWriteRepository));
         }
 
         public async Task<Unit> Handle(CreateCourierCommand request, CancellationToken cancellationToken)
         {
-            var courier = _mapper.Map<Courier>(request);
+            var courier = new Courier()
+            {
+                Name = request.Name,
+            };
 
             await _courierWriteRepository.AddAsync(courier);
             await _courierWriteRepository.SaveChangeAsync();

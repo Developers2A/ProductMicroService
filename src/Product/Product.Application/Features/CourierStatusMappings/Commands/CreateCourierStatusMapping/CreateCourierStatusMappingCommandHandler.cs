@@ -15,12 +15,15 @@ namespace Product.Application.Features.CourierStatusMappings.Commands.CreateCour
 
         public async Task<Unit> Handle(CreateCourierStatusMappingCommand request, CancellationToken cancellationToken)
         {
-            var courierLimit = new CourierStatusMapping()
+            var courierStatusMapping = new CourierStatusMapping()
             {
-                CourierApiId = request.CourierApiId
+                Version = request.Version,
+                StatusId = request.StatusId,
+                Description = request.Description,
+                Code = request.Code
             };
 
-            await _writeRepository.AddAsync(courierLimit);
+            await _writeRepository.AddAsync(courierStatusMapping);
             await _writeRepository.SaveChangeAsync();
             return Unit.Value;
         }

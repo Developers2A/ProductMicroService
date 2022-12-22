@@ -6,7 +6,7 @@ namespace Product.Application.Features.CourierStatusMappings.Commands.CreateCour
     {
         public CreateCourierStatusMappingCommandValidator()
         {
-            RuleFor(p => p.CourierApiId).
+            RuleFor(p => p.CourierId).
                 NotEmpty().NotNull().WithMessage(" کوریر الزامی میباشد");
 
             RuleFor(p => p.StatusId)

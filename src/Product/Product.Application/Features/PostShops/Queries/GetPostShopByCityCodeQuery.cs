@@ -24,7 +24,7 @@ namespace Product.Application.Features.PostShops.Queries
 
             public async Task<PostShopDto> Handle(GetPostShopByCityCodeQuery request, CancellationToken cancellationToken)
             {
-                var postShop = await _postShopRepository.TableNoTracking.FirstOrDefaultAsync(c => c.CityCode == request.CityCode, cancellationToken);
+                var postShop = await _postShopRepository.TableNoTracking.FirstOrDefaultAsync(c => c.CityCode == request.CityCode && c.AdminAccepet, cancellationToken);
                 return _mapper.Map<PostShopDto>(postShop);
             }
         }

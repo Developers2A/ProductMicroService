@@ -3,6 +3,7 @@ using Product.Application.Dtos.Commons;
 using Product.Application.Dtos.Couriers;
 using Product.Domain.Couriers;
 using Product.Domain.Locations;
+using Product.Domain.Offlines;
 using Product.Domain.ValueAddedPrices;
 
 namespace Product.Application.Mappings
@@ -11,14 +12,13 @@ namespace Product.Application.Mappings
     {
         public CourierMapping()
         {
-            CreateMap<Courier, CourierDto>();
-            CreateMap<Courier, CourierCommonDto>();
             CreateMap<CourierService, CourierServiceDto>();
+            CreateMap<CourierService, CourierCommonDto>();
             CreateMap<CourierInsurance, CourierInsuranceDto>();
             CreateMap<CourierLimit, CourierLimitDto>();
             CreateMap<CourierCod, CourierCodDto>();
-            CreateMap<CourierServiceZone, CourierServiceZoneDto>();
-            CreateMap<CourierServiceZonePrice, CourierServiceZonePriceDto>();
+            CreateMap<CourierZone, CourierZoneDto>();
+            CreateMap<CourierZonePrice, CourierZonePriceDto>();
 
             CreateMap<CourierStatusMapping, CourierStatusMappingDto>();
             CreateMap<CourierCityMapping, CourierCityMappingDto>();

@@ -10,7 +10,7 @@ namespace Product.Application.Features.CourierCityTypePrices.Queries
 {
     public class GetMaxParcelCityQuery : PaginationParameters, IRequest<ParcelCityDto>
     {
-        public CityType CityType { get; set; }
+        public CityTypeCode CityType { get; set; }
 
         public class Handler : IRequestHandler<GetMaxParcelCityQuery, ParcelCityDto>
         {

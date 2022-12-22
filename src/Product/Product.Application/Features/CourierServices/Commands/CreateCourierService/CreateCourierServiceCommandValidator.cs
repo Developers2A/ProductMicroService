@@ -7,10 +7,7 @@ namespace Product.Application.Features.CourierServices.Commands.CreateCourierSer
         public CreateCourierServiceCommandValidator()
         {
             RuleFor(p => p.Name)
-                  .NotNull().NotEmpty().WithMessage(" نام الزامی میباشد");
-
-            RuleFor(p => p.CourierId).
-               NotEmpty().NotNull().WithMessage(" کوریر الزامی میباشد");
+                  .NotEmpty().NotNull().WithMessage(" عنوان سرویس الزامی میباشد");
         }
     }
 }

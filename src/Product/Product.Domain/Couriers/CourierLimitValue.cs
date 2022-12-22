@@ -6,7 +6,7 @@ namespace Product.Domain.Couriers
     public class CourierLimitValue : BaseEntity<int>
     {
         public int CourierId { get; set; }
-        public Courier Courier { get; set; }
+        public CourierService Courier { get; set; }
         public int CourierLimitId { get; set; }
         public CourierLimit CourierLimit { get; set; }
         public float LowerLimit { get; set; }

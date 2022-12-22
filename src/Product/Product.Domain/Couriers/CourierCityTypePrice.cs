@@ -5,7 +5,7 @@ namespace Product.Domain.Couriers
 {
     public class CourierCityTypePrice : BaseEntity<int>
     {
-        public CourierCityTypePrice(decimal buyPrice, decimal sellPrice, int courierId, CityType cityType, double volume)
+        public CourierCityTypePrice(decimal buyPrice, decimal sellPrice, int courierId, CityTypeCode cityType, double volume)
         {
             BuyPrice = buyPrice;
             SellPrice = sellPrice;
@@ -21,7 +21,7 @@ namespace Product.Domain.Couriers
             Volume = volume;
         }
 
-        public CityType CityType { get; set; }
+        public CityTypeCode CityType { get; set; }
         public int CourierId { get; set; }
         public Courier Courier { get; set; }
         public decimal BuyPrice { get; set; }

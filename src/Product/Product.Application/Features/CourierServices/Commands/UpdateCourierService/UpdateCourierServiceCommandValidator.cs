@@ -7,10 +7,10 @@ namespace Product.Application.Features.CourierServices.Commands.UpdateCourierSer
         public UpdateCourierServiceCommandValidator()
         {
             RuleFor(p => p.Id)
-                  .NotEmpty().WithMessage(" شناسه الزامی میباشد");
+                  .NotEmpty().GreaterThan(0).WithMessage(" شناسه الزامی میباشد");
 
             RuleFor(p => p.Name)
-                  .NotEmpty().WithMessage(" نام الزامی میباشد");
+                  .NotEmpty().NotNull().WithMessage(" عنوان سرویس الزامی میباشد");
         }
     }
 }

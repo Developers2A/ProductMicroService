@@ -10,7 +10,7 @@ namespace Product.Application.Features.CourierCityTypePrices.Queries
     public class GetParcelCitiesByVolumAndCityTypeQuery : IRequest<BoxSizeDto>
     {
         public double Volume { get; set; }
-        public CityType CityType { get; set; }
+        public CityTypeCode CityType { get; set; }
 
         public class Handler : IRequestHandler<GetParcelCitiesByVolumAndCityTypeQuery, BoxSizeDto>
         {

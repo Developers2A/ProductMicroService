@@ -8,6 +8,7 @@ namespace Product.Application.Features.Cities.Queries
 {
     public class GetCitiesQuery : IRequest<List<CityDto>>
     {
+        public List<int>? CityCodes { get; set; }
         public class Handler : IRequestHandler<GetCitiesQuery, List<CityDto>>
         {
             private readonly IReadRepository<City> _cityReadRepository;
@@ -19,6 +20,11 @@ namespace Product.Application.Features.Cities.Queries
 
             public async Task<List<CityDto>> Handle(GetCitiesQuery request, CancellationToken cancellationToken)
             {
+                var cityQuery = _cityReadRepository.TableNoTracking;
+                if (request.CityCodes != null && request.CityCodes.Any())
+                {
+                    cityQuery = cityQuery.Where(x => request.CityCodes.Contains(x.Code));
+                }
                 var cities = await _cityReadRepository.TableNoTracking
                     .Select(c => new CityDto
                     {
@@ -28,7 +34,6 @@ namespace Product.Application.Features.Cities.Queries
                         EnglishName = c.EnglishName,
                         Code = c.Code
                     })
-                    .OrderByDescending(c => c.Id)
                     .ToListAsync(cancellationToken);
 
                 return cities;

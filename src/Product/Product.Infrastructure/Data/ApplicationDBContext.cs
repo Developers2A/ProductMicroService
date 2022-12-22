@@ -12,10 +12,9 @@ namespace Product.Infrastructure.Data
     public class ApplicationDBContext : IdentityDbContext<User>
     {
         public virtual DbSet<State> States { get; set; }
-        public virtual DbSet<Courier> Couriers { get; set; }
+        public virtual DbSet<CourierService> Couriers { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
-        public virtual DbSet<CourierApi> CourierApis { get; set; }
         public virtual DbSet<CourierCityMapping> CourierCityMappings { get; set; }
         public virtual DbSet<CourierStatusMapping> CourierStatusMappings { get; set; }
         public virtual DbSet<PostShop> PostShops { get; set; }

@@ -4,10 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Postex.SharedKernel.Api;
 using Product.Application.Dtos.Couriers;
 using Product.Application.Features.CourierServices.Commands.CreateCourierService;
-using Product.Application.Features.CourierServices.Commands.DeleteCourierService;
 using Product.Application.Features.CourierServices.Commands.UpdateCourierService;
-using Product.Application.Features.CourierServices.Queries.GetCourierServiceById;
-using Product.Application.Features.CourierServices.Queries.GetCourierServices;
+using Product.Application.Features.CourierServices.Queries;
 
 namespace Product.Api.Controllers.v1
 {
@@ -36,26 +34,19 @@ namespace Product.Api.Controllers.v1
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<ApiResult> Delete([FromBody] DeleteCourierServiceCommand command)
-        {
-            await _mediator.Send(command);
-            return Ok();
-        }
-
         [HttpGet]
-        public async Task<ApiResult<List<CourierServiceDto>>> Get(CancellationToken cancellationToken = default)
+        public async Task<ApiResult<List<CourierDto>>> Get(CancellationToken cancellationToken = default)
         {
             var query = new GetCourierServicesQuery();
-            var result = await _mediator.Send(query);
+            var result = await _mediator.Send(query, cancellationToken);
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<ApiResult<CourierServiceDto>> Get([FromRoute] int id, CancellationToken cancellationToken = default)
+        public async Task<ApiResult<CourierDto>> Get([FromRoute] int id, CancellationToken cancellationToken = default)
         {
             var query = new GetCourierServiceByIdQuery() { Id = id };
-            var result = await _mediator.Send(query);
+            var result = await _mediator.Send(query, cancellationToken);
             return Ok(result);
         }
     }

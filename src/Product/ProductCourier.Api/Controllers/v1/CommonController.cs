@@ -2,15 +2,20 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Postex.SharedKernel.Api;
+using Product.Application.Dtos.CollectionDistributions;
+using Product.Application.Dtos.Commons;
 using Product.Application.Dtos.Couriers;
 using Product.Application.Dtos.CourierServices.Common;
 using Product.Application.Dtos.Trackings;
-using Product.Application.Features.Couriers.Queries;
+using Product.Application.Features.Cities.Queries.GetCitiesCommon;
+using Product.Application.Features.CourierCityTypePrices.Queries;
+using Product.Application.Features.CourierServices.Queries;
+using Product.Application.Features.CourierZonePrices.Commands.CreateOfflineCourierZonePrice;
+using Product.Application.Features.CourierZonePrices.Queries.GetOfflinePrices;
 using Product.Application.Features.ServiceProviders.Common.Commands.CreateOrder;
-using Product.Application.Features.ServiceProviders.Common.Queries.GetCities;
 using Product.Application.Features.ServiceProviders.Common.Queries.GetPrice;
-using Product.Application.Features.ServiceProviders.Common.Queries.GetStates;
 using Product.Application.Features.ServiceProviders.Common.Queries.Track;
+using Product.Application.Features.States.Queries;
 
 namespace Product.Api.Controllers.v1
 {
@@ -31,14 +36,14 @@ namespace Product.Api.Controllers.v1
             return await _mediator.Send(new GetCouriersCommonQuery() { });
         }
 
-        [HttpPost("states")]
-        public async Task<ApiResult<List<CourierStateDto>>> GetStates(GetCourierStatesQuery request)
+        [HttpGet("states")]
+        public async Task<ApiResult<List<StateCommonDto>>> GetStates()
         {
-            return await _mediator.Send(request);
+            return await _mediator.Send(new GetStatesCommonQuery());
         }
 
         [HttpPost("cities")]
-        public async Task<ApiResult<List<CourierCityDto>>> GetCities(GetCourierCitiesQuery request)
+        public async Task<ApiResult<List<CityCommonDto>>> GetCities(GetCitiesCommonQuery request)
         {
             return await _mediator.Send(request);
         }
@@ -62,6 +67,31 @@ namespace Product.Api.Controllers.v1
         {
             var result = await _mediator.Send(request);
             return new ApiResult<CreateOrderResponse>(result.IsSuccess, result.Data, result.Message);
+        }
+
+        [HttpPost("cancel-order")]
+        public async Task<ApiResult<CreateOrderResponse>> CancelOrder(CreateOrderCommand request)
+        {
+            var result = await _mediator.Send(request);
+            return new ApiResult<CreateOrderResponse>(result.IsSuccess, result.Data, result.Message);
+        }
+
+        [HttpPost("offline-price-collection")]
+        public async Task<ApiResult<List<CourierCityTypePriceDto>>> GetOfflineCollectionDistributionPrice(GetCourierCityTypePricesQuery request)
+        {
+            return await _mediator.Send(request);
+        }
+
+        [HttpGet("fetch-offline-prices")]
+        public async Task FetchOfflinePrices()
+        {
+            await _mediator.Send(new CreateOfflineCourierZonePriceCommand());
+        }
+
+        [HttpPost("offline-price")]
+        public async Task GetOfflinePrice(GetOfflinePricesQuery request)
+        {
+            await _mediator.Send(request);
         }
     }
 }

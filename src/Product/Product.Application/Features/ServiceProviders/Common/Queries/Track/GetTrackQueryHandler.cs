@@ -30,7 +30,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
             {
                 var result = await _mediator.Send(new GetPostTrackQuery()
                 {
-                    ParcelCode = request.TrackingCode
+                    ParcelCode = request.TrackCode
                 });
             }
 
@@ -68,7 +68,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
             {
                 Order = new()
                 {
-                    Reference = request.TrackingCode,
+                    Reference = request.TrackCode,
                     Lang = "fa"
                 }
             };
@@ -115,7 +115,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
         {
             var trackRequest = new GetMahexTrackQuery()
             {
-                PartNumber = request.TrackingCode
+                PartNumber = request.TrackCode
             };
 
             var result = await _mediator.Send(trackRequest);
@@ -123,14 +123,14 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
             {
                 trackRequest = new GetMahexTrackQuery()
                 {
-                    WaybillNumber = request.TrackingCode
+                    WaybillNumber = request.TrackCode
                 };
                 result = await _mediator.Send(trackRequest);
                 if (!result.IsSuccess)
                 {
                     trackRequest = new GetMahexTrackQuery()
                     {
-                        Reference = request.TrackingCode
+                        Reference = request.TrackCode
                     };
                     result = await _mediator.Send(trackRequest);
                 }
@@ -163,7 +163,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
         {
             var trackRequest = new GetLinkTrackQuery()
             {
-                TrackingCode = request.TrackingCode
+                TrackingCode = request.TrackCode
             };
 
             var result = await _mediator.Send(trackRequest);
@@ -197,7 +197,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
         {
             var trackRequest = new GetTaroffTrackQuery()
             {
-                OrderId = Convert.ToInt32(request.TrackingCode)
+                OrderId = Convert.ToInt32(request.TrackCode)
             };
 
             var result = await _mediator.Send(trackRequest);
@@ -232,7 +232,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
             {
                 Order = new()
                 {
-                    Reference = request.TrackingCode,
+                    Reference = request.TrackCode,
                     Lang = "fa"
                 }
             };
@@ -267,7 +267,7 @@ namespace Product.Application.Features.ServiceProviders.Common.Queries.Track
         {
             var trackRequest = new GetSpeedTrackQuery()
             {
-                Barcode = Convert.ToInt64(request.TrackingCode)
+                Barcode = Convert.ToInt64(request.TrackCode)
             };
 
             var result = await _mediator.Send(trackRequest);

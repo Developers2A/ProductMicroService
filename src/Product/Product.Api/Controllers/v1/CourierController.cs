@@ -5,7 +5,8 @@ using Postex.SharedKernel.Api;
 using Product.Application.Dtos.Couriers;
 using Product.Application.Features.Couriers.Commands.CreateCourier;
 using Product.Application.Features.Couriers.Commands.UpdateCourier;
-using Product.Application.Features.Couriers.Queries;
+using Product.Application.Features.Couriers.Queries.GetCourierById;
+using Product.Application.Features.CourierServices.Queries;
 
 namespace Product.Api.Controllers.v1
 {
@@ -37,7 +38,7 @@ namespace Product.Api.Controllers.v1
         [HttpGet]
         public async Task<ApiResult<List<CourierDto>>> Get(CancellationToken cancellationToken = default)
         {
-            var query = new GetCouriersQuery();
+            var query = new GetCourierServicesQuery();
             var result = await _mediator.Send(query, cancellationToken);
             return Ok(result);
         }

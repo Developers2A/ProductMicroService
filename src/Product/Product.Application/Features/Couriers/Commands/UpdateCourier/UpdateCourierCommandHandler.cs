@@ -1,22 +1,21 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 using Product.Domain.Couriers;
 
 namespace Product.Application.Features.Couriers.Commands.UpdateCourier
 {
-    public class UpdateCourierCommandHandler : IRequestHandler<UpdateCourierCommand>
+    public class UpdateCourierServiceCommandHandler : IRequestHandler<UpdateCourierCommand>
     {
-        private readonly IWriteRepository<Courier> _couierWriteRepository;
+        private readonly IWriteRepository<Courier> _courierWriteRepository;
         private readonly IReadRepository<Courier> _courierReadRepository;
-        private readonly IMapper _mapper;
 
-        public UpdateCourierCommandHandler(IWriteRepository<Courier> couierWriteRepository, IReadRepository<Courier> courierReadRepository, IMapper mapper)
+        public UpdateCourierServiceCommandHandler(
+            IWriteRepository<Courier> courierWriteRepository,
+            IReadRepository<Courier> courierReadRepository)
         {
-            _couierWriteRepository = couierWriteRepository ?? throw new ArgumentNullException(nameof(couierWriteRepository));
+            _courierWriteRepository = courierWriteRepository ?? throw new ArgumentNullException(nameof(courierWriteRepository));
             _courierReadRepository = courierReadRepository;
-            _mapper = mapper;
         }
 
         public async Task<Unit> Handle(UpdateCourierCommand request, CancellationToken cancellationToken)
@@ -26,9 +25,10 @@ namespace Product.Application.Features.Couriers.Commands.UpdateCourier
             if (courier == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
 
-            var newCourier = _mapper.Map(request, courier);
-            await _couierWriteRepository.UpdateAsync(newCourier);
-            await _couierWriteRepository.SaveChangeAsync();
+            courier.Name = request.Name;
+
+            await _courierWriteRepository.UpdateAsync(courier);
+            await _courierWriteRepository.SaveChangeAsync();
 
             return Unit.Value;
         }
