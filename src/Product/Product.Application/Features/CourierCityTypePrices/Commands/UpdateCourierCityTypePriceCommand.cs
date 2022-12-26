@@ -3,7 +3,7 @@ using MediatR;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 using Product.Application.Contracts;
-using Product.Domain.Couriers;
+using Product.Domain.Offlines;
 
 namespace Product.Application.Features.CourierCityTypePrices.Commands
 {
@@ -16,11 +16,11 @@ namespace Product.Application.Features.CourierCityTypePrices.Commands
 
         private class Handler : IRequestHandler<UpdateCourierCityTypePriceCommand>
         {
-            private readonly IWriteRepository<CourierCityTypePrice> _courierCityTypePriceWriteRepository;
-            private readonly IReadRepository<CourierCityTypePrice> _courierCityTypePriceReadRepository;
+            private readonly IWriteRepository<CourierZoneCollectionDistributionPrice> _courierCityTypePriceWriteRepository;
+            private readonly IReadRepository<CourierZoneCollectionDistributionPrice> _courierCityTypePriceReadRepository;
 
-            public Handler(IWriteRepository<CourierCityTypePrice> parcelCityRepository,
-                IMediator mediator, IReadRepository<CourierCityTypePrice> parcelCityReadRepository)
+            public Handler(IWriteRepository<CourierZoneCollectionDistributionPrice> parcelCityRepository,
+                IMediator mediator, IReadRepository<CourierZoneCollectionDistributionPrice> parcelCityReadRepository)
             {
                 _courierCityTypePriceWriteRepository = parcelCityRepository;
                 _courierCityTypePriceReadRepository = parcelCityReadRepository;
@@ -28,7 +28,7 @@ namespace Product.Application.Features.CourierCityTypePrices.Commands
 
             public async Task<Unit> Handle(UpdateCourierCityTypePriceCommand request, CancellationToken cancellationToken)
             {
-                CourierCityTypePrice courierCityTypePrice = await _courierCityTypePriceReadRepository.GetByIdAsync(request.Id, cancellationToken);
+                CourierZoneCollectionDistributionPrice courierCityTypePrice = await _courierCityTypePriceReadRepository.GetByIdAsync(request.Id, cancellationToken);
 
                 if (courierCityTypePrice == null)
                     throw new AppException("اطلاعات مورد نظر یافت شد");

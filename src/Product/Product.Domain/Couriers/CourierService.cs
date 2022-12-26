@@ -9,7 +9,7 @@ namespace Product.Domain.Couriers
         public int CourierId { get; set; }
         public Courier Courier { get; set; }
         public string Name { get; set; }
-        public CourierCode Code { get; set; }
+        public CourierServiceCode Code { get; set; }
         public bool ForeignPost { get; set; }
         public bool DomesticPost { get; set; }
         public bool HasCollection { get; set; }
@@ -55,12 +55,11 @@ namespace Product.Domain.Couriers
         /// </summary>
         public long PostexFixPrice { get; set; }
         public bool IsActive { get; set; }
-        public string Days { get; set; }
+        public string? Days { get; set; }
         public ICollection<CourierCod> CourierCods { get; set; }
         public ICollection<CourierInsurance> CourierInsurances { get; set; }
         public ICollection<CourierLimitValue> CourierLimitValues { get; set; }
 
-        public ICollection<CourierCityType> CourierCityTypes { get; set; }
         public ICollection<CourierCityMapping> CourierCityMappings { get; set; }
         public ICollection<CourierZonePriceTemplate> CourierZonePriceTemplates { get; set; }
     }

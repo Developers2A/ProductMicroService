@@ -26,7 +26,8 @@ namespace Product.Application.Features.CourierZonePrices.Commands.CreateCourierZ
                 CourierServiceId = request.CourierServiceId,
                 Weight = request.Weight,
                 SellPrice = request.SellPrice,
-                BuyPrice = request.BuyPrice
+                BuyPrice = request.BuyPrice,
+                SameState = request.SameState
             };
 
             await _courierZonePriceWriteRepository.AddAsync(courierZonePrice);

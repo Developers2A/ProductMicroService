@@ -3,19 +3,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Postex.SharedKernel.Api;
 using Product.Application.Dtos.CollectionDistributions;
-using Product.Application.Dtos.Commons;
-using Product.Application.Dtos.Couriers;
 using Product.Application.Dtos.CourierServices.Common;
 using Product.Application.Dtos.Trackings;
-using Product.Application.Features.Cities.Queries.GetCitiesCommon;
+using Product.Application.Features.Common.Commands.CancelOrder;
+using Product.Application.Features.Common.Commands.CreateOrder;
+using Product.Application.Features.Common.Commands.DeleteOrder;
+using Product.Application.Features.Common.Commands.ReadyOrder;
+using Product.Application.Features.Common.Queries.GetPrice;
+using Product.Application.Features.Common.Queries.Track;
 using Product.Application.Features.CourierCityTypePrices.Queries;
-using Product.Application.Features.CourierServices.Queries;
 using Product.Application.Features.CourierZonePrices.Commands.CreateOfflineCourierZonePrice;
 using Product.Application.Features.CourierZonePrices.Queries.GetOfflinePrices;
-using Product.Application.Features.ServiceProviders.Common.Commands.CreateOrder;
-using Product.Application.Features.ServiceProviders.Common.Queries.GetPrice;
-using Product.Application.Features.ServiceProviders.Common.Queries.Track;
-using Product.Application.Features.States.Queries;
 
 namespace Product.Api.Controllers.v1
 {
@@ -28,31 +26,6 @@ namespace Product.Api.Controllers.v1
         public CommonController(IMediator mediator)
         {
             _mediator = mediator;
-        }
-
-        [HttpGet("couriers")]
-        public async Task<ApiResult<List<CourierCommonDto>>> GetCouriers()
-        {
-            return await _mediator.Send(new GetCouriersCommonQuery() { });
-        }
-
-        [HttpGet("states")]
-        public async Task<ApiResult<List<StateCommonDto>>> GetStates()
-        {
-            return await _mediator.Send(new GetStatesCommonQuery());
-        }
-
-        [HttpPost("cities")]
-        public async Task<ApiResult<List<CityCommonDto>>> GetCities(GetCitiesCommonQuery request)
-        {
-            return await _mediator.Send(request);
-        }
-
-        [HttpPost("price")]
-        public async Task<ApiResult<GetPriceResponse>> Price(GetPriceQuery request)
-        {
-            var result = await _mediator.Send(request);
-            return new ApiResult<GetPriceResponse>(result.IsSuccess, result.Data, result.Message);
         }
 
         [HttpPost("track")]
@@ -70,10 +43,31 @@ namespace Product.Api.Controllers.v1
         }
 
         [HttpPost("cancel-order")]
-        public async Task<ApiResult<CreateOrderResponse>> CancelOrder(CreateOrderCommand request)
+        public async Task<ApiResult<CancelOrderResponse>> CancelOrder(CancelOrderCommand request)
         {
             var result = await _mediator.Send(request);
-            return new ApiResult<CreateOrderResponse>(result.IsSuccess, result.Data, result.Message);
+            return new ApiResult<CancelOrderResponse>(result.IsSuccess, result.Data, result.Message);
+        }
+
+        [HttpPost("ready-order")]
+        public async Task<ApiResult<ReadyOrderResponse>> ReadyOrder(ReadyOrderCommand request)
+        {
+            var result = await _mediator.Send(request);
+            return new ApiResult<ReadyOrderResponse>(result.IsSuccess, result.Data, result.Message);
+        }
+
+        [HttpPost("delete-order")]
+        public async Task<ApiResult<DeleteOrderResponse>> DeleteOrder(DeleteOrderCommand request)
+        {
+            var result = await _mediator.Send(request);
+            return new ApiResult<DeleteOrderResponse>(result.IsSuccess, result.Data, result.Message);
+        }
+
+        [HttpPost("price")]
+        public async Task<ApiResult<GetPriceResponse>> Price(GetPriceQuery request)
+        {
+            var result = await _mediator.Send(request);
+            return new ApiResult<GetPriceResponse>(result.IsSuccess, result.Data, result.Message);
         }
 
         [HttpPost("offline-price-collection")]
@@ -89,9 +83,9 @@ namespace Product.Api.Controllers.v1
         }
 
         [HttpPost("offline-price")]
-        public async Task GetOfflinePrice(GetOfflinePricesQuery request)
+        public async Task<ApiResult<GetPriceResponse>> GetOfflinePrice(GetOfflinePricesQuery request)
         {
-            await _mediator.Send(request);
+            return await _mediator.Send(request);
         }
     }
 }

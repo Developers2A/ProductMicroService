@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Postex.SharedKernel.Interfaces;
 using Product.Application.Dtos.CollectionDistributions;
-using Product.Domain.Couriers;
+using Product.Domain.Offlines;
 
 namespace Product.Application.Features.CourierCityTypePrices.Queries
 {
@@ -10,22 +10,22 @@ namespace Product.Application.Features.CourierCityTypePrices.Queries
     {
         public class Handler : IRequestHandler<GetAllParcelCitiesQuery, List<ParcelCityDto>>
         {
-            private readonly IReadRepository<CourierCityTypePrice> _parcelCityRepository;
+            private readonly IReadRepository<CourierZoneCollectionDistributionPrice> _parcelCityRepository;
 
-            public Handler(IReadRepository<CourierCityTypePrice> parcelCityRepository)
+            public Handler(IReadRepository<CourierZoneCollectionDistributionPrice> parcelCityRepository)
             {
                 _parcelCityRepository = parcelCityRepository;
             }
 
             public async Task<List<ParcelCityDto>> Handle(GetAllParcelCitiesQuery request, CancellationToken cancellationToken)
             {
-                var parcelCities = await _parcelCityRepository.TableNoTracking.Include(x => x.Courier)
+                var parcelCities = await _parcelCityRepository.TableNoTracking.Include(x => x.CourierZone)
                     .Select(c => new ParcelCityDto
                     {
                         Id = c.Id,
                         SellPrice = c.SellPrice,
                         BuyPrice = c.BuyPrice,
-                        CityType = c.CityType,
+                        //CityType = c.CityType,
                         Volume = c.Volume,
                         CreatedOn = c.CreatedOn
                     })

@@ -11,7 +11,6 @@ namespace Product.Domain.Couriers
         public string? Company { get; set; }
         public bool IsActive { get; set; }
         public ICollection<CourierService> CourierServices { get; set; }
-        public ICollection<CourierCityType> CourierCityTypes { get; set; }
         public ICollection<CourierCityMapping> CourierCityMappings { get; set; }
         public ICollection<CourierZone> CourierZones { get; set; }
         public ICollection<CourierStatusMapping> CourierStatusMappings { get; set; }

@@ -10,20 +10,25 @@ namespace Product.Application.Features.CourierZonePrices.Queries
     {
         public class Handler : IRequestHandler<GetCourierZonePricesQuery, List<CourierZonePriceDto>>
         {
-            private readonly IReadRepository<CourierZonePrice> _courierServiceZonePriceReadRepository;
+            private readonly IReadRepository<CourierZonePrice> _courierZonePriceReadRepository;
 
-            public Handler(IReadRepository<CourierZonePrice> courierServiceZonePriceReadRepository)
+            public Handler(IReadRepository<CourierZonePrice> courierZonePriceReadRepository)
             {
-                _courierServiceZonePriceReadRepository = courierServiceZonePriceReadRepository;
+                _courierZonePriceReadRepository = courierZonePriceReadRepository;
             }
 
             public async Task<List<CourierZonePriceDto>> Handle(GetCourierZonePricesQuery request, CancellationToken cancellationToken)
             {
-                var courierZonePrices = await _courierServiceZonePriceReadRepository.TableNoTracking
+                var courierZonePrices = await _courierZonePriceReadRepository.TableNoTracking
                     .Select(c => new CourierZonePriceDto
                     {
                         Id = c.Id,
-                        CreatedOn = c.CreatedOn
+                        CourierServiceId = c.CourierServiceId,
+                        FromCourierZoneId = c.FromCourierZoneId,
+                        ToCourierZoneId = c.ToCourierZoneId,
+                        BuyPrice = c.BuyPrice,
+                        SellPrice = c.SellPrice,
+                        Weight = c.Weight
                     })
                     .OrderByDescending(c => c.Id)
                     .ToListAsync(cancellationToken);

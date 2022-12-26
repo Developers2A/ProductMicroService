@@ -6,14 +6,14 @@ namespace Product.Application.Features.CourierZonePrices.Commands.UpdateCourierZ
     {
         public UpdateCourierZonePriceCommandValidator()
         {
-            RuleFor(p => p.Id)
-              .NotEmpty().GreaterThan(0).WithMessage(" شناسه الزامی میباشد");
-
-            RuleFor(p => p.CourierId).
-               NotEmpty().GreaterThan(0).WithMessage(" کوریر الزامی میباشد");
-
-            RuleFor(p => p.StateId).
-                NotEmpty().GreaterThan(0).WithMessage(" استان الزامی میباشد");
+            RuleFor(p => p.FromCourierZoneId).
+                NotEmpty().NotNull().GreaterThan(0).WithMessage(" زون مبدا الزامی میباشد");
+            RuleFor(p => p.ToCourierZoneId).
+                NotEmpty().NotNull().GreaterThan(0).WithMessage(" زون مقصد الزامی میباشد");
+            RuleFor(p => p.Weight).
+               NotEmpty().NotNull().GreaterThan(0).WithMessage(" وزن الزامی میباشد");
+            RuleFor(p => p.BuyPrice).
+                NotEmpty().NotNull().GreaterThan(0).WithMessage(" قیمت خرید باید بزرگتر از صفر باشد");
         }
     }
 }

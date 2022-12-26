@@ -24,7 +24,12 @@ namespace Product.Application.Features.CourierZonePrices.Queries
                     .Select(c => new CourierZonePriceDto
                     {
                         Id = c.Id,
-                        CreatedOn = c.CreatedOn
+                        CourierServiceId = c.CourierServiceId,
+                        FromCourierZoneId = c.FromCourierZoneId,
+                        ToCourierZoneId = c.ToCourierZoneId,
+                        BuyPrice = c.BuyPrice,
+                        SellPrice = c.SellPrice,
+                        Weight = c.Weight
                     })
                     .FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
 

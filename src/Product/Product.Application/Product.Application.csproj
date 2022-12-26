@@ -24,6 +24,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Features\ServiceProviders\Pde\Commands\" />
+	  <Folder Include="Features\ServiceProviders\Pde\Queries\" />
+	  <Folder Include="Features\ServiceProviders\Yarbox\Commands\" />
+	  <Folder Include="Features\ServiceProviders\Yarbox\Queries\" />
 	  <Folder Include="Mappings\Common\" />
 	</ItemGroup>
 

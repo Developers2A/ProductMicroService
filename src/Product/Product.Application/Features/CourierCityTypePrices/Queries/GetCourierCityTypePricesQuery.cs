@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Postex.SharedKernel.Interfaces;
 using Product.Application.Dtos.CollectionDistributions;
-using Product.Domain.Couriers;
 using Product.Domain.Enums;
+using Product.Domain.Offlines;
 
 namespace Product.Application.Features.CourierCityTypePrices.Queries
 {
@@ -15,9 +15,9 @@ namespace Product.Application.Features.CourierCityTypePrices.Queries
 
         public class Handler : IRequestHandler<GetCourierCityTypePricesQuery, List<CourierCityTypePriceDto>>
         {
-            private readonly IReadRepository<CourierCityTypePrice> _courierCityTypePriceRepository;
+            private readonly IReadRepository<CourierZoneCollectionDistributionPrice> _courierCityTypePriceRepository;
 
-            public Handler(IReadRepository<CourierCityTypePrice> courierCityTypePriceRepository)
+            public Handler(IReadRepository<CourierZoneCollectionDistributionPrice> courierCityTypePriceRepository)
             {
                 _courierCityTypePriceRepository = courierCityTypePriceRepository;
             }
@@ -25,24 +25,26 @@ namespace Product.Application.Features.CourierCityTypePrices.Queries
             public async Task<List<CourierCityTypePriceDto>> Handle(GetCourierCityTypePricesQuery request, CancellationToken cancellationToken)
             {
                 List<CourierCityTypePriceDto> typeOfCityDto = new();
-                var courierCity = _courierCityTypePriceRepository.TableNoTracking.Include(x => x.Courier).Where(x => x.CityType == (CityTypeCode)request.CityType);
+                var courierCity = _courierCityTypePriceRepository.TableNoTracking.Include(x => x.CourierZone).ThenInclude(x => x.Courier)
+                    //.Where(x => x.CityType == (CityTypeCode)request.CityType)
+                    ;
                 if (request.CourierCode > 0)
                 {
-                    courierCity.Where(x => x.Courier.Code == (CourierCode)request.CourierCode);
+                    courierCity.Where(x => x.CourierZone.Courier.Code == (CourierCode)request.CourierCode);
                 }
                 var courierCityTypePrices = await courierCity.Where(x => x.Volume >= request.Volume)
                     .OrderBy(c => c.Volume).ToListAsync();
-                var couriers = courierCityTypePrices.Select(x => x.CourierId).Distinct();
+                var couriers = courierCityTypePrices.Select(x => x.CourierZone.CourierId).Distinct();
                 foreach (var item in couriers)
                 {
-                    var courierCityTypePrice = courierCityTypePrices.FirstOrDefault(x => x.CourierId == item);
+                    var courierCityTypePrice = courierCityTypePrices.FirstOrDefault(x => x.CourierZone.CourierId == item);
                     if (courierCityTypePrice != null)
                     {
                         typeOfCityDto.Add(new CourierCityTypePriceDto()
                         {
                             BuyPrice = courierCityTypePrice.BuyPrice,
-                            CourierName = courierCityTypePrice.Courier.Name,
-                            CityType = courierCityTypePrice.CityType,
+                            CourierName = courierCityTypePrice.CourierZone.Courier.Name,
+                            //CityType = courierCityTypePrice.CityType,
                             SellPrice = courierCityTypePrice.SellPrice,
                             Volume = courierCityTypePrice.Volume,
                             Id = courierCityTypePrice.Id

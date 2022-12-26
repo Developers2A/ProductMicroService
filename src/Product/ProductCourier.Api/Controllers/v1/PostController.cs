@@ -108,7 +108,7 @@ namespace Product.Api.Controllers.v1
         [HttpPost("suspend-order")]
         public async Task<ApiResult<List<PostSuspendOrderResponse>>> SuspendOrder(List<string> parcelCodes)
         {
-            var request = new SuspendOrderCommand()
+            var request = new SuspendPostOrderCommand()
             {
                 ParcelCodes = parcelCodes
             };
@@ -119,7 +119,7 @@ namespace Product.Api.Controllers.v1
         [HttpPost("delete-order")]
         public async Task<ApiResult<List<PostDeleteOrderResponse>>> DeleteOrder(List<string> parcelCodes)
         {
-            DeleteOrderCommand request = new()
+            DeletePostOrderCommand request = new()
             {
                 ParcelCodes = parcelCodes
             };

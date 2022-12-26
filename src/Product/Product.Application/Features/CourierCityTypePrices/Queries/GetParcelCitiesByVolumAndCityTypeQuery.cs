@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Postex.SharedKernel.Interfaces;
 using Product.Application.Dtos.CollectionDistributions;
-using Product.Domain.Couriers;
 using Product.Domain.Enums;
+using Product.Domain.Offlines;
 
 namespace Product.Application.Features.CourierCityTypePrices.Queries
 {
@@ -14,18 +14,18 @@ namespace Product.Application.Features.CourierCityTypePrices.Queries
 
         public class Handler : IRequestHandler<GetParcelCitiesByVolumAndCityTypeQuery, BoxSizeDto>
         {
-            private readonly IReadRepository<CourierCityTypePrice> _parcelCityRepository;
+            private readonly IReadRepository<CourierZoneCollectionDistributionPrice> _parcelCityRepository;
 
-            public Handler(IReadRepository<CourierCityTypePrice> parcelCityRepository)
+            public Handler(IReadRepository<CourierZoneCollectionDistributionPrice> parcelCityRepository)
             {
                 _parcelCityRepository = parcelCityRepository;
             }
 
             public async Task<BoxSizeDto> Handle(GetParcelCitiesByVolumAndCityTypeQuery request, CancellationToken cancellationToken)
             {
-                var parcelCitiesList = await _parcelCityRepository.TableNoTracking.Where(x => x.CityType == request.CityType).ToListAsync();
+                var parcelCitiesList = await _parcelCityRepository.TableNoTracking.ToListAsync();
                 var result = new BoxSizeDto();
-                for (int i = 0; i < parcelCitiesList.Count; i++)
+                for (int i = 0; i < parcelCitiesList.Count(); i++)
                 {
                     if (parcelCitiesList[i].Volume >= request.Volume)
                     {

@@ -15,7 +15,6 @@ namespace Product.Domain.Locations
 
         public ICollection<CityZipCode> CityZipCodes { get; set; }
         public ICollection<CourierCityMapping> CourierCityMappings { get; set; }
-        public ICollection<CourierCityType> CourierCityTypes { get; set; }
         public ICollection<CourierZoneCityMapping> CourierZoneCityMappings { get; set; }
     }
 }

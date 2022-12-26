@@ -6,6 +6,9 @@ namespace Product.Domain.Enums
     {
         [Description("همه ")] All = 0,
         [Description("پست پیشتاز")] PostPishtaz = 1,
-        [Description("پست ویژه")] PostVizhe = 2,
+        [Description("پست سفارشی")] PostSefareshi = 2,
+        [Description("پست ویژه")] PostVizhe = 3,
+        [Description("چاپار")] Chapar = 4,
+        [Description("چاپار اکسپرس")] ChaparExpress = 5,
     }
 }

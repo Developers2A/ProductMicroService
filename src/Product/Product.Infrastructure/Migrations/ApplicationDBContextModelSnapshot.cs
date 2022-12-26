@@ -171,7 +171,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -183,7 +185,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -228,7 +232,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -242,7 +248,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -267,115 +275,6 @@ namespace Product.Infrastructure.Migrations
                     b.ToTable("CourierCityMappings", (string)null);
                 });
 
-            modelBuilder.Entity("Product.Domain.Couriers.CourierCityType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CityType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CourierId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CourierId1")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("RemovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("CourierId");
-
-                    b.HasIndex("CourierId1");
-
-                    b.ToTable("CourierCityTypes", (string)null);
-                });
-
-            modelBuilder.Entity("Product.Domain.Couriers.CourierCityTypePrice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<decimal>("BuyPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("CityType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CourierId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("RemovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<decimal>("SellPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<double>("Volume")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourierId");
-
-                    b.ToTable("CourierCityTypePrices", (string)null);
-                });
-
             modelBuilder.Entity("Product.Domain.Couriers.CourierCod", b =>
                 {
                     b.Property<int>("Id")
@@ -388,7 +287,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -406,7 +307,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -447,7 +350,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -465,7 +370,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -503,7 +410,9 @@ namespace Product.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -512,7 +421,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -554,7 +465,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -569,7 +482,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("real");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -618,13 +533,14 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Days")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("DiscountPercent")
@@ -670,7 +586,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -734,7 +652,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -748,7 +668,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -791,7 +713,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -805,7 +729,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -850,7 +776,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -859,7 +787,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -893,7 +823,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -906,7 +838,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -949,7 +883,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -958,7 +894,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -996,7 +934,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -1009,7 +949,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1042,7 +984,9 @@ namespace Product.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -1051,7 +995,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1090,7 +1036,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -1099,7 +1047,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1139,7 +1089,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -1148,7 +1100,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1171,6 +1125,61 @@ namespace Product.Infrastructure.Migrations
                     b.ToTable("CourierZoneCityMappings", (string)null);
                 });
 
+            modelBuilder.Entity("Product.Domain.Offlines.CourierZoneCollectionDistributionPrice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("BuyPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("CourierZoneId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreatedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ModifiedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RemovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<decimal>("SellPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<double>("Volume")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourierZoneId");
+
+                    b.ToTable("CourierZoneCollectionDistributionPrices", (string)null);
+                });
+
             modelBuilder.Entity("Product.Domain.Offlines.CourierZonePrice", b =>
                 {
                     b.Property<int>("Id")
@@ -1186,7 +1195,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -1198,7 +1209,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1247,7 +1260,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -1262,10 +1277,15 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("RemovedOn")
                         .HasColumnType("datetime2");
@@ -1337,7 +1357,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -1382,7 +1404,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1532,7 +1556,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -1547,7 +1573,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("float");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1586,7 +1614,9 @@ namespace Product.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -1604,7 +1634,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1640,7 +1672,9 @@ namespace Product.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -1658,7 +1692,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1697,7 +1733,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -1706,7 +1744,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1749,7 +1789,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -1761,7 +1803,9 @@ namespace Product.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1861,40 +1905,6 @@ namespace Product.Infrastructure.Migrations
                         .HasForeignKey("CourierServiceId");
 
                     b.Navigation("City");
-
-                    b.Navigation("Courier");
-                });
-
-            modelBuilder.Entity("Product.Domain.Couriers.CourierCityType", b =>
-                {
-                    b.HasOne("Product.Domain.Locations.City", "City")
-                        .WithMany("CourierCityTypes")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Product.Domain.Couriers.CourierService", "Courier")
-                        .WithMany("CourierCityTypes")
-                        .HasForeignKey("CourierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Product.Domain.Couriers.Courier", null)
-                        .WithMany("CourierCityTypes")
-                        .HasForeignKey("CourierId1");
-
-                    b.Navigation("City");
-
-                    b.Navigation("Courier");
-                });
-
-            modelBuilder.Entity("Product.Domain.Couriers.CourierCityTypePrice", b =>
-                {
-                    b.HasOne("Product.Domain.Couriers.Courier", "Courier")
-                        .WithMany()
-                        .HasForeignKey("CourierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("Courier");
                 });
@@ -2017,6 +2027,17 @@ namespace Product.Infrastructure.Migrations
                     b.Navigation("CourierZone");
                 });
 
+            modelBuilder.Entity("Product.Domain.Offlines.CourierZoneCollectionDistributionPrice", b =>
+                {
+                    b.HasOne("Product.Domain.Offlines.CourierZone", "CourierZone")
+                        .WithMany()
+                        .HasForeignKey("CourierZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourierZone");
+                });
+
             modelBuilder.Entity("Product.Domain.Offlines.CourierZonePrice", b =>
                 {
                     b.HasOne("Product.Domain.Couriers.CourierService", "CourierService")
@@ -2070,8 +2091,6 @@ namespace Product.Infrastructure.Migrations
                 {
                     b.Navigation("CourierCityMappings");
 
-                    b.Navigation("CourierCityTypes");
-
                     b.Navigation("CourierServices");
 
                     b.Navigation("CourierStatusMappings");
@@ -2087,8 +2106,6 @@ namespace Product.Infrastructure.Migrations
             modelBuilder.Entity("Product.Domain.Couriers.CourierService", b =>
                 {
                     b.Navigation("CourierCityMappings");
-
-                    b.Navigation("CourierCityTypes");
 
                     b.Navigation("CourierCods");
 
@@ -2109,8 +2126,6 @@ namespace Product.Infrastructure.Migrations
                     b.Navigation("CityZipCodes");
 
                     b.Navigation("CourierCityMappings");
-
-                    b.Navigation("CourierCityTypes");
 
                     b.Navigation("CourierZoneCityMappings");
                 });

@@ -6,6 +6,7 @@ namespace Product.Application.Features.CourierZonePrices.Queries.GetOfflinePrice
     public class GetOfflinePricesQuery : IRequest<GetPriceResponse>
     {
         public int CourierCode { get; set; } = 0;
+        public int ServiceCode { get; set; } = 0;
         public int SenderState { get; set; }
         public int SenderCity { get; set; }
         public int ReceiverCity { get; set; }

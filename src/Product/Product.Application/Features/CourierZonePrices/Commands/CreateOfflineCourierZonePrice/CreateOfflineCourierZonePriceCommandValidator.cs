@@ -2,9 +2,9 @@
 
 namespace Product.Application.Features.CourierZonePrices.Commands.CreateOfflineCourierZonePrice
 {
-    public class CreateOfflineCourierZonePricePriceCommandValidator : AbstractValidator<CreateOfflineCourierZonePriceCommand>
+    public class CreatePostCourierZonePriceCommandValidator : AbstractValidator<CreateOfflineCourierZonePriceCommand>
     {
-        public CreateOfflineCourierZonePricePriceCommandValidator()
+        public CreatePostCourierZonePriceCommandValidator()
         {
         }
     }

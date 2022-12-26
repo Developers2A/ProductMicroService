@@ -25,7 +25,7 @@ namespace Product.Application.Features.Cities.Queries
                 {
                     cityQuery = cityQuery.Where(x => request.CityCodes.Contains(x.Code));
                 }
-                var cities = await _cityReadRepository.TableNoTracking
+                var cities = await cityQuery
                     .Select(c => new CityDto
                     {
                         Id = c.Id,

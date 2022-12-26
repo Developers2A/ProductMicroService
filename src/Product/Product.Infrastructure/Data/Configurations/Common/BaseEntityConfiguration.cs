@@ -12,6 +12,12 @@ namespace Product.Infrastructure.Data.Configurations.Common
             entity.Property(e => e.RowVersion)
                 .IsRequired()
                 .IsRowVersion();
+
+            entity.Property(e => e.CreatedBy)
+                .HasDefaultValue(0);
+
+            entity.Property(e => e.ModifiedBy)
+                .HasDefaultValue(0);
         }
     }
 }

@@ -10,5 +10,6 @@ namespace Product.Application.Features.CourierZonePrices.Commands.CreateCourierZ
         public decimal SellPrice { get; set; }
         public decimal BuyPrice { get; set; }
         public int Weight { get; set; }
+        public bool SameState { get; set; }
     }
 }

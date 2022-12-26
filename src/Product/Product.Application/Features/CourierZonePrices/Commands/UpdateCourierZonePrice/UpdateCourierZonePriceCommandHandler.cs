@@ -23,6 +23,7 @@ namespace Product.Application.Features.CourierZonePrices.Commands.UpdateCourierZ
 
             if (courierZone == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
+            courierZone.BuyPrice = request.BuyPrice;
 
             await _writeRepository.UpdateAsync(courierZone);
             await _writeRepository.SaveChangeAsync();

@@ -2,14 +2,14 @@
 using MediatR;
 using Postex.SharedKernel.Interfaces;
 using Product.Application.Contracts;
-using Product.Domain.Couriers;
 using Product.Domain.Enums;
+using Product.Domain.Offlines;
 
 namespace Product.Application.Features.CourierCityTypePrices.Commands
 {
     public class CreateCourierCityTypePriceCommand : ITransactionRequest
     {
-        public int CourierId { get; set; }
+        public int CourierZoneId { get; set; }
         public decimal BuyPrice { get; set; }
         public decimal SellPrice { get; set; }
         public CityTypeCode CityType { get; set; }
@@ -17,17 +17,17 @@ namespace Product.Application.Features.CourierCityTypePrices.Commands
 
         private class Handler : IRequestHandler<CreateCourierCityTypePriceCommand>
         {
-            private readonly IWriteRepository<CourierCityTypePrice> _parcelCityWriteRepository;
+            private readonly IWriteRepository<CourierZoneCollectionDistributionPrice> _parcelCityWriteRepository;
 
-            public Handler(IWriteRepository<CourierCityTypePrice> parcelCityWriteRepository)
+            public Handler(IWriteRepository<CourierZoneCollectionDistributionPrice> parcelCityWriteRepository)
             {
                 _parcelCityWriteRepository = parcelCityWriteRepository;
             }
 
             public async Task<Unit> Handle(CreateCourierCityTypePriceCommand request, CancellationToken cancellationToken)
             {
-                var boxSize = new CourierCityTypePrice(request.BuyPrice, request.SellPrice, request.CourierId, request.CityType, request.Volume);
-                await _parcelCityWriteRepository.AddAsync(boxSize);
+                var courierZoneCollectionDistributionPrice = new CourierZoneCollectionDistributionPrice(request.BuyPrice, request.SellPrice, request.CourierZoneId, request.Volume);
+                await _parcelCityWriteRepository.AddAsync(courierZoneCollectionDistributionPrice);
                 await _parcelCityWriteRepository.SaveChangeAsync();
                 return Unit.Value;
             }
@@ -37,7 +37,7 @@ namespace Product.Application.Features.CourierCityTypePrices.Commands
         {
             public CreateParcelCityCommandValidator()
             {
-                RuleFor(p => p.CourierId)
+                RuleFor(p => p.CourierZoneId)
                     .NotEmpty().NotNull().GreaterThan(0).WithMessage(" شناسه کوریر الزامی میباشد");
 
                 RuleFor(p => p.CityType)

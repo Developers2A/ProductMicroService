@@ -13,7 +13,8 @@ namespace Product.Application.Mappings
         public CourierMapping()
         {
             CreateMap<CourierService, CourierServiceDto>();
-            CreateMap<CourierService, CourierCommonDto>();
+            CreateMap<Courier, CourierCommonDto>();
+            CreateMap<CourierService, CourierServiceCommonDto>();
             CreateMap<CourierInsurance, CourierInsuranceDto>();
             CreateMap<CourierLimit, CourierLimitDto>();
             CreateMap<CourierCod, CourierCodDto>();

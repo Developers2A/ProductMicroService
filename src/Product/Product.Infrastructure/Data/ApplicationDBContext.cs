@@ -1,28 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Product.Domain.Couriers;
-using Product.Domain.Locations;
-using Product.Domain.Posts;
+using Postex.SharedKernel.Domain;
 using Product.Domain.Users;
-using Product.Domain.ValueAddedPrices;
 
 namespace Product.Infrastructure.Data
 {
     public class ApplicationDBContext : IdentityDbContext<User>
     {
-        public virtual DbSet<State> States { get; set; }
-        public virtual DbSet<CourierService> Couriers { get; set; }
-        public virtual DbSet<City> Cities { get; set; }
-        public virtual DbSet<Status> Statuses { get; set; }
-        public virtual DbSet<CourierCityMapping> CourierCityMappings { get; set; }
-        public virtual DbSet<CourierStatusMapping> CourierStatusMappings { get; set; }
-        public virtual DbSet<PostShop> PostShops { get; set; }
-        public virtual DbSet<ValueAddedPrice> ValueAddedPrices { get; set; }
-        public virtual DbSet<CourierCityType> CourierCityTypes { get; set; }
-        public virtual DbSet<CourierCityTypePrice> CourierCityTypePrices { get; set; }
-
-
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
         }
@@ -52,7 +37,28 @@ namespace Product.Infrastructure.Data
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            return base.SaveChangesAsync(cancellationToken);
+            foreach (var entry in ChangeTracker.Entries())
+            {
+
+                if (entry.Entity is not BaseEntity<int>)
+                    continue;
+
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.CurrentValues["CreatedOn"] = DateTime.Now;
+                        entry.CurrentValues["ModifiedOn"] = null;
+                        break;
+
+                    case EntityState.Modified:
+                        entry.CurrentValues["CreatedOn"] = entry.OriginalValues["CreatedOn"];
+                        entry.CurrentValues["ModifiedOn"] = DateTime.Now;
+                        break;
+                }
+            }
+
+            var entiries = base.SaveChangesAsync(cancellationToken);
+            return entiries;
         }
     }
 }
