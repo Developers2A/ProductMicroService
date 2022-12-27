@@ -2,6 +2,7 @@
 using Postex.SharedKernel.Common;
 using Product.Application.Dtos.CourierServices.Common;
 using Product.Application.Features.ServiceProviders.Post.Commands.ReadyToCollectOrder;
+using Product.Application.Features.ServiceProviders.Taroff.Commands.ReadyOrder;
 using Product.Domain.Enums;
 
 namespace Product.Application.Features.Common.Commands.ReadyOrder
@@ -23,7 +24,10 @@ namespace Product.Application.Features.Common.Commands.ReadyOrder
             {
                 return await ReadyPostOrder();
             }
-
+            if (_command.CourierCode == (int)CourierCode.Taroff)
+            {
+                return await ReadyTaroffOrder();
+            }
             return new BaseResponse<ReadyOrderResponse>()
             {
                 IsSuccess = false,
@@ -36,6 +40,19 @@ namespace Product.Application.Features.Common.Commands.ReadyOrder
             var result = await _mediator.Send(new ReadyToCollectOrderCommand()
             {
                 ParcelCodes = new List<string>() { _command.TrackCode }
+            });
+            return new BaseResponse<ReadyOrderResponse>()
+            {
+                IsSuccess = result.IsSuccess,
+                Message = result.Message
+            };
+        }
+
+        private async Task<BaseResponse<ReadyOrderResponse>> ReadyTaroffOrder()
+        {
+            var result = await _mediator.Send(new ReadyTaroffOrderCommand()
+            {
+                OrderId = Convert.ToInt32(_command.TrackCode)
             });
             return new BaseResponse<ReadyOrderResponse>()
             {

@@ -19,12 +19,12 @@ namespace Product.Application.Features.ServiceProviders.Taroff.Commands.DeleteOr
             _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Taroff;
         }
 
-        public async Task<BaseResponse<TaroffDeleteResponse>> Handle(DeleteTaroffOrderCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<TaroffDeleteResponse>> Handle(DeleteTaroffOrderCommand command, CancellationToken cancellationToken)
         {
             BaseResponse<TaroffDeleteResponse> result = new();
             try
             {
-                HttpResponseMessage response = await SetHttpRequest(request);
+                HttpResponseMessage response = await SetHttpRequest(command);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -47,18 +47,17 @@ namespace Product.Application.Features.ServiceProviders.Taroff.Commands.DeleteOr
             }
         }
 
-        private async Task<HttpResponseMessage> SetHttpRequest(DeleteTaroffOrderCommand request)
+        private async Task<HttpResponseMessage> SetHttpRequest(DeleteTaroffOrderCommand command)
         {
             HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl);
-
-            var serializedModel = JsonConvert.SerializeObject(request);
+            command.Token = _gateway.Token;
+            var serializedModel = JsonConvert.SerializeObject(command);
             var content = new StringContent(serializedModel,
                 Encoding.UTF8,
                 "application/json");
-
             var pUrl = new Uri($"{_gateway.BaseUrl}/order/delete");
-            var response = await client.PostAsync(pUrl, content);
-            return response;
+
+            return await client.PostAsync(pUrl, content);
         }
     }
 }

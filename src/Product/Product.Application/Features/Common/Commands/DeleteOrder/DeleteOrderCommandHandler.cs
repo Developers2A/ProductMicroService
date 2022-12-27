@@ -2,6 +2,7 @@
 using Postex.SharedKernel.Common;
 using Product.Application.Dtos.CourierServices.Common;
 using Product.Application.Features.ServiceProviders.Post.Commands.DeleteOrder;
+using Product.Application.Features.ServiceProviders.Taroff.Commands.DeleteOrder;
 using Product.Domain.Enums;
 
 namespace Product.Application.Features.Common.Commands.DeleteOrder
@@ -21,7 +22,11 @@ namespace Product.Application.Features.Common.Commands.DeleteOrder
             _command = command;
             if (_command.CourierCode == (int)CourierCode.Post)
             {
-                return await CancelPostOrder();
+                return await DeletePostOrder();
+            }
+            if (_command.CourierCode == (int)CourierCode.Taroff)
+            {
+                return await DeleteTaroffOrder();
             }
 
             return new BaseResponse<DeleteOrderResponse>()
@@ -32,11 +37,24 @@ namespace Product.Application.Features.Common.Commands.DeleteOrder
 
         }
 
-        private async Task<BaseResponse<DeleteOrderResponse>> CancelPostOrder()
+        private async Task<BaseResponse<DeleteOrderResponse>> DeletePostOrder()
         {
             var result = await _mediator.Send(new DeletePostOrderCommand()
             {
                 ParcelCodes = new List<string>() { _command.TrackCode }
+            });
+            return new BaseResponse<DeleteOrderResponse>()
+            {
+                IsSuccess = result.IsSuccess,
+                Message = result.Message
+            };
+        }
+
+        private async Task<BaseResponse<DeleteOrderResponse>> DeleteTaroffOrder()
+        {
+            var result = await _mediator.Send(new DeleteTaroffOrderCommand()
+            {
+                OrderId = Convert.ToInt32(_command.TrackCode)
             });
             return new BaseResponse<DeleteOrderResponse>()
             {

@@ -5,6 +5,7 @@ using Product.Application.Dtos.Couriers;
 using Product.Application.Dtos.Trackings;
 using Product.Application.Features.CourierStatusMappings.Queries;
 using Product.Application.Features.ServiceProviders.Chapar.Queries.Track;
+using Product.Application.Features.ServiceProviders.Kbk.Queries.Track;
 using Product.Application.Features.ServiceProviders.Link.Queries.Track;
 using Product.Application.Features.ServiceProviders.Mahex.Queries.Track;
 using Product.Application.Features.ServiceProviders.PishroPost.Queries.Track;
@@ -32,36 +33,36 @@ namespace Product.Application.Features.Common.Queries.Track
             {
                 return await PostTrack();
             }
-
-            else if (_query.CourierCode == (int)CourierCode.Chapar)
+            if (_query.CourierCode == (int)CourierCode.Chapar)
             {
                 return await ChaparTrack();
             }
-
-            else if (_query.CourierCode == (int)CourierCode.Mahex)
+            if (_query.CourierCode == (int)CourierCode.Mahex)
             {
                 return await MahexTrack();
             }
-            else if (_query.CourierCode == (int)CourierCode.Link)
+            if (_query.CourierCode == (int)CourierCode.Kalaresan)
+            {
+                return await KbkTrack();
+            }
+            if (_query.CourierCode == (int)CourierCode.Link)
             {
                 return await LinkTrack();
             }
-            else if (_query.CourierCode == (int)CourierCode.Taroff)
+            if (_query.CourierCode == (int)CourierCode.Taroff)
             {
                 return await TaroffTrack();
             }
-            else if (_query.CourierCode == (int)CourierCode.PishroPost)
+            if (_query.CourierCode == (int)CourierCode.PishroPost)
             {
                 return await PishroPostTrack();
             }
-            else if (_query.CourierCode == (int)CourierCode.Speed)
+            if (_query.CourierCode == (int)CourierCode.Speed)
             {
                 return await SpeedTrack();
             }
-            else
-            {
-                return new(false, "امکان ترک کدهای این کوریر وجود ندارد");
-            }
+
+            return new(false, "امکان ترک کدهای این کوریر وجود ندارد");
         }
 
         public async Task<BaseResponse<TrackingMapResponse>> PostTrack()
@@ -191,6 +192,38 @@ namespace Product.Application.Features.Common.Queries.Track
                 Date = date
             });
         }
+
+        public async Task<BaseResponse<TrackingMapResponse>> KbkTrack()
+        {
+            var trackRequest = new GetKbkTrackQuery()
+            {
+                ShipmentCode = _query.TrackCode
+            };
+            var result = await _mediator.Send(trackRequest);
+            if (!result.IsSuccess)
+            {
+                return new(false, result.Message);
+            }
+
+            var status = result.Data.Status;
+            var date = "";
+
+            var tracking = await GetPostexStatus(CourierCode.Kalaresan, status.ToString());
+            if (tracking == null)
+            {
+                return new(false, "Post Mappping is not set in database");
+            }
+
+            return new(true, "success", new TrackingMapResponse()
+            {
+                CourierStatusMappingId = tracking.Id,
+                TrackingCode = tracking.Code.ToString(),
+                TrackingStatusNote = tracking.Name,
+                CourierStatus = tracking.Description,
+                Date = date.ToString()
+            });
+        }
+
 
         public async Task<BaseResponse<TrackingMapResponse>> LinkTrack()
         {

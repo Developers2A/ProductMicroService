@@ -49,15 +49,13 @@ namespace Product.Application.Features.ServiceProviders.Taroff.Commands.CreateOr
         private async Task<HttpResponseMessage> SetHttpRequest(CreateTaroffOrderCommand request)
         {
             HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl);
-
             request.Token = _gateway.Token;
-
             var serializedModel = JsonConvert.SerializeObject(request);
             var content = new StringContent(serializedModel,
                 Encoding.UTF8,
                 "application/json");
-
             var pUrl = new Uri($"{_gateway.BaseUrl}/Order/CreateOrder");
+
             return await client.PostAsync(pUrl, content);
         }
     }

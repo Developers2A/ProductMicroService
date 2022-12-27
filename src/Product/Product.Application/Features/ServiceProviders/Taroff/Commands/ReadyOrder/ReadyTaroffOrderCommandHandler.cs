@@ -19,12 +19,12 @@ namespace Product.Application.Features.ServiceProviders.Taroff.Commands.ReadyOrd
             _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Taroff;
         }
 
-        public async Task<BaseResponse<TaroffReadyOrderResponse>> Handle(ReadyTaroffOrderCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<TaroffReadyOrderResponse>> Handle(ReadyTaroffOrderCommand command, CancellationToken cancellationToken)
         {
             BaseResponse<TaroffDeleteResponse> result = new();
             try
             {
-                HttpResponseMessage response = await SetHttpRequest(request);
+                HttpResponseMessage response = await SetHttpRequest(command);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -47,18 +47,17 @@ namespace Product.Application.Features.ServiceProviders.Taroff.Commands.ReadyOrd
             }
         }
 
-        private async Task<HttpResponseMessage> SetHttpRequest(ReadyTaroffOrderCommand request)
+        private async Task<HttpResponseMessage> SetHttpRequest(ReadyTaroffOrderCommand command)
         {
             HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl);
-
-            var serializedModel = JsonConvert.SerializeObject(request);
+            command.Token = _gateway.Token;
+            var serializedModel = JsonConvert.SerializeObject(command);
             var content = new StringContent(serializedModel,
                 Encoding.UTF8,
                 "application/json");
 
             var pUrl = new Uri($"{_gateway.BaseUrl}/order/SetStateReady");
-            var response = await client.PostAsync(pUrl, content);
-            return response;
+            return await client.PostAsync(pUrl, content);
         }
     }
 }

@@ -48,15 +48,14 @@ namespace Product.Application.Features.ServiceProviders.Taroff.Commands.CancelOr
         private async Task<HttpResponseMessage> SetHttpRequest(CancelTaroffOrderCommand request)
         {
             HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl);
-
+            request.Token = _gateway.Token;
             var serializedModel = JsonConvert.SerializeObject(request);
             var content = new StringContent(serializedModel,
                 Encoding.UTF8,
                 "application/json");
-
             var pUrl = new Uri($"{_gateway.BaseUrl}/order/cancel");
-            var response = await client.PostAsync(pUrl, content);
-            return response;
+
+            return await client.PostAsync(pUrl, content);
         }
     }
 }

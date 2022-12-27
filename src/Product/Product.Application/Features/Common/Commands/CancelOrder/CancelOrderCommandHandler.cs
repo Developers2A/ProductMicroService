@@ -2,6 +2,7 @@
 using Postex.SharedKernel.Common;
 using Product.Application.Dtos.CourierServices.Common;
 using Product.Application.Features.ServiceProviders.Kbk.Commands.CancelOrder;
+using Product.Application.Features.ServiceProviders.PishroPost.Commands.CancelOrder;
 using Product.Application.Features.ServiceProviders.Post.Commands.SuspendOrder;
 using Product.Application.Features.ServiceProviders.Speed.Commands.CancelOrder;
 using Product.Application.Features.ServiceProviders.Taroff.Commands.CancelOrder;
@@ -24,29 +25,29 @@ namespace Product.Application.Features.Common.Commands.CancelOrder
             _command = command;
             if (_command.CourierCode == (int)CourierCode.Post)
             {
-                await CancelPostOrder();
+                return await CancelPostOrder();
             }
-            else if (_command.CourierCode == (int)CourierCode.Speed)
+            if (_command.CourierCode == (int)CourierCode.Speed)
             {
-                await CancelSpeedOrder();
+                return await CancelSpeedOrder();
             }
-            else if (_command.CourierCode == (int)CourierCode.Taroff)
+            if (_command.CourierCode == (int)CourierCode.Taroff)
             {
-                await CancelTaroffOrder();
+                return await CancelTaroffOrder();
             }
-            else if (_command.CourierCode == (int)CourierCode.Kalaresan)
+            if (_command.CourierCode == (int)CourierCode.Kalaresan)
             {
-                await CancelKbkOrder();
+                return await CancelKbkOrder();
             }
-            else
+            if (_command.CourierCode == (int)CourierCode.PishroPost)
             {
-                return new BaseResponse<CancelOrderResponse>()
-                {
-                    IsSuccess = false,
-                    Message = "این کوریر امکان کنسل کردن سفارش را ندارد"
-                };
+                return await CancelPishroPostOrder();
             }
-            return new BaseResponse<CancelOrderResponse>();
+            return new BaseResponse<CancelOrderResponse>()
+            {
+                IsSuccess = false,
+                Message = "این کوریر امکان کنسل کردن سفارش را ندارد"
+            };
         }
 
         private async Task<BaseResponse<CancelOrderResponse>> CancelPostOrder()
@@ -98,6 +99,21 @@ namespace Product.Application.Features.Common.Commands.CancelOrder
             var result = await _mediator.Send(new CancelKbkOrderCommand()
             {
                 ShipmentCode = _command.TrackCode
+            });
+
+            return new BaseResponse<CancelOrderResponse>()
+            {
+                IsSuccess = result.IsSuccess,
+                Message = result.Message
+            };
+        }
+
+        private async Task<BaseResponse<CancelOrderResponse>> CancelPishroPostOrder()
+        {
+
+            var result = await _mediator.Send(new CancelPishroPostOrderCommand()
+            {
+                ConsignmentNo = _command.TrackCode
             });
 
             return new BaseResponse<CancelOrderResponse>()

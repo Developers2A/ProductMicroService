@@ -26,9 +26,17 @@ namespace Product.Application.Features.CourierStatusMappings.Queries
 
             public async Task<CourierStatusMappingDto> Handle(GetCourierStatusMappingByCourierAndStatusQuery request, CancellationToken cancellationToken)
             {
-                var courierStatusMappingQuery = _courierStatusMappingReadRepository.TableNoTracking.Include(x => x.Status)
-                    .Where(x => x.Courier.Code == request.Courier && x.Code == request.CourierStatus);
-                var courierStatusMapping = await courierStatusMappingQuery.FirstOrDefaultAsync();
+                var courierStatusMappingQuery = _courierStatusMappingReadRepository.TableNoTracking
+                    .Where(x => x.Courier.Code == request.Courier);
+                if (request.Courier == CourierCode.Mahex || request.Courier == CourierCode.Speed)
+                {
+                    courierStatusMappingQuery = courierStatusMappingQuery.Where(x => x.Description == request.CourierStatus);
+                }
+                else
+                {
+                    courierStatusMappingQuery = courierStatusMappingQuery.Where(x => x.Code == request.CourierStatus);
+                }
+                var courierStatusMapping = await courierStatusMappingQuery.Include(x => x.Status).FirstOrDefaultAsync();
                 return _mapper.Map<CourierStatusMappingDto>(courierStatusMapping);
             }
         }
