@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Interfaces;
 using Product.Application.Dtos.Couriers;
-using Product.Domain.Enums;
 using Product.Domain.Offlines;
 
 namespace Product.Application.Features.CourierZones.Queries

@@ -38,7 +38,7 @@ namespace Product.Application.Features.ServiceProviders.Speed.Commands.CreateOrd
                     return new(true, "success", resModel);
                 }
 
-                return new(false, resModel.Error);
+                return new(false, resModel.Msg + " " + resModel.Error);
             }
             catch (Exception ex)
             {

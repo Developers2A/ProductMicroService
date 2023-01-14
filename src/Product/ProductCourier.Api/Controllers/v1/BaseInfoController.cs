@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Postex.SharedKernel.Api;
+using Product.Api.Filters;
 using Product.Application.Dtos.Commons;
 using Product.Application.Dtos.Couriers;
 using Product.Application.Features.Cities.Queries.GetCitiesCommon;
@@ -12,7 +12,7 @@ using Product.Application.Features.States.Queries;
 namespace Product.Api.Controllers.v1
 {
     [ApiVersion("1")]
-    [AllowAnonymous]
+    [ApiKey]
     public class BaseInfoController : BaseApiControllerWithDefaultRoute
     {
         private readonly IMediator _mediator;

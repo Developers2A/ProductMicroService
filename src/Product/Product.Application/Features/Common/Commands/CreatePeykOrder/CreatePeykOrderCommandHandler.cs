@@ -1,11 +1,16 @@
 ﻿using MediatR;
 using Postex.SharedKernel.Common;
+using Postex.SharedKernel.Common.Enums;
+using Postex.SharedKernel.Utilities;
+using Product.Application.Dtos.Couriers;
 using Product.Application.Dtos.CourierServices.Common;
+using Product.Application.Features.CourierCityMappings.Queries;
+using Product.Application.Features.ServiceProviders.EcoPeyk.Commands.CreateOrder;
 using Product.Application.Features.ServiceProviders.Link.Commands.CreateOrder;
 using Product.Application.Features.ServiceProviders.PishroPost.Commands.CreateOrder;
 using Product.Application.Features.ServiceProviders.Speed.Commands.CreateOrder;
 using Product.Application.Features.ServiceProviders.Taroff.Commands.CreateOrder;
-using Product.Domain.Enums;
+using System.Globalization;
 
 namespace Product.Application.Features.Common.Commands.CreatePeykOrder
 {
@@ -13,6 +18,7 @@ namespace Product.Application.Features.Common.Commands.CreatePeykOrder
     {
         private readonly IMediator _mediator;
         private CreatePeykOrderCommand _command;
+        private List<CourierCityMappingDto> _courierCityMappings;
 
         public CreatePeykOrderCommandHandler(IMediator mediator)
         {
@@ -22,32 +28,53 @@ namespace Product.Application.Features.Common.Commands.CreatePeykOrder
         public async Task<BaseResponse<CreateOrderResponse>> Handle(CreatePeykOrderCommand command, CancellationToken cancellationToken)
         {
             _command = command;
-            if (_command.CourierCode == (int)CourierCode.Link)
+
+            if (_command.CourierServiceCode == (int)CourierServiceCode.Link)
             {
-                await CreateLinkOrder();
+                return await CreateLinkOrder();
             }
 
-            if (_command.CourierCode == (int)CourierCode.Speed)
+            if (_command.CourierServiceCode == (int)CourierServiceCode.Speed)
             {
-                await CreateSpeedOrder();
+                return await CreateSpeedOrder();
             }
 
-            if (_command.CourierCode == (int)CourierCode.Taroff)
+            if (_command.CourierServiceCode == (int)CourierServiceCode.Taroff)
             {
-                await CreateTaroffOrder();
+                _courierCityMappings = await GetCourierCityMapping(CourierCode.Taroff);
+                return await CreateTaroffOrder();
             }
 
-            if (_command.CourierCode == (int)CourierCode.PishroPost)
+            if (_command.CourierServiceCode == (int)CourierServiceCode.PishroPost)
             {
-                await CreatePishroPostOrder();
+                _courierCityMappings = await GetCourierCityMapping(CourierCode.PishroPost);
+                return await CreatePishroPostOrder();
             }
 
-            return new BaseResponse<CreateOrderResponse>();
+            if (_command.CourierServiceCode == (int)CourierServiceCode.EcoPeyk)
+            {
+                return await CreateEcoPeykOrder();
+            }
+
+            return new BaseResponse<CreateOrderResponse>()
+            {
+                IsSuccess = false,
+                Message = "برای این کوریر ثبت سفارش پیاده سازی نشده است"
+            };
         }
 
-        private async Task CreateLinkOrder()
+        private async Task<BaseResponse<CreateOrderResponse>> CreateLinkOrder()
         {
-            await _mediator.Send(CreateLinkOrderCommand());
+            var result = await _mediator.Send(CreateLinkOrderCommand());
+            return new BaseResponse<CreateOrderResponse>()
+            {
+                IsSuccess = result.IsSuccess,
+                Message = result.Message,
+                Data = new CreateOrderResponse()
+                {
+                    ParcelCode = result.Data.TrackingCode
+                }
+            };
         }
 
         private CreateLinkOrderCommand CreateLinkOrderCommand()
@@ -59,11 +86,11 @@ namespace Product.Application.Features.Common.Commands.CreatePeykOrder
                 {
                     new LinkOrder()
                     {
-                        Address = _command.Reciver_Address,
-                        CellPhone = _command.Reciver_Mobile,
-                        FullName = _command.Reciver_FristName + " " + _command.Reciver_LastName,
-                        Latitude  = Convert.ToDecimal(_command.Reciverlat),
-                        Longitude = Convert.ToDecimal(_command.Reciverlon),
+                        Address = _command.ReceiverAddress,
+                        CellPhone = _command.ReceiverMobile,
+                        FullName = _command.ReceiverFristName + " " + _command.ReceiverLastName,
+                        Latitude  = Convert.ToDecimal(_command.ReceiverLat),
+                        Longitude = Convert.ToDecimal(_command.ReceiverLon),
                         ParcelValue = _command.ApproximateValue,
                         Weight = _command.Weight,
                     }
@@ -71,9 +98,14 @@ namespace Product.Application.Features.Common.Commands.CreatePeykOrder
             };
         }
 
-        private async Task CreatePishroPostOrder()
+        private async Task<BaseResponse<CreateOrderResponse>> CreatePishroPostOrder()
         {
-            await _mediator.Send(CreatePishroPostCommand());
+            var result = await _mediator.Send(CreatePishroPostCommand());
+            return new BaseResponse<CreateOrderResponse>()
+            {
+                IsSuccess = result.IsSuccess,
+                Message = result.Message
+            };
         }
 
         private CreatePishroPostOrderCommand CreatePishroPostCommand()
@@ -86,24 +118,28 @@ namespace Product.Application.Features.Common.Commands.CreatePeykOrder
                     {
                         sender = new PishroPostSenderReceiver()
                         {
-                            address = _command.Sender_Address,
-                            mobile = _command.Sender_Mobile,
-                            person = _command.Sender_FristName + " " + _command.Sender_LastName,
-                            telephone = _command.Sender_Mobile,
-                            city_no = ""
+                            address = _command.SenderAddress,
+                            mobile = _command.SenderMobile,
+                            person = _command.SenderFristName + " " + _command.SenderLastName,
+                            telephone = _command.SenderMobile,
+                            city_no = GetCityMappedCode(CourierCode.PishroPost, _command.SenderCityCode),
+                            company = _command.SenderCompany,
+                            email = _command.SenderEmail,
                         },
                         receiver = new PishroPostSenderReceiver()
                         {
-                            address = _command.Reciver_Address,
-                            mobile = _command.Reciver_Mobile,
-                            person = _command.Reciver_FristName + " " + _command.Reciver_LastName,
-                            telephone = _command.Reciver_Mobile,
-                            city_no = ""
+                            address = _command.ReceiverAddress,
+                            mobile = _command.ReceiverMobile,
+                            person = _command.ReceiverFristName + " " + _command.ReceiverLastName,
+                            telephone = _command.ReceiverMobile,
+                            city_no = GetCityMappedCode(CourierCode.PishroPost, _command.ReceiverCityCode),
+                            company = _command.ReceiverCompany,
+                            email = _command.ReceiverEmail,
                         },
                         cn = new PishroPostCn()
                         {
                             weight = _command.Weight.ToString(),
-                            content = _command.GoodsType,
+                            content = _command.Content,
                             value = _command.ApproximateValue.ToString()
                         }
                     }
@@ -111,53 +147,133 @@ namespace Product.Application.Features.Common.Commands.CreatePeykOrder
             };
         }
 
-        private async Task CreateTaroffOrder()
+        private async Task<BaseResponse<CreateOrderResponse>> CreateTaroffOrder()
         {
-            await _mediator.Send(CreateTarrofCommand());
+            var result = await _mediator.Send(CreateTarrofCommand());
+            return new BaseResponse<CreateOrderResponse>()
+            {
+                IsSuccess = result.IsSuccess,
+                Message = result.Message
+            };
         }
 
         private CreateTaroffOrderCommand CreateTarrofCommand()
         {
+            var cityCode = GetCityMappedCode(CourierCode.Taroff, _command.ReceiverCityCode);
             return new CreateTaroffOrderCommand()
             {
-                FirstName = _command.Reciver_FristName,
-                LastName = _command.Reciver_LastName,
-                Address = _command.Reciver_Address,
-                Mobile = _command.Reciver_Mobile,
-                PostCode = _command.Reciver_PostCode,
-                ProductTitles = _command.GoodsType,
+                FirstName = _command.ReceiverFristName,
+                LastName = _command.ReceiverLastName,
+                Address = _command.ReceiverAddress,
+                Mobile = _command.ReceiverMobile,
+                PostCode = _command.ReceiverPostCode,
+                ProductTitles = _command.Content,
                 TotalWeight = _command.Weight,
                 TotalPrice = _command.ApproximateValue,
-                Note = _command.GoodsType
+                Note = _command.Content,
+                DeliverTime = _command.DeliveryDate.ToString("HH:mm"),
+                Email = _command.ReceiverEmail,
+                PaymentMethodId = _command.PayType == (int)PayType.Cod ? 1212 : 1213,
+                CarrierId = 153,
+                CityId = cityCode != "0" ? Convert.ToInt32(cityCode) : 1,
             };
         }
 
-        private async Task CreateSpeedOrder()
+        private async Task<BaseResponse<CreateOrderResponse>> CreateSpeedOrder()
         {
-            await _mediator.Send(CreateSpeedCommand());
+            var result = await _mediator.Send(CreateSpeedCommand());
+            return new BaseResponse<CreateOrderResponse>()
+            {
+                IsSuccess = result.IsSuccess,
+                Message = result.Message,
+                Data = new CreateOrderResponse()
+                {
+                    ParcelCode = result.Data != null ? result.Data.Barcode.ToString() : ""
+                }
+            };
         }
 
         private CreateSpeedOrderCommand CreateSpeedCommand()
         {
             return new CreateSpeedOrderCommand()
             {
-                Name = _command.Reciver_FristName,
-                LastName = _command.Reciver_LastName,
-                Address = _command.Reciver_Address,
-                CellPhone = _command.Reciver_Mobile,
-                Phone = _command.Reciver_Mobile,
+                Name = _command.ReceiverFristName,
+                LastName = _command.ReceiverLastName,
+                Address = _command.ReceiverAddress,
+                CellPhone = _command.ReceiverMobile,
+                Phone = _command.ReceiverMobile,
                 City = "تهران",
-                SenderCellPhone = _command.Sender_Mobile,
-                SenderPhone = _command.Sender_Mobile,
-                SenderLastName = _command.Sender_LastName,
-                SenderName = _command.Sender_FristName,
-                SenderLocation = _command.Sender_Address,
+                SenderCity = "تهران",
+                SenderCellPhone = _command.SenderMobile,
+                SenderPhone = _command.SenderMobile,
+                SenderName = _command.SenderFristName,
+                SenderLastName = _command.SenderLastName,
+                SenderLocation = _command.ReceiverLat + " , " + _command.ReceiverLon,
                 Weight = _command.Weight,
-                SenderAddress = _command.Sender_Address,
-                Cod = _command.IsCOD == true ? 1 : 0,
-                Content = _command.GoodsType,
+                SenderAddress = _command.SenderAddress,
+                Cod = _command.PayType == (int)PayType.Cod ? 1 : 0,
+                Content = _command.Content,
                 Price = _command.ApproximateValue,
             };
+        }
+
+        private async Task<BaseResponse<CreateOrderResponse>> CreateEcoPeykOrder()
+        {
+            var result = await _mediator.Send(CreateEcoPeykCommand());
+            return new BaseResponse<CreateOrderResponse>()
+            {
+                IsSuccess = result.IsSuccess,
+                Message = result.Message
+            };
+        }
+
+        private CreateEcoPeykOrderCommand CreateEcoPeykCommand()
+        {
+            return new CreateEcoPeykOrderCommand()
+            {
+                Type = 1,
+                Orders = new List<EcoPeykOrder>()
+                {
+                    new EcoPeykOrder()
+                    {
+                       SenderTitle = _command.SenderFristName + " " + _command.SenderLastName,
+                       SenderAddress = _command.SenderAddress,
+                       SenderPostalCode = _command.SenderPostCode,
+                       SenderPhone = _command.SenderMobile,
+                       SenderLocation = _command.SenderLon + "," + _command.SenderLat,
+                       ReceiverPhone= _command.ReceiverMobile,
+                       ReceiverTitle = _command.ReceiverFristName + " " + _command.ReceiverLastName,
+                       ReceiverAddress = _command.ReceiverAddress,
+                       ReceiverLocation = _command.ReceiverLat + "," + _command.ReceiverLon,
+                       BoxPriceValue = _command.ApproximateValue,
+                       CashOnDelivery = _command.PayType == (int)PayType.Cod,
+                       BoxSize = _command.BoxSize ?? 1,
+                       DeliveryDate = _command.DeliveryDate.ToString("yyyy/MM/dd", CultureInfo.GetCultureInfo("fa-Ir")),
+                       PickupDate = _command.PickupDate.ToString("yyyy/MM/dd", CultureInfo.GetCultureInfo("fa-Ir")),
+                       DeliveryShift = _command.DeliveryDate.ToShift(),
+                       PickupShift = _command.PickupDate.ToShift(),
+                    }
+                }
+            };
+        }
+
+        private string GetCityMappedCode(CourierCode courierCode, int cityCode)
+        {
+            var city = _courierCityMappings.FirstOrDefault(x => x.Courier.Code == courierCode && x.Code == Convert.ToInt32(cityCode));
+            if (city == null)
+            {
+                return "0";
+            }
+            return city.MappedCode;
+        }
+
+        public async Task<List<CourierCityMappingDto>> GetCourierCityMapping(CourierCode courierCode)
+        {
+            return await _mediator.Send(new GetCourierCityMappingsByCourierAndCitiesQuery()
+            {
+                CourierCode = (int)courierCode,
+                CityCodes = new List<int> { _command.SenderCityCode, _command.ReceiverCityCode }
+            });
         }
     }
 }

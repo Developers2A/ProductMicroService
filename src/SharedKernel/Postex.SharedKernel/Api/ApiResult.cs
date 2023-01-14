@@ -44,6 +44,11 @@ namespace Postex.SharedKernel.Api
         {
             return new ApiResult(false);
         }
+
+        public static implicit operator ApiResult(UnauthorizedResult result)
+        {
+            return new ApiResult(false);
+        }
         #endregion
     }
 

@@ -20,9 +20,9 @@ namespace Product.Application.Mappings
             CreateMap<CourierCod, CourierCodDto>();
             CreateMap<CourierZone, CourierZoneDto>();
             CreateMap<CourierZonePrice, CourierZonePriceDto>();
-
+            CreateMap<Courier, CourierDto>();
             CreateMap<CourierStatusMapping, CourierStatusMappingDto>();
-            CreateMap<CourierCityMapping, CourierCityMappingDto>();
+            CreateMap<CourierCityMapping, CourierCityMappingDto>().ReverseMap();
             CreateMap<ValueAddedPrice, ValueAddedPriceDto>();
             CreateMap<Zone, ZoneDto>();
             CreateMap<Weight, WeightDto>();

@@ -1,6 +1,6 @@
-﻿using Postex.SharedKernel.Domain;
+﻿using Postex.SharedKernel.Common.Enums;
+using Postex.SharedKernel.Domain;
 using Product.Domain.Couriers;
-using Product.Domain.Enums;
 
 namespace Product.Domain.Offlines
 {

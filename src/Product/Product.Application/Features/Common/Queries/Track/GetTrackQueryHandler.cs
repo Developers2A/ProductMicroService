@@ -1,10 +1,12 @@
 ﻿using MediatR;
 using Postex.SharedKernel.Common;
+using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Utilities;
 using Product.Application.Dtos.Couriers;
 using Product.Application.Dtos.Trackings;
 using Product.Application.Features.CourierStatusMappings.Queries;
 using Product.Application.Features.ServiceProviders.Chapar.Queries.Track;
+using Product.Application.Features.ServiceProviders.EcoPeyk.Queries.GetStatus;
 using Product.Application.Features.ServiceProviders.Kbk.Queries.Track;
 using Product.Application.Features.ServiceProviders.Link.Queries.Track;
 using Product.Application.Features.ServiceProviders.Mahex.Queries.Track;
@@ -12,7 +14,6 @@ using Product.Application.Features.ServiceProviders.PishroPost.Queries.Track;
 using Product.Application.Features.ServiceProviders.Post.Queries.GetStatus;
 using Product.Application.Features.ServiceProviders.Speed.Queries.Track;
 using Product.Application.Features.ServiceProviders.Taroff.Queries.Track;
-using Product.Domain.Enums;
 
 namespace Product.Application.Features.Common.Queries.Track
 {
@@ -61,7 +62,10 @@ namespace Product.Application.Features.Common.Queries.Track
             {
                 return await SpeedTrack();
             }
-
+            if (_query.CourierCode == (int)CourierCode.EcoPeyk)
+            {
+                return await EcoPeykTrack();
+            }
             return new(false, "امکان ترک کدهای این کوریر وجود ندارد");
         }
 
@@ -180,7 +184,7 @@ namespace Product.Application.Features.Common.Queries.Track
             var tracking = await GetPostexStatus(CourierCode.Mahex, status);
             if (tracking == null)
             {
-                return new(false, "Mahex Mappping is not set in database");
+                return new(false, "Mahex Mappping is not set in database : " + status);
             }
 
             return new(true, "success", new TrackingMapResponse()
@@ -211,7 +215,7 @@ namespace Product.Application.Features.Common.Queries.Track
             var tracking = await GetPostexStatus(CourierCode.Kalaresan, status.ToString());
             if (tracking == null)
             {
-                return new(false, "Post Mappping is not set in database");
+                return new(false, "Kbk Mappping is not set in database for kbk status :" + status);
             }
 
             return new(true, "success", new TrackingMapResponse()
@@ -367,6 +371,39 @@ namespace Product.Application.Features.Common.Queries.Track
                 CourierStatus = tracking.Description,
                 Date = date
             });
+        }
+
+        public async Task<BaseResponse<TrackingMapResponse>> EcoPeykTrack()
+        {
+            var trackRequest = new GetEcoPeykStatusQuery()
+            {
+                Code = _query.TrackCode
+            };
+
+            var result = await _mediator.Send(trackRequest);
+            if (!result.IsSuccess)
+            {
+                return new(false, result.Message);
+            }
+            var status = result.Data.StatusCode;
+            var date = "";
+
+            var tracking = await GetPostexStatus(CourierCode.EcoPeyk, status.ToString());
+            if (tracking != null)
+            {
+                return new(true, "success", new TrackingMapResponse()
+                {
+                    CourierStatusMappingId = tracking.Id,
+                    TrackingCode = tracking.Code.ToString(),
+                    TrackingStatusNote = tracking.Name,
+                    CourierStatus = tracking.Description,
+                    Date = date
+                });
+            }
+            else
+            {
+                return new(false, "EcoPeyk Mappping is not set in database");
+            }
         }
     }
 }

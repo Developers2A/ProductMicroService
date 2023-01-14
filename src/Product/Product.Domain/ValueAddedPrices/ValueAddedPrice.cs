@@ -1,5 +1,5 @@
-﻿using Postex.SharedKernel.Domain;
-using Product.Domain.Enums;
+﻿using Postex.SharedKernel.Common.Enums;
+using Postex.SharedKernel.Domain;
 
 namespace Product.Domain.ValueAddedPrices
 {

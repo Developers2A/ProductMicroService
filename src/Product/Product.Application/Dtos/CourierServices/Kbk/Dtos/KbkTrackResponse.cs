@@ -1,8 +1,10 @@
-﻿namespace Product.Application.Dtos.CourierServices.Kbk.Dtos
+﻿using Newtonsoft.Json;
+
+namespace Product.Application.Dtos.CourierServices.Kbk.Dtos
 {
     public class KbkTrackResponse
     {
+        [JsonProperty("status")]
         public string Status { get; set; }
-        public string DriverName { get; set; }
     }
 }

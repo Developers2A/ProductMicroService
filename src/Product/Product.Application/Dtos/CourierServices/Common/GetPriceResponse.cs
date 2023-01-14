@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Product.Application.Dtos.CourierServices.Common
+﻿namespace Product.Application.Dtos.CourierServices.Common
 {
     public class GetPriceResponse
     {
@@ -9,9 +7,9 @@ namespace Product.Application.Dtos.CourierServices.Common
         public decimal PrintPrice { get; set; }
         public decimal AvatarPrice { get; set; }
         public decimal SmsPrice { get; set; }
-        public decimal CollectionPrice { get; set; }
-        public decimal DistributionPrice { get; set; }
         public List<ServicePrice> ServicePrices { get; set; }
+        public List<CollectionDistributionPrice> CollectionPrices { get; set; }
+        public List<CollectionDistributionPrice> DistributionPrices { get; set; }
     }
 
     public class ServicePrice
@@ -23,5 +21,12 @@ namespace Product.Application.Dtos.CourierServices.Common
         public long PostexPrice { get; set; }
         public long PostexTax { get; set; }
         public long TotalPrice { get; set; }
+    }
+
+    public class CollectionDistributionPrice
+    {
+        public string CourierName { get; set; }
+        public int CourierCode { get; set; }
+        public long Price { get; set; }
     }
 }

@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Interfaces;
 using Product.Application.Dtos.Couriers;
 using Product.Domain.Couriers;
-using Product.Domain.Enums;
 
 namespace Product.Application.Features.CourierCityMappings.Queries
 {
     public class GetCourierCityMappingsByCourierAndCitiesQuery : IRequest<List<CourierCityMappingDto>>
     {
-        public int Courier { get; set; }
+        public int CourierCode { get; set; }
         public List<int> CityCodes { get; set; }
 
         public class Handler : IRequestHandler<GetCourierCityMappingsByCourierAndCitiesQuery, List<CourierCityMappingDto>>
@@ -28,12 +28,12 @@ namespace Product.Application.Features.CourierCityMappings.Queries
             {
                 var courierCityMappingQuery = _courierCityMappingRepository.TableNoTracking
                     .Include(x => x.Courier).Where(x => request.CityCodes.Contains(x.Code));
-                if ((int)request.Courier > 0)
+                if ((int)request.CourierCode > 0)
                 {
-                    courierCityMappingQuery = courierCityMappingQuery.Where(x => x.Courier.Code == (CourierCode)request.Courier);
+                    courierCityMappingQuery = courierCityMappingQuery.Where(x => x.Courier.Code == (CourierCode)request.CourierCode);
                 }
 
-                var courierCities = await courierCityMappingQuery.ToListAsync();
+                var courierCities = await courierCityMappingQuery.Include(x => x.Courier).ToListAsync();
                 return _mapper.Map<List<CourierCityMappingDto>>(courierCities);
             }
         }

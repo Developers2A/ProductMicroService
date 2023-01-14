@@ -1,5 +1,5 @@
-﻿using Product.Application.Contracts;
-using Product.Domain.Enums;
+﻿using Postex.SharedKernel.Common.Enums;
+using Product.Application.Contracts;
 
 namespace Product.Application.Features.ValueAddedPrices.Commands.UpdateValueAddedPrice
 {

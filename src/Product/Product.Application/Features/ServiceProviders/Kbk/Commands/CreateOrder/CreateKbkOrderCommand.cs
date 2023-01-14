@@ -1,4 +1,5 @@
-﻿using Postex.SharedKernel.Common;
+﻿using Newtonsoft.Json;
+using Postex.SharedKernel.Common;
 using Product.Application.Contracts;
 using Product.Application.Dtos.CourierServices.Kbk.Dtos;
 
@@ -6,23 +7,49 @@ namespace Product.Application.Features.ServiceProviders.Kbk.Commands.CreateOrder
 {
     public class CreateKbkOrderCommand : ITransactionRequest<BaseResponse<KbkCreateOrderResponse>>
     {
-        public string apiCode { get; set; }
-        public string postexShipmentCode { get; set; }
-        public string senderName { get; set; }
-        public string senderPhone { get; set; }
-        public string senderAddr { get; set; }
-        public string receiverName { get; set; }
-        public string receiverPhone { get; set; }
-        public string receiverAddr { get; set; }
-        public int originCity { get; set; }
-        public int destinationCity { get; set; }
-        public List<KbkPriceDetailsResponse> Detail { get; set; }
+        [JsonProperty("apiCode")]
+        public string ApiCode { get; set; }
+
+        [JsonProperty("postexShipmentCode")]
+        public string PostexShipmentCode { get; set; }
+
+        [JsonProperty("senderName")]
+        public string SenderName { get; set; }
+
+        [JsonProperty("senderPhone")]
+        public string SenderPhone { get; set; }
+
+        [JsonProperty("senderAddr")]
+        public string SenderAddr { get; set; }
+
+        [JsonProperty("receiverName")]
+        public string ReceiverName { get; set; }
+
+        [JsonProperty("receiverPhone")]
+        public string ReceiverPhone { get; set; }
+
+        [JsonProperty("receiverAddr")]
+        public string ReceiverAddr { get; set; }
+
+        [JsonProperty("originCity")]
+        public int OriginCity { get; set; }
+
+        [JsonProperty("destinationCity")]
+        public int DestinationCity { get; set; }
+
+        [JsonProperty("packetsDetail")]
+        public List<PacketsDetail> Detail { get; set; }
     }
 
-    public class KbkPriceDetailsResponse
+    public class PacketsDetail
     {
-        public int size { get; set; }
-        public int count { get; set; }
-        public string desc { get; set; }
+        [JsonProperty("size")]
+        public int Size { get; set; }
+
+        [JsonProperty("count")]
+        public int Count { get; set; }
+
+        [JsonProperty("desc")]
+        public string Description { get; set; }
     }
 }

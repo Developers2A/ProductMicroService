@@ -2,6 +2,6 @@
 {
     public class CreateOrderResponse
     {
-        public string TrackingNumber { get; set; }
+        public string ParcelCode { get; set; }
     }
 }

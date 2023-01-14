@@ -18,6 +18,7 @@
         public CourierConfig Yarbox { get; set; }
         public CourierConfig Pde { get; set; }
         public CourierConfig Post { get; set; }
+        public CourierConfig EcoPeyk { get; set; }
     }
 
     public class CourierConfig

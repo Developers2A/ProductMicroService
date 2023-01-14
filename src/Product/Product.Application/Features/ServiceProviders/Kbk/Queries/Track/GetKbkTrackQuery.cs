@@ -9,6 +9,8 @@ namespace Product.Application.Features.ServiceProviders.Kbk.Queries.Track
     {
         [JsonProperty("apiCode")]
         public string ApiCode { get; set; }
+
+        [JsonProperty("shipmentCode")]
         public string ShipmentCode { get; set; }
     }
 }

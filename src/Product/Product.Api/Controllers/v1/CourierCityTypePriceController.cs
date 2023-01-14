@@ -20,14 +20,14 @@ namespace Product.Api.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<ApiResult> Post([FromBody] CreateCourierCityTypePriceCommand command)
+        public async Task<ApiResult> Post([FromBody] CreateCourierCollectionDistributionPriceCommand command)
         {
             await _mediator.Send(command);
             return Ok();
         }
 
         [HttpPut]
-        public async Task<ApiResult> Put([FromBody] UpdateCourierCityTypePriceCommand command)
+        public async Task<ApiResult> Put([FromBody] UpdateCourierCollectionDistributionPriceCommand command)
         {
             await _mediator.Send(command);
             return Ok();

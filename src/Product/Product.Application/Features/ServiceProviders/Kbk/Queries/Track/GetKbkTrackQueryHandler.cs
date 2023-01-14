@@ -32,7 +32,7 @@ namespace Product.Application.Features.ServiceProviders.Kbk.Queries.Track
 
                 var res = await response.Content.ReadAsStringAsync();
                 var resModel = JsonConvert.DeserializeObject<KbkTrackResponse>(res);
-                if (resModel != null)
+                if (resModel != null && resModel.Status != null)
                 {
                     return new(true, "success", resModel);
                 }

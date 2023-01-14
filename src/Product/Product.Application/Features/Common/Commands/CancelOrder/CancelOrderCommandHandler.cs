@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Postex.SharedKernel.Common;
+using Postex.SharedKernel.Common.Enums;
 using Product.Application.Dtos.CourierServices.Common;
 using Product.Application.Features.ServiceProviders.Kbk.Commands.CancelOrder;
 using Product.Application.Features.ServiceProviders.PishroPost.Commands.CancelOrder;
 using Product.Application.Features.ServiceProviders.Post.Commands.SuspendOrder;
 using Product.Application.Features.ServiceProviders.Speed.Commands.CancelOrder;
 using Product.Application.Features.ServiceProviders.Taroff.Commands.CancelOrder;
-using Product.Domain.Enums;
 
 namespace Product.Application.Features.Common.Commands.CancelOrder
 {
@@ -95,7 +95,6 @@ namespace Product.Application.Features.Common.Commands.CancelOrder
 
         private async Task<BaseResponse<CancelOrderResponse>> CancelKbkOrder()
         {
-
             var result = await _mediator.Send(new CancelKbkOrderCommand()
             {
                 ShipmentCode = _command.TrackCode
