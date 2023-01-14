@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Postex.SharedKernel.Api;
+using Product.Api.Filters;
 using Product.Application.Dtos.CourierServices.Post;
 using Product.Application.Features.ServiceProviders.Post.Commands.CreateOrder;
 using Product.Application.Features.ServiceProviders.Post.Commands.CreateShop;
@@ -9,6 +9,7 @@ using Product.Application.Features.ServiceProviders.Post.Commands.DeleteOrder;
 using Product.Application.Features.ServiceProviders.Post.Commands.ReadyToCollectOrder;
 using Product.Application.Features.ServiceProviders.Post.Commands.SuspendOrder;
 using Product.Application.Features.ServiceProviders.Post.Commands.UpdateOrder;
+using Product.Application.Features.ServiceProviders.Post.Commands.UpdateWeight;
 using Product.Application.Features.ServiceProviders.Post.Queries.GetNodes;
 using Product.Application.Features.ServiceProviders.Post.Queries.GetPrice;
 using Product.Application.Features.ServiceProviders.Post.Queries.GetShops;
@@ -19,7 +20,7 @@ using Product.Application.Features.ServiceProviders.Post.Queries.Track;
 namespace Product.Api.Controllers.v1
 {
     [ApiVersion("1")]
-    [AllowAnonymous]
+    [ApiKey]
     public class PostController : BaseApiControllerWithDefaultRoute
     {
         private readonly IMediator _mediator;
@@ -103,6 +104,13 @@ namespace Product.Api.Controllers.v1
         {
             var result = await _mediator.Send(request);
             return new ApiResult<PostEditOrderResponse>(result.IsSuccess, result.Data, result.Message);
+        }
+
+        [HttpPost("edit-weight")]
+        public async Task<ApiResult<PostEditWeightResponse>> EditOrder(UpdatePostWeightCommand request)
+        {
+            var result = await _mediator.Send(request);
+            return new ApiResult<PostEditWeightResponse>(result.IsSuccess, result.Data, result.Message);
         }
 
         [HttpPost("suspend-order")]

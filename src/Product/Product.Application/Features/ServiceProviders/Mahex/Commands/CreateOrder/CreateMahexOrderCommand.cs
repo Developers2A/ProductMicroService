@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Postex.SharedKernel.Common;
 using Product.Application.Contracts;
+using Product.Application.Dtos.CourierServices.Mahex;
 using Product.Application.Dtos.CourierServices.Mahex.Common;
-using Product.Application.Dtos.CourierServices.Post;
 
 namespace Product.Application.Features.ServiceProviders.Mahex.Commands.CreateOrder
 {
-    public class CreateMahexOrderCommand : ITransactionRequest<BaseResponse<PostCreateOrderResponse>>
+    public class CreateMahexOrderCommand : ITransactionRequest<BaseResponse<MahexCreateOrderResponse>>
     {
         [JsonProperty("from_address")]
         public MahexAddressDetails FromAddress { get; set; }

@@ -1,16 +1,17 @@
 ﻿using MediatR;
 using Postex.SharedKernel.Common;
+using Postex.SharedKernel.Common.Enums;
 using Product.Application.Dtos.Couriers;
 using Product.Application.Dtos.CourierServices.Common;
 using Product.Application.Dtos.CourierServices.Mahex.Common;
 using Product.Application.Features.CourierCityMappings.Queries;
+using Product.Application.Features.CourierCityTypePrices.Queries.GetOfflinePrices;
 using Product.Application.Features.PostShops.Queries;
 using Product.Application.Features.ServiceProviders.Chapar.Queries.GetPrice;
 using Product.Application.Features.ServiceProviders.Kbk.Queries.GetPrice;
 using Product.Application.Features.ServiceProviders.Mahex.Queries.GetPrice;
 using Product.Application.Features.ServiceProviders.Post.Queries.GetPrice;
 using Product.Application.Features.ValueAddedPrices.Queries;
-using Product.Domain.Enums;
 
 namespace Product.Application.Features.Common.Queries.GetPrice
 {
@@ -76,16 +77,20 @@ namespace Product.Application.Features.Common.Queries.GetPrice
 
             if (request.HasCollection || request.HasDistribution)
             {
-                //var price = await _courierCityTypePriceService.GetCollectionDistributionPrice(request);
+                var collectionDistributionPrice = await _mediator.Send(new GetPeykOfflinePricesQuery()
+                {
+                    CourierCode = request.CourierCode,
+                    SenderCity = request.CourierCode,
+                });
 
-                //if (request.HasCollection)
-                //{
-                //    priceResponse.CollectionPrice = price.Data.ServicePrices.FirstOrDefault().TotalPrice;
-                //}
-                //if (request.HasDistribution)
-                //{
-                //    priceResponse.DistributionPrice = price.Data.ServicePrices.FirstOrDefault().TotalPrice;
-                //}
+                if (request.HasCollection)
+                {
+                    priceResponse.CollectionPrices = collectionDistributionPrice.CollectionPrices;
+                }
+                if (request.HasDistribution)
+                {
+                    priceResponse.DistributionPrices = collectionDistributionPrice.DistributionPrices;
+                }
             }
 
             priceResponse.ServicePrices = prices;
@@ -124,7 +129,7 @@ namespace Product.Application.Features.Common.Queries.GetPrice
         {
             return await _mediator.Send(new GetCourierCityMappingsByCourierAndCitiesQuery()
             {
-                Courier = courierCode,
+                CourierCode = courierCode,
                 CityCodes = new List<int> { senderCity, receiverCity }
             });
         }

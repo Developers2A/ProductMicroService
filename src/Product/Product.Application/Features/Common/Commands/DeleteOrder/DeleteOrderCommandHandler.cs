@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Postex.SharedKernel.Common;
+using Postex.SharedKernel.Common.Enums;
 using Product.Application.Dtos.CourierServices.Common;
 using Product.Application.Features.ServiceProviders.Post.Commands.DeleteOrder;
 using Product.Application.Features.ServiceProviders.Taroff.Commands.DeleteOrder;
-using Product.Domain.Enums;
 
 namespace Product.Application.Features.Common.Commands.DeleteOrder
 {

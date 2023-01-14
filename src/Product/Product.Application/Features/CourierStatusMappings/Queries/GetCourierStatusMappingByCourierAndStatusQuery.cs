@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Interfaces;
 using Product.Application.Dtos.Couriers;
 using Product.Domain.Couriers;
-using Product.Domain.Enums;
 
 namespace Product.Application.Features.CourierStatusMappings.Queries
 {

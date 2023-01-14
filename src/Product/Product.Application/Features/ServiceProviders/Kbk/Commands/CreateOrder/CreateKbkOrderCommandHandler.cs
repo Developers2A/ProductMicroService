@@ -33,16 +33,16 @@ namespace Product.Application.Features.ServiceProviders.Kbk.Commands.CreateOrder
 
                 var res = await response.Content.ReadAsStringAsync();
                 var resModel = JsonConvert.DeserializeObject<KbkCreateOrderResponse>(res);
-                if (resModel != null)
+                if (resModel!.ErrorCode != null && Convert.ToInt32(resModel!.ErrorCode) <= 4)
                 {
-                    return new(true, "success", resModel);
+                    return new(false, resModel.Message);
                 }
 
-                return new(false, "fail");
+                return new(true, "success", resModel);
             }
             catch (Exception ex)
             {
-                return new(false, "An error has occurred in the Service chapar " + ex.Message);
+                return new(false, "An error has occurred in the Service kbk " + ex.Message);
             }
         }
 
@@ -50,7 +50,7 @@ namespace Product.Application.Features.ServiceProviders.Kbk.Commands.CreateOrder
         {
             HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl);
 
-            request.apiCode = "32e5ddaad52dee1a0cd1c6279ea5d436";
+            request.ApiCode = "32e5ddaad52dee1a0cd1c6279ea5d436";
             var pUrl = new Uri($"{_gateway.BaseUrl}?postexApi=1");
 
             var serializedModel = JsonConvert.SerializeObject(request);

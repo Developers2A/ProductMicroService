@@ -23,7 +23,7 @@ namespace Product.Application.Features.Couriers.Queries
             public async Task<List<CourierCommonDto>> Handle(GetCouriersCommonQuery request, CancellationToken cancellationToken)
             {
                 var couriers = await _courierRepository.TableNoTracking
-                    .OrderByDescending(c => c.Id)
+                    .OrderByDescending(c => c.Name)
                     .ToListAsync(cancellationToken);
                 return _mapper.Map<List<CourierCommonDto>>(couriers);
             }

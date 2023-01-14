@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Interfaces;
 using Product.Application.Features.CourierZonePrices.Commands.CreateCourierZonePrice;
 using Product.Application.Features.CourierZonePrices.Commands.CreateCourierZonePrices;
 using Product.Application.Features.ServiceProviders.Chapar.Queries.GetPrice;
 using Product.Application.Features.Weights.Queries;
-using Product.Domain.Enums;
 using Product.Domain.Offlines;
 
 namespace Product.Application.Features.CourierZonePrices.Commands.CreateChaparCourierZonePrice

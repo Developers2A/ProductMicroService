@@ -1,5 +1,4 @@
 ﻿using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -39,20 +38,19 @@ namespace Product.Api.Swagger
         public static void AddCustomSwagger(this IServiceCollection services)
         {
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
             services.AddSwaggerGen(options =>
             {
                 options.OperationFilter<SwaggerDefaultValues>();
                 options.OperationFilter<SwaggerCustomeHeaders>();
                 options.DocumentFilter<CustomSwaggerFilter>();
                 options.SchemaFilter<AddReadOnlyPropertiesFilter>();
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                options.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
                 {
-                    Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Enter 'Bearer' [space] and then your valid token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
+                    Name = "X-API-Key",
+                    Description = "Enter ApiKey",
                 });
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
@@ -62,7 +60,7 @@ namespace Product.Api.Swagger
                             Reference = new OpenApiReference
                             {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = JwtBearerDefaults.AuthenticationScheme
+                                Id = "ApiKey"
                             }
                         },
                         Array.Empty<string>()

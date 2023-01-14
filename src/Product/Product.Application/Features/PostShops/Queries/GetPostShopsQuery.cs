@@ -9,6 +9,8 @@ namespace Product.Application.Features.PostShops.Queries
 {
     public class GetPostShopsQuery : IRequest<List<PostShopDto>>
     {
+        public string? Mobile { get; set; }
+
         public class Handler : IRequestHandler<GetPostShopsQuery, List<PostShopDto>>
         {
             private readonly IReadRepository<PostShop> _postShopRepository;
@@ -22,8 +24,12 @@ namespace Product.Application.Features.PostShops.Queries
 
             public async Task<List<PostShopDto>> Handle(GetPostShopsQuery request, CancellationToken cancellationToken)
             {
-                var postShops = await _postShopRepository.TableNoTracking
-                    .OrderByDescending(c => c.Id)
+                var postShopQuery = _postShopRepository.TableNoTracking;
+                if (!string.IsNullOrEmpty(request.Mobile))
+                {
+                    postShopQuery = postShopQuery.Where(x => x.Mob == request.Mobile);
+                }
+                var postShops = await postShopQuery.OrderByDescending(c => c.Id)
                     .ToListAsync(cancellationToken);
                 return _mapper.Map<List<PostShopDto>>(postShops);
             }

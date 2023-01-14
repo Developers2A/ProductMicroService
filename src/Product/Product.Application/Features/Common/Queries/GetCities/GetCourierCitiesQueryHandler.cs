@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
+using Postex.SharedKernel.Common.Enums;
 using Product.Application.Dtos.CourierServices.Common;
 using Product.Application.Features.ServiceProviders.Chapar.Queries.GetCities;
 using Product.Application.Features.ServiceProviders.Post.Queries.GetCities;
 using Product.Application.Features.ServiceProviders.Taroff.Queries.GetCities;
-using Product.Domain.Enums;
 
 namespace Product.Application.Features.Common.Queries.GetCities
 {

@@ -24,7 +24,7 @@ namespace Product.Application.Features.Common.Queries.GetStates
 
             public async Task<List<CourierStateDto>> Handle(GetCourierStatesQuery request, CancellationToken cancellationToken)
             {
-                if (request.CourierCode == (int)Domain.Enums.CourierCode.Post)
+                if (request.CourierCode == (int)Postex.SharedKernel.Common.Enums.CourierCode.Post)
                 {
                     var postResponse = await _mediator.Send(new GetPostStatesQuery());
                     if (postResponse.IsSuccess)
@@ -32,7 +32,7 @@ namespace Product.Application.Features.Common.Queries.GetStates
                         return _mapper.Map<List<CourierStateDto>>(postResponse.Data);
                     }
                 }
-                if (request.CourierCode == (int)Domain.Enums.CourierCode.Chapar)
+                if (request.CourierCode == (int)Postex.SharedKernel.Common.Enums.CourierCode.Chapar)
                 {
                     var postResponse = await _mediator.Send(new GetChaparStatesQuery());
                     if (postResponse.IsSuccess)
@@ -40,7 +40,7 @@ namespace Product.Application.Features.Common.Queries.GetStates
                         return _mapper.Map<List<CourierStateDto>>(postResponse.Data);
                     }
                 }
-                if (request.CourierCode == (int)Domain.Enums.CourierCode.Taroff)
+                if (request.CourierCode == (int)Postex.SharedKernel.Common.Enums.CourierCode.Taroff)
                 {
                     var postResponse = await _mediator.Send(new GetTaroffStatesQuery());
                     if (postResponse.IsSuccess)

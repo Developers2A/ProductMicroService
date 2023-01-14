@@ -3,13 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
-using Product.Application.Dtos.CourierServices.Post;
+using Product.Application.Dtos.CourierServices.Mahex;
 using System.Net.Http.Headers;
 using System.Text;
 
 namespace Product.Application.Features.ServiceProviders.Mahex.Commands.CreateOrder
 {
-    public class CreateMahexOrderCommandHandler : IRequestHandler<CreateMahexOrderCommand, BaseResponse<PostCreateOrderResponse>>
+    public class CreateMahexOrderCommandHandler : IRequestHandler<CreateMahexOrderCommand, BaseResponse<MahexCreateOrderResponse>>
     {
         private readonly IConfiguration _configuration;
         private readonly CourierConfig _gateway;
@@ -20,7 +20,7 @@ namespace Product.Application.Features.ServiceProviders.Mahex.Commands.CreateOrd
             _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Mahex;
         }
 
-        public async Task<BaseResponse<PostCreateOrderResponse>> Handle(CreateMahexOrderCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<MahexCreateOrderResponse>> Handle(CreateMahexOrderCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -33,13 +33,13 @@ namespace Product.Application.Features.ServiceProviders.Mahex.Commands.CreateOrd
 
                 var res = await response.Content.ReadAsStringAsync();
 
-                var resModel = JsonConvert.DeserializeObject<PostResponse<PostCreateOrderResponse>>(res);
-                if (resModel!.ResCode == 0)
+                var resModel = JsonConvert.DeserializeObject<MahexCreateOrderResponse>(res);
+                if (resModel!.Status.Code == 200 || resModel.Status.Code == 201)
                 {
-                    return new(true, "success", resModel!.Data);
+                    return new(true, "success", resModel);
                 }
 
-                return new(false, resModel!.ResMsg!);
+                return new(false, resModel!.Status.Message!);
             }
             catch (Exception ex)
             {

@@ -1,4 +1,4 @@
-﻿using Product.Domain.Enums;
+﻿using Postex.SharedKernel.Common.Enums;
 
 namespace Product.Application.Dtos.Couriers
 {
