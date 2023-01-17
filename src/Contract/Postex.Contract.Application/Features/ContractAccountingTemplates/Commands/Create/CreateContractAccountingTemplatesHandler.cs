@@ -23,6 +23,7 @@ namespace Postex.Contract.Application.Features.ContractAccountingTemplates.Comma
             {
                 var contractAccountingTemplate = new ContractAccountingTemplate
                 {
+                    ContractInfoId=item.ContractInfoId,
                     AccountId = item.AccountId,
                     ContractDetailType = item.ContractDetailType,
                     ContractDetailId = item.ContractDetailId,

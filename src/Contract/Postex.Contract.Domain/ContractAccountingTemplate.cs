@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 namespace Postex.Contract.Domain
 {
     public class ContractAccountingTemplate : BaseEntity<int>
-    {              
+    {
+        public int ContractInfoId { get; set; }
+        public ContractInfo ContractInfo { get; set; }
         public string ContractDetailType { get; set; }
         public int ContractDetailId { get; set; }
         public int AccountId { get; set; }

@@ -5,6 +5,7 @@ namespace Postex.Contract.Application.Features.ContractAccountingTemplates.Comma
 {
     public class CreateContractAccountingTemplateCommand: ITransactionRequest
     {
+        public int ContractInfoId { get; set; }
         public string ContractDetailType { get; set; }
         public int ContractDetailId { get; set; }
         public int AccountId { get; set; }

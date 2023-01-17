@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.CreateContractItemType
 {
-    public class CreateContractAccountingTemplatesCommandValidator : AbstractValidator<CreateContractAccountingTemplatesCommand>
+    public class CreateContractAccountingTemplatesValidator : AbstractValidator<CreateContractAccountingTemplatesCommand>
     {
-        public CreateContractAccountingTemplatesCommandValidator()
+        public CreateContractAccountingTemplatesValidator()
         {
 
             RuleFor(p => p.ContractAccountingTemplates.Sum(c => c.PercentValue))
