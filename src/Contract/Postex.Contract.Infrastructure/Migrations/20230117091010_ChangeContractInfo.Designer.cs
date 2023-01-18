@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Postex.Contract.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Postex.Contract.Infrastructure.Data;
 namespace Postex.Contract.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230117091010_ChangeContractInfo")]
+    partial class ChangeContractInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,7 +221,7 @@ namespace Postex.Contract.Infrastructure.Migrations
                     b.ToTable("cn_ContractAccountingTemplates", (string)null);
                 });
 
-            modelBuilder.Entity("Postex.Contract.Domain.ContractBoxPrice", b =>
+            modelBuilder.Entity("Postex.Contract.Domain.ContractBoxType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -288,7 +291,7 @@ namespace Postex.Contract.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("cn_ContractBoxPrices", (string)null);
+                    b.ToTable("cn_ContractBoxTypes", (string)null);
                 });
 
             modelBuilder.Entity("Postex.Contract.Domain.ContractCod", b =>
@@ -764,48 +767,6 @@ namespace Postex.Contract.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("cn_ContractItemTypes", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ContractTypeCode = "01",
-                            ContractTypeName = "پیام کوتاه",
-                            CreatedBy = 0,
-                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
-                            IsRemoved = false,
-                            ModifiedBy = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ContractTypeCode = "02",
-                            ContractTypeName = "چاپ فاکتور",
-                            CreatedBy = 0,
-                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
-                            IsRemoved = false,
-                            ModifiedBy = 0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ContractTypeCode = "03",
-                            ContractTypeName = "آواتار",
-                            CreatedBy = 0,
-                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
-                            IsRemoved = false,
-                            ModifiedBy = 0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ContractTypeCode = "04",
-                            ContractTypeName = "انبار",
-                            CreatedBy = 0,
-                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
-                            IsRemoved = false,
-                            ModifiedBy = 0
-                        });
                 });
 
             modelBuilder.Entity("Postex.Contract.Domain.Customer", b =>
@@ -869,7 +830,7 @@ namespace Postex.Contract.Infrastructure.Migrations
                     b.Navigation("ContractInfo");
                 });
 
-            modelBuilder.Entity("Postex.Contract.Domain.ContractBoxPrice", b =>
+            modelBuilder.Entity("Postex.Contract.Domain.ContractBoxType", b =>
                 {
                     b.HasOne("Postex.Contract.Domain.BoxType", "BoxType")
                         .WithMany()
@@ -878,7 +839,7 @@ namespace Postex.Contract.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Postex.Contract.Domain.ContractInfo", "ContractInfo")
-                        .WithMany("ContractBoxPrices")
+                        .WithMany("ContractBoxTypes")
                         .HasForeignKey("ContractInfoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -982,7 +943,7 @@ namespace Postex.Contract.Infrastructure.Migrations
 
             modelBuilder.Entity("Postex.Contract.Domain.ContractInfo", b =>
                 {
-                    b.Navigation("ContractBoxPrices");
+                    b.Navigation("ContractBoxTypes");
 
                     b.Navigation("ContractCods");
 

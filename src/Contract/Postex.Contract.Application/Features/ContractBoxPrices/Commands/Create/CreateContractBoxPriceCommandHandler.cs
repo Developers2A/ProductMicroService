@@ -7,19 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractBoxTypes.Command.Create
+namespace Postex.Contract.Application.Features.ContractBoxPrices.Command.Create
 {
-    internal class CreateContractBoxTypeCommandHandler : IRequestHandler<CreateContractBoxTypeCommand>
+    internal class CreateContractBoxPriceCommandHandler : IRequestHandler<CreateContractBoxPriceCommand>
     {
-        private readonly IWriteRepository<ContractBoxType> _writeRepository;
+        private readonly IWriteRepository<ContractBoxPrice> _writeRepository;
 
-        public CreateContractBoxTypeCommandHandler(IWriteRepository<ContractBoxType> writeRepository)
+        public CreateContractBoxPriceCommandHandler(IWriteRepository<ContractBoxPrice> writeRepository)
         {
             _writeRepository = writeRepository;
         }
-        public async Task<Unit> Handle(CreateContractBoxTypeCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateContractBoxPriceCommand request, CancellationToken cancellationToken)
         {
-            var contractBoxType = new ContractBoxType
+            var contractBoxType = new ContractBoxPrice
             {
                 ContractInfoId = request.ContractInfoId,
                 BoxTypeId = request.BoxTypeId,

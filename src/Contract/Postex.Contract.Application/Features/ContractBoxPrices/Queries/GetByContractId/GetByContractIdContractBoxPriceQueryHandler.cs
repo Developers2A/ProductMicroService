@@ -3,26 +3,21 @@ using Microsoft.EntityFrameworkCore;
 using Postex.Contract.Application.Dtos;
 using Postex.Contract.Domain;
 using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractBoxTypes.Queries
+namespace Postex.Contract.Application.Features.ContractBoxPrices.Queries
 {
-    public class GetByContractIdContractBoxTypeQueryHandler : IRequestHandler<GetByContractIdContractBoxTypeQuery, List<ContractBoxTypeDto>>
+    public class GetByCustomerContractBoxPriceQueryHandler : IRequestHandler<GetByContractIdContractBoxPriceQuery, List<ContractBoxPriceDto>>
     {
-        private readonly IReadRepository<ContractBoxType> _readRepository;
+        private readonly IReadRepository<ContractBoxPrice> _readRepository;
 
-        public GetByContractIdContractBoxTypeQueryHandler(IReadRepository<ContractBoxType> readRepository)
+        public GetByCustomerContractBoxPriceQueryHandler(IReadRepository<ContractBoxPrice> readRepository)
         {
             this._readRepository = readRepository;
         }
-        public async Task<List<ContractBoxTypeDto>> Handle(GetByContractIdContractBoxTypeQuery request, CancellationToken cancellationToken)
+        public async Task<List<ContractBoxPriceDto>> Handle(GetByContractIdContractBoxPriceQuery request, CancellationToken cancellationToken)
         {
-            var cod = await _readRepository.Table.Include(b => b.BoxType)
-                .Select(c => new ContractBoxTypeDto
+            var boxPrice = await _readRepository.Table.Include(b => b.BoxType)
+                .Select(c => new ContractBoxPriceDto
                 {
                     Id = c.Id,
                     ContractInfoId = c.ContractInfoId,
@@ -38,8 +33,9 @@ namespace Postex.Contract.Application.Features.ContractBoxTypes.Queries
                     Description=c.Description
 
                 })
+                .Where(c=> c.ContractInfoId == request.ContractInfoId)
                 .ToListAsync(cancellationToken);
-            return cod;
+            return boxPrice;
         }
     }
 }

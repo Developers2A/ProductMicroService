@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Postex.Contract.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Postex.Contract.Infrastructure.Data;
 namespace Postex.Contract.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230118074020_ChangeContractBoxPrice")]
+    partial class ChangeContractBoxPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -764,48 +767,6 @@ namespace Postex.Contract.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("cn_ContractItemTypes", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ContractTypeCode = "01",
-                            ContractTypeName = "پیام کوتاه",
-                            CreatedBy = 0,
-                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
-                            IsRemoved = false,
-                            ModifiedBy = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ContractTypeCode = "02",
-                            ContractTypeName = "چاپ فاکتور",
-                            CreatedBy = 0,
-                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
-                            IsRemoved = false,
-                            ModifiedBy = 0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ContractTypeCode = "03",
-                            ContractTypeName = "آواتار",
-                            CreatedBy = 0,
-                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
-                            IsRemoved = false,
-                            ModifiedBy = 0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ContractTypeCode = "04",
-                            ContractTypeName = "انبار",
-                            CreatedBy = 0,
-                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
-                            IsRemoved = false,
-                            ModifiedBy = 0
-                        });
                 });
 
             modelBuilder.Entity("Postex.Contract.Domain.Customer", b =>

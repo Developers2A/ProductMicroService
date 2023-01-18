@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Postex.Contract.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Postex.Contract.Application.Dtos
     {
         public int Id { get; set; }
         public int ContractInfoId { get; set; }
+        public ContractInfo ContractInfo { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
       
@@ -21,5 +23,9 @@ namespace Postex.Contract.Application.Dtos
         public double SalePrice { get; set; }
         public double BuyPrice { get; set; }
         public string Description { get; set; }
+
+        public string LevelPrice { get; set; }
+
+
     }
 }

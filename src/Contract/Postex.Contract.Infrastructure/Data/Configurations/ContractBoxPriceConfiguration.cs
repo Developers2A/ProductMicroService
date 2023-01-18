@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Postex.Contract.Infrastructure.Data.Configurations
 {
-    public class ContractBoxTypeConfiguration:BaseEntityConfiguration<ContractBoxType>
+    public class ContractBoxPriceConfiguration:BaseEntityConfiguration<ContractBoxPrice>
     {
-        public override void Configure(EntityTypeBuilder<ContractBoxType> entity)
+        public override void Configure(EntityTypeBuilder<ContractBoxPrice> entity)
         {
             base.Configure(entity);
-            entity.ToTable("cn_ContractBoxTypes");
+            entity.ToTable("cn_ContractBoxPrices");
             entity.Property(c => c.Description)
                 .HasMaxLength(512);
         }

@@ -8,21 +8,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractBoxTypes.Command.Update
+namespace Postex.Contract.Application.Features.ContractBoxPrices.Command.Update
 {
-    public class UpdateContractBoxTypeCommandHandler : IRequestHandler<UpdateContractBoxTypeCommand>
+    public class UpdateContractBoxPriceCommandHandler : IRequestHandler<UpdateContractBoxPriceCommand>
     {
-        private readonly IWriteRepository<ContractBoxType> _writeRepository;
-        private readonly IReadRepository<ContractBoxType> _readRepository;
+        private readonly IWriteRepository<ContractBoxPrice> _writeRepository;
+        private readonly IReadRepository<ContractBoxPrice> _readRepository;
 
-        public UpdateContractBoxTypeCommandHandler(IWriteRepository<ContractBoxType> writeRepository, IReadRepository<ContractBoxType> readRepository)
+        public UpdateContractBoxPriceCommandHandler(IWriteRepository<ContractBoxPrice> writeRepository, IReadRepository<ContractBoxPrice> readRepository)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
         }
-        public async Task<Unit> Handle(UpdateContractBoxTypeCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateContractBoxPriceCommand request, CancellationToken cancellationToken)
         {
-            ContractBoxType contractBoxType = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
+            var contractBoxType = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (contractBoxType == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");

@@ -3,7 +3,7 @@
 namespace Postex.Contract.Domain
 {
 
-    public class ContractBoxType : BaseEntity<int>
+    public class ContractBoxPrice : BaseEntity<int>
     {
         public BoxType BoxType { get; set; }
         public int BoxTypeId { get; set; }

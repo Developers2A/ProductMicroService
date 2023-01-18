@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Postex.Contract.Application.Features.ContractInfos.Queries.GetAll;
 using Postex.Contract.Application.Features.Contracts.Commands.CreateContractCommand;
 using Postex.Contract.Application.Features.Contracts.Commands.UpdateContractCommand;
 using Postex.Contract.Application.Features.Contracts.Queries.GetContractByCustomer;
@@ -28,6 +29,11 @@ namespace Postex.Contract.Api.Controllers
         public async Task<IActionResult> Put(UpdateContractCommand command)
         {
             return Ok(await mediator.Send(command));
+        }
+        [HttpGet("All")]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await mediator.Send(new GetAllContractInfoCommand() ));
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)

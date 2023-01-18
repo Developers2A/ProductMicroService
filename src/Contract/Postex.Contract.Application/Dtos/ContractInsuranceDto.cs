@@ -15,5 +15,6 @@ namespace Postex.Contract.Application.Dtos
         public Double FixedPercent { get; set; }
         public int FixedValue { get; set; }
         public string Description { get; set; }
+        public string LevelPrice { get; set; }
     }
 }

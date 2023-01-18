@@ -17,9 +17,12 @@ namespace Postex.Contract.Application.Dtos
         public DateTime EndDate { get; set; }
         public DateTime RegisterDate { get; set; }      
         public int? CustomerId { get; set; }
+        public int? CityId { get; set; }
+        public int? ProvinceId { get; set; }
         public bool IsActive { get; set; }
 
         public ICollection<ContractInsurance>? ContractInsurances { get; set; }
         public ICollection<ContractCod> ContractCods { get; set; }
+        public ICollection<ContractBoxPrice> ContractBoxPrices { get; set; }
     }
 }

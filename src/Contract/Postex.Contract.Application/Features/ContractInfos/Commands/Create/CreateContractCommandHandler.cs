@@ -28,6 +28,8 @@ namespace Postex.Contract.Application.Features.Contracts.Commands.CreateContract
                 IsActive = request.IsActive,
 
                 CustomerId = request.CustomerId,
+                CityId=request.CityId,
+                ProvinceId=request.ProvinceId,
             };
             await _writeRepository.AddAsync(contractInfo, cancellationToken);
             await _writeRepository.SaveChangeAsync(cancellationToken);
