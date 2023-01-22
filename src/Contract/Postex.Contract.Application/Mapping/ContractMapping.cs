@@ -8,7 +8,7 @@ namespace Postex.Contract.Application.Mapping
     {
         public ContractMapping()
         {
-            CreateMap<ContractItemType, ContractItemTypeDto>();
+            CreateMap<ContractCod, ContractCodDto>();
         }
     }
 }
