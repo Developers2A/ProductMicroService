@@ -21,7 +21,17 @@ namespace Postex.Contract.Domain
         /// <summary>
         /// نرخ بازگشت
         /// </summary>
+        
+ 
         public double ReturnRate { get; set; }
+        /// <summary>
+        /// تاریخ شروع
+        /// </summary>
+        public DateTime StartDate { get; set; }
+        /// <summary>
+        /// تاریخ پایان
+        /// </summary>
+        public DateTime EndDate { get; set; }
         /// <summary>
         /// نرخ برداشت
         /// </summary>

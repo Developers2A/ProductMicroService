@@ -12,5 +12,7 @@ public class ContractCod : BaseEntity<int>
     public double FixedPercent { get; set; }
     public int FixedValue { get; set; }
     public string Description { get; set; }
+
+    public bool IsActice { get; set; }
 }
 

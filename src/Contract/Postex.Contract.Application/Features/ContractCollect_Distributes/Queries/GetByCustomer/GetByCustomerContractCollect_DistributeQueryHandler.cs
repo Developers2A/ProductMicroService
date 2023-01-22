@@ -56,7 +56,8 @@ namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Queri
                   ProvinceId = c.ProvinceId,
                   SalePrice = c.SalePrice,
                   BuyPrice = c.BuyPrice,                 
-                  Description = c.Description
+                  Description = c.Description,
+                  IsActice=c.IsActice
               })
               .ToListAsync(cancellationToken);
 
@@ -71,7 +72,8 @@ namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Queri
                     ProvinceId = c.ProvinceId,
                     SalePrice = c.SalePrice,
                     BuyPrice = c.BuyPrice,
-                    Description = c.Description
+                    Description = c.Description,
+                    IsActice = c.IsActice
                 })               
                 .ToListAsync(cancellationToken);
 

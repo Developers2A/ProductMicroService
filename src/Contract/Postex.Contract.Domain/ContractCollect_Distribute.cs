@@ -13,5 +13,6 @@ public class ContractCollect_Distribute : BaseEntity<int>
     public double SalePrice { get; set; }
     public double BuyPrice { get; set; }
     public string Description { get; set; }
+    public bool IsActice { get; set; }
 
 }

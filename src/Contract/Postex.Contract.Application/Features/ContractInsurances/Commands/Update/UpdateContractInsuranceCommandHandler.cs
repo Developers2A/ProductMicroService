@@ -35,6 +35,7 @@ namespace Postex.Contract.Application.Features.ContractInsurances.Command.Update
             contractInsurance.FixedValue = request.FixedValue;
             contractInsurance.FixedPercent = request.FixedPercent;
             contractInsurance.Description = request.Description;
+            contractInsurance.IsActice=request.IsActice;
 
             await _writeRepository.UpdateAsync(contractInsurance);
             await _writeRepository.SaveChangeAsync();

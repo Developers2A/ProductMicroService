@@ -30,7 +30,8 @@ namespace Postex.Contract.Application.Features.ContractBoxPrices.Queries
                     Height = c.BoxType.Height,
                     Width = c.BoxType.Width,
                     Length = c.BoxType.Length,
-                    Description=c.Description
+                    Description=c.Description,
+                    IsActive = c.IsActive,
 
                 })
                 .Where(c=> c.ContractInfoId == request.ContractInfoId)

@@ -28,6 +28,7 @@ namespace Postex.Contract.Application.Features.ContractBoxPrices.Command.Create
                 SalePrice = request.SalePrice,
                 BuyPrice = request.BuyPrice,
                 Description = request.Description,
+                IsActive = request.IsActive
             };
             await _writeRepository.AddAsync(contractBoxType);
             await _writeRepository.SaveChangeAsync(cancellationToken);

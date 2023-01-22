@@ -254,6 +254,9 @@ namespace Postex.Contract.Infrastructure.Migrations
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
@@ -327,6 +330,9 @@ namespace Postex.Contract.Infrastructure.Migrations
                     b.Property<int>("FromValue")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActice")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
@@ -389,6 +395,9 @@ namespace Postex.Contract.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
+
+                    b.Property<bool>("IsActice")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
@@ -603,6 +612,9 @@ namespace Postex.Contract.Infrastructure.Migrations
                     b.Property<int>("FromValue")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActice")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
@@ -808,6 +820,147 @@ namespace Postex.Contract.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Postex.Contract.Domain.ContractLeasing", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreatedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DailyDepositRateCeiling")
+                        .HasColumnType("int");
+
+                    b.Property<double>("DailyDepositeRate")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ModifiedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RemovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("ReturnRate")
+                        .HasColumnType("float");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("WithdrawRate")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("cn_ContractLeasings", (string)null);
+                });
+
+            modelBuilder.Entity("Postex.Contract.Domain.ContractLeasingWarranty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BankName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ContractLeasingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreatedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ModifiedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RemovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int>("WarrantyAmount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("WarrantyEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("WarrantyNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("WarrantyReqistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContractLeasingId");
+
+                    b.ToTable("cn_ContractLeasingWarranties", (string)null);
+                });
+
             modelBuilder.Entity("Postex.Contract.Domain.Customer", b =>
                 {
                     b.Property<int>("Id")
@@ -980,6 +1133,17 @@ namespace Postex.Contract.Infrastructure.Migrations
                     b.Navigation("Customer");
                 });
 
+            modelBuilder.Entity("Postex.Contract.Domain.ContractLeasingWarranty", b =>
+                {
+                    b.HasOne("Postex.Contract.Domain.ContractLeasing", "ContractLeasing")
+                        .WithMany("Warranties")
+                        .HasForeignKey("ContractLeasingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ContractLeasing");
+                });
+
             modelBuilder.Entity("Postex.Contract.Domain.ContractInfo", b =>
                 {
                     b.Navigation("ContractBoxPrices");
@@ -989,6 +1153,11 @@ namespace Postex.Contract.Infrastructure.Migrations
                     b.Navigation("ContractCollect_Distributes");
 
                     b.Navigation("ContractInsurances");
+                });
+
+            modelBuilder.Entity("Postex.Contract.Domain.ContractLeasing", b =>
+                {
+                    b.Navigation("Warranties");
                 });
 #pragma warning restore 612, 618
         }

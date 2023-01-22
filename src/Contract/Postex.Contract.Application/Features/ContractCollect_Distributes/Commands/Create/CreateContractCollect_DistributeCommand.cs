@@ -17,5 +17,6 @@ namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Comma
         public double SalePrice { get; set; }
         public double BuyPrice { get; set; }
         public string Description { get; set; }
+        public bool IsActice { get; set; }
     }
 }

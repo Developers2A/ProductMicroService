@@ -38,6 +38,7 @@ namespace Postex.Contract.Application.Features.ContractBoxPrices.Queries.GetByCu
                   Width = c.BoxType.Width,
                   Length = c.BoxType.Length,
                   Description = c.Description,
+                  IsActive = c.IsActive,
                   LevelPrice = "Default"
 
               })

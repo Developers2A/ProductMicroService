@@ -15,6 +15,7 @@ namespace Postex.Contract.Application.Features.ContractInsurances.Command
         public double FixedPercent { get; set; }
         public int FixedValue { get; set; }
         public string Description { get; set; }
+        public bool IsActice { get; set; }
 
     }
 }

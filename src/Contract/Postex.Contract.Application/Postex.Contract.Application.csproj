@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Postex.Contract.Domain\Postex.Contract.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\ContractLeasings\Queries\" />
-  </ItemGroup>
-
 </Project>

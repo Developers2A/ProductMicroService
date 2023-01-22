@@ -23,12 +23,15 @@ namespace Postex.Contract.Application.Features.ContractLeasings.Commands.Create
             var contractLeasing = new ContractLeasing()
             {
                 CustomerId = request.CustomerId,
+                StartDate = request.StartDate,
+                EndDate = request.EndDate,
                 IsActive = request.IsActive,
                 Amount = request.Amount,
                 DailyDepositeRate = request.DailyDepositeRate,
                 DailyDepositRateCeiling = request.DailyDepositRateCeiling,
                 ReturnRate = request.ReturnRate,
                 WithdrawRate = request.WithdrawRate,
+                Description=request.Description,
             };
             await writeRepository.AddAsync(contractLeasing);
             await writeRepository.SaveChangeAsync(cancellationToken);

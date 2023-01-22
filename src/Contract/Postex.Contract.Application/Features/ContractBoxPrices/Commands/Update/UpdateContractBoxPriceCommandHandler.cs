@@ -34,6 +34,7 @@ namespace Postex.Contract.Application.Features.ContractBoxPrices.Command.Update
             contractBoxType.SalePrice = request.SalePrice;
             contractBoxType.BuyPrice = request.BuyPrice;
             contractBoxType.Description= request.Description;
+            contractBoxType.IsActive = request.IsActive;
 
             await _writeRepository.UpdateAsync(contractBoxType);
             await _writeRepository.SaveChangeAsync();

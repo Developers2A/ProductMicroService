@@ -27,6 +27,7 @@ namespace Postex.Contract.Application.Features.ContractInsurances.Command
                 FixedPercent = request.FixedPercent,
                 FixedValue=request.FixedValue,
                 Description=request.Description,
+                IsActice=request.IsActice
             };
             await _writeRepositort.AddAsync(contractInsurance);
             await _writeRepositort.SaveChangeAsync(cancellationToken);

@@ -34,6 +34,7 @@ namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Comma
             contractCollect_Distribute.SalePrice = request.SalePrice;
             contractCollect_Distribute.BuyPrice = request.BuyPrice;
             contractCollect_Distribute.Description= request.Description;
+            contractCollect_Distribute.IsActice= request.IsActice;
 
             await _writeRepository.UpdateAsync(contractCollect_Distribute);
             await _writeRepository.SaveChangeAsync();

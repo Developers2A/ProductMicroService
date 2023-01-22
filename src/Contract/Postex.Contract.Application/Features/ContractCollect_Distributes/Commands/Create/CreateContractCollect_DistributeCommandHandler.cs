@@ -23,6 +23,7 @@ namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Comma
                 SalePrice = request.SalePrice,
                 BuyPrice = request.BuyPrice,
                 Description = request.Description,
+                IsActice=request.IsActice,
             };
             await _writeRepository.AddAsync(contractCollect_Distribute);
             await _writeRepository.SaveChangeAsync(cancellationToken);

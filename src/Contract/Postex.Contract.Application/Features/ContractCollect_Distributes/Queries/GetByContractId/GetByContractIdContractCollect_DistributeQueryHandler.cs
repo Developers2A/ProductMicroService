@@ -35,7 +35,8 @@ namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Queri
                     Height = c.BoxType.Height,
                     Width = c.BoxType.Width,
                     Length = c.BoxType.Length,
-                    Description=c.Description
+                    Description=c.Description,
+                    IsActice=c.IsActice,
                 })
                 .Where(c=> c.ContractInfoId == request.ContractInfoId)
                 .ToListAsync(cancellationToken);

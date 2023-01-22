@@ -16,5 +16,6 @@ namespace Postex.Contract.Application.Features.ContractBoxPrices.Command.Update
         public double SalePrice { get; set; }
         public double BuyPrice { get; set; }
         public string Description { get; set; }
+        public bool IsActive { get; set; }
     }
 }

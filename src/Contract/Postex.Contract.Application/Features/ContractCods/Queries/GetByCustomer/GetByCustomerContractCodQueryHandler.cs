@@ -32,6 +32,7 @@ namespace Postex.Contract.Application.Features.ContractCods.Queries.GetByCustome
                    FixedPercent = c.FixedPercent,
                    FixedValue = c.FixedValue,
                    Description = c.Description,
+                   IsActice=c.IsActice,
                    LevelPrice = "Customer"
                })
                .ToListAsync(cancellationToken);
@@ -51,6 +52,7 @@ namespace Postex.Contract.Application.Features.ContractCods.Queries.GetByCustome
                   FixedPercent = c.FixedPercent,
                   FixedValue = c.FixedValue,
                   Description = c.Description,
+                  IsActice = c.IsActice,
                   LevelPrice="City"
               })
               .ToListAsync(cancellationToken);
@@ -68,6 +70,7 @@ namespace Postex.Contract.Application.Features.ContractCods.Queries.GetByCustome
                FixedPercent = c.FixedPercent,
                FixedValue = c.FixedValue,
                Description = c.Description,
+               IsActice = c.IsActice,
                LevelPrice = "Default"
 
            })
