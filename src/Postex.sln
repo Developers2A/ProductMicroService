@@ -33,15 +33,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Product", "Product", "{7E6D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{503A475E-8CF4-41FD-B358-62DBB1BA07BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Domain", "Product\Product.Domain\Product.Domain.csproj", "{DE7C4A33-3D9C-48DB-88E9-EE217D2B2B14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.Product.Domain", "Product\Postex.Product.Domain\Postex.Product.Domain.csproj", "{DE7C4A33-3D9C-48DB-88E9-EE217D2B2B14}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Infrastructure", "Product\Product.Infrastructure\Product.Infrastructure.csproj", "{F92B3703-74D6-4BD8-9788-D4BC6364BF1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.Product.Infrastructure", "Product\Postex.Product.Infrastructure\Postex.Product.Infrastructure.csproj", "{F92B3703-74D6-4BD8-9788-D4BC6364BF1B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Application", "Product\Product.Application\Product.Application.csproj", "{0F51528B-9EA9-4848-B747-9A1F8D46FF88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.Product.Application", "Product\Postex.Product.Application\Postex.Product.Application.csproj", "{0F51528B-9EA9-4848-B747-9A1F8D46FF88}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Api", "Product\Product.Api\Product.Api.csproj", "{B309ADA1-B3C7-488C-B3AF-7C779B4BF0AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.Product.Api", "Product\Postex.Product.Api\Postex.Product.Api.csproj", "{B309ADA1-B3C7-488C-B3AF-7C779B4BF0AB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductCourier.Api", "Product\ProductCourier.Api\ProductCourier.Api.csproj", "{A279C3C4-798E-4546-858B-ADBD2E668A80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.ProductService.Api", "Product\Postex.ProductService.Api\Postex.ProductService.Api.csproj", "{A279C3C4-798E-4546-858B-ADBD2E668A80}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contract", "Contract", "{36C42113-A7D7-4B68-B50A-E91A9D717729}"
 EndProject

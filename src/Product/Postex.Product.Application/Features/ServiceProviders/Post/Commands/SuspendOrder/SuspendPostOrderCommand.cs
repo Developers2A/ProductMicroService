@@ -1,0 +1,11 @@
+﻿using Postex.Product.Application.Contracts;
+using Postex.Product.Application.Dtos.CourierServices.Post;
+using Postex.SharedKernel.Common;
+
+namespace Postex.Product.Application.Features.ServiceProviders.Post.Commands.SuspendOrder
+{
+    public class SuspendPostOrderCommand : ITransactionRequest<BaseResponse<List<PostSuspendOrderResponse>>>
+    {
+        public List<string> ParcelCodes { get; set; }
+    }
+}
