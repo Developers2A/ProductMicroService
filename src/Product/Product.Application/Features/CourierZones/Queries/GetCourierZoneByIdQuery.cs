@@ -26,7 +26,7 @@ namespace Product.Application.Features.CourierZones.Queries
                     {
                         Id = c.Id,
                         Name = c.Name,
-                        Code = c.Code,
+                        CityType = c.CityType,
                         CourierId = c.CourierId,
                     })
                     .FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);

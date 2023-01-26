@@ -4,9 +4,9 @@ using Product.Domain.ValueAddedPrices;
 
 namespace Product.Infrastructure.Data.Configurations.Common
 {
-    public class BoxPriceConfiguration : BaseEntityConfiguration<BoxPrice>
+    public class BoxPriceConfiguration : BaseEntityConfiguration<BoxSizePrice>
     {
-        public override void Configure(EntityTypeBuilder<BoxPrice> builder)
+        public override void Configure(EntityTypeBuilder<BoxSizePrice> builder)
         {
             base.Configure(builder);
 
@@ -22,7 +22,7 @@ namespace Product.Infrastructure.Data.Configurations.Common
             var createDate = new DateTime(2022, 12, 12, 12, 12, 0);
             return new object[]
             {
-                new BoxPrice {
+                new BoxSizePrice {
                     Id = 1,
                     Name = "سایز 1",
                     Height = 10,
@@ -32,7 +32,7 @@ namespace Product.Infrastructure.Data.Configurations.Common
                     SellPrice = 160000,
                     CreatedOn = createDate
                 },
-                   new BoxPrice
+                   new BoxSizePrice
                 {
                     Id = 2,
                     Name = "سایز 2",
@@ -44,7 +44,7 @@ namespace Product.Infrastructure.Data.Configurations.Common
                     SellPrice = 170000,
                     CreatedOn = createDate
                 },
-                new BoxPrice
+                new BoxSizePrice
                 {
                     Id = 3,
                     Name = "سایز 3",
@@ -56,7 +56,7 @@ namespace Product.Infrastructure.Data.Configurations.Common
                     SellPrice = 190000,
                     CreatedOn = createDate
                 },
-                new BoxPrice
+                new BoxSizePrice
                 {
                     Id = 4,
                     Name = "سایز 4",
@@ -68,7 +68,7 @@ namespace Product.Infrastructure.Data.Configurations.Common
                     SellPrice = 210000,
                     CreatedOn = createDate
                 },
-                new BoxPrice
+                new BoxSizePrice
                 {
                     Id = 5,
                     Name = "سایز 5",
@@ -80,7 +80,7 @@ namespace Product.Infrastructure.Data.Configurations.Common
                     SellPrice = 230000,
                     CreatedOn = createDate
                 },
-                new BoxPrice
+                new BoxSizePrice
                 {
                     Id = 6,
                     Name = "سایز 6",
@@ -92,7 +92,7 @@ namespace Product.Infrastructure.Data.Configurations.Common
                     SellPrice = 280000,
                     CreatedOn = createDate
                 },
-                new BoxPrice
+                new BoxSizePrice
                 {
                     Id = 7,
                     Name = "سایز 7",
@@ -104,7 +104,7 @@ namespace Product.Infrastructure.Data.Configurations.Common
                     SellPrice = 300000,
                     CreatedOn = createDate
                 },
-                new BoxPrice
+                new BoxSizePrice
                 {
                     Id = 8,
                     Name = "سایز 8",
@@ -116,7 +116,7 @@ namespace Product.Infrastructure.Data.Configurations.Common
                     SellPrice = 330000,
                     CreatedOn = createDate
                 },
-                new BoxPrice
+                new BoxSizePrice
                 {
                     Id = 9,
                     Name = "سایز 9",
@@ -128,7 +128,7 @@ namespace Product.Infrastructure.Data.Configurations.Common
                     SellPrice = 400000,
                     CreatedOn = createDate
                 },
-                new BoxPrice
+                new BoxSizePrice
                 {
                     Id = 10,
                     Name = " پاکت A5",
@@ -140,7 +140,7 @@ namespace Product.Infrastructure.Data.Configurations.Common
                     SellPrice = 150000,
                     CreatedOn = createDate
                 },
-                new BoxPrice
+                new BoxSizePrice
                 {
                     Id = 11,
                     Name = " پاکت A4",
@@ -152,7 +152,7 @@ namespace Product.Infrastructure.Data.Configurations.Common
                     SellPrice = 160000,
                     CreatedOn = createDate
                 },
-                new BoxPrice
+                new BoxSizePrice
                 {
                     Id = 12,
                     Name = " پاکت A3",

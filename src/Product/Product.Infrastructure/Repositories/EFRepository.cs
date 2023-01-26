@@ -115,7 +115,7 @@ namespace Product.Infrastructure.Repositories
 
         public async Task<TEntity> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await dbContext.Set<TEntity>().FindAsync(id);
+            return await dbContext.Set<TEntity>().FindAsync(id, cancellationToken);
         }
 
         //public Task<PagedList<TEntity>> GetPageAsync(int pageIndex, int pageSize, CancellationToken cancellationToken)

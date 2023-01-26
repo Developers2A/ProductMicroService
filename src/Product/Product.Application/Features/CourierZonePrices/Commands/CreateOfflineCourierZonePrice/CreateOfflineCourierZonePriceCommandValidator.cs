@@ -6,6 +6,7 @@ namespace Product.Application.Features.CourierZonePrices.Commands.CreateOfflineC
     {
         public CreatePostCourierZonePriceCommandValidator()
         {
+
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Product.Application.Mappings
             CreateMap<ValueAddedPrice, ValueAddedPriceDto>();
             CreateMap<Zone, ZoneDto>();
             CreateMap<Weight, WeightDto>();
-            CreateMap<BoxPrice, BoxPriceDto>();
+            CreateMap<BoxSizePrice, BoxPriceDto>();
             //CreateMap<Status, StatusDto>();
         }
     }

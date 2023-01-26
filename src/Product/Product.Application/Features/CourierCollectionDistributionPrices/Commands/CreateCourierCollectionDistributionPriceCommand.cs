@@ -3,7 +3,7 @@ using MediatR;
 using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Interfaces;
 using Product.Application.Contracts;
-using Product.Domain.Offlines;
+using Product.Domain.CollectionDistributionPrices;
 
 namespace Product.Application.Features.CourierCityTypePrices.Commands
 {
@@ -17,18 +17,24 @@ namespace Product.Application.Features.CourierCityTypePrices.Commands
 
         private class Handler : IRequestHandler<CreateCourierCollectionDistributionPriceCommand>
         {
-            private readonly IWriteRepository<CourierZoneCollectionDistributionPrice> _parcelCityWriteRepository;
+            private readonly IWriteRepository<CourierZoneCollectionDistributionPrice> _writeRepository;
 
-            public Handler(IWriteRepository<CourierZoneCollectionDistributionPrice> parcelCityWriteRepository)
+            public Handler(IWriteRepository<CourierZoneCollectionDistributionPrice> writeRepository)
             {
-                _parcelCityWriteRepository = parcelCityWriteRepository;
+                _writeRepository = writeRepository;
             }
 
             public async Task<Unit> Handle(CreateCourierCollectionDistributionPriceCommand request, CancellationToken cancellationToken)
             {
-                var courierZoneCollectionDistributionPrice = new CourierZoneCollectionDistributionPrice(request.BuyPrice, request.SellPrice, request.CourierZoneId, request.Volume);
-                await _parcelCityWriteRepository.AddAsync(courierZoneCollectionDistributionPrice);
-                await _parcelCityWriteRepository.SaveChangeAsync();
+                var courierZoneCollectionDistributionPrice = new CourierZoneCollectionDistributionPrice
+                {
+                    BuyPrice = request.BuyPrice,
+                    SellPrice = request.SellPrice,
+                    CourierZoneId = request.CourierZoneId,
+                    Volume = request.Volume
+                };
+                await _writeRepository.AddAsync(courierZoneCollectionDistributionPrice);
+                await _writeRepository.SaveChangeAsync();
                 return Unit.Value;
             }
         }

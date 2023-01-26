@@ -5,7 +5,6 @@ using Postex.SharedKernel.Interfaces;
 using Product.Application.Features.CourierZonePrices.Commands.CreateCourierZonePrice;
 using Product.Application.Features.CourierZonePrices.Commands.CreateCourierZonePrices;
 using Product.Application.Features.ServiceProviders.Chapar.Queries.GetPrice;
-using Product.Application.Features.Weights.Queries;
 using Product.Domain.Offlines;
 
 namespace Product.Application.Features.CourierZonePrices.Commands.CreateChaparCourierZonePrice
@@ -36,42 +35,57 @@ namespace Product.Application.Features.CourierZonePrices.Commands.CreateChaparCo
 
         private async Task SavePrices(List<CourierZonePriceTemplate> chaparTemplates)
         {
-            var courierZonePrices = new List<CreateCourierZonePriceCommand>();
-            var weights = await _mediator.Send(new GetWeightsQuery());
-
-            foreach (var item in chaparTemplates)
+            try
             {
-                for (int i = 1; i < 2; i++)
+                foreach (var template in chaparTemplates)
                 {
-                    foreach (var weight in weights)
+                    await CreateZonePrice(template);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private async Task CreateZonePrice(CourierZonePriceTemplate template)
+        {
+            var courierZonePrices = new List<CreateCourierZonePriceCommand>();
+            var weight = template.Weight;
+            var index = 0;
+            var method = "11";
+            if (template.CourierService.Code == CourierServiceCode.ChaparExpress)
+            {
+                method = "6";
+            }
+
+            while (weight <= 30000)
+            {
+                var price = await _mediator.Send(new GetChaparPriceQuery()
+                {
+                    Order = new ChaparOrder()
                     {
-                        var priceRequest = new GetChaparPriceQuery()
-                        {
-                            Order = new ChaparOrder()
-                            {
-                                Weight = (decimal)weight.PostageWeight * 1000,
-                                Value = 300000,
-                                Origin = item.FromCity.ToString(),
-                                Destination = item.ToCity.ToString(),
-                                Method = item.CourierService.Code == CourierServiceCode.Chapar ? "11" : "6"
-                            }
-                        };
-
-                        var price = await _mediator.Send(priceRequest);
-
-                        if (price.IsSuccess)
-                        {
-                            courierZonePrices.Add(new CreateCourierZonePriceCommand()
-                            {
-                                BuyPrice = price.Data.Objects.Order.Quote,
-                                SellPrice = 0,
-                                Weight = item.Weight,
-                                FromCourierZoneId = item.FromCourierZoneId,
-                                ToCourierZoneId = item.ToCourierZoneId,
-                                CourierServiceId = item.CourierServiceId
-                            });
-                        }
+                        Cod = 0,
+                        Origin = template.FromCity.ToString(),
+                        Destination = template.ToCity.ToString(),
+                        Value = 50000,
+                        Method = method
                     }
+                });
+                if (price.IsSuccess)
+                {
+                    courierZonePrices.Add(new CreateCourierZonePriceCommand()
+                    {
+                        BuyPrice = price.Data.Objects.Order.Quote,
+                        SellPrice = 0,
+                        Weight = weight,
+                        FromCourierZoneId = template.FromCourierZoneId,
+                        ToCourierZoneId = template.ToCourierZoneId,
+                        CourierServiceId = template.CourierServiceId
+                    });
+
+                    index += 1;
+                    weight = index == 1 ? 1000 : weight + 1000;
                 }
             }
 

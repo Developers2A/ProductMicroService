@@ -155,6 +155,61 @@ namespace Product.Infrastructure.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Product.Domain.CollectionDistributionPrices.CourierZoneCollectionDistributionPrice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("BuyPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("CourierZoneId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreatedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ModifiedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RemovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<decimal>("SellPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<double>("Volume")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourierZoneId");
+
+                    b.ToTable("CourierZoneCollectionDistributionPrices", (string)null);
+                });
+
             modelBuilder.Entity("Product.Domain.Couriers.Courier", b =>
                 {
                     b.Property<int>("Id")
@@ -1029,7 +1084,7 @@ namespace Product.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Code")
+                    b.Property<int>("CityType")
                         .HasColumnType("int");
 
                     b.Property<int>("CourierId")
@@ -1042,6 +1097,9 @@ namespace Product.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<decimal>("EntryPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
@@ -1123,61 +1181,6 @@ namespace Product.Infrastructure.Migrations
                     b.HasIndex("CourierZoneId");
 
                     b.ToTable("CourierZoneCityMappings", (string)null);
-                });
-
-            modelBuilder.Entity("Product.Domain.Offlines.CourierZoneCollectionDistributionPrice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<decimal>("BuyPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("CourierZoneId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ModifiedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("RemovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<decimal>("SellPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<double>("Volume")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourierZoneId");
-
-                    b.ToTable("CourierZoneCollectionDistributionPrices", (string)null);
                 });
 
             modelBuilder.Entity("Product.Domain.Offlines.CourierZonePrice", b =>
@@ -1471,6 +1474,51 @@ namespace Product.Infrastructure.Migrations
                     b.ToTable("PostShops", (string)null);
                 });
 
+            modelBuilder.Entity("Product.Domain.Posts.PostToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CreatedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ModifiedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RemovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PostTokens", (string)null);
+                });
+
             modelBuilder.Entity("Product.Domain.Users.User", b =>
                 {
                     b.Property<string>("Id")
@@ -1544,7 +1592,7 @@ namespace Product.Infrastructure.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("Product.Domain.ValueAddedPrices.BoxPrice", b =>
+            modelBuilder.Entity("Product.Domain.ValueAddedPrices.BoxSizePrice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1886,6 +1934,17 @@ namespace Product.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Product.Domain.CollectionDistributionPrices.CourierZoneCollectionDistributionPrice", b =>
+                {
+                    b.HasOne("Product.Domain.Offlines.CourierZone", "CourierZone")
+                        .WithMany()
+                        .HasForeignKey("CourierZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourierZone");
+                });
+
             modelBuilder.Entity("Product.Domain.Couriers.CourierCityMapping", b =>
                 {
                     b.HasOne("Product.Domain.Locations.City", "City")
@@ -2023,17 +2082,6 @@ namespace Product.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
-
-                    b.Navigation("CourierZone");
-                });
-
-            modelBuilder.Entity("Product.Domain.Offlines.CourierZoneCollectionDistributionPrice", b =>
-                {
-                    b.HasOne("Product.Domain.Offlines.CourierZone", "CourierZone")
-                        .WithMany()
-                        .HasForeignKey("CourierZoneId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("CourierZone");
                 });

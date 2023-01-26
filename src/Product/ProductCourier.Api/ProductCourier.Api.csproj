@@ -9,6 +9,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Hangfire.Core" Version="1.7.32" />
+		<PackageReference Include="Hangfire.AspNetCore" Version="1.7.32" />
+		<PackageReference Include="Hangfire.SqlServer" Version="1.7.32" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,13 +26,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Infrastructure\Postex.Infrastructure\Postex.Infrastructure\Postex.Infrastructure.csproj" />
-	  <ProjectReference Include="..\..\SharedKernel\Postex.SharedKernel\Postex.SharedKernel.csproj" />
-	  <ProjectReference Include="..\Product.Application\Product.Application.csproj" />
-	  <ProjectReference Include="..\Product.Infrastructure\Product.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\Postex.Infrastructure\Postex.Infrastructure\Postex.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\SharedKernel\Postex.SharedKernel\Postex.SharedKernel.csproj" />
+		<ProjectReference Include="..\Product.Application\Product.Application.csproj" />
+		<ProjectReference Include="..\Product.Infrastructure\Product.Infrastructure.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="logs\" />
+		<Folder Include="logs\" />
 	</ItemGroup>
 </Project>

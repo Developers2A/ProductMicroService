@@ -2,11 +2,6 @@
 using Postex.Contract.Infrastructure.Data;
 using Postex.SharedKernel.Interfaces;
 using Postex.SharedKernel.Paginations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postex.Contract.Infrastructure.Repositories
 {
@@ -120,7 +115,7 @@ namespace Postex.Contract.Infrastructure.Repositories
 
         public async Task<TEntity> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await dbContext.Set<TEntity>().FindAsync(id);
+            return await dbContext.Set<TEntity>().FindAsync(id, cancellationToken);
         }
 
         //public Task<PagedList<TEntity>> GetPageAsync(int pageIndex, int pageSize, CancellationToken cancellationToken)

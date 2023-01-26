@@ -136,7 +136,25 @@ namespace Product.Application.Features.Common.Commands.CreateOrder
                 Message = result.Message,
                 Data = new CreateOrderResponse()
                 {
-                    ParcelCode = result.Data.ParcelCode
+                    ParcelCode = result.Data != null ? result.Data.ParcelCode : "",
+                    Price = result.Data == null ? null : new CreateOrderPriceResponse()
+                    {
+                        COD = result.Data.Price.COD,
+                        DeliveryNotifyPrice = result.Data.Price.DeliveryNotifyPrice,
+                        DiscountAmount = result.Data.Price.DiscountAmount,
+                        DiscountPercent = result.Data.Price.DiscountPercent,
+                        EcommercePrice = result.Data.Price.EcommercePrice,
+                        ElectronicIDPrice = result.Data.Price.ElectronicIDPrice,
+                        InsurancePrice = result.Data.Price.InsurancePrice,
+                        NonStandardPrice = result.Data.Price.NonStandardPrice,
+                        PostFare = result.Data.Price.PostFare,
+                        PostPayFarePrice = result.Data.Price.PostPayFarePrice,
+                        PostPrice = result.Data.Price.PostPrice,
+                        SendPlacePrice = result.Data.Price.SendPlacePrice,
+                        Tax = result.Data.Price.Tax,
+                        TotalPrice = result.Data.Price.TotalPrice,
+                        SMSPrice = result.Data.Price.SMSPrice,
+                    }
                 }
             };
         }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Product.Domain.Offlines;
+using Product.Domain.CollectionDistributionPrices;
 using Product.Infrastructure.Data.Configurations.Common;
 
 namespace Product.Infrastructure.Data.Configurations.Offlines

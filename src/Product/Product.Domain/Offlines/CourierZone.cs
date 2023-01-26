@@ -9,7 +9,8 @@ namespace Product.Domain.Offlines
         public int CourierId { get; set; }
         public Courier Courier { get; set; }
         public string Name { get; set; }
-        public CityTypeCode Code { get; set; }
+        public CityTypeCode CityType { get; set; }
+        public decimal EntryPrice { get; set; }
 
         public ICollection<CourierZonePrice> FromCourierZonePrices { get; set; }
         public ICollection<CourierZonePrice> ToCourierZonePrices { get; set; }

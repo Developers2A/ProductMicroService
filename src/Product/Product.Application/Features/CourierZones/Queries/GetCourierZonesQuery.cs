@@ -10,7 +10,7 @@ namespace Product.Application.Features.CourierZones.Queries
     public class GetCourierZonesQuery : IRequest<List<CourierZoneDto>>
     {
         public List<int>? Ids { get; set; }
-        public CityTypeCode? Code { get; set; }
+        public CityTypeCode? CityTypeCode { get; set; }
 
         public class Handler : IRequestHandler<GetCourierZonesQuery, List<CourierZoneDto>>
         {
@@ -24,9 +24,9 @@ namespace Product.Application.Features.CourierZones.Queries
             public async Task<List<CourierZoneDto>> Handle(GetCourierZonesQuery request, CancellationToken cancellationToken)
             {
                 var courierZoneQuery = _courierZoneReadRepository.TableNoTracking;
-                if (request.Code.HasValue && request.Code > 0)
+                if (request.CityTypeCode.HasValue && request.CityTypeCode > 0)
                 {
-                    courierZoneQuery.Where(x => x.Code == (CityTypeCode)request.Code);
+                    courierZoneQuery.Where(x => x.CityType == (CityTypeCode)request.CityTypeCode);
                 }
                 if (request.Ids != null && request.Ids.Any())
                 {
@@ -36,8 +36,9 @@ namespace Product.Application.Features.CourierZones.Queries
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Code = c.Code,
+                    CityType = c.CityType,
                     CourierId = c.CourierId,
+                    EntryPrice = c.EntryPrice
                 }).OrderByDescending(c => c.Id).ToListAsync(cancellationToken);
 
                 return courierZoneDtos;

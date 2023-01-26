@@ -45,6 +45,15 @@ namespace Product.Application.Features.CourierZonePrices.Queries.GetOfflinePrice
                 }
             }
 
+            if (request.CourierCode == (int)CourierCode.All || request.CourierCode == (int)CourierCode.Chapar)
+            {
+                var postPrices = await PostPrice();
+                if (postPrices != null)
+                {
+                    response.ServicePrices.AddRange(postPrices);
+                }
+            }
+
             return response;
         }
 
@@ -91,6 +100,53 @@ namespace Product.Application.Features.CourierZonePrices.Queries.GetOfflinePrice
                 }).ToList();
             }
             return null;
+        }
+
+        private async Task<List<ServicePrice>> ChaparPrice()
+        {
+            int fromCityId = GetCityId(CourierCode.Post, _query.SenderCity);
+            var toCityId = GetCityId(CourierCode.Post, _query.ReceiverCity);
+            int fromZoneId = GetZoneId(CourierCode.Post, fromCityId);
+            int toZoneId = GetZoneId(CourierCode.Post, toCityId);
+            SetFromAndToZoneDefaultIfZero(ref fromZoneId, ref toZoneId);
+
+            if (fromZoneId > 0 && toZoneId > 0)
+            {
+                var postPrice = await _courierZonePriceReadRepository.TableNoTracking.Include(x => x.CourierService).Where(x => x.FromCourierZoneId == fromZoneId && x.ToCourierZoneId == toZoneId && x.Weight >= _query.Weight).GroupBy(x => x.CourierServiceId)
+                    .Select(group => new
+                    {
+                        CourierServiceId = group.Key,
+                        CourierService = group.FirstOrDefault().CourierService,
+                        Price = group.FirstOrDefault(x => x.Weight == group.Min(x => x.Weight))
+                    }).ToListAsync();
+
+                return postPrice.Select(x => new ServicePrice()
+                {
+                    CourierCode = (int)CourierCode.Chapar,
+                    CourierName = "چاپار",
+                    PostexPrice = Convert.ToInt64(x.Price.BuyPrice),
+                    TotalPrice = ChangePrice(x.CourierService, Convert.ToInt64(x.Price.BuyPrice))
+                }).ToList();
+            }
+            return null;
+        }
+
+        private long ChangePrice(CourierService courierService, long price)
+        {
+            double taxChangePercent = 0;
+            if (courierService == null)
+            {
+                return price;
+            }
+            else
+            {
+                double changePrice = price;
+                changePrice = price * courierService.PostexPercent / 100; // 4800
+                taxChangePercent = changePrice * 9 / 100; // 432  
+                changePrice = price + changePrice + taxChangePercent;
+
+                return Convert.ToInt64(changePrice);
+            }
         }
 
         private int GetZoneId(CourierCode courierCode, int cityId)

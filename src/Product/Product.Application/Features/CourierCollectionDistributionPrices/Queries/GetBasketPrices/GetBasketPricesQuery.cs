@@ -1,16 +1,10 @@
 ﻿using MediatR;
-using Postex.SharedKernel.Common.Enums;
-using Product.Application.Dtos.CollectionDistributions;
-using Product.Application.Dtos.CourierServices.Common;
+using Product.Application.Dtos.CollectionDistributionPrices.Basket;
 
 namespace Product.Application.Features.CourierCityTypePrices.Queries.GetBasketPrices
 {
-    public class GetBasketPricesQuery : IRequest<GetPriceResponse>
+    public class GetBasketPricesQuery : IRequest<PriceResponseDto>
     {
-        public List<ParcelPrice> Parcels { get; set; }
-        public CityTypeCode CityTypeId { get; set; }
-        public ServiceType ServiceId { get; set; }
-        public CourierCode CourierId { get; set; }
-        public string BasketId { get; set; }
+        public Basket Basket { get; set; }
     }
 }

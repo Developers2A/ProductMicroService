@@ -7,11 +7,11 @@ namespace Product.Application.Features.BoxPrices.Commands.UpdateBoxPrice
 {
     public class UpdateBoxPriceCommandHandler : IRequestHandler<UpdateBoxPriceCommand>
     {
-        private readonly IWriteRepository<BoxPrice> _boxPriceWriteRepository;
-        private readonly IReadRepository<BoxPrice> _boxPriceReadRepository;
+        private readonly IWriteRepository<BoxSizePrice> _boxPriceWriteRepository;
+        private readonly IReadRepository<BoxSizePrice> _boxPriceReadRepository;
 
-        public UpdateBoxPriceCommandHandler(IWriteRepository<BoxPrice> boxPriceWriteRepository,
-            IReadRepository<BoxPrice> boxPriceReadRepository)
+        public UpdateBoxPriceCommandHandler(IWriteRepository<BoxSizePrice> boxPriceWriteRepository,
+            IReadRepository<BoxSizePrice> boxPriceReadRepository)
         {
             _boxPriceWriteRepository = boxPriceWriteRepository;
             _boxPriceReadRepository = boxPriceReadRepository;
@@ -19,7 +19,7 @@ namespace Product.Application.Features.BoxPrices.Commands.UpdateBoxPrice
 
         public async Task<Unit> Handle(UpdateBoxPriceCommand request, CancellationToken cancellationToken)
         {
-            BoxPrice boxPrice = await _boxPriceReadRepository.GetByIdAsync(request.Id, cancellationToken);
+            BoxSizePrice boxPrice = await _boxPriceReadRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (boxPrice == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");

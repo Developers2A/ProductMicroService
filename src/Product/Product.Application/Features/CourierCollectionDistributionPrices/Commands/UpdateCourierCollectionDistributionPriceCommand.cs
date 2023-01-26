@@ -3,7 +3,7 @@ using MediatR;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 using Product.Application.Contracts;
-using Product.Domain.Offlines;
+using Product.Domain.CollectionDistributionPrices;
 
 namespace Product.Application.Features.CourierCityTypePrices.Commands
 {
@@ -20,7 +20,7 @@ namespace Product.Application.Features.CourierCityTypePrices.Commands
             private readonly IReadRepository<CourierZoneCollectionDistributionPrice> _courierCityTypePriceReadRepository;
 
             public Handler(IWriteRepository<CourierZoneCollectionDistributionPrice> parcelCityRepository,
-                IMediator mediator, IReadRepository<CourierZoneCollectionDistributionPrice> parcelCityReadRepository)
+                IReadRepository<CourierZoneCollectionDistributionPrice> parcelCityReadRepository)
             {
                 _courierCityTypePriceWriteRepository = parcelCityRepository;
                 _courierCityTypePriceReadRepository = parcelCityReadRepository;
@@ -33,7 +33,9 @@ namespace Product.Application.Features.CourierCityTypePrices.Commands
                 if (courierCityTypePrice == null)
                     throw new AppException("اطلاعات مورد نظر یافت شد");
 
-                courierCityTypePrice.Edit(request.BuyPrice, request.SellPrice, request.Volume);
+                courierCityTypePrice.SellPrice = request.SellPrice;
+                courierCityTypePrice.BuyPrice = request.BuyPrice;
+                courierCityTypePrice.Volume = request.Volume;
                 await _courierCityTypePriceWriteRepository.UpdateAsync(courierCityTypePrice);
                 await _courierCityTypePriceWriteRepository.SaveChangeAsync();
 

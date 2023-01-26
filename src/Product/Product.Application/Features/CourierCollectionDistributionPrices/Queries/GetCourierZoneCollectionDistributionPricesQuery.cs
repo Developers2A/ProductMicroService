@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Interfaces;
 using Product.Application.Dtos.CollectionDistributions;
-using Product.Domain.Offlines;
+using Product.Domain.CollectionDistributionPrices;
 
 namespace Product.Application.Features.CourierCityTypePrices.Queries
 {
@@ -25,7 +25,7 @@ namespace Product.Application.Features.CourierCityTypePrices.Queries
             public async Task<List<CourierCityTypePriceDto>> Handle(GetCourierZoneCollectionDistributionPricesQuery request, CancellationToken cancellationToken)
             {
                 List<CourierCityTypePriceDto> typeOfCityDto = new();
-                var courierCity = _courierCityTypePriceRepository.TableNoTracking.Include(x => x.CourierZone).ThenInclude(x => x.Courier)
+                var courierCity = _courierCityTypePriceRepository.TableNoTracking
                     .Where(x => x.CourierZoneId == request.CourierZoneId);
                 if (request.CourierCode > 0)
                 {

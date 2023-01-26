@@ -1,8 +1,7 @@
 ﻿using MediatR;
-using Postex.SharedKernel.Interfaces;
+using Postex.SharedKernel.Common.Enums;
 using Product.Application.Features.CourierZonePrices.Commands.CreateChaparCourierZonePrice;
 using Product.Application.Features.CourierZonePrices.Commands.CreatePostCourierZonePrice;
-using Product.Domain.Offlines;
 
 namespace Product.Application.Features.CourierZonePrices.Commands.CreateOfflineCourierZonePrice
 {
@@ -10,15 +9,21 @@ namespace Product.Application.Features.CourierZonePrices.Commands.CreateOfflineC
     {
         private readonly IMediator _mediator;
 
-        public CreateOfflineCourierZonePriceCommandHandler(IWriteRepository<CourierZonePrice> writeRepository, IReadRepository<CourierZonePriceTemplate> courierZonePriceTemplateRepository, IMediator mediator)
+        public CreateOfflineCourierZonePriceCommandHandler(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         public async Task<Unit> Handle(CreateOfflineCourierZonePriceCommand request, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new CreateChaparCourierZonePriceCommand());
-            await _mediator.Send(new CreatePostCourierZonePriceCommand());
+            if (request.CourierCode == (int)CourierCode.All || request.CourierCode == (int)CourierCode.Chapar)
+            {
+                await _mediator.Send(new CreateChaparCourierZonePriceCommand(), cancellationToken);
+            }
+            if (request.CourierCode == (int)CourierCode.All || request.CourierCode == (int)CourierCode.Post)
+            {
+                await _mediator.Send(new CreatePostCourierZonePriceCommand(), cancellationToken);
+            }
             return Unit.Value;
         }
     }

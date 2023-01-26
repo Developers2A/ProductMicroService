@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Postex.SharedKernel.Api;
 using Product.Api.Filters;
+using Product.Application.Dtos.CollectionDistributionPrices.Basket;
 using Product.Application.Dtos.CollectionDistributions;
 using Product.Application.Dtos.CourierServices.Common;
 using Product.Application.Features.Common.Queries.GetPrice;
 using Product.Application.Features.CourierCityTypePrices.Queries;
+using Product.Application.Features.CourierCityTypePrices.Queries.GetBasketPrices;
+using Product.Application.Features.CourierZonePrices.Commands.CreateOfflineCourierZonePrice;
 using Product.Application.Features.CourierZonePrices.Queries.GetOfflinePrices;
 
 namespace Product.Api.Controllers.v1
@@ -40,12 +43,19 @@ namespace Product.Api.Controllers.v1
             return await _mediator.Send(request);
         }
 
-        //[HttpGet("fetch-offline-prices")]
-        //public async Task FetchOfflinePrices()
-        //{
-        //    await _mediator.Send(new CreateOfflineCourierZonePriceCommand());
-        //}
+        [HttpPost("fetch-offline-prices")]
+        public async Task FetchOfflinePrices(CreateOfflineCourierZonePriceCommand createOfflineCourierZonePriceCommand)
+        {
+            await _mediator.Send(createOfflineCourierZonePriceCommand);
+        }
 
-
+        [HttpPost("basket-price")]
+        public async Task<ApiResult<PriceResponseDto>> BasketPrice(Basket basket)
+        {
+            return await _mediator.Send(new GetBasketPricesQuery()
+            {
+                Basket = basket
+            });
+        }
     }
 }

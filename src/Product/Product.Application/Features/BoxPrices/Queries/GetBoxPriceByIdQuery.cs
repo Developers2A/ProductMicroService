@@ -13,10 +13,10 @@ namespace Product.Application.Features.BoxPrices.Queries
 
         public class Handler : IRequestHandler<GetBoxPriceByIdQuery, BoxPriceDto>
         {
-            private readonly IReadRepository<BoxPrice> _boxPriceRepository;
+            private readonly IReadRepository<BoxSizePrice> _boxPriceRepository;
             private readonly IMapper _mapper;
 
-            public Handler(IReadRepository<BoxPrice> boxPriceRepository, IMapper mapper)
+            public Handler(IReadRepository<BoxSizePrice> boxPriceRepository, IMapper mapper)
             {
                 _boxPriceRepository = boxPriceRepository;
                 _mapper = mapper;
