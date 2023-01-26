@@ -15,5 +15,6 @@ namespace Postex.Contract.Application.Dtos
         public double PercentDiscount { get; set; }
         public bool IsActive { get; set; }
         public string Description { get; set; }
+        public string LevelPrice { get; set; }
     }
 }

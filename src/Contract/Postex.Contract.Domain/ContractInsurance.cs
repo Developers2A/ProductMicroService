@@ -14,5 +14,7 @@ public class ContractInsurance : BaseEntity<int>
     public int FixedValue { get; set; }
     public string Description { get; set; }
 
+    public bool IsActice { get; set; }
+
 
 }

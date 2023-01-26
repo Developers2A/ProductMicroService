@@ -31,6 +31,7 @@ namespace Postex.Contract.Application.Features.ContractCods.Queries
                     FixedPercent = c.FixedPercent,
                     FixedValue = c.FixedValue,
                     Description=c.Description,
+                    IsActice = c.IsActice,
                 })
                 .ToListAsync(cancellationToken);
             return cod;

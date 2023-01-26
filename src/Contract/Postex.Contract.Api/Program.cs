@@ -18,10 +18,10 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("V1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "Contract api"
+        Title = "Contract Api"
     });
 });
-//builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
 builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddApplicationCore(builder.Configuration);
 

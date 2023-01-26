@@ -40,8 +40,8 @@ namespace Postex.Contract.Application.Features.ContractItems.Commands.UpdateCont
             contractitem.BuyPrice = request.BuyPrice;
             contractitem.Description= request.Description;
 
-            await _writeRepository.UpdateAsync(contractitem);
-            await _writeRepository.SaveChangeAsync();
+            await _writeRepository.UpdateAsync(contractitem,cancellationToken);
+            await _writeRepository.SaveChangeAsync(cancellationToken);
 
             return Unit.Value;
         }

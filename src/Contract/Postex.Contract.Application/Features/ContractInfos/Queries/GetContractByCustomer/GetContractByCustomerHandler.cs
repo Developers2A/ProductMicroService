@@ -21,8 +21,10 @@ namespace Postex.Contract.Application.Features.Contracts.Queries.GetContractByCu
 
         public async Task<ContractInfoDto> Handle(GetContractByCustomer request, CancellationToken cancellationToken)
         {
-            var info = await _readRepository.Table.Include(c=> c.ContractInsurances).Include(c=> c.ContractCods)
-                                                         
+            var info = await _readRepository.Table
+                                            .Include(c=> c.ContractInsurances)
+                                            .Include(c=> c.ContractCods)
+                                            .Include(c=> c.ContractBoxPrices)                                                         
                 .Select(c => new ContractInfoDto
                 {
                     Id = c.Id,
@@ -33,8 +35,12 @@ namespace Postex.Contract.Application.Features.Contracts.Queries.GetContractByCu
                     EndDate = c.EndDate,
                     RegisterDate = c.RegisterDate,
                     CustomerId = c.CustomerId,
+                    CityId=c.CityId,
+                    ProvinceId  = c.ProvinceId,
+                    IsActive = c.IsActive,
                     ContractInsurances = c.ContractInsurances,
                     ContractCods = c.ContractCods,
+                    ContractBoxPrices = c.ContractBoxPrices
          
 
                 })

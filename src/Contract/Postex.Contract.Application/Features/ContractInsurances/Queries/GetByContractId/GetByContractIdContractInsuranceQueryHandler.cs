@@ -30,7 +30,9 @@ namespace Postex.Contract.Application.Features.ContractInsurances.Queries
                     ToValue = c.ToValue,
                     FixedPercent = c.FixedPercent,
                     FixedValue = c.FixedValue,
+                    IsActice=c.IsActice,
                     Description=c.Description,
+                    
                 })
                 .ToListAsync(cancellationToken);
             return  insurance;
