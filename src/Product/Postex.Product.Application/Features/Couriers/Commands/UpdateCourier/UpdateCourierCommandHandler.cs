@@ -5,12 +5,12 @@ using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.Couriers.Commands.UpdateCourier
 {
-    public class UpdateCourierServiceCommandHandler : IRequestHandler<UpdateCourierCommand>
+    public class UpdateCourierCommandHandler : IRequestHandler<UpdateCourierCommand>
     {
         private readonly IWriteRepository<Courier> _courierWriteRepository;
         private readonly IReadRepository<Courier> _courierReadRepository;
 
-        public UpdateCourierServiceCommandHandler(
+        public UpdateCourierCommandHandler(
             IWriteRepository<Courier> courierWriteRepository,
             IReadRepository<Courier> courierReadRepository)
         {
@@ -26,7 +26,7 @@ namespace Postex.Product.Application.Features.Couriers.Commands.UpdateCourier
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
 
             courier.Name = request.Name;
-
+            courier.Company = request.Company;
             await _courierWriteRepository.UpdateAsync(courier);
             await _courierWriteRepository.SaveChangeAsync();
 

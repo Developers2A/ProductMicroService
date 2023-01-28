@@ -10,8 +10,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
         private readonly IMediator _mediator;
         private GetDistributionAndCollectionPricesQuery _query;
 
-        public GetDistributionAndCollectionPricesQueryHandler(
-            IMediator mediator)
+        public GetDistributionAndCollectionPricesQueryHandler(IMediator mediator)
         {
             _mediator = mediator;
         }

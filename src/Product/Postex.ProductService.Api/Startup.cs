@@ -51,17 +51,18 @@ namespace Postex.ProductService.Api
 
         private static void ScheduleHangfireJobs(IServiceProvider serviceProvider)
         {
-            RecurringJob.AddOrUpdate(
-               "Run Everyday 12:00 AM",
-               () => serviceProvider.GetService<IHangFireJob>().SyncShops(),
-               //"0 0 * * *"
-               "*/15 * * * *"
-               );
+            //RecurringJob.AddOrUpdate(
+            //   "Run Everyday 12:00 AM",
+            //   () => serviceProvider.GetService<IHangFireJob>().SyncShops(),
+            //   //"0 0 * * *"
+            //   "*/15 * * * *"
+            //   );
 
             RecurringJob.AddOrUpdate(
               "Run Everyday 2:00 AM",
               () => serviceProvider.GetService<IHangFireJob>().SyncPrices(),
-              "0 2 * * *"
+              "*/5 * * * *"
+              //"0 2 * * *"
               );
         }
     }

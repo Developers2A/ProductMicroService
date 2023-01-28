@@ -13,20 +13,22 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Commands.CreateP
     public class CreatePostCourierZonePriceCommandHandler : IRequestHandler<CreatePostCourierZonePriceCommand>
     {
         private readonly IWriteRepository<CourierZonePrice> _courierZonePriceWriteRepository;
+        private readonly IReadRepository<CourierZonePrice> _courierZonePriceReadRepository;
         private readonly IReadRepository<CourierZonePriceTemplate> _courierZonePriceTemplateRepository;
         private readonly IMediator _mediator;
 
-        public CreatePostCourierZonePriceCommandHandler(IWriteRepository<CourierZonePrice> writeRepository, IReadRepository<CourierZonePriceTemplate> courierZonePriceTemplateRepository, IMediator mediator)
+        public CreatePostCourierZonePriceCommandHandler(IWriteRepository<CourierZonePrice> writeRepository, IReadRepository<CourierZonePriceTemplate> courierZonePriceTemplateRepository, IMediator mediator, IReadRepository<CourierZonePrice> courierZonePriceReadRepository)
         {
             _courierZonePriceWriteRepository = writeRepository;
             _courierZonePriceTemplateRepository = courierZonePriceTemplateRepository;
             _mediator = mediator;
+            _courierZonePriceReadRepository = courierZonePriceReadRepository;
         }
 
         public async Task<Unit> Handle(CreatePostCourierZonePriceCommand request, CancellationToken cancellationToken)
         {
             var postTemplates = await _courierZonePriceTemplateRepository.TableNoTracking.Include(x => x.CourierService)
-                .Where(x => x.CourierService.Courier.Code == CourierCode.Post && x.FromCourierZoneId == 11 && x.ToCourierZoneId == 11 && x.SameState == false).ToListAsync();
+                .Where(x => x.CourierService.Courier.Code == CourierCode.Post).ToListAsync();
             await SavePrices(postTemplates);
             return Unit.Value;
         }
@@ -84,27 +86,35 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Commands.CreateP
 
                 if (price.IsSuccess)
                 {
-                    courierZonePrices.Add(new CreateCourierZonePriceCommand()
+                    var existing = _courierZonePriceReadRepository.TableNoTracking.FirstOrDefaultAsync(x => x.BuyPrice == price.Data.PostPrice &&
+                    x.FromCourierZoneId == template.FromCourierZoneId && x.ToCourierZoneId == template.ToCourierZoneId && x.Weight == weight);
+                    if (existing != null)
                     {
-                        BuyPrice = price.Data.PostPrice,
-                        SellPrice = 0,
-                        Weight = weight,
-                        FromCourierZoneId = template.FromCourierZoneId,
-                        ToCourierZoneId = template.ToCourierZoneId,
-                        CourierServiceId = template.CourierServiceId,
-                        SameState = template.SameState
-                    });
+                        courierZonePrices.Add(new CreateCourierZonePriceCommand()
+                        {
+                            BuyPrice = price.Data.PostPrice,
+                            SellPrice = 0,
+                            Weight = weight,
+                            FromCourierZoneId = template.FromCourierZoneId,
+                            ToCourierZoneId = template.ToCourierZoneId,
+                            CourierServiceId = template.CourierServiceId,
+                            SameState = template.SameState
+                        });
+                    }
                 }
                 index += 1;
                 weight = index == 1 ? 1000 : weight + 1000;
             }
 
-            await _mediator.Send(
-                 new CreateCourierZonePricesCommand()
-                 {
-                     CourierZonePrices = courierZonePrices
-                 }
-            );
+            if (courierZonePrices.Any())
+            {
+                await _mediator.Send(
+                     new CreateCourierZonePricesCommand()
+                     {
+                         CourierZonePrices = courierZonePrices
+                     }
+                );
+            }
         }
     }
 }

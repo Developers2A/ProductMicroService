@@ -48,9 +48,9 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
                 var basketNoCancel = new Basket()
                 {
                     BasketId = basket.BasketId,
-                    CourierId = basket.CourierId,
-                    CityTypeId = basket.CityTypeId,
-                    ServiceId = basket.ServiceId,
+                    CourierCode = basket.CourierCode,
+                    CityTypeCode = basket.CityTypeCode,
+                    ServiceCode = basket.ServiceCode,
                     Parcels = basket.Parcels.Where(x => x.IsCanceled == false).ToList()
                 };
 
@@ -159,14 +159,14 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
         private CollectionDistributionPriceDto GetMaxVolume(Basket basket)
         {
             var price = _query.CollectionDistributionPrices.Where(x =>
-               x.CityType == basket.CityTypeId).LastOrDefault()!;
+               x.CityType == basket.CityTypeCode).LastOrDefault()!;
             return price;
         }
 
         private BoxSizeDto GetPriceByVolume(double volumeOfAllItemInBasket)
         {
             var price = _query.CollectionDistributionPrices.Where(x =>
-                x.CityType == _query.Basket.CityTypeId &&
+                x.CityType == _query.Basket.CityTypeCode &&
                 x.Volume >= volumeOfAllItemInBasket).FirstOrDefault();
 
             return new BoxSizeDto()
@@ -180,7 +180,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
         {
             var cityTypes = await _mediator.Send(new GetCourierZonesQuery()
             {
-                CityTypeCode = _query.Basket.CityTypeId
+                CityTypeCode = _query.Basket.CityTypeCode
             });
             if (cityTypes != null && cityTypes.Any())
             {
@@ -264,11 +264,11 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             }
 
             //  مجانی شدن جمع آوری برای 10 بسته در هر سبد سفارش برای پیکهاب ، لینک اکپرس ، اسپید و تعارف
-            if (basket.Parcels.Count >= 10 && (basket.CourierId == CourierCode.Paykhub ||
-                                               basket.CourierId == CourierCode.Taroff ||
-                                               basket.CourierId == CourierCode.Link ||
-                                               basket.CourierId == CourierCode.Speed ||
-                                               basket.CourierId == CourierCode.PishroPost))
+            if (basket.Parcels.Count >= 10 && (basket.CourierCode == CourierCode.Paykhub ||
+                                               basket.CourierCode == CourierCode.Taroff ||
+                                               basket.CourierCode == CourierCode.Link ||
+                                               basket.CourierCode == CourierCode.Speed ||
+                                               basket.CourierCode == CourierCode.PishroPost))
             {
                 response.CollectionPrice = 0;
             }

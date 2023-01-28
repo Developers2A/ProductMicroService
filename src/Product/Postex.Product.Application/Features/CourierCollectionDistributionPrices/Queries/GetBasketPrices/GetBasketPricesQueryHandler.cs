@@ -30,7 +30,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
                 return basketValidate;
             }
 
-            switch (_basket.ServiceId)
+            switch (_basket.ServiceCode)
             {
                 case ServiceType.DistributionAndCollectionService:
                     {
@@ -115,7 +115,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
 
             _courierZoneCollectionDistributionPrices = await _mediator.Send(new GetCourierZoneCollectionDistributionPricesFilterQuery()
             {
-                CourierCode = _basket.CourierId
+                CourierCode = _basket.CourierCode
             });
 
             if (_courierZoneCollectionDistributionPrices == null || !_courierZoneCollectionDistributionPrices.Any())
@@ -147,7 +147,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
                 }
             }
 
-            if (!_courierZoneCollectionDistributionPrices.Any(x => x.CityType == _basket.CityTypeId))
+            if (!_courierZoneCollectionDistributionPrices.Any(x => x.CityType == _basket.CityTypeCode))
             {
                 response.ErrorResponse = "کوریر در شهر درخواستی سرویس نمی دهد ";
                 response.CollectionPrice = null;

@@ -65,7 +65,6 @@ namespace Postex.Product.Application.Features.Common.Commands.CancelOrder
 
         private async Task<BaseResponse<CancelOrderResponse>> CancelSpeedOrder()
         {
-
             var result = await _mediator.Send(new CancelSpeedOrderCommand()
             {
                 Barcode = Convert.ToInt64(_command.TrackCode)
@@ -73,14 +72,13 @@ namespace Postex.Product.Application.Features.Common.Commands.CancelOrder
 
             return new BaseResponse<CancelOrderResponse>()
             {
-                IsSuccess = true,
-                Message = "success"
+                IsSuccess = result.IsSuccess,
+                Message = result.Message
             };
         }
 
         private async Task<BaseResponse<CancelOrderResponse>> CancelTaroffOrder()
         {
-
             var result = await _mediator.Send(new CancelTaroffOrderCommand()
             {
                 OrderId = Convert.ToInt32(_command.TrackCode)
@@ -109,7 +107,6 @@ namespace Postex.Product.Application.Features.Common.Commands.CancelOrder
 
         private async Task<BaseResponse<CancelOrderResponse>> CancelPishroPostOrder()
         {
-
             var result = await _mediator.Send(new CancelPishroPostOrderCommand()
             {
                 ConsignmentNo = _command.TrackCode
