@@ -54,7 +54,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Commands.CreateP
             var weight = template.Weight;
             var index = 0;
 
-            var postShop = await _mediator.Send(new GetPostShopByCityCodeQuery()
+            var postShop = await _mediator.Send(new GetPostShopsQuery()
             {
                 CityCode = template.FromCity
             });
@@ -78,7 +78,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Commands.CreateP
                     CollectNeed = false,
                     NonStandardPackage = false,
                     Weight = weight,
-                    ShopID = postShop.ShopId,
+                    ShopID = postShop.FirstOrDefault()!.ShopId,
                     PayTypeID = 1,
                     SMSService = false,
                     ParcelValue = 50000

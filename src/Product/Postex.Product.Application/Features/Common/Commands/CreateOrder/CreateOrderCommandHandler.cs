@@ -210,15 +210,11 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 
         private async Task<int> GetShopIdBySenderMobile()
         {
-            var postShops = await _mediator.Send(new GetPostShopsQuery()
+            return await _mediator.Send(new GetPostShopIdQuery()
             {
-                Mobile = _command.SenderMobile
+                Mobile = _command.SenderMobile,
+                CityCode = _command.SenderCityCode,
             });
-            if (postShops.Any())
-            {
-                return postShops.FirstOrDefault()!.ShopId;
-            }
-            return 0;
         }
 
         private int GetPostServiceId()

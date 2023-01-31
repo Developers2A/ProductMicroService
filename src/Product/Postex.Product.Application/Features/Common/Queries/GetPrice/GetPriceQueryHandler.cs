@@ -223,15 +223,10 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 
         private async Task<int> GetShopId(int cityCode)
         {
-            var shop = await _mediator.Send(new GetPostShopByCityCodeQuery()
+            return await _mediator.Send(new GetPostShopIdQuery()
             {
                 CityCode = cityCode,
             });
-            if (shop == null)
-            {
-                return 0;
-            }
-            return shop.ShopId;
         }
 
         public async Task<ServicePrice> MahexPrice(GetPriceQuery request)

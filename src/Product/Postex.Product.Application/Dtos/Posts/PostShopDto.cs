@@ -1,4 +1,4 @@
-﻿namespace Postex.Product.Application.Dtos.PostShops
+﻿namespace Postex.Product.Application.Dtos.Posts
 {
     public class PostShopDto
     {

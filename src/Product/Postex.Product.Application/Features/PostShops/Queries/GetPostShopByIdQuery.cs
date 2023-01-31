@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Product.Application.Dtos.PostShops;
+using Postex.Product.Application.Dtos.Posts;
 using Postex.Product.Domain.Posts;
 using Postex.SharedKernel.Interfaces;
 
@@ -16,9 +16,9 @@ namespace Postex.Product.Application.Features.PostShops.Queries
             private readonly IReadRepository<PostShop> _postShopRepository;
             private readonly IMapper _mapper;
 
-            public Handler(IReadRepository<PostShop> courierRepository, IMapper mapper)
+            public Handler(IReadRepository<PostShop> postShopRepository, IMapper mapper)
             {
-                _postShopRepository = courierRepository;
+                _postShopRepository = postShopRepository;
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Product.Application.Dtos.PostShops;
+using Postex.Product.Application.Dtos.Posts;
 using Postex.Product.Domain.Posts;
 using Postex.SharedKernel.Interfaces;
 
@@ -10,6 +10,7 @@ namespace Postex.Product.Application.Features.PostShops.Queries
     public class GetPostShopsQuery : IRequest<List<PostShopDto>>
     {
         public string? Mobile { get; set; }
+        public int? CityCode { get; set; }
 
         public class Handler : IRequestHandler<GetPostShopsQuery, List<PostShopDto>>
         {
@@ -28,6 +29,10 @@ namespace Postex.Product.Application.Features.PostShops.Queries
                 if (!string.IsNullOrEmpty(request.Mobile))
                 {
                     postShopQuery = postShopQuery.Where(x => x.Mob == request.Mobile);
+                }
+                if (request.CityCode.HasValue && request.CityCode > 0)
+                {
+                    postShopQuery = postShopQuery.Where(x => x.CityCode == request.CityCode && x.AdminAccepet);
                 }
                 var postShops = await postShopQuery.OrderByDescending(c => c.Id)
                     .ToListAsync(cancellationToken);

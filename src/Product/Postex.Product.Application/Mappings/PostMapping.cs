@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
-using Postex.Product.Application.Dtos.PostShops;
+using Postex.Product.Application.Dtos.Posts;
 using Postex.Product.Domain.Posts;
 
 namespace Postex.Product.Application.Mappings
 {
-    public class PostShopMapping : Profile
+    public class PostMapping : Profile
     {
-        public PostShopMapping()
+        public PostMapping()
         {
             CreateMap<PostShopDto, PostShop>().ReverseMap();
+            CreateMap<PostCityShopDto, PostCityShop>().ReverseMap();
         }
     }
 }
