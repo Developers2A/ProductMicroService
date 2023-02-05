@@ -55,6 +55,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.Contract.Api", "Cont
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.Product.UnitTest", "Product\Postex.Product.UnitTest\Postex.Product.UnitTest.csproj", "{22FEA485-958D-40AB-93BF-DA10CE406937}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProfileManagement", "ProfileManagement", "{7F5996AA-611E-4F60-BD36-2A55D757B2E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.ProfileManagement.Domain", "ProfileManagement\Postex.ProfileManagement.Domain\Postex.ProfileManagement.Domain.csproj", "{6F070B34-6ABD-446B-8D7A-0EE4B001C7B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.ProfileManagement.Application", "ProfileManagement\Postex.ProfileManagement.Application\Postex.ProfileManagement.Application.csproj", "{C0664479-D94A-4097-9A24-ACC728712890}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.ProfileManagement.Infrastructure", "ProfileManagement\Postex.ProfileManagement.Infrastructure\Postex.ProfileManagement.Infrastructure.csproj", "{C57DF9ED-9EF3-4E00-B5BD-CBDEC1BB2C54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.ProfileManagement.Api", "ProfileManagement\Postex.ProfileManagement.Api\Postex.ProfileManagement.Api.csproj", "{7EACB7D8-9567-4603-9CD7-48601056C346}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +151,22 @@ Global
 		{22FEA485-958D-40AB-93BF-DA10CE406937}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22FEA485-958D-40AB-93BF-DA10CE406937}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22FEA485-958D-40AB-93BF-DA10CE406937}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F070B34-6ABD-446B-8D7A-0EE4B001C7B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F070B34-6ABD-446B-8D7A-0EE4B001C7B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F070B34-6ABD-446B-8D7A-0EE4B001C7B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F070B34-6ABD-446B-8D7A-0EE4B001C7B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0664479-D94A-4097-9A24-ACC728712890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0664479-D94A-4097-9A24-ACC728712890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0664479-D94A-4097-9A24-ACC728712890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0664479-D94A-4097-9A24-ACC728712890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C57DF9ED-9EF3-4E00-B5BD-CBDEC1BB2C54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C57DF9ED-9EF3-4E00-B5BD-CBDEC1BB2C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C57DF9ED-9EF3-4E00-B5BD-CBDEC1BB2C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C57DF9ED-9EF3-4E00-B5BD-CBDEC1BB2C54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EACB7D8-9567-4603-9CD7-48601056C346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EACB7D8-9567-4603-9CD7-48601056C346}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EACB7D8-9567-4603-9CD7-48601056C346}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EACB7D8-9567-4603-9CD7-48601056C346}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -166,6 +192,10 @@ Global
 		{5C9809C0-A0F5-43FC-A087-08A6846DC397} = {36C42113-A7D7-4B68-B50A-E91A9D717729}
 		{51A4548F-7FD1-4847-B86F-3488AC798348} = {36C42113-A7D7-4B68-B50A-E91A9D717729}
 		{22FEA485-958D-40AB-93BF-DA10CE406937} = {7E6D07B5-2315-49F5-BAA8-9C80EEAA5B73}
+		{6F070B34-6ABD-446B-8D7A-0EE4B001C7B7} = {7F5996AA-611E-4F60-BD36-2A55D757B2E8}
+		{C0664479-D94A-4097-9A24-ACC728712890} = {7F5996AA-611E-4F60-BD36-2A55D757B2E8}
+		{C57DF9ED-9EF3-4E00-B5BD-CBDEC1BB2C54} = {7F5996AA-611E-4F60-BD36-2A55D757B2E8}
+		{7EACB7D8-9567-4603-9CD7-48601056C346} = {7F5996AA-611E-4F60-BD36-2A55D757B2E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C68AB3D0-1A10-4000-9B35-E35F513BF374}
