@@ -14,6 +14,12 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                 .NotNull().NotEmpty().WithMessage(" نام خانوادگی گیرنده الزامی میباشد");
             RuleFor(p => p.ReceiverMobile)
                 .NotNull().NotEmpty().WithMessage(" شماره موبایل گیرنده الزامی میباشد");
+            RuleFor(p => p.Width)
+               .NotNull().NotEmpty().GreaterThan(0).WithMessage(" عرض بسته الزامی میباشد");
+            RuleFor(p => p.Height)
+               .NotNull().NotEmpty().GreaterThan(0).WithMessage(" ارتفاع بسته الزامی میباشد");
+            RuleFor(p => p.Length)
+               .NotNull().NotEmpty().GreaterThan(0).WithMessage(" طول بسته الزامی میباشد");
         }
     }
 }

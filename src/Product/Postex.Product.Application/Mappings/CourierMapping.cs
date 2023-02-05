@@ -27,7 +27,7 @@ namespace Postex.Product.Application.Mappings
             CreateMap<Zone, ZoneDto>();
             CreateMap<Weight, WeightDto>();
             CreateMap<BoxSizePrice, BoxPriceDto>();
-            //CreateMap<Status, StatusDto>();
+            CreateMap<BoxSizePrice, BoxSizeDto>();
         }
     }
 }

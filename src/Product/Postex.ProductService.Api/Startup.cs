@@ -41,7 +41,10 @@ namespace Postex.ProductService.Api
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseCustomHangfire(env, Configuration);
-            ScheduleHangfireJobs(serviceProvider);
+            if (!env.IsDevelopment())
+            {
+                ScheduleHangfireJobs(serviceProvider);
+            }
 
             app.UseEndpoints(config =>
             {

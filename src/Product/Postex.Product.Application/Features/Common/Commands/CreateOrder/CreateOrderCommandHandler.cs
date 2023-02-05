@@ -15,6 +15,7 @@ using Postex.Product.Application.Features.ServiceProviders.Post.Commands.CreateO
 using Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetPrice;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Common.Enums;
+using Postex.SharedKernel.Exceptions;
 
 namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 {
@@ -54,11 +55,6 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                 return await CreateKbkOrder();
             }
             return await CreatePeykOrder();
-            return new BaseResponse<CreateOrderResponse>()
-            {
-                IsSuccess = false,
-                Message = "برای این کوریر ثبت سفارش پیاده سازی نشده است"
-            };
         }
 
         public async Task<List<CourierCityMappingDto>> GetCourierCityMapping(CourierCode courierCode)
@@ -115,7 +111,11 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 
         private async Task<BaseResponse<CreateOrderResponse>> CreatePostOrder()
         {
-            var shopId = await GetShopIdBySenderMobile();
+            var shopId = await GetShopIdByUserName();
+            if (shopId == 0)
+            {
+                throw new AppException("برای این فرستنده شاپ یافت نشد");
+            }
             GetPostPriceQuery getPostPriceQuery = CreatePostGetPriceQuery(shopId);
             var getPostPrice = await _mediator.Send(getPostPriceQuery);
 
@@ -184,7 +184,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                 ShopID = priceQuery.ShopID,
                 PayTypeID = priceQuery.PayTypeID,
                 CollectNeed = true,
-                NonStandardPackage = false,
+                NonStandardPackage = _command.IsLiquidOrBroken,
                 ServiceTypeID = priceQuery.ServiceTypeID
             };
             return createPostOrderCommand;
@@ -203,16 +203,20 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             var city = _courierCityMappings.FirstOrDefault(x => x.Courier.Code == courierCode && x.Code == Convert.ToInt32(cityId));
             if (city == null)
             {
-                return "0";
+                throw new AppException("نگاشت شهر به کوریر درخواستی یافت نشد");
             }
             return city.MappedCode;
         }
 
-        private async Task<int> GetShopIdBySenderMobile()
+        private async Task<int> GetShopIdByUserName()
         {
+            if (string.IsNullOrEmpty(_command.UserName))
+            {
+                throw new AppException("نام کاربری الزامی می باشد");
+            }
             return await _mediator.Send(new GetPostShopIdQuery()
             {
-                Mobile = _command.SenderMobile,
+                Mobile = _command.UserName,
                 CityCode = _command.SenderCityCode,
             });
         }

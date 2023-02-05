@@ -6,6 +6,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 {
     public class CreateOrderCommand : ITransactionRequest<BaseResponse<CreateOrderResponse>>
     {
+        public string? UserName { get; set; }
         public int CourierServiceCode { get; set; }
         public int PayType { get; set; }
         public string? ParcelId { get; set; }
@@ -42,5 +43,6 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
         public decimal Length { get; set; }
         public DateTime DeliveryDate { get; set; }
         public DateTime PickupDate { get; set; }
+        public bool IsLiquidOrBroken { get; set; }
     }
 }
