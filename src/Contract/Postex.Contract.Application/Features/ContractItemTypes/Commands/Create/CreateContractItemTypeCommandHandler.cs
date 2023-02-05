@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.CreateContractItemType
 {
-    public class CreateContractItemTypeCommandHandler : IRequestHandler<CreateContractItemTypeCommand>
+    public class CreateContractItemTypeCommandHandler : IRequestHandler<CreateContractItemTypeCommand, ContractItemType>
     {
         private readonly IWriteRepository<ContractItemType> _writeRepository;
         private readonly IMapper _mapper;
@@ -22,9 +22,21 @@ namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.Create
             this._mapper = mapper;
         }
 
-        public async Task<Unit> Handle(CreateContractItemTypeCommand request, CancellationToken cancellationToken)
+        //public async Task<Unit> Handle(CreateContractItemTypeCommand request, CancellationToken cancellationToken)
+        //{
+        //    //var contractItemType = _mapper.Map<ContractItemType>(request);
+        //    var contractItemType = new ContractItemType
+        //    {
+        //        ContractTypeCode = request.ContractTypeCode,
+        //        ContractTypeName = request.ContractTypeName
+        //    };
+        //    await _writeRepository.AddAsync(contractItemType, cancellationToken);
+        //    await _writeRepository.SaveChangeAsync(cancellationToken);
+        //    return Unit.Value;
+        //}
+
+        async  Task<ContractItemType> IRequestHandler<CreateContractItemTypeCommand, ContractItemType>.Handle(CreateContractItemTypeCommand request, CancellationToken cancellationToken)
         {
-             //var contractItemType = _mapper.Map<ContractItemType>(request);
             var contractItemType = new ContractItemType
             {
                 ContractTypeCode = request.ContractTypeCode,
@@ -32,7 +44,7 @@ namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.Create
             };
             await _writeRepository.AddAsync(contractItemType, cancellationToken);
             await _writeRepository.SaveChangeAsync(cancellationToken);
-            return Unit.Value;
+            return contractItemType;
         }
     }
 }
