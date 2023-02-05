@@ -8,7 +8,7 @@ namespace Postex.ProductService.Api
         {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
-                .WriteTo.File("logs/log-.log", rollingInterval: RollingInterval.Hour)
+                .WriteTo.File(/*new CompactJsonFormatter(), */"logs/log-.log", rollingInterval: RollingInterval.Hour)
                 .CreateLogger();
 
             try
