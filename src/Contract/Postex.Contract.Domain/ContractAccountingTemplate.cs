@@ -13,7 +13,7 @@ namespace Postex.Contract.Domain
         public ContractInfo ContractInfo { get; set; }
         public string ContractDetailType { get; set; }
         public int ContractDetailId { get; set; }
-        public int AccountId { get; set; }
+        public int CustomerId { get; set; }
         public double PercentValue { get; set; }
         public int FixedValue { get; set; }
         public string Description { get; set; }
