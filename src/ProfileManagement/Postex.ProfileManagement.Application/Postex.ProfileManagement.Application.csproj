@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Postex.ProfileManagement.Domain\Postex.ProfileManagement.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
