@@ -2,7 +2,7 @@
 
 namespace Postex.ProfileManagement.Domain
 {
-    public class Customer : BaseEntity<int>
+    public class Customer :  BaseEntity<int>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -11,6 +11,6 @@ namespace Postex.ProfileManagement.Domain
         public string Email { get; set; }
         public int MobileNo { get; set; }
         public string PostalCode { get; set; }
-        public bool isShahkarValidate  { get; set; }
+        public bool isShahkarValidate { get; set; }
     }
 }
