@@ -21,7 +21,7 @@ namespace Postex.Contract.Application.Features.ContractCods.Queries.GetByCustome
         }
         public async Task<List<ContractCodDto>> Handle(GetByCustomerContractCodQuery request, CancellationToken cancellationToken)
         {
-            var codCus = await _readRepository.Table
+            var codCus = await _readRepository.Table.AsNoTracking()
                .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == request.CustomerId)
                .Select(c => new ContractCodDto
                {

@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\SharedKernel\Postex.SharedKernel\Postex.SharedKernel.csproj" />
+    <ProjectReference Include="..\Postex.ProfileManagement.Domain\Postex.ProfileManagement.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
