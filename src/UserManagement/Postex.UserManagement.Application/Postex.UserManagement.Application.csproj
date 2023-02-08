@@ -18,6 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\Product\Postex.Product.Infrastructure\Postex.Product.Infrastructure.csproj" />
 		<ProjectReference Include="..\..\SharedKernel\Postex.SharedKernel\Postex.SharedKernel.csproj" />
 		<ProjectReference Include="..\Postex.UserManagement.Domain\Postex.UserManagement.Domain.csproj" />
 	</ItemGroup>
