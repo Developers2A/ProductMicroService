@@ -12,5 +12,7 @@ namespace Postex.ProfileManagement.Domain
         public int MobileNo { get; set; }
         public string PostalCode { get; set; }
         public bool isShahkarValidate { get; set; }
+        public int UserId { get; set; }
+        public bool IsActive { get; set; }
     }
 }
