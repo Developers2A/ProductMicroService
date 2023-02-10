@@ -23,7 +23,7 @@ namespace Postex.ProfileManagement.Application.Mapping
             CreateMap<CreateCustomerCodCommand, CustomerCod>();
             CreateMap<UpdateCustomerCodCommand, CustomerCod>();
 
-            CreateMap<CustomerCod, CustomerDto>();
+            CreateMap<CustomerCod, CustomerCodDto>();
 
             CreateMap<CreateCustomerInvoiceInfoCommand, CustomerInvoiceInfo>();
             CreateMap<UpdateCustomerInvoiceInfoCommand, CustomerInvoiceInfo>();

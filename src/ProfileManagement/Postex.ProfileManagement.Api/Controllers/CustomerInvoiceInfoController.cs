@@ -1,8 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Postex.ProfileManagement.Application.Dtos;
 using Postex.ProfileManagement.Application.Features.CustomerInvoiceInfos.Commands.Create;
 using Postex.ProfileManagement.Application.Features.CustomerInvoiceInfos.Commands.Update;
 using Postex.ProfileManagement.Application.Features.CustomerInvoiceInfos.Queries;
+using Postex.SharedKernel.Api;
 
 namespace Postex.ProfileManagement.Api.Controllers
 {
@@ -26,14 +28,24 @@ namespace Postex.ProfileManagement.Api.Controllers
             return Ok(await mediator.Send(command));
         }
         [HttpGet("GetById")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ApiResult<CustomerInvoiceInfoDto>> GetById(int id)
         {
-            return Ok(await mediator.Send( new GetByIdQuery{ Id=id}));
+            var result =await mediator.Send( new GetByIdQuery{ Id=id});
+            if (result == null)
+            {
+                return new ApiResult<CustomerInvoiceInfoDto>(true, null, "اطلاعاتی پیدا نشد");
+            }
+            return new ApiResult<CustomerInvoiceInfoDto>(true, result, "");
         }
         [HttpGet("GetByCustomerId")]
-        public async Task<IActionResult> GetByCustomerId(int customerId)
+        public async Task<ApiResult<CustomerInvoiceInfoDto>> GetByCustomerId(int customerId)
         {
-            return Ok(await mediator.Send(new GetByCustomerIdQuery { CustomerId = customerId }));
+            var result =await mediator.Send(new GetByCustomerIdQuery { CustomerId = customerId });
+            if (result == null)
+            {
+                return new ApiResult<CustomerInvoiceInfoDto>(true, null, "اطلاعاتی پیدا نشد");
+            }
+            return new ApiResult<CustomerInvoiceInfoDto>(true, result, "");
         }
     }
 }
