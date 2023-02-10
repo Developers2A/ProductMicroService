@@ -21,7 +21,7 @@ namespace Postex.ProfileManagement.Application.Features.CustomerInvoiceInfos.Que
         {
             var customerInvoiceInfo = await _readRepository.Table
                 .Where(c=> c.Id == request.Id)                
-                .ToListAsync(cancellationToken);
+                .FirstOrDefaultAsync(cancellationToken);
             var customerInvoiceInfoDto = _mapper.Map<CustomerInvoiceInfoDto>(customerInvoiceInfo);
             return customerInvoiceInfoDto;
         }

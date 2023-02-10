@@ -7,7 +7,7 @@ using Postex.SharedKernel.Interfaces;
 
 namespace Postex.ProfileManagement.Application.Features.Customers.Queries
 {
-    public class GetByUserIdQueryHandler : IRequestHandler<GetByIdQuery, CustomerDto>
+    public class GetByUserIdQueryHandler : IRequestHandler<GetByUserIdQuery, CustomerDto>
     {
         private readonly IReadRepository<Customer> _readRepository;
         private readonly IMapper _mapper;
@@ -17,11 +17,11 @@ namespace Postex.ProfileManagement.Application.Features.Customers.Queries
             this._readRepository = readRepository;
             this._mapper = mapper;
         }
-        public async Task<CustomerDto> Handle(GetByIdQuery request, CancellationToken cancellationToken)
+        public async Task<CustomerDto> Handle(GetByUserIdQuery request, CancellationToken cancellationToken)
         {
             var customer = await _readRepository.Table
-                .Where(c=> c.Id == request.Id)                
-                .ToListAsync(cancellationToken);
+                .Where(c=> c.UserId == request.UserId)                
+                .FirstOrDefaultAsync(cancellationToken);
             var customerDto = _mapper.Map<CustomerDto>(customer);
             return customerDto;
         }

@@ -1,9 +1,7 @@
-using MediatR;
 using Microsoft.OpenApi.Models;
 using Postex.Contract.Application.Configuration;
 using Postex.Contract.Infrastructure.Configuration;
 using Serilog;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 

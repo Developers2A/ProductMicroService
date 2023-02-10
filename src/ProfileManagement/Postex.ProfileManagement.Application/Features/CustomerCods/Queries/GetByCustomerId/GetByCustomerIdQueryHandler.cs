@@ -21,7 +21,7 @@ namespace Postex.ProfileManagement.Application.Features.CustomerCods.Queries
         {
             var customerCod = await _readRepository.Table
                 .Where(c=> c.Id == request.CustomerId)                
-                .ToListAsync(cancellationToken);
+                .FirstOrDefaultAsync(cancellationToken);
             var customerCodDto = _mapper.Map<CustomerCodDto>(customerCod);
             return customerCodDto;
         }

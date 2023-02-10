@@ -13,7 +13,7 @@ namespace Postex.ProfileManagement.Infrastructure.Configuration
         {
             services.AddDbContext<ApplicationDBContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("Customer_db"));
+                options.UseSqlServer(configuration.GetConnectionString("ProfileManagement_db"));
                 options.EnableSensitiveDataLogging();
             });
 
