@@ -1,9 +1,11 @@
-﻿using Postex.SharedKernel.Domain;
+﻿using Postex.ProfileManagement.Application.Contracts;
+using Postex.ProfileManagement.Domain;
 
-namespace Postex.ProfileManagement.Domain
+namespace Postex.ProfileManagement.Application.Features.Customers.Commands.Update
 {
-    public class Customer :  BaseEntity<int>
+    public class UpdateCustomerCommand : ITransactionRequest<Customer>
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FatherName { get; set; }
@@ -11,7 +13,7 @@ namespace Postex.ProfileManagement.Domain
         public string Email { get; set; }
         public int MobileNo { get; set; }
         public string PostalCode { get; set; }
-        public bool isShahkarValidate { get; set; }
+        public bool IsShahkarValidate { get; set; }
         public int UserId { get; set; }
         public bool IsActive { get; set; }
     }
