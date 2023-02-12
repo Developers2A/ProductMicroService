@@ -114,7 +114,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             var shopId = await GetShopIdByUserName();
             if (shopId == 0)
             {
-                throw new AppException("برای این فرستنده شاپ یافت نشد");
+                throw new AppException($"برای این نام کاربری {_command.UserName} شاپ یافت نشد");
             }
             GetPostPriceQuery getPostPriceQuery = CreatePostGetPriceQuery(shopId);
             var getPostPrice = await _mediator.Send(getPostPriceQuery);

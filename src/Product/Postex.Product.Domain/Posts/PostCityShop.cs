@@ -8,7 +8,7 @@ namespace Postex.Product.Domain.Posts
         public string Code { get; set; }
         public string? FullName { get; set; }
         public string UserName { get; set; }
-        public int CityName { get; set; }
+        public string CityName { get; set; }
         public int CityCode { get; set; }
     }
 }
