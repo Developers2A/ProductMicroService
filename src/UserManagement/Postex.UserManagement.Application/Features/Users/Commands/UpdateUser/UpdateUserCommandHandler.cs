@@ -4,7 +4,7 @@ using Postex.SharedKernel.Interfaces;
 using Postex.SharedKernel.Utilities;
 using Postex.UserManagement.Domain;
 
-namespace Pouya.Application.Features.Users.Commands;
+namespace Postex.UserManagement.Application.Features.Users.Commands.UpdateUser;
 
 public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
 {

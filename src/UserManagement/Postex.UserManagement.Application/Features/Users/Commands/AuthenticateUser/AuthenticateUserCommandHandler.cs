@@ -9,7 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Pouya.Application.Features.Users.Commands;
+namespace Postex.UserManagement.Application.Features.Users.Commands.AuthenticateUser;
 
 public class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCommand, AuthenticateUserDto>
 {
@@ -35,7 +35,7 @@ public class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCo
                 Message = "کاربر یافت نشد"
             };
         }
-        if (!user.IsActive)
+        if (!user.IsVerified)
         {
             return new AuthenticateUserDto()
             {

@@ -9,5 +9,6 @@ namespace Postex.UserManagement.Domain
 
         public Role Role { get; set; }
         public int RoleId { get; set; }
+        public bool IsActive { get; set; }
     }
 }

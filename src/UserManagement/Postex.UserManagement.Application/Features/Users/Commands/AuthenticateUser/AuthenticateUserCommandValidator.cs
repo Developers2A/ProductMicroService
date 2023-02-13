@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Pouya.Application.Features.Users.Commands;
+namespace Postex.UserManagement.Application.Features.Users.Commands.AuthenticateUser;
 
 public class AuthenticateUserCommandValidator : AbstractValidator<AuthenticateUserCommand>
 {

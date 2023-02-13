@@ -17,6 +17,10 @@ namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
                 .HasMaxLength(20);
             builder.Property(i => i.Password)
               .HasMaxLength(200);
+            builder.Property(i => i.FirstName)
+                .HasMaxLength(200);
+            builder.Property(i => i.LastName)
+                .HasMaxLength(200);
             builder.Property(i => i.Email)
              .HasMaxLength(200);
             builder.HasData(Seed());

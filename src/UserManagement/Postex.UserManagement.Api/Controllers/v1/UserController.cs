@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Postex.SharedKernel.Api;
-using Pouya.Application.Features.Users.Commands;
+using Postex.UserManagement.Application.Features.Users.Commands.AuthenticateUser;
+using Postex.UserManagement.Application.Features.Users.Commands.CreateUser;
+using Postex.UserManagement.Application.Features.Users.Commands.ForgetPassword;
+using Postex.UserManagement.Application.Features.Users.Commands.VerifiyUser;
 
 namespace Postex.ProductService.Api.Controllers.v1;
 
@@ -16,18 +19,24 @@ public class UserController : BaseApiControllerWithDefaultRoute
         _mediator = mediator;
     }
 
-    [HttpPost]
-    public async Task<ApiResult> Post([FromBody] CreateUserCommand command)
+    [HttpPost("register")]
+    [AllowAnonymous]
+    public async Task<ApiResult> Register([FromBody] CreateUserCommand command)
     {
         await _mediator.Send(command);
         return Ok();
     }
 
-    [HttpPut]
-    public async Task<ApiResult> Put([FromBody] UpdateUserCommand command)
+    [HttpPost("verify-code")]
+    [AllowAnonymous]
+    public async Task<ApiResult> Verify([FromBody] VerifyUserCommand command)
     {
-        await _mediator.Send(command);
-        return Ok();
+        var result = await _mediator.Send(command);
+        if (string.IsNullOrEmpty(result.Token))
+        {
+            return new ApiResult(false, result.Message!);
+        }
+        return new ApiResult(true, result.Token);
     }
 
     [AllowAnonymous]
@@ -40,5 +49,13 @@ public class UserController : BaseApiControllerWithDefaultRoute
             return new ApiResult(false, result.Message!);
         }
         return new ApiResult(true, result.Token);
+    }
+
+    [AllowAnonymous]
+    [HttpPost("forget-password")]
+    public async Task<ApiResult> ForgetPassword([FromBody] ForgetPasswordCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok();
     }
 }

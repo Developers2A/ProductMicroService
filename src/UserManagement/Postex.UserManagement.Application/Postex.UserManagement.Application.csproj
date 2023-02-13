@@ -23,4 +23,8 @@
 		<ProjectReference Include="..\Postex.UserManagement.Domain\Postex.UserManagement.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Features\VerificationCodes\Queries\" />
+	</ItemGroup>
+
 </Project>

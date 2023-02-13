@@ -1,6 +1,6 @@
 ﻿using Postex.UserManagement.Application.Contracts;
 
-namespace Pouya.Application.Features.Users.Commands;
+namespace Postex.UserManagement.Application.Features.Users.Commands.UpdateUser;
 
 public class UpdateUserCommand : ITransactionRequest
 {
