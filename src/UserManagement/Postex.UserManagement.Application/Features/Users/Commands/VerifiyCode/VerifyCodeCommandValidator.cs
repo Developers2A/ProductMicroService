@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Postex.UserManagement.Application.Features.Users.Commands.VerifiyUser;
+namespace Postex.UserManagement.Application.Features.Users.Commands.VerifiyCode;
 
-public class VerifyUserCommandValidator : AbstractValidator<VerifyUserCommand>
+public class VerifyCodeCommandValidator : AbstractValidator<VerifyCodeCommand>
 {
-    public VerifyUserCommandValidator()
+    public VerifyCodeCommandValidator()
     {
         RuleFor(p => p.Mobile)
              .NotEmpty().NotNull().WithMessage(" شماره موبایل الزامی میباشد");

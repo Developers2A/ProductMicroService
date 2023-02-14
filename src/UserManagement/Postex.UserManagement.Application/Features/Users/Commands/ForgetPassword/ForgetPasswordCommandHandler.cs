@@ -1,42 +1,54 @@
 ﻿using MediatR;
 using Postex.Application.Features.VerificationCodes.Commands.CreateVerificationCode;
-using Postex.SharedKernel.Exceptions;
+using Postex.SharedKernel.Api;
 using Postex.SharedKernel.Interfaces;
+using Postex.UserManagement.Application.Dtos.Users;
 using Postex.UserManagement.Domain;
 
 namespace Postex.UserManagement.Application.Features.Users.Commands.ForgetPassword;
 
-public class ForgetPasswordCommandHandler : IRequestHandler<ForgetPasswordCommand>
+public class ForgetPasswordCommandHandler : IRequestHandler<ForgetPasswordCommand, ApiResult<MobileDto>>
 {
     private readonly IReadRepository<User> _userReadRepository;
-    private readonly IReadRepository<VerificationCode> _verificationCodeReadRepository;
-    private readonly IWriteRepository<User> _userWriteRepository;
-    private readonly IWriteRepository<VerificationCode> _verificationCodeWriteRepository;
     private readonly IMediator _mediator;
 
-    public ForgetPasswordCommandHandler(IReadRepository<User> userRadRepository, IMediator mediator, IReadRepository<VerificationCode> verificationCodeReadRepository, IWriteRepository<User> userWriteRepository, IWriteRepository<VerificationCode> verificationCodeWriteRepository)
+    private ForgetPasswordCommand _command;
+
+    public ForgetPasswordCommandHandler(IReadRepository<User> userRadRepository, IMediator mediator)
     {
         _userReadRepository = userRadRepository;
         _mediator = mediator;
-        _verificationCodeReadRepository = verificationCodeReadRepository;
-        _userWriteRepository = userWriteRepository;
-        _verificationCodeWriteRepository = verificationCodeWriteRepository;
     }
 
-    public async Task<Unit> Handle(ForgetPasswordCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResult<MobileDto>> Handle(ForgetPasswordCommand command, CancellationToken cancellationToken)
     {
-        var user = _userReadRepository.Table.FirstOrDefault(x => x.Mobile == request.Mobile);
+        _command = command;
+        var user = _userReadRepository.TableNoTracking.FirstOrDefault(x => x.Mobile == _command.Mobile);
         if (user == null)
         {
-            throw new AppException("کاربری با این شماره موبایل وجود ندارد");
+            return new ApiResult<MobileDto>(false, $"کاربری با این شماره موبایل {_command.Mobile} فعال نشده است ");
+        }
+        if (!user.IsVerified)
+        {
+            return new ApiResult<MobileDto>(false, $"کاربری با این شماره موبایل {_command.Mobile} فعال نشده است ");
         }
 
+        await CreateAndSendVerificationCode();
+        var mobileDto = new MobileDto()
+        {
+            Mobile = user.Mobile
+        };
+
+        return new ApiResult<MobileDto>(true, mobileDto, "کد تایید فراموزشی رمز عبور از طریق پیامک ارسال شد");
+    }
+
+    private async Task CreateAndSendVerificationCode()
+    {
         await _mediator.Send(new CreateVerificationCodeCommand()
         {
-            Mobile = request.Mobile
+            Mobile = _command.Mobile,
+            VerificationCodeType = VerificationCodeType.ForgetPassword
         });
-        //send sms
-        return Unit.Value;
     }
 }
 

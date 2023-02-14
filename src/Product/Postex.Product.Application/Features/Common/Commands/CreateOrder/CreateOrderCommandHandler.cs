@@ -161,7 +161,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 
         private CreatePostOrderCommand CreatePostOrderCommand(GetPostPriceQuery priceQuery)
         {
-            var createPostOrderCommand = new CreatePostOrderCommand()
+            var createPostOrderCommand = new CreatePostOrderCommand
             {
                 CustomerName = _command.ReceiverFristName,
                 CustomerFamily = _command.ReceiverLastName,
@@ -172,20 +172,19 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                 ClientOrderID = _command.ParcelId,
                 CustomerEmail = _command.ReceiverEmail,
                 CustomerNID = _command.ReceiverNationalCode,
-                ParcelCategoryID = 0
-            };
-
-            createPostOrderCommand.Price = new PostPriceRequest()
-            {
-                ParcelValue = _command.ApproximateValue,
-                ToCityID = priceQuery.ToCityID,
-                Weight = _command.Weight,
-                SMSService = false,
-                ShopID = priceQuery.ShopID,
-                PayTypeID = priceQuery.PayTypeID,
-                CollectNeed = true,
-                NonStandardPackage = _command.IsLiquidOrBroken,
-                ServiceTypeID = priceQuery.ServiceTypeID
+                ParcelCategoryID = 0,
+                Price = new PostPriceRequest()
+                {
+                    ParcelValue = _command.ApproximateValue,
+                    ToCityID = priceQuery.ToCityID,
+                    Weight = _command.Weight,
+                    SMSService = false,
+                    ShopID = priceQuery.ShopID,
+                    PayTypeID = priceQuery.PayTypeID,
+                    CollectNeed = true,
+                    NonStandardPackage = _command.IsLiquidOrBroken,
+                    ServiceTypeID = priceQuery.ServiceTypeID
+                }
             };
             return createPostOrderCommand;
         }
@@ -277,7 +276,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 
         private CreateMahexOrderCommand CreateMahexCommand()
         {
-            Random random = new Random();
+            Random random = new();
             return new CreateMahexOrderCommand()
             {
                 Reference = random.Next(100, 9999).ToString(),

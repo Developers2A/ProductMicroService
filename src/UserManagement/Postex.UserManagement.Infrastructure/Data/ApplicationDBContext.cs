@@ -19,7 +19,7 @@ namespace Postex.UserManagement.Infrastructure.Data
         {
             foreach (var entry in ChangeTracker.Entries())
             {
-                if (entry.Entity is not IAuditable<Guid>)
+                if (entry.Entity is not BaseEntity<int>)
                     continue;
 
                 switch (entry.State)

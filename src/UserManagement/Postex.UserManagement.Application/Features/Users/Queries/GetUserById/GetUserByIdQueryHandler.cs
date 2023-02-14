@@ -17,10 +17,10 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, UserDto
 
     public async Task<UserDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        var user = await _readRepository.TableNoTracking.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var user = await _readRepository.TableNoTracking.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         return new UserDto()
         {
-            Id = user.Id,
+            Id = user!.Id,
             Mobile = user.Mobile,
             UserName = user.UserName,
             FirstName = user.FirstName,

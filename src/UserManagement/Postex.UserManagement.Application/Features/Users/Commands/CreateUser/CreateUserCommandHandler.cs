@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Postex.Application.Features.VerificationCodes.Commands.CreateVerificationCode;
+using Postex.SharedKernel.Api;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 using Postex.SharedKernel.Utilities;
@@ -9,65 +10,87 @@ using Postex.UserManagement.Domain;
 
 namespace Postex.UserManagement.Application.Features.Users.Commands.CreateUser;
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, UserCreateDto>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiResult<MobileDto>>
 {
-    private readonly IWriteRepository<User> _writeRepository;
-    private readonly IReadRepository<User> _readRepository;
+    private readonly IWriteRepository<User> _userWriteRepository;
+    private readonly IReadRepository<User> _userReadRepository;
     private readonly IMediator _mediator;
+    private CreateUserCommand _command;
 
-    public CreateUserCommandHandler(IWriteRepository<User> writeRepository, IReadRepository<User> readRepository, IMediator mediator)
+    public CreateUserCommandHandler(IWriteRepository<User> userWriteRepository, IReadRepository<User> userReadRepository, IMediator mediator)
     {
-        _writeRepository = writeRepository;
-        _readRepository = readRepository;
+        _userWriteRepository = userWriteRepository;
+        _userReadRepository = userReadRepository;
         _mediator = mediator;
     }
 
-    public async Task<UserCreateDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResult<MobileDto>> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
-        if (request.Password != request.RePassword)
+        _command = command;
+        if (_command.Password != _command.RePassword)
         {
             throw new AppException("پسورد و تکرار آن مطابقت ندارند");
         }
 
-        if (!request.Mobile.StartsWith("0"))
+        if (!_command.Mobile.StartsWith("0"))
         {
-            request.Mobile = "0" + request.Mobile;
+            _command.Mobile = "0" + _command.Mobile;
+        }
+
+        await CreateUser();
+        await CreateAndSendVerificationCode();
+
+        var mobileDto = new MobileDto()
+        {
+            Mobile = _command.Mobile
+        };
+
+        return new ApiResult<MobileDto>(true, mobileDto, "کد تایید ثبت نام از طریق پیامک ارسال شد");
+    }
+
+    private async Task<User> CreateUser()
+    {
+        var user = await _userReadRepository.TableNoTracking.FirstOrDefaultAsync(x => x.Mobile == _command.Mobile);
+        if (user != null && user.IsVerified)
+        {
+            throw new AppException($"کاربری با این شماره موبایل {_command.Mobile} در سیستم وجود دارد");
         }
 
         var passwordHasher = new PasswordHasher();
-        var hashedPassword = passwordHasher.HashPassword(request.Password);
-        var user = new User()
+        var hashedPassword = passwordHasher.HashPassword(_command.Password);
+        if (user == null)
         {
-            UserName = request.Mobile,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Password = hashedPassword,
-            Mobile = request.Mobile,
-            IsVerified = false
-        };
-
-        var isUserExists = await _readRepository.TableNoTracking.AnyAsync(x => x.Mobile == request.Mobile && x.IsVerified);
-        if (isUserExists)
+            user = new User()
+            {
+                UserName = _command.Mobile,
+                FirstName = _command.FirstName,
+                LastName = _command.LastName,
+                Password = hashedPassword,
+                Mobile = _command.Mobile,
+                IsVerified = false,
+                IsActive = false
+            };
+        }
+        else
         {
-            throw new AppException($"کاربری با این شماره موبایل {request.Mobile} در سیستم وجود دارد");
+            user.UserName = _command.Mobile;
+            user.Password = hashedPassword;
+            user.FirstName = _command.FirstName;
+            user.LastName = _command.LastName;
+            user.IsVerified = false;
         }
 
-        await _writeRepository.AddAsync(user);
-        await _writeRepository.SaveChangeAsync();
-        await CreateAndSendVerificationCode(request);
-
-        return new UserCreateDto()
-        {
-            Token = Guid.NewGuid().ToString(),
-            Mobile = user.Mobile
-        };
+        _userWriteRepository.Update(user);
+        await _userWriteRepository.SaveChangeAsync();
+        return user;
     }
 
-    private async Task CreateAndSendVerificationCode(CreateUserCommand request)
+    private async Task CreateAndSendVerificationCode()
     {
         await _mediator.Send(new CreateVerificationCodeCommand()
         {
-            Mobile = request.Mobile
+            Mobile = _command.Mobile,
+            VerificationCodeType = VerificationCodeType.Register
         });
     }
 }

@@ -19,7 +19,8 @@ public class UpdateVerificationCodeCommandHandler : IRequestHandler<UpdateVerifi
     public async Task<Unit> Handle(UpdateVerificationCodeCommand request, CancellationToken cancellationToken)
     {
         var verificationCode = _readRepository.Table.FirstOrDefault(x => x.Mobile == request.Mobile && x.Code == request.Code);
-        verificationCode.IsUsed = request.IsUsed;
+        verificationCode!.IsUsed = request.IsUsed;
+        verificationCode.UserId = request.UserId;
         await _writeRepository.UpdateAsync(verificationCode);
         await _writeRepository.SaveChangeAsync();
         return Unit.Value;

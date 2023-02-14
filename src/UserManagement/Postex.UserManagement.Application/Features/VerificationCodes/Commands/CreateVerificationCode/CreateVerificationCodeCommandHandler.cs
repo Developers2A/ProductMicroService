@@ -27,8 +27,9 @@ public class CreateVerificationCodeCommandHandler : IRequestHandler<CreateVerifi
         }
         var verificationCode = new VerificationCode()
         {
-            Code = code,
+            Code = 1111,
             Mobile = request.Mobile,
+            VerificationCodeType = request.VerificationCodeType,
             IsUsed = false
         };
 

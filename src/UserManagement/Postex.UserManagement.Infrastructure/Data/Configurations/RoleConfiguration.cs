@@ -24,6 +24,11 @@ namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
                     Id = 1,
                     Name = "Admin",
                     CreatedOn = createDate
+                },
+                new Role {
+                    Id = 2,
+                    Name = "User",
+                    CreatedOn = createDate
                 }
             };
         }

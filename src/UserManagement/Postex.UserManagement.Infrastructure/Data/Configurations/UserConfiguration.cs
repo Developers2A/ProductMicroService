@@ -23,6 +23,8 @@ namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
                 .HasMaxLength(200);
             builder.Property(i => i.Email)
              .HasMaxLength(200);
+            builder.Property(i => i.NationalCode)
+             .HasMaxLength(10);
             builder.HasData(Seed());
         }
 
@@ -34,6 +36,8 @@ namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
                 new User {
                     Id = 1,
                     UserName = "Admin",
+                    FirstName = "ادمین",
+                    LastName = "سیستم",
                     Password = "123",
                     Mobile = "09394066727",
                     CreatedOn = createDate
