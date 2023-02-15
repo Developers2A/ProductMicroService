@@ -2,14 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Dtos.Commons;
 using Postex.Product.Application.Dtos.Couriers;
+using Postex.Product.Application.Dtos.CourierStatus;
 using Postex.Product.Application.Features.BoxPrices.Queries;
 using Postex.Product.Application.Features.Cities.Queries.GetCitiesCommon;
 using Postex.Product.Application.Features.Couriers.Queries;
 using Postex.Product.Application.Features.CourierServices.Queries;
+using Postex.Product.Application.Features.CourierStatusMappings.Queries;
 using Postex.Product.Application.Features.PostShops.Commands.SyncPostShops;
 using Postex.Product.Application.Features.States.Queries;
 using Postex.ProductService.Api.Filters;
 using Postex.SharedKernel.Api;
+using Postex.SharedKernel.Common.Enums;
 
 namespace Postex.ProductService.Api.Controllers.v1
 {
@@ -52,6 +55,15 @@ namespace Postex.ProductService.Api.Controllers.v1
         public async Task<ApiResult<List<BoxSizeDto>>> GetBoxSizes()
         {
             return await _mediator.Send(new GetBoxSizesQuery());
+        }
+
+        [HttpGet("status-mappings/{courierCode}")]
+        public async Task<ApiResult<List<CourierStatusMappingDetailsDto>>> GetStatusMappings(int courierCode = 0)
+        {
+            return await _mediator.Send(new GetCourierStatusMappingsQuery()
+            {
+                CourierCode = (CourierCode)courierCode
+            });
         }
 
         [HttpGet("sync-shops")]

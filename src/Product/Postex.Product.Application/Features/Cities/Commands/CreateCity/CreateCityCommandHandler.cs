@@ -18,10 +18,17 @@ namespace Postex.Product.Application.Features.Cities.Commands.CreateCity
 
         public async Task<Unit> Handle(CreateCityCommand request, CancellationToken cancellationToken)
         {
-            var city = _mapper.Map<City>(request);
+            try
+            {
+                var city = _mapper.Map<City>(request);
 
-            await _cityWriteRepository.AddAsync(city, cancellationToken);
-            await _cityWriteRepository.SaveChangeAsync(cancellationToken);
+                await _cityWriteRepository.AddAsync(city, cancellationToken);
+                await _cityWriteRepository.SaveChangeAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                var a = ex.Message;
+            }
             return Unit.Value;
         }
     }

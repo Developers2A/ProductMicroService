@@ -22,8 +22,25 @@ namespace Postex.Product.UnitTest.States.Commands
             {
                 Name = name
             };
+
             var result = await _commandValidator.ValidateAsync(command);
+
             Assert.Contains(result.Errors, o => o.PropertyName == nameof(command.Name));
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public async Task ValidateAsync_CodeIsNullOrEmpty_ValidationFailed(string code)
+        {
+            CreateStateCommand command = new()
+            {
+                Code = code
+            };
+
+            var result = await _commandValidator.ValidateAsync(command);
+
+            Assert.Contains(result.Errors, o => o.PropertyName == nameof(command.Code));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Postex.Product.Application.Dtos.Couriers
+﻿namespace Postex.Product.Application.Dtos.CourierStatus
 {
     public class CourierStatusMappingDto
     {

@@ -4,7 +4,7 @@ using Postex.UserManagement.Domain;
 
 namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
 {
-    public class VerificationCodeConfiguration : BaseEntityConfiguration<VerificationCode>
+    public class VerificationCodeConfiguration : BaseEntityConfiguration<VerificationCode, int>
     {
         public override void Configure(EntityTypeBuilder<VerificationCode> builder)
         {

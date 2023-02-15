@@ -22,7 +22,9 @@ namespace Postex.Product.UnitTest.CourierLimits.Commands
             {
                 Name = name
             };
+
             var result = await _commandValidator.ValidateAsync(command);
+
             Assert.Contains(result.Errors, o => o.PropertyName == nameof(command.Name));
         }
     }

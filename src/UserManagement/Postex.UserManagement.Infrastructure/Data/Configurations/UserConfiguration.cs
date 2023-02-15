@@ -4,7 +4,7 @@ using Postex.UserManagement.Domain;
 
 namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
 {
-    public class UserConfiguration : BaseEntityConfiguration<User>
+    public class UserConfiguration : BaseEntityConfiguration<User, Guid>
     {
         public override void Configure(EntityTypeBuilder<User> builder)
         {
@@ -34,7 +34,7 @@ namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
             return new object[]
             {
                 new User {
-                    Id = 1,
+                    Id = Guid.NewGuid(),
                     UserName = "Admin",
                     FirstName = "ادمین",
                     LastName = "سیستم",

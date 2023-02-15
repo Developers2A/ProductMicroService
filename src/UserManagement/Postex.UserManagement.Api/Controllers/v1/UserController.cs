@@ -81,7 +81,7 @@ public class UserController : BaseApiControllerWithDefaultRoute
         var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
         var command = new RevokeTokenCommand()
         {
-            UserId = int.Parse(userId)
+            UserId = Guid.Parse(userId)
         };
         await _mediator.Send(command);
         return Ok();

@@ -3,43 +3,46 @@ using MediatR;
 using Moq;
 using Postex.Product.Application.Features.States.Commands.UpdateState;
 using Postex.Product.Domain.Locations;
-using Postex.SharedKernel.Interfaces;
+using Postex.Product.UnitTest.Common;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Postex.Product.UnitTest.States.Commands
 {
-    public class UpdateStateCommandHandlerTests
+    public class UpdateStateCommandHandlerTests : BaseHandlerTest<State>
     {
         private readonly UpdateStateCommandHandler _commandHandler;
 
         public UpdateStateCommandHandlerTests()
         {
-            MockWriteRepository(out var mockWriteRepository);
-            MockReadRepository(out var mockReadRepository);
-            _commandHandler = new UpdateStateCommandHandler(mockWriteRepository.Object, mockReadRepository.Object);
+            _commandHandler = new UpdateStateCommandHandler(_writeRepository.Object, _readRepository.Object);
+        }
+
+        private UpdateStateCommand CreateValidCommand()
+        {
+            return new UpdateStateCommand()
+            {
+                Name = "تهران",
+                Code = "123",
+                EnglishName = "Tehran"
+            };
+        }
+
+        [Fact]
+        public async Task HandleAsync_CommandIsValid_AddAsyncIsCalled()
+        {
+            var result = await _commandHandler.Handle(CreateValidCommand(), new CancellationToken());
+
+            _writeRepository.Verify(e => e.UpdateAsync(It.IsAny<State>(), CancellationToken.None), Times.Once);
         }
 
         [Fact]
         public async Task HandleAsync_CommandIsValid_EntityIsUpdated()
         {
-            var result = await _commandHandler.Handle(new UpdateStateCommand(), new CancellationToken());
+            var result = await _commandHandler.Handle(CreateValidCommand(), new CancellationToken());
+
             result.Should().Be(Unit.Value);
-        }
-
-        private static void MockWriteRepository(out Mock<IWriteRepository<State>> repository)
-        {
-            var mockRepository = new Mock<IWriteRepository<State>>();
-            mockRepository.Setup(x => x.UpdateAsync(It.IsAny<State>(), CancellationToken.None)).Returns(Task.FromResult(new State())).Verifiable();
-            repository = mockRepository;
-        }
-
-        private static void MockReadRepository(out Mock<IReadRepository<State>> repository)
-        {
-            var mockRepository = new Mock<IReadRepository<State>>();
-            mockRepository.Setup(x => x.GetByIdAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(new State())).Verifiable();
-            repository = mockRepository;
         }
     }
 }

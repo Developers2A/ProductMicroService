@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Postex.Product.Application.Dtos.Couriers;
+using Postex.Product.Application.Dtos.CourierStatus;
 using Postex.Product.Application.Dtos.Trackings;
 using Postex.Product.Application.Features.CourierStatusMappings.Queries;
 using Postex.Product.Application.Features.ServiceProviders.Chapar.Queries.Track;

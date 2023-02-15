@@ -4,7 +4,7 @@ using Postex.UserManagement.Domain;
 
 namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
 {
-    public class RoleConfiguration : BaseEntityConfiguration<Role>
+    public class RoleConfiguration : BaseEntityConfiguration<Role, int>
     {
         public override void Configure(EntityTypeBuilder<Role> builder)
         {

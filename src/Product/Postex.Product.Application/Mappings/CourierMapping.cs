@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Postex.Product.Application.Dtos.Commons;
 using Postex.Product.Application.Dtos.Couriers;
+using Postex.Product.Application.Dtos.CourierStatus;
 using Postex.Product.Domain.Couriers;
 using Postex.Product.Domain.Locations;
 using Postex.Product.Domain.Offlines;

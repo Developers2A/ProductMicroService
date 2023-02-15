@@ -1,29 +1,29 @@
-﻿using Postex.Product.Application.Features.CourierLimits.Commands.UpdateCourierLimit;
+﻿using Postex.Product.Application.Features.Cities.Commands.UpdateCity;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Postex.Product.UnitTest.CourierLimits.Commands
+namespace Postex.Product.UnitTest.Cities.Commands
 {
-    public class UpdateCourierLimitCommandValidatorTests
+    public class UpdateCityCommandValidatorTests
     {
-        private readonly UpdateCourierLimitCommandValidator _commandValidator;
-        public UpdateCourierLimitCommandValidatorTests()
+        private readonly UpdateCityCommandValidator _commandValidator;
+
+        public UpdateCityCommandValidatorTests()
         {
-            _commandValidator = new UpdateCourierLimitCommandValidator();
+            _commandValidator = new UpdateCityCommandValidator();
         }
 
         [Theory]
         [InlineData("")]
         [InlineData(null)]
+        [InlineData("  ")]
         public async Task ValidateAsync_NameIsNullOrEmpty_ValidationFailed(string name)
         {
-            UpdateCourierLimitCommand command = new()
+            UpdateCityCommand command = new()
             {
                 Name = name
             };
-
             var result = await _commandValidator.ValidateAsync(command);
-
             Assert.Contains(result.Errors, o => o.PropertyName == nameof(command.Name));
         }
 
@@ -32,14 +32,11 @@ namespace Postex.Product.UnitTest.CourierLimits.Commands
         [InlineData(-1)]
         public async Task ValidateAsync_IdIsDefault_ValidationFailed(int id)
         {
-            UpdateCourierLimitCommand command = new()
+            UpdateCityCommand command = new()
             {
-                Name = "test",
                 Id = id
             };
-
             var result = await _commandValidator.ValidateAsync(command);
-
             Assert.Contains(result.Errors, o => o.PropertyName == nameof(command.Id));
         }
     }

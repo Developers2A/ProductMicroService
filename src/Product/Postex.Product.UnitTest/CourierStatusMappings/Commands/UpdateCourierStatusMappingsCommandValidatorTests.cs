@@ -21,7 +21,9 @@ namespace Postex.Product.UnitTest.CourierStatusMappings.Commands
             {
                 Code = code
             };
+
             var result = await _commandValidator.ValidateAsync(command);
+
             Assert.Contains(result.Errors, o => o.PropertyName == nameof(command.Code));
         }
 
@@ -35,7 +37,9 @@ namespace Postex.Product.UnitTest.CourierStatusMappings.Commands
                 Code = "test",
                 Id = id
             };
+
             var result = await _commandValidator.ValidateAsync(command);
+
             Assert.Contains(result.Errors, o => o.PropertyName == nameof(command.Id));
         }
     }

@@ -38,7 +38,7 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, A
 
         string username = principal.Identity!.Name!;
 
-        var user = await _userReadRepository.Table.FirstOrDefaultAsync(x => x.Id == int.Parse(username));
+        var user = await _userReadRepository.Table.FirstOrDefaultAsync(x => x.Id == Guid.Parse(username));
 
         if (user == null || user.RefreshToken != request.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
         {

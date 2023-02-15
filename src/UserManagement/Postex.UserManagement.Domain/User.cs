@@ -2,7 +2,7 @@
 
 namespace Postex.UserManagement.Domain
 {
-    public class User : BaseEntity<int>
+    public class User : BaseEntity<Guid>
     {
         public string UserName { get; set; }
         public string? Email { get; set; }

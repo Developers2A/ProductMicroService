@@ -2,36 +2,46 @@
 using Moq;
 using Postex.Product.Application.Features.States.Commands.CreateState;
 using Postex.Product.Domain.Locations;
-using Postex.SharedKernel.Interfaces;
+using Postex.Product.UnitTest.Common;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Postex.Product.UnitTest.States.Commands
 {
-    public class CreateStateCommandHandlerTests
+    public class CreateStateCommandHandlerTests : BaseHandlerTest<State>
     {
         private readonly CreateStateCommandHandler _commandHandler;
 
         public CreateStateCommandHandlerTests()
         {
-            MockRepository(out var mockRepository);
-            _commandHandler = new CreateStateCommandHandler(mockRepository.Object);
+            _commandHandler = new CreateStateCommandHandler(_writeRepository.Object);
+        }
+
+        private CreateStateCommand CreateValidCommand()
+        {
+            return new CreateStateCommand()
+            {
+                Name = "تهران",
+                Code = "123",
+                EnglishName = "Tehran"
+            };
+        }
+
+        [Fact]
+        public async Task HandleAsync_CommandIsValid_AddAsyncIsCalled()
+        {
+            var result = await _commandHandler.Handle(CreateValidCommand(), new CancellationToken());
+
+            _writeRepository.Verify(e => e.AddAsync(It.IsAny<State>(), CancellationToken.None), Times.Once);
         }
 
         [Fact]
         public async Task HandleAsync_CommandIsValid_EntityIsCreated()
         {
-            var result = await _commandHandler.Handle(new CreateStateCommand() { Name = "test", Code = "123", EnglishName = "test" }, new CancellationToken());
-            result.Should().Be(MediatR.Unit.Value);
-        }
+            var result = await _commandHandler.Handle(CreateValidCommand(), new CancellationToken());
 
-        private static void MockRepository(out Mock<IWriteRepository<State>> mockRepository)
-        {
-            var mockClassRoomRepository = new Mock<IWriteRepository<State>>();
-            mockClassRoomRepository.Setup(x => x.AddAsync(It.IsAny<State>(), CancellationToken.None)).Returns(Task.FromResult(new State())).Verifiable();
-            mockClassRoomRepository.Setup(x => x.UpdateAsync(It.IsAny<State>(), CancellationToken.None)).Returns(Task.FromResult(new State())).Verifiable();
-            mockRepository = mockClassRoomRepository;
+            result.Should().Be(MediatR.Unit.Value);
         }
     }
 }

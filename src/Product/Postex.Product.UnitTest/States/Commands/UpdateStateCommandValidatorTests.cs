@@ -21,7 +21,9 @@ namespace Postex.Product.UnitTest.States.Commands
             {
                 Name = name
             };
+
             var result = await _commandValidator.ValidateAsync(updateStateCommand);
+
             Assert.Contains(result.Errors, o => o.PropertyName == nameof(updateStateCommand.Name));
         }
 
@@ -35,7 +37,9 @@ namespace Postex.Product.UnitTest.States.Commands
                 Name = "test",
                 Id = id
             };
+
             var result = await _commandValidator.ValidateAsync(updateStateCommand);
+
             Assert.Contains(result.Errors, o => o.PropertyName == nameof(updateStateCommand.Id));
         }
     }

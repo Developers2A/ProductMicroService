@@ -4,6 +4,6 @@ namespace Postex.UserManagement.Application.Features.Users.Commands.RevokeToken
 {
     public class RevokeTokenCommand : ITransactionRequest
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

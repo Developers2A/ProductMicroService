@@ -5,5 +5,5 @@ namespace Postex.UserManagement.Application.Features.Users.Queries.GetUserById;
 
 public class GetUserByIdQuery : IRequest<UserDto>
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
 }

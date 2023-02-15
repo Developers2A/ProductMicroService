@@ -4,22 +4,21 @@ using Moq;
 using Postex.Product.Application.Dtos.Couriers;
 using Postex.Product.Application.Features.CourierServices.Commands.CreateCourierService;
 using Postex.Product.Domain.Couriers;
-using Postex.SharedKernel.Interfaces;
+using Postex.Product.UnitTest.Common;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Postex.Product.UnitTest.CourierServices.Commands
 {
-    public class CreateCourierServiceCommandHandlerTests
+    public class CreateCourierServiceCommandHandlerTests : BaseHandlerTest<CourierService>
     {
         private readonly CreateCourierServiceCommandHandler _commandHandler;
 
         public CreateCourierServiceCommandHandlerTests()
         {
             MockMapper(out var mapper);
-            MockRepository(out var mockRepository);
-            _commandHandler = new CreateCourierServiceCommandHandler(mockRepository.Object, mapper);
+            _commandHandler = new CreateCourierServiceCommandHandler(_writeRepository.Object, mapper);
         }
 
         private static void MockMapper(out IMapper mapper)
@@ -32,12 +31,12 @@ namespace Postex.Product.UnitTest.CourierServices.Commands
             mapper = mockMapper.CreateMapper();
         }
 
-        private static void MockRepository(out Mock<IWriteRepository<CourierService>> mockRepository)
+        [Fact]
+        public async Task HandleAsync_CommandIsValid_AddAsyncIsCalled()
         {
-            var mockClassRoomRepository = new Mock<IWriteRepository<CourierService>>();
-            mockClassRoomRepository.Setup(x => x.AddAsync(It.IsAny<CourierService>(), CancellationToken.None)).Returns(Task.FromResult(new CourierService())).Verifiable();
-            mockClassRoomRepository.Setup(x => x.UpdateAsync(It.IsAny<CourierService>(), CancellationToken.None)).Returns(Task.FromResult(new CourierService())).Verifiable();
-            mockRepository = mockClassRoomRepository;
+            var result = await _commandHandler.Handle(new CreateCourierServiceCommand(), new CancellationToken());
+
+            _writeRepository.Verify(e => e.AddAsync(It.IsAny<CourierService>(), CancellationToken.None), Times.Once);
         }
 
         [Fact]

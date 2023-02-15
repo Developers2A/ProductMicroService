@@ -6,6 +6,6 @@ namespace Postex.Application.Features.VerificationCodes.Commands.CreateVerificat
 public class CreateVerificationCodeCommand : ITransactionRequest
 {
     public string Mobile { get; set; }
-    public int? UserId { get; set; }
+    public Guid? UserId { get; set; }
     public VerificationCodeType VerificationCodeType { get; set; }
 }

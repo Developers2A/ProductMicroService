@@ -7,9 +7,9 @@ namespace Postex.Product.Application.Features.Cities.Commands.CreateCity
         public CreateCityCommandValidator()
         {
             RuleFor(p => p.Name)
-                  .NotEmpty().WithMessage(" نام الزامی میباشد");
+                  .NotEmpty().NotNull().WithMessage(" نام الزامی میباشد");
             RuleFor(p => p.StateId)
-                 .NotEmpty().WithMessage(" استان الزامی میباشد");
+                 .NotEmpty().NotNull().GreaterThan(0).WithMessage(" استان الزامی میباشد");
         }
     }
 }
