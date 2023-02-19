@@ -6,6 +6,7 @@ using Postex.Product.Application.Dtos.CourierServices.Common;
 using Postex.Product.Application.Features.Common.Queries.GetPrice;
 using Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries;
 using Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries.GetBasketPrices;
+using Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries.GetPudoPrice;
 using Postex.Product.Application.Features.CourierZonePrices.Commands.CreateOfflineCourierZonePrice;
 using Postex.Product.Application.Features.CourierZonePrices.Queries.GetOfflinePrices;
 using Postex.ProductService.Api.Filters;
@@ -56,6 +57,16 @@ namespace Postex.ProductService.Api.Controllers.v1
             {
                 Basket = basket
             });
+        }
+
+        [HttpGet("pudo-price/{cityName}")]
+        public async Task<ApiResult<PudoPriceResponseDto>> PudoPrice(string cityName)
+        {
+            var result = await _mediator.Send(new GetPudoPriceQuery()
+            {
+                CityName = cityName
+            });
+            return new ApiResult<PudoPriceResponseDto>(true, result);
         }
     }
 }

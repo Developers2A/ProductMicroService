@@ -17,5 +17,6 @@ namespace Postex.SharedKernel.Common.Enums
         [Description("پیشروپست")] PishroPost = 10,
         [Description("اسپید")] Speed = 11,
         [Description("اکوپیک")] EcoPeyk = 12,
+        [Description("پودو")] Pudo = 13,
     }
 }

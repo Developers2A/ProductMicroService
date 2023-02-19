@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Postex.Product.Infrastructure;
 using Postex.SharedKernel.Interfaces;
 using Postex.SharedKernel.Paginations;
 using Postex.UserManagement.Application.Dtos.Users;
 using Postex.UserManagement.Domain;
+using Postex.UserManagement.Infrastructure;
 
 namespace Postex.UserManagement.Application.Features.Users.Queries.GetUsers;
 
