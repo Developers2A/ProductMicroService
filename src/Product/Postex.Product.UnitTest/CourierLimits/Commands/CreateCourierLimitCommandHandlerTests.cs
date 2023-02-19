@@ -2,36 +2,36 @@
 using Moq;
 using Postex.Product.Application.Features.CourierLimits.Commands.CreateCourierLimit;
 using Postex.Product.Domain.Couriers;
-using Postex.SharedKernel.Interfaces;
+using Postex.Product.UnitTest.Common;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Postex.Product.UnitTest.CourierLimits.Commands
 {
-    public class CreateCourierLimitCommandHandlerTests
+    public class CreateCourierLimitCommandHandlerTests : BaseHandlerTest<CourierLimit>
     {
         private readonly CreateCourierLimitCommandHandler _commandHandler;
 
         public CreateCourierLimitCommandHandlerTests()
         {
-            MockRepository(out var mockRepository);
-            _commandHandler = new CreateCourierLimitCommandHandler(mockRepository.Object);
+            _commandHandler = new CreateCourierLimitCommandHandler(_writeRepository.Object);
+        }
+
+        [Fact]
+        public async Task HandleAsync_CommandIsValid_AddAsyncIsCalled()
+        {
+            var result = await _commandHandler.Handle(new CreateCourierLimitCommand(), new CancellationToken());
+
+            _writeRepository.Verify(e => e.AddAsync(It.IsAny<CourierLimit>(), CancellationToken.None), Times.Once);
         }
 
         [Fact]
         public async Task HandleAsync_CommandIsValid_EntityIsCreated()
         {
             var result = await _commandHandler.Handle(new CreateCourierLimitCommand() { Name = "test" }, new CancellationToken());
-            result.Should().Be(MediatR.Unit.Value);
-        }
 
-        private static void MockRepository(out Mock<IWriteRepository<CourierLimit>> mockRepository)
-        {
-            var mockClassRoomRepository = new Mock<IWriteRepository<CourierLimit>>();
-            mockClassRoomRepository.Setup(x => x.AddAsync(It.IsAny<CourierLimit>(), CancellationToken.None)).Returns(Task.FromResult(new CourierLimit())).Verifiable();
-            mockClassRoomRepository.Setup(x => x.UpdateAsync(It.IsAny<CourierLimit>(), CancellationToken.None)).Returns(Task.FromResult(new CourierLimit())).Verifiable();
-            mockRepository = mockClassRoomRepository;
+            result.Should().Be(MediatR.Unit.Value);
         }
     }
 }

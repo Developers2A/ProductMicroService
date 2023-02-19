@@ -1258,9 +1258,10 @@ namespace Product.Infrastructure.Migrations
                     b.Property<int?>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CityName")
+                    b.Property<string>("CityName")
+                        .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Code")
                         .IsRequired()

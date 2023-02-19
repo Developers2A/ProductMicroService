@@ -4,7 +4,7 @@ using Postex.UserManagement.Domain;
 
 namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
 {
-    public class RoleConfiguration : BaseEntityConfiguration<Role>
+    public class RoleConfiguration : BaseEntityConfiguration<Role, int>
     {
         public override void Configure(EntityTypeBuilder<Role> builder)
         {
@@ -23,6 +23,11 @@ namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
                 new Role {
                     Id = 1,
                     Name = "Admin",
+                    CreatedOn = createDate
+                },
+                new Role {
+                    Id = 2,
+                    Name = "User",
                     CreatedOn = createDate
                 }
             };

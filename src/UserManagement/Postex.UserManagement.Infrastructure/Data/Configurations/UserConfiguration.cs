@@ -4,7 +4,7 @@ using Postex.UserManagement.Domain;
 
 namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
 {
-    public class UserConfiguration : BaseEntityConfiguration<User>
+    public class UserConfiguration : BaseEntityConfiguration<User, Guid>
     {
         public override void Configure(EntityTypeBuilder<User> builder)
         {
@@ -17,8 +17,14 @@ namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
                 .HasMaxLength(20);
             builder.Property(i => i.Password)
               .HasMaxLength(200);
+            builder.Property(i => i.FirstName)
+                .HasMaxLength(200);
+            builder.Property(i => i.LastName)
+                .HasMaxLength(200);
             builder.Property(i => i.Email)
              .HasMaxLength(200);
+            builder.Property(i => i.NationalCode)
+             .HasMaxLength(10);
             builder.HasData(Seed());
         }
 
@@ -28,8 +34,10 @@ namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
             return new object[]
             {
                 new User {
-                    Id = 1,
+                    Id = Guid.NewGuid(),
                     UserName = "Admin",
+                    FirstName = "ادمین",
+                    LastName = "سیستم",
                     Password = "123",
                     Mobile = "09394066727",
                     CreatedOn = createDate

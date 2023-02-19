@@ -1,15 +1,18 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Product.Application.Dtos.Couriers;
+using Postex.Product.Application.Dtos.CourierStatus;
 using Postex.Product.Domain.Couriers;
+using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.CourierStatusMappings.Queries
 {
-    public class GetCourierStatusMappingsQuery : IRequest<List<CourierStatusMappingDto>>
+    public class GetCourierStatusMappingsQuery : IRequest<List<CourierStatusMappingDetailsDto>>
     {
-        public class Handler : IRequestHandler<GetCourierStatusMappingsQuery, List<CourierStatusMappingDto>>
+        public CourierCode CourierCode { get; set; }
+
+        public class Handler : IRequestHandler<GetCourierStatusMappingsQuery, List<CourierStatusMappingDetailsDto>>
         {
             private readonly IReadRepository<CourierStatusMapping> _courierStatusMappingReadRepository;
             private readonly IMapper _mapper;
@@ -20,12 +23,28 @@ namespace Postex.Product.Application.Features.CourierStatusMappings.Queries
                 _mapper = mapper;
             }
 
-            public async Task<List<CourierStatusMappingDto>> Handle(GetCourierStatusMappingsQuery request, CancellationToken cancellationToken)
+            public async Task<List<CourierStatusMappingDetailsDto>> Handle(GetCourierStatusMappingsQuery request, CancellationToken cancellationToken)
             {
-                var courierStatusMappings = await _courierStatusMappingReadRepository.TableNoTracking
-                    .OrderByDescending(c => c.Id)
+                var courierStatusMappings = _courierStatusMappingReadRepository.TableNoTracking;
+                if (request.CourierCode != CourierCode.All)
+                {
+                    courierStatusMappings = courierStatusMappings.Where(x => x.Courier.Code == request.CourierCode);
+                }
+
+                var courierStatuses = await courierStatusMappings.Include(x => x.Courier).Include(x => x.Status).OrderByDescending(c => c.Id)
                     .ToListAsync(cancellationToken);
-                return _mapper.Map<List<CourierStatusMappingDto>>(courierStatusMappings);
+                return courierStatuses.Select(x => new CourierStatusMappingDetailsDto()
+                {
+                    Id = x.Id,
+                    CourierCode = (int)x.Courier.Code,
+                    CourierName = x.Courier.Name,
+                    PostexStatusCode = x.Status.Code,
+                    PostexStatusTitle = x.Status.Name,
+                    PostexStatusDescription = x.Status.Description,
+                    CourierStatusCode = x.Code,
+                    CourierStatusTitle = x.Description,
+                    CourierStatusDescription = x.Description,
+                }).ToList();
             }
         }
     }

@@ -3,22 +3,29 @@ using FluentAssertions;
 using Moq;
 using Postex.Product.Application.Features.CourierCods.Commands.CreateCourierCod;
 using Postex.Product.Domain.Couriers;
-using Postex.SharedKernel.Interfaces;
+using Postex.Product.UnitTest.Common;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Postex.Product.UnitTest.CourierCods.Commands
 {
-    public class CreateCourierCodCommandHandlerTests
+    public class CreateCourierCodCommandHandlerTests : BaseHandlerTest<CourierCod>
     {
         private readonly CreateCourierCodCommandHandler _commandHandler;
 
         public CreateCourierCodCommandHandlerTests()
         {
             MockMapper(out var mapper);
-            MockRepository(out var mockRepository);
-            _commandHandler = new CreateCourierCodCommandHandler(mockRepository.Object, mapper);
+            _commandHandler = new CreateCourierCodCommandHandler(_writeRepository.Object, mapper);
+        }
+
+        [Fact]
+        public async Task HandleAsync_CommandIsValid_AddAsyncIsCalled()
+        {
+            var result = await _commandHandler.Handle(new CreateCourierCodCommand(), new CancellationToken());
+
+            _writeRepository.Verify(e => e.AddAsync(It.IsAny<CourierCod>(), CancellationToken.None), Times.Once);
         }
 
         [Fact]
@@ -35,14 +42,6 @@ namespace Postex.Product.UnitTest.CourierCods.Commands
                 cfg.CreateMap<CourierCod, CreateCourierCodCommand>().ReverseMap();
             });
             mapper = mockMapper.CreateMapper();
-        }
-
-        private static void MockRepository(out Mock<IWriteRepository<CourierCod>> mockRepository)
-        {
-            var mockClassRoomRepository = new Mock<IWriteRepository<CourierCod>>();
-            mockClassRoomRepository.Setup(x => x.AddAsync(It.IsAny<CourierCod>(), CancellationToken.None)).Returns(Task.FromResult(new CourierCod())).Verifiable();
-            mockClassRoomRepository.Setup(x => x.UpdateAsync(It.IsAny<CourierCod>(), CancellationToken.None)).Returns(Task.FromResult(new CourierCod())).Verifiable();
-            mockRepository = mockClassRoomRepository;
         }
     }
 }

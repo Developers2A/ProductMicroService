@@ -27,7 +27,7 @@ namespace Postex.Product.Infrastructure.Configuration
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-                // dbContext.Database.Migrate();
+                dbContext.Database.Migrate();
             }
 
             return app;

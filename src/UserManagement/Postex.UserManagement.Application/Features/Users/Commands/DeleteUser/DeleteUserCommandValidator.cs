@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Pouya.Application.Features.Users.Commands;
+namespace Postex.UserManagement.Application.Features.Users.Commands.DeleteUser;
 
 public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
 {

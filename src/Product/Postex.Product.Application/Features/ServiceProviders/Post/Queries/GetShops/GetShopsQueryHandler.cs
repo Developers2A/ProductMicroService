@@ -61,7 +61,6 @@ namespace Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetS
             {
                 throw new AppException("An error has occurred in the Service Post " + ex.Message);
             }
-            return new(false, "fail");
         }
 
         private async Task<HttpResponseMessage> SetHttpRequest(string token, GetShopsQuery request)

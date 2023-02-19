@@ -1,8 +1,5 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Postex.SharedKernel.Extensions;
+using Postex.SharedKernel.Settings;
 using Postex.UserManagement.Api.Extensions;
 using Postex.UserManagement.Application.Configuration;
 using Postex.UserManagement.Infrastructure.Configuration;
@@ -25,9 +22,11 @@ namespace Postex.UserManagement.Api
             services.AddControllers();
             services.AddCustomVersioningSwagger();
             services.AddApplicationCore(Configuration);
+            services.Configure<JwtSetting>(Configuration.GetSection("JwtSetting"));
+            services.Configure<CodeExpirationSetting>(Configuration.GetSection("CodeExpirationSetting"));
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             app.UseCustomExceptionHandler();
             app.UseCustomSwagger();

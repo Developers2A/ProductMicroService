@@ -22,7 +22,7 @@ namespace Postex.Product.Application.Features.PostShops.Commands.UpdatePostShop
 
         public async Task<Unit> Handle(UpdatePostShopCommand request, CancellationToken cancellationToken)
         {
-            PostShop postShop = await _postShopReadRepository.TableNoTracking.FirstOrDefaultAsync(x => x.ShopId == request.ShopID);
+            PostShop postShop = await _postShopReadRepository.Table.FirstOrDefaultAsync(x => x.ShopId == request.ShopID);
 
             if (postShop == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");

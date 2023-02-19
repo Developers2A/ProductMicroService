@@ -7,7 +7,7 @@ namespace Postex.Product.Application.Features.Couriers.Commands.UpdateCourier
         public UpdateCourierCommandValidator()
         {
             RuleFor(p => p.Id)
-                  .NotEmpty().WithMessage(" شناسه الزامی میباشد");
+                  .NotEmpty().GreaterThan(0).WithMessage(" شناسه الزامی میباشد");
 
             RuleFor(p => p.Name)
                   .NotEmpty().WithMessage(" نام الزامی میباشد");

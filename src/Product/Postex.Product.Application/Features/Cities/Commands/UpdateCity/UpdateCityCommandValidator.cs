@@ -10,7 +10,7 @@ namespace Postex.Product.Application.Features.Cities.Commands.UpdateCity
                   .NotEmpty().GreaterThan(0).WithMessage(" شناسه الزامی میباشد");
 
             RuleFor(p => p.Name)
-                  .NotEmpty().WithMessage(" نام الزامی میباشد");
+                  .NotEmpty().NotNull().WithMessage(" نام الزامی میباشد");
         }
     }
 }

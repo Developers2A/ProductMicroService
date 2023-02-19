@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Postex.Product.Application.Dtos.Couriers;
+using Postex.Product.Application.Dtos.CourierStatus;
 using Postex.Product.Application.Features.CourierStatusMappings.Commands.CreateCourierStatusMapping;
 using Postex.Product.Application.Features.CourierStatusMappings.Commands.UpdateCourierStatusMapping;
 using Postex.Product.Application.Features.CourierStatusMappings.Queries;

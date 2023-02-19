@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.Product.Application.Dtos.Couriers;
+using Postex.Product.Application.Dtos.CourierStatus;
 using Postex.Product.Domain.Couriers;
 using Postex.SharedKernel.Interfaces;
 

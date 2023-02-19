@@ -3,7 +3,7 @@ using MediatR;
 using Postex.SharedKernel.Interfaces;
 using Postex.UserManagement.Domain;
 
-namespace Pouya.Application.Features.Users.Commands;
+namespace Postex.UserManagement.Application.Features.Users.Commands.DeleteUser;
 
 public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
 {

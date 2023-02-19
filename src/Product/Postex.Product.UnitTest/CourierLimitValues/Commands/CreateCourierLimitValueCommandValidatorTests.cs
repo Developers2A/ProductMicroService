@@ -16,13 +16,15 @@ namespace Postex.Product.UnitTest.CourierLimitValues.Commands
         [Theory]
         [InlineData(0)]
         [InlineData(-1)]
-        public async Task ValidateAsync_NameIsNullOrEmpty_ValidationFailed(int courierId)
+        public async Task ValidateAsync_CourierIdIsDefault_ValidationFailed(int courierId)
         {
             CreateCourierLimitValueCommand command = new()
             {
                 CourierId = courierId
             };
+
             var result = await _commandValidator.ValidateAsync(command);
+
             Assert.Contains(result.Errors, o => o.PropertyName == nameof(command.CourierId));
         }
     }

@@ -4,8 +4,8 @@ using Postex.SharedKernel.Domain;
 
 namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
 {
-    public abstract class BaseEntityConfiguration<TBase> : IEntityTypeConfiguration<TBase>
-      where TBase : BaseEntity<int>
+    public abstract class BaseEntityConfiguration<TBase, TKey> : IEntityTypeConfiguration<TBase>
+      where TBase : BaseEntity<TKey>
     {
         public virtual void Configure(EntityTypeBuilder<TBase> entity)
         {
@@ -14,10 +14,10 @@ namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
                 .IsRowVersion();
 
             entity.Property(e => e.CreatedBy)
-                .HasDefaultValue(0);
+                .HasDefaultValue(null);
 
             entity.Property(e => e.ModifiedBy)
-                .HasDefaultValue(0);
+                .HasDefaultValue(null);
         }
     }
 }

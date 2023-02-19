@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Product.Application.Dtos.Couriers;
+using Postex.Product.Application.Dtos.CourierStatus;
 using Postex.Product.Domain.Couriers;
 using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Interfaces;
