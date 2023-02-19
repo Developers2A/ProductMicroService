@@ -10,7 +10,7 @@ namespace Postex.ProfileManagement.Application.Features.CustomerInvoiceInfos.Com
 {
     public class CreateCustomerInvoiceInfoCommand : ITransactionRequest<CustomerInvoiceInfo>
     {
-        public int CustomerId { get; set; }      
+        public Guid CustomerId { get; set; }      
         public int AddressId { get; set; }
         public int TelNo { get; set; }
         public string NationalCode { get; set; }

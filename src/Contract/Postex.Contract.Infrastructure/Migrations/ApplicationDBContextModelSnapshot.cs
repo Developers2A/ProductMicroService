@@ -159,9 +159,6 @@ namespace Postex.Contract.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ContractDetailId")
                         .HasColumnType("int");
 
@@ -180,6 +177,9 @@ namespace Postex.Contract.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -288,8 +288,6 @@ namespace Postex.Contract.Infrastructure.Migrations
                     b.HasIndex("BoxTypeId");
 
                     b.HasIndex("ContractInfoId");
-
-                    b.HasIndex("CustomerId");
 
                     b.ToTable("cn_ContractBoxPrices", (string)null);
                 });
@@ -571,8 +569,6 @@ namespace Postex.Contract.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
                     b.ToTable("cn_ContractsInfo", (string)null);
                 });
 
@@ -679,9 +675,6 @@ namespace Postex.Contract.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(512)
@@ -721,8 +714,6 @@ namespace Postex.Contract.Infrastructure.Migrations
                     b.HasIndex("ContractInfoId");
 
                     b.HasIndex("ContractItemTypeId");
-
-                    b.HasIndex("CustomerId");
 
                     b.ToTable("cn_ContractItems", (string)null);
                 });
@@ -961,56 +952,6 @@ namespace Postex.Contract.Infrastructure.Migrations
                     b.ToTable("cn_ContractLeasingWarranties", (string)null);
                 });
 
-            modelBuilder.Entity("Postex.Contract.Domain.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CustomerCode")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("RemovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Customer");
-                });
-
             modelBuilder.Entity("Postex.Contract.Domain.ContractAccountingTemplate", b =>
                 {
                     b.HasOne("Postex.Contract.Domain.ContractInfo", "ContractInfo")
@@ -1036,15 +977,9 @@ namespace Postex.Contract.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Postex.Contract.Domain.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-
                     b.Navigation("BoxType");
 
                     b.Navigation("ContractInfo");
-
-                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Postex.Contract.Domain.ContractCod", b =>
@@ -1088,15 +1023,6 @@ namespace Postex.Contract.Infrastructure.Migrations
                     b.Navigation("ContractInfo");
                 });
 
-            modelBuilder.Entity("Postex.Contract.Domain.ContractInfo", b =>
-                {
-                    b.HasOne("Postex.Contract.Domain.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-
-                    b.Navigation("Customer");
-                });
-
             modelBuilder.Entity("Postex.Contract.Domain.ContractInsurance", b =>
                 {
                     b.HasOne("Postex.Contract.Domain.ContractInfo", "ContractInfo")
@@ -1122,15 +1048,9 @@ namespace Postex.Contract.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Postex.Contract.Domain.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-
                     b.Navigation("ContractInfo");
 
                     b.Navigation("ContractItemType");
-
-                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Postex.Contract.Domain.ContractLeasingWarranty", b =>

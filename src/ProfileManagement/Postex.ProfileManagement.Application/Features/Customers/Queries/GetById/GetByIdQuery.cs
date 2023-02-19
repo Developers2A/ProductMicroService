@@ -5,6 +5,6 @@ namespace Postex.ProfileManagement.Application.Features.Customers.Queries
 {
     public class GetByIdQuery:IRequest<CustomerDto>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

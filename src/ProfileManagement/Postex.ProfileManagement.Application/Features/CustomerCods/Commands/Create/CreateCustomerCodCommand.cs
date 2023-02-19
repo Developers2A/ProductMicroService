@@ -10,7 +10,7 @@ namespace Postex.ProfileManagement.Application.Features.CustomerCods.Commands.Cr
 {
     public class CreateCustomerCodCommand : ITransactionRequest<CustomerCod>
     {
-        public int CustomerId { get; set; }        
+        public Guid CustomerId { get; set; }        
         public string BirthDate { get; set; }
         public string NationalIDSerial { get; set; }
         public string AccountNumber { get; set; }

@@ -10,7 +10,7 @@ namespace Postex.ProfileManagement.Application.Dtos
     public class CustomerInvoiceInfoDto
     {
         public int Id { get; set; }
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
         public int AddressId { get; set; }
         public int TelNo { get; set; }

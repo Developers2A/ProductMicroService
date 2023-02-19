@@ -12,6 +12,6 @@ namespace Postex.Contract.Application.Features.ContractLeasings.Queries.GetByCus
 
     public class GetByCustomerContractLeasingCommand : IRequest<ContractLeasingDto>
     {
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
     }
 }

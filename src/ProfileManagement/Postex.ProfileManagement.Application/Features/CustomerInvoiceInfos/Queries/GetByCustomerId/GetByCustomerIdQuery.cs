@@ -5,6 +5,6 @@ namespace Postex.ProfileManagement.Application.Features.CustomerInvoiceInfos.Que
 {
     public class GetByCustomerIdQuery : IRequest<CustomerInvoiceInfoDto>
     {
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
     }
 }

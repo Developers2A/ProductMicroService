@@ -25,6 +25,7 @@ namespace Postex.Contract.Application.Features.ContractBoxPrices.Command.Create
                 BoxTypeId = request.BoxTypeId,
                 CityId = request.CityId,
                 ProvinceId = request.ProvinceId,
+                CustomerId = request.CustomerId,
                 SalePrice = request.SalePrice,
                 BuyPrice = request.BuyPrice,
                 Description = request.Description,

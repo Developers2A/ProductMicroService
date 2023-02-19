@@ -20,7 +20,7 @@ namespace Postex.ProfileManagement.Application.Features.CustomerCods.Queries
         public async Task<CustomerCodDto> Handle(GetByCustomerIdQuery request, CancellationToken cancellationToken)
         {
             var customerCod = await _readRepository.Table
-                .Where(c=> c.Id == request.CustomerId)                
+                .Where(c=> c.CustomerId == request.CustomerId)                
                 .FirstOrDefaultAsync(cancellationToken);
             var customerCodDto = _mapper.Map<CustomerCodDto>(customerCod);
             return customerCodDto;

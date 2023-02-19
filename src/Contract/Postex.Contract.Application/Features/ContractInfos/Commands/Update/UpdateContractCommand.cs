@@ -17,7 +17,7 @@ namespace Postex.Contract.Application.Features.Contracts.Commands.UpdateContract
         public DateTime EndDate { get; set; }
         public DateTime RegisterDate { get; set; }
         public int ContractTypeId { get; set; }
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
         public bool IsActive { get; set; }
     }
 }

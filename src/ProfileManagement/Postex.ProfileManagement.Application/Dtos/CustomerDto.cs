@@ -9,7 +9,7 @@ namespace Postex.ProfileManagement.Application.Dtos
 {
     public class CustomerDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FatherName { get; set; }
@@ -18,7 +18,7 @@ namespace Postex.ProfileManagement.Application.Dtos
         public int MobileNo { get; set; }
         public string PostalCode { get; set; }
         public bool isShahkarValidate { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedOn_P => CreatedOn.ToPersianDate();

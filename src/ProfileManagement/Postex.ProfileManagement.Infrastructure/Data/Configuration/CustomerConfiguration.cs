@@ -9,12 +9,16 @@ using System.Threading.Tasks;
 
 namespace Postex.ProfileManagement.Infrastructure.Data.Configuration
 {
-    public class CustomerConfiguration : BaseEntityConfiguration<Customer>
+    public class CustomerConfiguration : BaseGUIDEntityConfiguration<Customer>
     {
         public override void Configure(EntityTypeBuilder<Customer> entity)
         {
             base.Configure(entity);
             entity.ToTable("Customer");
+            //entity.HasKey(c => c.Id);
+            //entity.Property(c => c.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            //entity.Property(c => c.Id).IsRequired();
+
 
             entity.Property(c => c.FirstName)
                 .HasMaxLength(64);

@@ -11,7 +11,7 @@ namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Queri
 {
     public class GetByCustomerContractCollect_DistributeQuery : IRequest<List<ContractCollect_DistributeDto>>
     {
-        public int? CustomerId { get; set; }
+        public Guid? CustomerId { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
     }

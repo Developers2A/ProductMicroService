@@ -6,7 +6,7 @@ namespace Postex.ProfileManagement.Application.Features.CustomerInvoiceInfos.Com
     public class UpdateCustomerInvoiceInfoCommand : ITransactionRequest<CustomerInvoiceInfo>
     {
         public int Id { get; set; }
-        public int CustomerId { get; set; }       
+        public Guid CustomerId { get; set; }       
         public int AddressId { get; set; }
         public int TelNo { get; set; }
         public string NationalCode { get; set; }

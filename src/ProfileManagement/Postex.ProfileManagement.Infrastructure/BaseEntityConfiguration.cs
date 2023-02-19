@@ -5,7 +5,8 @@ using Postex.SharedKernel.Domain;
 namespace Postex.ProfileManagement.Infrastructure
 {
     public abstract class BaseEntityConfiguration<TBase> : IEntityTypeConfiguration<TBase>
-       where TBase : BaseEntity<int>
+       where TBase : BaseEntity<int> 
+         
     {
         public virtual void Configure(EntityTypeBuilder<TBase> entity)
         {
