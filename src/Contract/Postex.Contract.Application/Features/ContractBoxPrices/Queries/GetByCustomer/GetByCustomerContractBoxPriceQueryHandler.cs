@@ -31,6 +31,7 @@ namespace Postex.Contract.Application.Features.ContractBoxPrices.Queries.GetByCu
                   BoxTypeId = c.BoxTypeId,
                   CityId = c.CityId,
                   ProvinceId = c.ProvinceId,
+                  CustomerId= c.CustomerId,
                   SalePrice = c.SalePrice,
                   BuyPrice = c.BuyPrice,
                   BoxName = c.BoxType.Name,

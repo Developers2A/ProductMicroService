@@ -13,10 +13,10 @@ namespace Postex.Contract.Application.Features.ContractBoxPrices.Command.Create
         public int ContractInfoId { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
+        public Guid? CustomerId { get; set; }
         public double SalePrice { get; set; }
         public double BuyPrice { get; set; }
         public string Description { get; set; }
-
         public bool IsActive { get; set; }
 
     }

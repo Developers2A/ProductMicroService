@@ -117,7 +117,10 @@ namespace Postex.Contract.Infrastructure.Repositories
         {
             return await dbContext.Set<TEntity>().FindAsync(id, cancellationToken);
         }
-
+        public async Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            return await dbContext.Set<TEntity>().FindAsync(id, cancellationToken);
+        }
         //public Task<PagedList<TEntity>> GetPageAsync(int pageIndex, int pageSize, CancellationToken cancellationToken)
         //{
         //    return dbContext.Set<TEntity>().ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);

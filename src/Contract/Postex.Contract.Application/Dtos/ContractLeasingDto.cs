@@ -11,7 +11,7 @@ namespace Postex.Contract.Application.Dtos
     {
         public int Id { get; set; }
         public bool IsActive { get; set; }
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
         public int Amount { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }   

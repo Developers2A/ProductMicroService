@@ -31,6 +31,7 @@ namespace Postex.Contract.Application.Features.ContractBoxPrices.Command.Update
             contractBoxType.BoxTypeId = request.BoxTypeId;
             contractBoxType.CityId = request.CityId;
             contractBoxType.ProvinceId = request.ProvinceId;
+            contractBoxType.CustomerId= request.CustomerId;
             contractBoxType.SalePrice = request.SalePrice;
             contractBoxType.BuyPrice = request.BuyPrice;
             contractBoxType.Description= request.Description;

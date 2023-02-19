@@ -13,7 +13,7 @@ namespace Postex.Contract.Domain
         /// کد مشتری
         /// 
         /// </summary>
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
         /// <summary>
         /// مبلغ لیزینگ
         /// </summary>
