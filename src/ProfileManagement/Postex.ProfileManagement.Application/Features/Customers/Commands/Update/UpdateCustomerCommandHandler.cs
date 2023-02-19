@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Postex.ProfileManagement.Domain;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
@@ -21,7 +22,8 @@ namespace Postex.ProfileManagement.Application.Features.Customers.Commands.Updat
 
         async Task<Customer> IRequestHandler<UpdateCustomerCommand, Customer>.Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-            Customer customer = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
+            Customer customer =  await _readRepository.Table
+                .Where(c=> c.Id == request.Id).FirstOrDefaultAsync();
 
             if (customer == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");

@@ -5,7 +5,7 @@ namespace Postex.ProfileManagement.Application.Features.Customers.Commands.Updat
 {
     public class UpdateCustomerCommand : ITransactionRequest<Customer>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FatherName { get; set; }
@@ -14,7 +14,7 @@ namespace Postex.ProfileManagement.Application.Features.Customers.Commands.Updat
         public int MobileNo { get; set; }
         public string PostalCode { get; set; }
         public bool IsShahkarValidate { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public bool IsActive { get; set; }
     }
 }

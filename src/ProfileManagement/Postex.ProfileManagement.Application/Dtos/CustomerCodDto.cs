@@ -11,7 +11,7 @@ namespace Postex.ProfileManagement.Application.Dtos
     public class CustomerCodDto
     {
         public int Id { get; set; }
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
         public string BirthDate { get; set; }
         public string NationalIDSerial { get; set; }

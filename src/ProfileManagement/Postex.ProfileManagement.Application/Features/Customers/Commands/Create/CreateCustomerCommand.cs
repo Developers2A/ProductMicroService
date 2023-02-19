@@ -1,4 +1,5 @@
 ﻿using Postex.ProfileManagement.Application.Contracts;
+using Postex.ProfileManagement.Application.Dtos;
 using Postex.ProfileManagement.Domain;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Postex.ProfileManagement.Application.Features.Customers.Commands.Creat
         public int MobileNo { get; set; }
         public string PostalCode { get; set; }
 
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public bool IsActive { get; set; }
     }
 }

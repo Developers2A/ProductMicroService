@@ -20,7 +20,7 @@ namespace Postex.ProfileManagement.Application.Features.CustomerInvoiceInfos.Que
         public async Task<CustomerInvoiceInfoDto> Handle(GetByCustomerIdQuery request, CancellationToken cancellationToken)
         {
             var customerInvoiceInfo = await _readRepository.Table
-                .Where(c=> c.Id == request.CustomerId)                
+                .Where(c=> c.CustomerId == request.CustomerId)                
                 .FirstOrDefaultAsync(cancellationToken);
             var customerInvoiceInfoDto = _mapper.Map<CustomerInvoiceInfoDto>(customerInvoiceInfo);
             return customerInvoiceInfoDto;

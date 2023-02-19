@@ -4,8 +4,8 @@ using Postex.SharedKernel.Domain;
 
 namespace Postex.ProfileManagement.Infrastructure
 {
-    public abstract class BaseEntityConfiguration<TBase> : IEntityTypeConfiguration<TBase>
-       where TBase : BaseEntity<int> 
+    public abstract class BaseGUIDEntityConfiguration<TBase> : IEntityTypeConfiguration<TBase>
+       where TBase : BaseEntity<Guid> 
          
     {
         public virtual void Configure(EntityTypeBuilder<TBase> entity)
@@ -14,11 +14,11 @@ namespace Postex.ProfileManagement.Infrastructure
                 .IsRequired()
                 .IsRowVersion();
 
-            entity.Property(e => e.CreatedBy)
-                .HasDefaultValue(0);
+            //entity.Property(e => e.CreatedBy)
+            //    .HasDefaultValue(0);
 
-            entity.Property(e => e.ModifiedBy)
-                .HasDefaultValue(0);
+            //entity.Property(e => e.ModifiedBy)
+            //    .HasDefaultValue(0);
         }
     }
 }

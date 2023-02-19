@@ -15,8 +15,7 @@ namespace Postex.ProfileManagement.Infrastructure.Migrations
                 name: "Customer",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     FatherName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
@@ -25,13 +24,13 @@ namespace Postex.ProfileManagement.Infrastructure.Migrations
                     MobileNo = table.Column<int>(type: "int", nullable: false),
                     PostalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     isShahkarValidate = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -46,7 +45,7 @@ namespace Postex.ProfileManagement.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BirthDate = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     NationalIDSerial = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     AccountNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
@@ -84,7 +83,7 @@ namespace Postex.ProfileManagement.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AddressId = table.Column<int>(type: "int", nullable: false),
                     TelNo = table.Column<int>(type: "int", maxLength: 30, nullable: false),
                     NationalCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
