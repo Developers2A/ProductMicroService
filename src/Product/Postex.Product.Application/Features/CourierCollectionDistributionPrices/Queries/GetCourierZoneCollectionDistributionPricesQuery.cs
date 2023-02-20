@@ -12,21 +12,23 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
         public int CourierCode { get; set; }
         public int CourierZoneId { get; set; }
         public int Volume { get; set; }
+        public string City { get; set; }
 
         public class Handler : IRequestHandler<GetCourierZoneCollectionDistributionPricesQuery, List<CourierCityTypePriceDto>>
         {
-            private readonly IReadRepository<CourierZoneCollectionDistributionPrice> _courierCityTypePriceRepository;
+            private readonly IReadRepository<CourierZoneCollectionDistributionPrice> _courierZoneCollectionDistributionPriceRepository;
 
             public Handler(IReadRepository<CourierZoneCollectionDistributionPrice> courierCityTypePriceRepository)
             {
-                _courierCityTypePriceRepository = courierCityTypePriceRepository;
+                _courierZoneCollectionDistributionPriceRepository = courierCityTypePriceRepository;
             }
 
             public async Task<List<CourierCityTypePriceDto>> Handle(GetCourierZoneCollectionDistributionPricesQuery request, CancellationToken cancellationToken)
             {
                 List<CourierCityTypePriceDto> typeOfCityDto = new();
-                var courierCity = _courierCityTypePriceRepository.TableNoTracking
+                var courierCity = _courierZoneCollectionDistributionPriceRepository.TableNoTracking
                     .Where(x => x.CourierZoneId == request.CourierZoneId);
+
                 if (request.CourierCode > 0)
                 {
                     courierCity.Where(x => x.CourierZone.Courier.Code == (CourierCode)request.CourierCode);

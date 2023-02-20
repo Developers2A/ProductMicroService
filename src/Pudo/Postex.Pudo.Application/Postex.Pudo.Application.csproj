@@ -4,8 +4,8 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<AssemblyName>Postex.UserManagement.Application</AssemblyName>
-		<RootNamespace>Postex.UserManagement.Application</RootNamespace>
+		<AssemblyName>Postex.Pudo.Application</AssemblyName>
+		<RootNamespace>Postex.Pudo.Application</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -18,13 +18,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\UserManagement\Postex.UserManagement.Infrastructure\Postex.UserManagement.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Pudo\Postex.Pudo.Infrastructure\Postex.Pudo.Infrastructure.csproj" />
 		<ProjectReference Include="..\..\SharedKernel\Postex.SharedKernel\Postex.SharedKernel.csproj" />
-		<ProjectReference Include="..\Postex.UserManagement.Domain\Postex.UserManagement.Domain.csproj" />
+		<ProjectReference Include="..\Postex.Pudo.Domain\Postex.Pudo.Domain.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Features\VerificationCodes\Queries\" />
+	  <Folder Include="Mappings\" />
 	</ItemGroup>
 
 </Project>
