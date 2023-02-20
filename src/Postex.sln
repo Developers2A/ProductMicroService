@@ -73,7 +73,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.UserManagement.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.UserManagement.Infrastructure", "UserManagement\Postex.UserManagement.Infrastructure\Postex.UserManagement.Infrastructure.csproj", "{2CADDA1D-3BA8-4DEC-B1ED-B69CCB5B514A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.ProfileManagement.Api", "ProfileManagement\Postex.ProfileManagement.Api\Postex.ProfileManagement.Api.csproj", "{8D95F193-4552-4921-A81C-310F8A6693D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postex.ProfileManagement.Api", "ProfileManagement\Postex.ProfileManagement.Api\Postex.ProfileManagement.Api.csproj", "{8D95F193-4552-4921-A81C-310F8A6693D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postex.Product.ContractApi", "Product\Postex.Product.ContractApi\Postex.Product.ContractApi.csproj", "{3A7D1DCF-5FCA-4497-9D9F-6C1E8E4E22BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -193,6 +195,10 @@ Global
 		{8D95F193-4552-4921-A81C-310F8A6693D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D95F193-4552-4921-A81C-310F8A6693D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D95F193-4552-4921-A81C-310F8A6693D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A7D1DCF-5FCA-4497-9D9F-6C1E8E4E22BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A7D1DCF-5FCA-4497-9D9F-6C1E8E4E22BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A7D1DCF-5FCA-4497-9D9F-6C1E8E4E22BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A7D1DCF-5FCA-4497-9D9F-6C1E8E4E22BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -226,6 +232,7 @@ Global
 		{F5D7326D-14F8-4A09-82E0-EBD950292773} = {6A02ECA5-57B1-46A7-95EB-A31D9867ECD3}
 		{2CADDA1D-3BA8-4DEC-B1ED-B69CCB5B514A} = {6A02ECA5-57B1-46A7-95EB-A31D9867ECD3}
 		{8D95F193-4552-4921-A81C-310F8A6693D9} = {7F5996AA-611E-4F60-BD36-2A55D757B2E8}
+		{3A7D1DCF-5FCA-4497-9D9F-6C1E8E4E22BE} = {7E6D07B5-2315-49F5-BAA8-9C80EEAA5B73}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C68AB3D0-1A10-4000-9B35-E35F513BF374}
