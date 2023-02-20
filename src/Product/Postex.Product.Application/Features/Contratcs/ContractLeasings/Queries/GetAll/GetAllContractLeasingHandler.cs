@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Postex.Product.Application.Dtos;
-using Postex.Product.Domain;
 using Postex.SharedKernel.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Postex.SharedKernel.Utilities;
+using Postex.Product.Domain.Contracts;
 
 namespace Postex.Product.Application.Features.ContractLeasings.Queries.GetAll
 {

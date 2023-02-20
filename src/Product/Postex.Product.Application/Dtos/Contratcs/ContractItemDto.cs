@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Postex.SharedKernel.Common.Enums;
 
 namespace Postex.Product.Application.Dtos
 {
     public class ContractItemDto
     {
-
         public int ContractInfoId { get; set; }
         public int CourierId { get; set; }
         public int ContractItemTypeId { get; set; }
-        public string ContractTypeCode { get; set; }
+        public ValueAddedType ContractItemType { get; set; }
         public string ContractTypeName { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }

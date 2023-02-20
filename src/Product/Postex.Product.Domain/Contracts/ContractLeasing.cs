@@ -1,13 +1,8 @@
 ﻿using Postex.SharedKernel.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Postex.Product.Domain
+namespace Postex.Product.Domain.Contracts
 {
-    public class ContractLeasing:BaseEntity<int>
+    public class ContractLeasing : BaseEntity<int>
     {
         /// <summary>
         /// کد مشتری
@@ -21,8 +16,8 @@ namespace Postex.Product.Domain
         /// <summary>
         /// نرخ بازگشت
         /// </summary>
-        
- 
+
+
         public double ReturnRate { get; set; }
         /// <summary>
         /// تاریخ شروع

@@ -1,6 +1,7 @@
-﻿using Postex.SharedKernel.Domain;
+﻿using Postex.Product.Domain.ValueAddedPrices;
+using Postex.SharedKernel.Domain;
 
-namespace Postex.Product.Domain;
+namespace Postex.Product.Domain.Contracts;
 
 public class ContractCollect_Distribute : BaseEntity<int>
 {

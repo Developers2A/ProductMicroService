@@ -24,7 +24,7 @@ namespace Postex.Product.Application.Features.BoxPrices.Commands.UpdateBoxPrice
             if (boxPrice == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
 
-            boxPrice.Name = request.Name;
+            boxPrice.BuyPrice = request.BuyPrice;
             boxPrice.SellPrice = request.SellPrice;
 
             await _boxPriceWriteRepository.UpdateAsync(boxPrice);

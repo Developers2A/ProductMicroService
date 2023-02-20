@@ -1,4 +1,4 @@
-﻿using Postex.Product.Domain;
+﻿using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Utilities;
 using System;
 using System.Collections.Generic;

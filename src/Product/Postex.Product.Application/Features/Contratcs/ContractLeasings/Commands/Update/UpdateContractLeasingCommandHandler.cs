@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Postex.Product.Application.Features.ContractLeasings.Command.Create;
-using Postex.Product.Domain;
+using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 using System;

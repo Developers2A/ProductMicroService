@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Postex.Product.Application.Dtos;
-using Postex.Product.Domain;
+using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.Contracts.Queries.GetContractByCustomer

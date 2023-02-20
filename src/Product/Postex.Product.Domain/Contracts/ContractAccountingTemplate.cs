@@ -1,11 +1,6 @@
 ﻿using Postex.SharedKernel.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Postex.Product.Domain
+namespace Postex.Product.Domain.Contracts
 {
     public class ContractAccountingTemplate : BaseEntity<int>
     {

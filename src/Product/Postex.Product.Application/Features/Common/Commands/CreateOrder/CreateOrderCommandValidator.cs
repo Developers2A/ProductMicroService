@@ -8,11 +8,11 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
         {
             RuleFor(p => p.CourierServiceCode)
                 .NotNull().NotEmpty().GreaterThan(0).WithMessage(" کد سرویس الزامی میباشد");
-            RuleFor(p => p.ReceiverFristName)
+            RuleFor(p => p.Receiver.FristName)
                 .NotNull().NotEmpty().WithMessage(" نام گیرنده الزامی میباشد");
-            RuleFor(p => p.ReceiverLastName)
+            RuleFor(p => p.Receiver.LastName)
                 .NotNull().NotEmpty().WithMessage(" نام خانوادگی گیرنده الزامی میباشد");
-            RuleFor(p => p.ReceiverMobile)
+            RuleFor(p => p.Receiver.Mobile)
                 .NotNull().NotEmpty().WithMessage(" شماره موبایل گیرنده الزامی میباشد");
             RuleFor(p => p.Width)
                .NotNull().NotEmpty().GreaterThan(0).WithMessage(" عرض بسته الزامی میباشد");

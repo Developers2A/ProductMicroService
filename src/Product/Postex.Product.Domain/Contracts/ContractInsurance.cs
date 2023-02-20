@@ -1,6 +1,6 @@
 ﻿using Postex.SharedKernel.Domain;
 
-namespace Postex.Product.Domain;
+namespace Postex.Product.Domain.Contracts;
 
 public class ContractInsurance : BaseEntity<int>
 {
@@ -10,7 +10,7 @@ public class ContractInsurance : BaseEntity<int>
     public int? CityId { get; set; }
     public int FromValue { get; set; }
     public int ToValue { get; set; }
-    public Double FixedPercent { get; set; }
+    public double FixedPercent { get; set; }
     public int FixedValue { get; set; }
     public string Description { get; set; }
 

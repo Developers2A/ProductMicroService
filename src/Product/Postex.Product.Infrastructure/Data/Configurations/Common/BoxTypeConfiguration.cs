@@ -1,15 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Postex.Product.Domain;
-using Postex.Product.Infrastructure.Data.Configurations.Common;
+using Postex.Product.Domain.ValueAddedPrices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Infrastructure.Data.Configurations
+namespace Postex.Product.Infrastructure.Data.Configurations.Common
 {
-    public class BoxTypeConfiguration:BaseEntityConfiguration<BoxType>
+    public class BoxTypeConfiguration : BaseEntityConfiguration<BoxType>
     {
         public override void Configure(EntityTypeBuilder<BoxType> entity)
         {
@@ -26,7 +25,7 @@ namespace Postex.Product.Infrastructure.Data.Configurations
                     Name = "سایز 1",
                     Height = 10,
                     Width = 10,
-                    Length = 15,  
+                    Length = 15,
                     IsRemoved = false,
                     CreatedOn = createDate
                 },

@@ -37,7 +37,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 
             await ValueAddedPrice(priceResponse, request);
 
-            _courierCityMappings = await GetCourierCityMapping(request.CourierCode, request.SenderCity, request.ReceiverCity);
+            _courierCityMappings = await GetCourierCityMapping(request.CourierCode, request.SenderCityCode, request.ReceiverCityCode);
 
             if (request.CourierCode == (int)CourierCode.Kalaresan || request.CourierCode == (int)CourierCode.All)
             {
@@ -136,8 +136,8 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 
         public async Task<ServicePrice> KbkPrice(GetPriceQuery request)
         {
-            string senderCityCode = GetCityMappedCode(CourierCode.Kalaresan, request.SenderCity);
-            string receiverCityCode = GetCityMappedCode(CourierCode.Kalaresan, request.ReceiverCity);
+            string senderCityCode = GetCityMappedCode(CourierCode.Kalaresan, request.SenderCityCode);
+            string receiverCityCode = GetCityMappedCode(CourierCode.Kalaresan, request.ReceiverCityCode);
 
             var priceRequest = new GetKbkPriceQuery()
             {
@@ -211,9 +211,9 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         }
 
 
-        private string GetCityMappedCode(CourierCode courierCode, int cityId)
+        private string GetCityMappedCode(CourierCode courierCode, int cityCode)
         {
-            var city = _courierCityMappings.FirstOrDefault(x => x.Courier.Code == courierCode && x.Code == cityId);
+            var city = _courierCityMappings.FirstOrDefault(x => x.Courier.Code == courierCode && x.Code == cityCode);
             if (city == null)
             {
                 return "0";
@@ -231,8 +231,8 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 
         public async Task<ServicePrice> MahexPrice(GetPriceQuery request)
         {
-            string senderCityCode = GetCityMappedCode(CourierCode.Mahex, request.SenderCity);
-            string receiverCityCode = GetCityMappedCode(CourierCode.Mahex, request.ReceiverCity);
+            string senderCityCode = GetCityMappedCode(CourierCode.Mahex, request.SenderCityCode);
+            string receiverCityCode = GetCityMappedCode(CourierCode.Mahex, request.ReceiverCityCode);
 
             var priceRequest = new GetMahexPriceQuery()
             {
@@ -270,8 +270,8 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         public async Task<List<ServicePrice>> ChaparPrice(GetPriceQuery request)
         {
             List<ServicePrice> priceResult = new();
-            string senderCityCode = GetCityMappedCode(CourierCode.Chapar, request.SenderCity);
-            string receiverCityCode = GetCityMappedCode(CourierCode.Chapar, request.ReceiverCity);
+            string senderCityCode = GetCityMappedCode(CourierCode.Chapar, request.SenderCityCode);
+            string receiverCityCode = GetCityMappedCode(CourierCode.Chapar, request.ReceiverCityCode);
             string method = "11";
             string courier = "";
 
@@ -317,8 +317,8 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         public async Task<List<ServicePrice>> PostPrice(GetPriceQuery request)
         {
             List<ServicePrice> priceResult = new();
-            string senderCityCode = GetCityMappedCode(CourierCode.Post, request.SenderCity);
-            string receiverCityCode = GetCityMappedCode(CourierCode.Post, request.ReceiverCity);
+            string senderCityCode = GetCityMappedCode(CourierCode.Post, request.SenderCityCode);
+            string receiverCityCode = GetCityMappedCode(CourierCode.Post, request.ReceiverCityCode);
             var shopId = await GetShopId(int.Parse(senderCityCode));
             int serviceTypeId = 0;
             string courier = "";

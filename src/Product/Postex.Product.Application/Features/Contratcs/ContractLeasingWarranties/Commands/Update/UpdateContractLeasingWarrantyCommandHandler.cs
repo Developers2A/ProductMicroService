@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Postex.Product.Application.Features.ContractLeasingWarranties.Command.Create;
-using Postex.Product.Domain;
+using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 using System;

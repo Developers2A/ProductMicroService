@@ -4,10 +4,8 @@ namespace Postex.Product.Domain.ValueAddedPrices
 {
     public class BoxSizePrice : BaseEntity<int>
     {
-        public string Name { get; set; }
-        public double Height { get; set; }
-        public double Width { get; set; }
-        public double Length { get; set; }
+        public int BoxTypeId { get; set; }
+        public BoxType BoxType { get; set; }
         public decimal SellPrice { get; set; }
         public decimal BuyPrice { get; set; }
     }

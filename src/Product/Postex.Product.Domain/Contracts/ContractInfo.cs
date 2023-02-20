@@ -1,6 +1,6 @@
 ﻿using Postex.SharedKernel.Domain;
 
-namespace Postex.Product.Domain;
+namespace Postex.Product.Domain.Contracts;
 
 public class ContractInfo : BaseEntity<int>
 {

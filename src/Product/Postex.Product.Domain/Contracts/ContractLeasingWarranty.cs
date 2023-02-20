@@ -1,6 +1,6 @@
 ﻿using Postex.SharedKernel.Domain;
 
-namespace Postex.Product.Domain
+namespace Postex.Product.Domain.Contracts
 {
     /// <summary>
     /// ضمانتنامه های قرارداد های لیزینگ
@@ -41,5 +41,5 @@ namespace Postex.Product.Domain
         public string Description { get; set; }
     }
 
-    
+
 }

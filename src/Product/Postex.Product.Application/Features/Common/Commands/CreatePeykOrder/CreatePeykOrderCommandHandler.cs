@@ -86,11 +86,11 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
                 {
                     new LinkOrder()
                     {
-                        Address = _command.ReceiverAddress,
-                        CellPhone = _command.ReceiverMobile,
-                        FullName = _command.ReceiverFristName + " " + _command.ReceiverLastName,
-                        Latitude  = Convert.ToDecimal(_command.ReceiverLat),
-                        Longitude = Convert.ToDecimal(_command.ReceiverLon),
+                        Address = _command.Receiver.Address,
+                        CellPhone = _command.Receiver.Mobile,
+                        FullName = _command.Receiver.FristName + " " + _command.Receiver.LastName,
+                        Latitude  = Convert.ToDecimal(_command.Receiver.Lat),
+                        Longitude = Convert.ToDecimal(_command.Receiver.Lon),
                         ParcelValue = _command.ApproximateValue,
                         Weight = _command.Weight,
                     }
@@ -118,23 +118,23 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
                     {
                         sender = new PishroPostSenderReceiver()
                         {
-                            address = _command.SenderAddress,
-                            mobile = _command.SenderMobile,
-                            person = _command.SenderFristName + " " + _command.SenderLastName,
-                            telephone = _command.SenderMobile,
-                            city_no = GetCityMappedCode(CourierCode.PishroPost, _command.SenderCityCode),
-                            company = _command.SenderCompany,
-                            email = _command.SenderEmail,
+                            address = _command.Sender.Address,
+                            mobile = _command.Sender.Mobile,
+                            person = _command.Sender.FristName + " " + _command.Sender.LastName,
+                            telephone = _command.Sender.Mobile,
+                            city_no = GetCityMappedCode(CourierCode.PishroPost, _command.Sender.CityCode),
+                            company = _command.Sender.Company,
+                            email = _command.Sender.Email,
                         },
                         receiver = new PishroPostSenderReceiver()
                         {
-                            address = _command.ReceiverAddress,
-                            mobile = _command.ReceiverMobile,
-                            person = _command.ReceiverFristName + " " + _command.ReceiverLastName,
-                            telephone = _command.ReceiverMobile,
-                            city_no = GetCityMappedCode(CourierCode.PishroPost, _command.ReceiverCityCode),
-                            company = _command.ReceiverCompany,
-                            email = _command.ReceiverEmail,
+                            address = _command.Receiver.Address,
+                            mobile = _command.Receiver.Mobile,
+                            person = _command.Receiver.FristName + " " + _command.Receiver.LastName,
+                            telephone = _command.Receiver.Mobile,
+                            city_no = GetCityMappedCode(CourierCode.PishroPost, _command.Receiver.CityCode),
+                            company = _command.Receiver.Company,
+                            email = _command.Receiver.Email,
                         },
                         cn = new PishroPostCn()
                         {
@@ -159,20 +159,20 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
 
         private CreateTaroffOrderCommand CreateTarrofCommand()
         {
-            var cityCode = GetCityMappedCode(CourierCode.Taroff, _command.ReceiverCityCode);
+            var cityCode = GetCityMappedCode(CourierCode.Taroff, _command.Receiver.CityCode);
             return new CreateTaroffOrderCommand()
             {
-                FirstName = _command.ReceiverFristName,
-                LastName = _command.ReceiverLastName,
-                Address = _command.ReceiverAddress,
-                Mobile = _command.ReceiverMobile,
-                PostCode = _command.ReceiverPostCode,
+                FirstName = _command.Receiver.FristName,
+                LastName = _command.Receiver.LastName,
+                Address = _command.Receiver.Address,
+                Mobile = _command.Receiver.Mobile,
+                PostCode = _command.Receiver.PostCode,
                 ProductTitles = _command.Content,
                 TotalWeight = _command.Weight,
                 TotalPrice = _command.ApproximateValue,
                 Note = _command.Content,
                 DeliverTime = _command.DeliveryDate.ToString("HH:mm"),
-                Email = _command.ReceiverEmail,
+                Email = _command.Receiver.Email,
                 PaymentMethodId = _command.PayType == (int)PayType.Cod ? 1212 : 1213,
                 CarrierId = 153,
                 CityId = cityCode != "0" ? Convert.ToInt32(cityCode) : 1,
@@ -197,20 +197,20 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
         {
             return new CreateSpeedOrderCommand()
             {
-                Name = _command.ReceiverFristName,
-                LastName = _command.ReceiverLastName,
-                Address = _command.ReceiverAddress,
-                CellPhone = _command.ReceiverMobile,
-                Phone = _command.ReceiverMobile,
+                Name = _command.Receiver.FristName,
+                LastName = _command.Receiver.LastName,
+                Address = _command.Receiver.Address,
+                CellPhone = _command.Receiver.Mobile,
+                Phone = _command.Receiver.Mobile,
                 City = "تهران",
                 SenderCity = "تهران",
-                SenderCellPhone = _command.SenderMobile,
-                SenderPhone = _command.SenderMobile,
-                SenderName = _command.SenderFristName,
-                SenderLastName = _command.SenderLastName,
-                SenderLocation = _command.ReceiverLat + " , " + _command.ReceiverLon,
+                SenderCellPhone = _command.Sender.Mobile,
+                SenderPhone = _command.Sender.Mobile,
+                SenderName = _command.Sender.FristName,
+                SenderLastName = _command.Sender.LastName,
+                SenderLocation = _command.Receiver.Lat + " , " + _command.Receiver.Lon,
                 Weight = _command.Weight,
-                SenderAddress = _command.SenderAddress,
+                SenderAddress = _command.Sender.Address,
                 Cod = _command.PayType == (int)PayType.Cod ? 1 : 0,
                 Content = _command.Content,
                 Price = _command.ApproximateValue,
@@ -236,15 +236,15 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
                 {
                     new EcoPeykOrder()
                     {
-                       SenderTitle = _command.SenderFristName + " " + _command.SenderLastName,
-                       SenderAddress = _command.SenderAddress,
-                       SenderPostalCode = _command.SenderPostCode,
-                       SenderPhone = _command.SenderMobile,
-                       SenderLocation = _command.SenderLon + "," + _command.SenderLat,
-                       ReceiverPhone= _command.ReceiverMobile,
-                       ReceiverTitle = _command.ReceiverFristName + " " + _command.ReceiverLastName,
-                       ReceiverAddress = _command.ReceiverAddress,
-                       ReceiverLocation = _command.ReceiverLat + "," + _command.ReceiverLon,
+                       SenderTitle = _command.Sender.FristName + " " + _command.Sender.LastName,
+                       SenderAddress = _command.Sender.Address,
+                       SenderPostalCode = _command.Sender.PostCode,
+                       SenderPhone = _command.Sender.Mobile,
+                       SenderLocation = _command.Sender.Lon + "," + _command.Sender.Lat,
+                       ReceiverPhone= _command.Receiver.Mobile,
+                       ReceiverTitle = _command.Receiver.FristName + " " + _command.Receiver.LastName,
+                       ReceiverAddress = _command.Receiver.Address,
+                       ReceiverLocation = _command.Receiver.Lat + "," + _command.Receiver.Lon,
                        BoxPriceValue = _command.ApproximateValue,
                        CashOnDelivery = _command.PayType == (int)PayType.Cod,
                        BoxSize = _command.BoxSize ?? 1,
@@ -272,7 +272,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             return await _mediator.Send(new GetCourierCityMappingsByCourierAndCitiesQuery()
             {
                 CourierCode = (int)courierCode,
-                CityCodes = new List<int> { _command.SenderCityCode, _command.ReceiverCityCode }
+                CityCodes = new List<int> { _command.Sender.CityCode, _command.Receiver.CityCode }
             });
         }
     }

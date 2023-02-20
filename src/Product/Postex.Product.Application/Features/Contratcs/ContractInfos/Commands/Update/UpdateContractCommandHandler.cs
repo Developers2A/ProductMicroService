@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Postex.SharedKernel.Interfaces;
-using Postex.Product.Domain;
 using Postex.SharedKernel.Exceptions;
+using Postex.Product.Domain.Contracts;
 
 namespace Postex.Product.Application.Features.Contracts.Commands.UpdateContractCommand
 {

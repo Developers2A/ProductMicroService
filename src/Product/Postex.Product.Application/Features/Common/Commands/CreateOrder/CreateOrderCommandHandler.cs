@@ -62,7 +62,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             return await _mediator.Send(new GetCourierCityMappingsByCourierAndCitiesQuery()
             {
                 CourierCode = (int)courierCode,
-                CityCodes = new List<int> { _command.SenderCityCode, _command.ReceiverCityCode }
+                CityCodes = new List<int> { _command.Sender.CityCode, _command.Receiver.CityCode }
             });
         }
 
@@ -75,35 +75,13 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                 ParcelId = _command.ParcelId,
                 ApproximateValue = _command.ApproximateValue,
                 Content = _command.Content,
-                ReceiverCityCode = _command.ReceiverCityCode,
-                ReceiverLat = _command.ReceiverLat,
-                ReceiverCompany = _command.ReceiverCompany,
-                ReceiverAddress = _command.ReceiverAddress,
-                ReceiverFristName = _command.ReceiverFristName,
-                ReceiverLastName = _command.ReceiverLastName,
-                ReceiverEmail = _command.ReceiverEmail,
-                ReceiverMobile = _command.ReceiverMobile,
-                ReceiverLon = _command.ReceiverLon,
-                ReceiverNationalCode = _command.ReceiverNationalCode,
-                ReceiverPostCode = _command.ReceiverPostCode,
-                ReceiverPhone = _command.ReceiverPhone,
-                SenderCityCode = _command.SenderCityCode,
-                SenderLat = _command.SenderLat,
-                SenderLon = _command.SenderLon,
-                SenderCompany = _command.SenderCompany,
-                SenderAddress = _command.SenderAddress,
-                SenderFristName = _command.SenderFristName,
-                SenderLastName = _command.SenderLastName,
-                SenderPhone = _command.SenderPhone,
-                SenderMobile = _command.SenderMobile,
-                SenderPostCode = _command.SenderPostCode,
-                SenderNationalCode = _command.SenderNationalCode,
-                SenderEmail = _command.SenderEmail,
+                Receiver = _command.Receiver,
+                Sender = _command.Sender,
                 Length = _command.Length,
                 Height = _command.Height,
                 Width = _command.Width,
                 Weight = _command.Weight,
-                BoxSize = _command.BoxSize,
+                BoxSize = Convert.ToInt32(_command.Length * _command.Width * _command.Height),
                 DeliveryDate = _command.DeliveryDate,
                 PickupDate = _command.PickupDate,
             });
@@ -114,7 +92,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             var shopId = await GetShopIdByUserName();
             if (shopId == 0)
             {
-                throw new AppException($"برای این نام کاربری {_command.UserName} شاپ یافت نشد");
+                throw new AppException($"برای این شخص  {_command.Sender.Mobile} شاپ یافت نشد");
             }
             GetPostPriceQuery getPostPriceQuery = CreatePostGetPriceQuery(shopId);
             var getPostPrice = await _mediator.Send(getPostPriceQuery);
@@ -163,15 +141,15 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
         {
             var createPostOrderCommand = new CreatePostOrderCommand
             {
-                CustomerName = _command.ReceiverFristName,
-                CustomerFamily = _command.ReceiverLastName,
-                CustomerAddress = _command.ReceiverAddress,
+                CustomerName = _command.Receiver.FristName,
+                CustomerFamily = _command.Receiver.LastName,
+                CustomerAddress = _command.Receiver.Address,
                 ParcelContent = _command.Content,
-                CustomerMobile = _command.ReceiverMobile,
-                CustomerPostalCode = _command.ReceiverPostCode,
+                CustomerMobile = _command.Receiver.Mobile,
+                CustomerPostalCode = _command.Receiver.PostCode,
                 ClientOrderID = _command.ParcelId,
-                CustomerEmail = _command.ReceiverEmail,
-                CustomerNID = _command.ReceiverNationalCode,
+                CustomerEmail = _command.Receiver.Email,
+                CustomerNID = _command.Receiver.NationalCode,
                 ParcelCategoryID = 0,
                 Price = new PostPriceRequest()
                 {
@@ -193,7 +171,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
         {
             return await _mediator.Send(new GetCitiesQuery()
             {
-                CityCodes = new List<int> { _command.SenderCityCode, _command.ReceiverCityCode }
+                CityCodes = new List<int> { _command.Sender.CityCode, _command.Receiver.CityCode }
             });
         }
 
@@ -209,14 +187,14 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 
         private async Task<int> GetShopIdByUserName()
         {
-            if (string.IsNullOrEmpty(_command.UserName))
+            if (string.IsNullOrEmpty(_command.Sender.Mobile))
             {
                 throw new AppException("نام کاربری الزامی می باشد");
             }
             return await _mediator.Send(new GetPostShopIdQuery()
             {
-                Mobile = _command.UserName,
-                CityCode = _command.SenderCityCode,
+                Mobile = _command.Sender.Mobile,
+                CityCode = _command.Sender.CityCode,
             });
         }
 
@@ -251,7 +229,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             return new GetPostPriceQuery()
             {
                 ParcelValue = _command.ApproximateValue,
-                ToCityID = Convert.ToInt32(GetCityMappedCode(CourierCode.Post, _command.ReceiverCityCode)),
+                ToCityID = Convert.ToInt32(GetCityMappedCode(CourierCode.Post, _command.Receiver.CityCode)),
                 Weight = _command.Weight,
                 SMSService = false,
                 ShopID = shopId,
@@ -282,30 +260,30 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                 Reference = random.Next(100, 9999).ToString(),
                 ToAddress = new MahexAddressDetails()
                 {
-                    FirstName = _command.ReceiverFristName,
-                    LastName = _command.ReceiverLastName,
-                    Mobile = _command.ReceiverMobile,
-                    Street = _command.ReceiverAddress,
-                    PostalCode = _command.ReceiverPostCode,
+                    FirstName = _command.Receiver.FristName,
+                    LastName = _command.Receiver.LastName,
+                    Mobile = _command.Receiver.Mobile,
+                    Street = _command.Receiver.Address,
+                    PostalCode = _command.Receiver.PostCode,
                     ClientId = "",
-                    NationalId = _command.ReceiverNationalCode,
-                    Organization = _command.ReceiverCompany,
+                    NationalId = _command.Receiver.NationalCode,
+                    Organization = _command.Receiver.Company,
                     Type = "LEGAL",
-                    Phone = _command.ReceiverPhone,
-                    CityCode = GetCityMappedCode(CourierCode.Mahex, _command.ReceiverCityCode)
+                    Phone = _command.Receiver.Phone,
+                    CityCode = GetCityMappedCode(CourierCode.Mahex, _command.Receiver.CityCode)
                 },
                 FromAddress = new MahexAddressDetails()
                 {
-                    FirstName = _command.SenderFristName,
-                    LastName = _command.SenderLastName,
-                    Mobile = _command.SenderMobile,
-                    Street = _command.SenderAddress,
-                    PostalCode = _command.SenderPostCode,
+                    FirstName = _command.Sender.FristName,
+                    LastName = _command.Sender.LastName,
+                    Mobile = _command.Sender.Mobile,
+                    Street = _command.Sender.Address,
+                    PostalCode = _command.Sender.PostCode,
                     ClientId = "",
-                    NationalId = _command.SenderNationalCode,
-                    Organization = _command.SenderCompany,
+                    NationalId = _command.Sender.NationalCode,
+                    Organization = _command.Sender.Company,
                     Type = "LEGAL",
-                    CityCode = GetCityMappedCode(CourierCode.Mahex, _command.SenderCityCode)
+                    CityCode = GetCityMappedCode(CourierCode.Mahex, _command.Sender.CityCode)
                 },
                 Parcels = new List<MahexGetPriceParcel>()
                 {
@@ -348,25 +326,25 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                     {
                         sender = new ChaparSenderReceiver()
                         {
-                            address = _command.SenderAddress,
-                            mobile = _command.SenderMobile,
-                            person = _command.SenderFristName + " " + _command.SenderLastName,
-                            telephone = _command.SenderMobile,
-                            city_no = GetCityMappedCode(CourierCode.Chapar, _command.SenderCityCode),
-                            postcode = _command.SenderPostCode,
-                            company = _command.SenderCompany,
-                            email = _command.SenderEmail
+                            address = _command.Sender.Address,
+                            mobile = _command.Sender.Mobile,
+                            person = _command.Sender.FristName + " " + _command.Sender.LastName,
+                            telephone = _command.Sender.Mobile,
+                            city_no = GetCityMappedCode(CourierCode.Chapar, _command.Sender.CityCode),
+                            postcode = _command.Sender.PostCode,
+                            company = _command.Sender.Company,
+                            email = _command.Sender.Email
                         },
                         receiver = new ChaparSenderReceiver()
                         {
-                            address = _command.ReceiverAddress,
-                            mobile = _command.ReceiverMobile,
-                            person = _command.ReceiverFristName + " " + _command.ReceiverLastName,
-                            telephone = _command.ReceiverMobile,
-                            city_no =  GetCityMappedCode(CourierCode.Chapar, _command.ReceiverCityCode),
-                            postcode = _command.ReceiverPostCode,
-                            company = _command.ReceiverCompany,
-                            email = _command.ReceiverEmail
+                            address = _command.Receiver.Address,
+                            mobile = _command.Receiver.Mobile,
+                            person = _command.Receiver.FristName + " " + _command.Receiver.LastName,
+                            telephone = _command.Receiver.Mobile,
+                            city_no =  GetCityMappedCode(CourierCode.Chapar, _command.Receiver.CityCode),
+                            postcode = _command.Receiver.PostCode,
+                            company = _command.Receiver.Company,
+                            email = _command.Receiver.Email
                         },
                         cn = new CnBulkImport()
                         {
@@ -407,14 +385,14 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             return new CreateKbkOrderCommand()
             {
                 PostexShipmentCode = _command.ParcelId,
-                OriginCity = Convert.ToInt32(GetCityMappedCode(CourierCode.Kalaresan, _command.SenderCityCode)),
-                DestinationCity = Convert.ToInt32(GetCityMappedCode(CourierCode.Kalaresan, _command.ReceiverCityCode)),
-                SenderName = _command.SenderFristName + " " + _command.SenderLastName,
-                SenderPhone = _command.SenderMobile,
-                SenderAddr = _command.SenderAddress,
-                ReceiverName = _command.ReceiverFristName + " " + _command.ReceiverLastName,
-                ReceiverPhone = _command.ReceiverMobile,
-                ReceiverAddr = _command.ReceiverAddress,
+                OriginCity = Convert.ToInt32(GetCityMappedCode(CourierCode.Kalaresan, _command.Sender.CityCode)),
+                DestinationCity = Convert.ToInt32(GetCityMappedCode(CourierCode.Kalaresan, _command.Receiver.CityCode)),
+                SenderName = _command.Sender.FristName + " " + _command.Sender.LastName,
+                SenderPhone = _command.Sender.Mobile,
+                SenderAddr = _command.Sender.Address,
+                ReceiverName = _command.Receiver.FristName + " " + _command.Receiver.LastName,
+                ReceiverPhone = _command.Receiver.Mobile,
+                ReceiverAddr = _command.Receiver.Address,
                 Detail = new List<PacketsDetail>()
                 {
                     new PacketsDetail()

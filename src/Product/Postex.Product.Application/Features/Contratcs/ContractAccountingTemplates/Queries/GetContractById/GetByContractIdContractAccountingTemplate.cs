@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Postex.Product.Application.Dtos;
-using Postex.Product.Domain;
+using Postex.Product.Domain.Contracts;
 
 namespace Postex.Product.Application.Features.ContractAccountingTemplates.Queries.GetContractById
 {

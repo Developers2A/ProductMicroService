@@ -1,9 +1,5 @@
 ﻿using Postex.Product.Application.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Postex.SharedKernel.Common.Enums;
 
 namespace Postex.Product.Application.Features.ContractItems.Commands.CreateContractItem
 {
@@ -11,7 +7,7 @@ namespace Postex.Product.Application.Features.ContractItems.Commands.CreateContr
     {
         public int ContractInfoId { get; set; }
         public int CourierId { get; set; }
-        public int ContractItemTypeId { get; set; }
+        public ValueAddedType ContractItemType { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
         public bool IsActive { get; set; }

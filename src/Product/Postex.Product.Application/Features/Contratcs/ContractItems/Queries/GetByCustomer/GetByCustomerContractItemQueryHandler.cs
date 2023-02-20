@@ -1,13 +1,8 @@
 ﻿using MediatR;
-using Postex.Product.Application.Dtos;
-using Postex.Product.Domain;
-using Postex.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Postex.Product.Application.Dtos;
+using Postex.Product.Domain.Contracts;
+using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.ContractItems.Queries.GetByCustomer
 {
@@ -27,9 +22,7 @@ namespace Postex.Product.Application.Features.ContractItems.Queries.GetByCustome
                {
                    ContractInfoId = c.ContractInfoId,
                    CourierId = c.CourierId,
-                   ContractItemTypeId = c.ContractItemTypeId,
-                   ContractTypeCode = c.ContractItemType.ContractTypeCode,
-                   ContractTypeName = c.ContractItemType.ContractTypeName,
+                   ContractItemType = c.ContractItemType,
                    ProvinceId = c.ProvinceId,
                    CityId = c.CityId,
                    IsActive = c.IsActive,
@@ -39,36 +32,32 @@ namespace Postex.Product.Application.Features.ContractItems.Queries.GetByCustome
                    LevelPrice = "Customer"
                })
                .ToListAsync(cancellationToken);
-                    
+
 
             var itemCity = await _readRepository.Table
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == null )
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == null)
               .Select(c => new ContractItemDto
               {
                   ContractInfoId = c.ContractInfoId,
                   CourierId = c.CourierId,
-                  ContractItemTypeId = c.ContractItemTypeId,
-                  ContractTypeCode = c.ContractItemType.ContractTypeCode,
-                  ContractTypeName = c.ContractItemType.ContractTypeName,
+                  ContractItemType = c.ContractItemType,
                   ProvinceId = c.ProvinceId,
                   CityId = c.CityId,
                   IsActive = c.IsActive,
                   SalePrice = c.SalePrice,
                   BuyPrice = c.BuyPrice,
                   Description = c.Description,
-                  LevelPrice ="City"
+                  LevelPrice = "City"
               })
               .ToListAsync(cancellationToken);
-            
+
             var itemDefualt = await _readRepository.Table
            .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && (c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null))
            .Select(c => new ContractItemDto
            {
                ContractInfoId = c.ContractInfoId,
                CourierId = c.CourierId,
-               ContractItemTypeId = c.ContractItemTypeId,
-               ContractTypeCode = c.ContractItemType.ContractTypeCode,
-               ContractTypeName = c.ContractItemType.ContractTypeName,
+               ContractItemType = c.ContractItemType,
                ProvinceId = c.ProvinceId,
                CityId = c.CityId,
                IsActive = c.IsActive,

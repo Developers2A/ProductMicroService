@@ -1,6 +1,6 @@
 ﻿using Postex.SharedKernel.Domain;
 
-namespace Postex.Product.Domain;
+namespace Postex.Product.Domain.ValueAddedPrices;
 
 public class BoxType : BaseEntity<int>
 {

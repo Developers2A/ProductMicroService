@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
-using Postex.Product.Domain;
 
 namespace Postex.Product.Application.Features.ContractItems.Commands.CreateContractItem
 {
@@ -22,13 +22,13 @@ namespace Postex.Product.Application.Features.ContractItems.Commands.CreateContr
             {
                 ContractInfoId = request.ContractInfoId,
                 CourierId = request.CourierId,
-                ContractItemTypeId = request.ContractItemTypeId,
+                ContractItemType = request.ContractItemType,
                 ProvinceId = request.ProvinceId,
                 CityId = request.CityId,
                 IsActive = request.IsActive,
                 SalePrice = request.SalePrice,
-                BuyPrice= request.BuyPrice,
-                Description= request.Description,
+                BuyPrice = request.BuyPrice,
+                Description = request.Description,
             };
             await _writeRepository.AddAsync(contractItem, cancellationToken);
             await _writeRepository.SaveChangeAsync(cancellationToken);
