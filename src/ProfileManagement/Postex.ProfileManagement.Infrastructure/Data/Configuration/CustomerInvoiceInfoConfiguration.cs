@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Postex.ProfileManagement.Infrastructure.Data.Configuration
 {
-    public class CustomerInvoiceInfoConfiguration:BaseEntityConfiguration<CustomerInvoiceInfo>
+    public class CustomerInvoiceInfoConfiguration:BaseEntityConfiguration<CustomerInvoiceInfo,int>
     {
         public override void Configure(EntityTypeBuilder<CustomerInvoiceInfo> entity)
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Postex.ProfileManagement.Infrastructure.Data.Configuration
 {
-    public class CustomerConfiguration : BaseGUIDEntityConfiguration<Customer>
+    public class CustomerConfiguration : BaseEntityConfiguration<Customer,Guid>
     {
         public override void Configure(EntityTypeBuilder<Customer> entity)
         {
