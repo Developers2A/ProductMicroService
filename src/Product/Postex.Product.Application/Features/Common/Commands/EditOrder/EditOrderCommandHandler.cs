@@ -37,14 +37,14 @@ namespace Postex.Product.Application.Features.Common.Commands.EditOrder
 
             var createPostOrderCommand = new UpdatePostOrderCommand()
             {
-                CustomerName = _command.ReceiverFristName,
-                CustomerFamily = _command.ReceiverLastName,
-                CustomerAddress = _command.ReceiverAddress,
+                CustomerName = _command.Receiver.FristName,
+                CustomerFamily = _command.Receiver.LastName,
+                CustomerAddress = _command.Receiver.Address,
                 ParcelContent = _command.Content,
-                CustomerMobile = _command.ReceiverMobile,
-                CustomerPostalCode = _command.ReceiverPostCode,
-                CustomerEmail = _command.ReceiverEmail,
-                CustomerNID = _command.ReceiverNationalCode,
+                CustomerMobile = _command.Receiver.Mobile,
+                CustomerPostalCode = _command.Receiver.PostCode,
+                CustomerEmail = _command.Receiver.Email,
+                CustomerNID = _command.Receiver.NationalCode,
                 ParcelCode = _command.ParcelId,
                 ShopID = shopId
             };

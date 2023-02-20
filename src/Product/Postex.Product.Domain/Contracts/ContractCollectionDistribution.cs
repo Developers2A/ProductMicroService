@@ -3,7 +3,7 @@ using Postex.SharedKernel.Domain;
 
 namespace Postex.Product.Domain.Contracts;
 
-public class ContractCollect_Distribute : BaseEntity<int>
+public class ContractCollectionDistribution : BaseEntity<int>
 {
     public ContractInfo ContractInfo { get; set; }
     public int ContractInfoId { get; set; }
@@ -15,5 +15,4 @@ public class ContractCollect_Distribute : BaseEntity<int>
     public double BuyPrice { get; set; }
     public string Description { get; set; }
     public bool IsActice { get; set; }
-
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.ContractCollect_Distributes.Queries
 {
-    public class GetByContractIdContractCollect_DistributeQuery : IRequest<List<ContractCollect_DistributeDto>>
+    public class GetByContractIdContractCollect_DistributeQuery : IRequest<List<ContractCollectionDistributionDto>>
     {
         public int ContractInfoId { get; set; }
     }

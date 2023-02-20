@@ -10,7 +10,7 @@ namespace Postex.Product.Infrastructure.Data.Configurations
         public override void Configure(EntityTypeBuilder<ContractBoxPrice> entity)
         {
             base.Configure(entity);
-            entity.ToTable("cn_ContractBoxPrices");
+            entity.ToTable("ContractBoxPrices");
             entity.Property(c => c.Description)
                 .HasMaxLength(512);
         }

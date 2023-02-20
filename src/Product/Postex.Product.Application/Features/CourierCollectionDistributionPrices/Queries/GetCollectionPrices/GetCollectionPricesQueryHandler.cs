@@ -106,7 +106,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             priceResponse.CollectionPrice = priceResponse?.CollectionPrice ?? 0;
 
             //اگر بسته اول یا هر کدام از بسته های یک درخواست در سبد ارسالی نیاز به جمع آوری نداشت ، هزینه  جمع آوری سبد صفر است و جمع آوری با مشتری است
-            if (basket.Parcels.Any(x => x.NeedsCollection == false))
+            if (basket.Parcels.Any(x => x.HasCollection == false))
             {
                 priceResponse.CollectionPrice = 0;
                 priceResponse.CommentCollection =
@@ -142,7 +142,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
         private BoxSizeDto? GetPriceByVolume(BoxPrice parcel)
         {
             var price = _query.CollectionDistributionPrices.Where(x =>
-                x.CityType == parcel.DestinationCityTypeId &&
+                x.CityType == parcel.DestinationCityTypeCode &&
                 x.Volume >= parcel.GetVolume()).FirstOrDefault();
 
             if (price != null)
@@ -230,8 +230,8 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
                 {
                     var boxSize = new BoxPrice
                     {
-                        SellingPrice = maxVolumePrice.SellPrice,
-                        BuyingPrice = maxVolumePrice.BuyPrice,
+                        SellPrice = maxVolumePrice.SellPrice,
+                        BuyPrice = maxVolumePrice.BuyPrice,
                         SizeOfBox = maxVolumePrice.Volume.ToString("##,###")
                     };
                     response.BoxSizes.Add(boxSize);
@@ -242,8 +242,8 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
                 {
                     response.BoxSizes.Add(new BoxPrice()
                     {
-                        BuyingPrice = restOfBox.BuyPrice,
-                        SellingPrice = restOfBox.SellPrice
+                        BuyPrice = restOfBox.BuyPrice,
+                        SellPrice = restOfBox.SellPrice
                     });
                 }
             }
@@ -253,12 +253,12 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
                 var volume = GetPriceByVolume(volumeOfAllItemInBasket);
                 var restOfBox = new BoxPrice()
                 {
-                    BuyingPrice = volume.BuyPrice,
-                    SellingPrice = volume.SellPrice,
+                    BuyPrice = volume.BuyPrice,
+                    SellPrice = volume.SellPrice,
                 };
                 if (restOfBox != null)
                 {
-                    finalPriceCollection = restOfBox.SellingPrice;
+                    finalPriceCollection = restOfBox.SellPrice;
                     response.BoxSizes.Add(restOfBox);
                 }
             }
@@ -277,7 +277,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
                 response.CollectionPrice = finalPriceCollection;
             }
             //اگر بسته اول یا هر کدام از بسته های یک درخواست در سبد ارسالی نیاز به جمع آوری نداشت ، هزینه  جمع آوری سبد صفر است و جمع آوری با مشتری است
-            if (basket.Parcels.Any(x => x.NeedsCollection == false))
+            if (basket.Parcels.Any(x => x.HasCollection == false))
             {
                 response.CollectionPrice = 0;
                 response.CommentCollection =
@@ -298,7 +298,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             response.DistributionPrice = finalPriceDistribution;
             //اگر بسته اول یا هر کدام از بسته های یک درخواست در سبد ارسالی نیاز به توزیع نداشت ، هزینه  توزیع سبد صفر است و توزیع با مشتری است
 
-            if (basket.Parcels.Any(x => x.NeedsDistribution == false))
+            if (basket.Parcels.Any(x => x.HasDistribution == false))
             {
                 response.DistributionPrice = 0;
                 response.CommentDistribution =

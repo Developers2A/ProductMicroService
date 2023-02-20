@@ -5,12 +5,12 @@ using Postex.Product.Infrastructure.Data.Configurations.Common;
 
 namespace Postex.Product.Infrastructure.Data.Configurations
 {
-    public class ContractCollect_DistributeConfiguration : BaseEntityConfiguration<ContractCollect_Distribute>
+    public class ContractCollectDistributeConfiguration : BaseEntityConfiguration<ContractCollectionDistribution>
     {
-        public override void Configure(EntityTypeBuilder<ContractCollect_Distribute> entity)
+        public override void Configure(EntityTypeBuilder<ContractCollectionDistribution> entity)
         {
             base.Configure(entity);
-            entity.ToTable("cn_ContractCollect_Distributes");
+            entity.ToTable("ContractCollectionDistributions");
             entity.Property(c => c.Description)
                 .HasMaxLength(512);
         }

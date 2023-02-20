@@ -5,6 +5,6 @@ namespace Postex.Product.Application.Features.Cities.Queries.GetCitiesCommon
 {
     public class GetCitiesCommonQuery : IRequest<List<CityCommonDto>>
     {
-        public string StateCode { get; set; }
+        public int StateCode { get; set; }
     }
 }

@@ -16,9 +16,6 @@ namespace Postex.Product.Infrastructure.Data.Configurations.Locations
             builder.Property(i => i.Name)
                 .HasMaxLength(200);
 
-            builder.Property(i => i.Code)
-                .HasMaxLength(200);
-
             builder.Property(i => i.EnglishName)
                 .HasMaxLength(200);
         }

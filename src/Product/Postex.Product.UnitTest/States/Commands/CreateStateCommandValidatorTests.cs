@@ -29,9 +29,9 @@ namespace Postex.Product.UnitTest.States.Commands
         }
 
         [Theory]
-        [InlineData("")]
+        [InlineData(0)]
         [InlineData(null)]
-        public async Task ValidateAsync_CodeIsNullOrEmpty_ValidationFailed(string code)
+        public async Task ValidateAsync_CodeIsNullOrEmpty_ValidationFailed(int code)
         {
             CreateStateCommand command = new()
             {

@@ -6,15 +6,15 @@ namespace Postex.Product.Application.Features.ContractCollect_Distributes.Comman
 {
     internal class CreateContractCollect_DistributeCommandHandler : IRequestHandler<CreateContractCollect_DistributeCommand>
     {
-        private readonly IWriteRepository<ContractCollect_Distribute> _writeRepository;
+        private readonly IWriteRepository<ContractCollectionDistribution> _writeRepository;
 
-        public CreateContractCollect_DistributeCommandHandler(IWriteRepository<ContractCollect_Distribute> writeRepository)
+        public CreateContractCollect_DistributeCommandHandler(IWriteRepository<ContractCollectionDistribution> writeRepository)
         {
             _writeRepository = writeRepository;
         }
         public async Task<Unit> Handle(CreateContractCollect_DistributeCommand request, CancellationToken cancellationToken)
         {
-            var contractCollect_Distribute = new ContractCollect_Distribute
+            var contractCollect_Distribute = new ContractCollectionDistribution
             {
                 ContractInfoId = request.ContractInfoId,
                 BoxTypeId = request.BoxTypeId,
@@ -23,7 +23,7 @@ namespace Postex.Product.Application.Features.ContractCollect_Distributes.Comman
                 SalePrice = request.SalePrice,
                 BuyPrice = request.BuyPrice,
                 Description = request.Description,
-                IsActice=request.IsActice,
+                IsActice = request.IsActice,
             };
             await _writeRepository.AddAsync(contractCollect_Distribute);
             await _writeRepository.SaveChangeAsync(cancellationToken);

@@ -16,7 +16,7 @@ public class ContractInfo : BaseEntity<int>
     public bool IsActive { get; set; }
     public ICollection<ContractInsurance> ContractInsurances { get; set; }
     public ICollection<ContractBoxPrice> ContractBoxPrices { get; set; }
-    public ICollection<ContractCollect_Distribute> ContractCollect_Distributes { get; set; }
+    public ICollection<ContractCollectionDistribution> ContractCollectionDistributions { get; set; }
     public ICollection<ContractCod> ContractCods { get; set; }
 }
 

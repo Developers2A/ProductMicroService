@@ -5,12 +5,12 @@ using Postex.Product.Infrastructure.Data.Configurations.Common;
 
 namespace Postex.Product.Infrastructure.Data.Configurations
 {
-    public class ContractInfoConfiguration:BaseEntityConfiguration<ContractInfo>
+    public class ContractInfoConfiguration : BaseEntityConfiguration<ContractInfo>
     {
         public override void Configure(EntityTypeBuilder<ContractInfo> entity)
         {
             base.Configure(entity);
-            entity.ToTable("cn_ContractsInfo");
+            entity.ToTable("ContractsInfo");
             entity.Property(c => c.ContractNo)
                 .HasMaxLength(64);
             entity.Property(c => c.Title)

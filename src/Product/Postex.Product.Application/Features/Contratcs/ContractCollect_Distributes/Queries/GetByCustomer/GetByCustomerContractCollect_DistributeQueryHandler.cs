@@ -3,30 +3,25 @@ using Microsoft.EntityFrameworkCore;
 using Postex.Product.Application.Dtos;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.ContractCollect_Distributes.Queries
 {
-    public class GetByCustomerContractCollect_DistributeQueryHandler : IRequestHandler<GetByCustomerContractCollect_DistributeQuery, List<ContractCollect_DistributeDto>>
+    public class GetByCustomerContractCollect_DistributeQueryHandler : IRequestHandler<GetByCustomerContractCollect_DistributeQuery, List<ContractCollectionDistributionDto>>
     {
-        private readonly IReadRepository<ContractCollect_Distribute> _readRepository;
- 
+        private readonly IReadRepository<ContractCollectionDistribution> _readRepository;
 
-        public GetByCustomerContractCollect_DistributeQueryHandler(IReadRepository<ContractCollect_Distribute> readRepository )
+
+        public GetByCustomerContractCollect_DistributeQueryHandler(IReadRepository<ContractCollectionDistribution> readRepository)
         {
             this._readRepository = readRepository;
-             
+
         }
-        public async Task<List<ContractCollect_DistributeDto>> Handle(GetByCustomerContractCollect_DistributeQuery request, CancellationToken cancellationToken)
+        public async Task<List<ContractCollectionDistributionDto>> Handle(GetByCustomerContractCollect_DistributeQuery request, CancellationToken cancellationToken)
         {
             var collect_DistributeDefualt = await _readRepository.Table
                .Include(b => b.BoxType)
-               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true &&( c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null))
-               .Select(c => new ContractCollect_DistributeDto
+               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && (c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null))
+               .Select(c => new ContractCollectionDistributionDto
                {
                    Id = c.Id,
                    ContractInfoId = c.ContractInfoId,
@@ -40,14 +35,14 @@ namespace Postex.Product.Application.Features.ContractCollect_Distributes.Querie
                    Width = c.BoxType.Width,
                    Length = c.BoxType.Length,
                    Description = c.Description,
-                   LevelPrice ="Default"
+                   LevelPrice = "Default"
 
-               })               
+               })
                .ToListAsync(cancellationToken);
 
-            var collect_DistributeCity = await _readRepository.Table             
+            var collect_DistributeCity = await _readRepository.Table
               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == null)
-              .Select(c => new ContractCollect_DistributeDto
+              .Select(c => new ContractCollectionDistributionDto
               {
                   Id = c.Id,
                   ContractInfoId = c.ContractInfoId,
@@ -55,15 +50,15 @@ namespace Postex.Product.Application.Features.ContractCollect_Distributes.Querie
                   CityId = c.CityId,
                   ProvinceId = c.ProvinceId,
                   SalePrice = c.SalePrice,
-                  BuyPrice = c.BuyPrice,                 
+                  BuyPrice = c.BuyPrice,
                   Description = c.Description,
-                  IsActice=c.IsActice
+                  IsActice = c.IsActice
               })
               .ToListAsync(cancellationToken);
 
-            var collect_DistributeCus = await _readRepository.Table              
-                .Include(c=> c.ContractInfo).Where(c=> c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId== request.CustomerId)
-                .Select(c=> new ContractCollect_DistributeDto
+            var collect_DistributeCus = await _readRepository.Table
+                .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == request.CustomerId)
+                .Select(c => new ContractCollectionDistributionDto
                 {
                     Id = c.Id,
                     ContractInfoId = c.ContractInfoId,
@@ -74,13 +69,13 @@ namespace Postex.Product.Application.Features.ContractCollect_Distributes.Querie
                     BuyPrice = c.BuyPrice,
                     Description = c.Description,
                     IsActice = c.IsActice
-                })               
+                })
                 .ToListAsync(cancellationToken);
 
             for (int i = 0; i < collect_DistributeDefualt.Count; i++)
             {
                 var item = collect_DistributeDefualt[i];
-                
+
                 if (collect_DistributeCus.Where(c => c.BoxTypeId == item.BoxTypeId)
                     .FirstOrDefault() != null)
                 {
@@ -103,7 +98,7 @@ namespace Postex.Product.Application.Features.ContractCollect_Distributes.Querie
                 }
             }
 
-            
+
 
             return collect_DistributeDefualt;
         }

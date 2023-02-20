@@ -59,7 +59,6 @@ namespace Postex.Product.Domain.Couriers
         public ICollection<CourierCod> CourierCods { get; set; }
         public ICollection<CourierInsurance> CourierInsurances { get; set; }
         public ICollection<CourierLimitValue> CourierLimitValues { get; set; }
-
         public ICollection<CourierCityMapping> CourierCityMappings { get; set; }
         public ICollection<CourierZonePriceTemplate> CourierZonePriceTemplates { get; set; }
     }

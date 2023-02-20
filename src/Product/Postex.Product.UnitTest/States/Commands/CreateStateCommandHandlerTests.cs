@@ -23,7 +23,7 @@ namespace Postex.Product.UnitTest.States.Commands
             return new CreateStateCommand()
             {
                 Name = "تهران",
-                Code = "123",
+                Code = 1,
                 EnglishName = "Tehran"
             };
         }

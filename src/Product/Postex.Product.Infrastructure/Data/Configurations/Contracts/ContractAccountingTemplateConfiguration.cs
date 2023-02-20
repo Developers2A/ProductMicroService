@@ -10,7 +10,7 @@ namespace Postex.Product.Infrastructure.Data.Configurations
         public override void Configure(EntityTypeBuilder<ContractAccountingTemplate> entity)
         {
             base.Configure(entity);
-            entity.ToTable("cn_ContractAccountingTemplates");
+            entity.ToTable("ContractAccountingTemplates");
             entity.Property(c => c.ContractDetailType)
                 .HasMaxLength(64);
         }

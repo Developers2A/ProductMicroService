@@ -10,12 +10,12 @@ namespace Postex.Product.Application.Dtos.CollectionDistributionPrices.Basket
         public double Length { get; set; }
         public decimal? CollectionPrice { get; set; } = 0;
         public decimal? DistributionPrice { get; set; } = 0;
-        public decimal BuyingPrice { get; set; }
-        public decimal SellingPrice { get; set; }
-        public CityTypeCode DestinationCityTypeId { get; set; }
+        public decimal BuyPrice { get; set; }
+        public decimal SellPrice { get; set; }
+        public CityTypeCode DestinationCityTypeCode { get; set; }
         public bool IsNew { get; set; }
         public bool IsCanceled { get; set; }
-        public bool NeedsCollection { get; set; }
-        public bool NeedsDistribution { get; set; }
+        public bool HasCollection { get; set; }
+        public bool HasDistribution { get; set; }
     }
 }

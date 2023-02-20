@@ -10,7 +10,7 @@ namespace Postex.Product.Infrastructure.Data.Configurations
         public override void Configure(EntityTypeBuilder<ContractItem> entity)
         {
             base.Configure(entity);
-            entity.ToTable("cn_ContractItems");
+            entity.ToTable("ContractItems");
             entity.Property(c => c.Description)
                 .HasMaxLength(512);
 

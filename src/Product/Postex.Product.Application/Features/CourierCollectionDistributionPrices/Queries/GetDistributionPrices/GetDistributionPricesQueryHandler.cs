@@ -43,11 +43,11 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
                     if (parcel.IsNew && !parcel.IsCanceled)
                     {
                         parcel.DistributionPrice = byVolume.SellPrice;
-                        parcel.BuyingPrice = byVolume.BuyPrice;
-                        parcel.SellingPrice = byVolume.SellPrice;
+                        parcel.BuyPrice = byVolume.BuyPrice;
+                        parcel.SellPrice = byVolume.SellPrice;
                         //اگر بسته  یا هر کدام از بسته های یک درخواست در سبد ارسالی نیاز به توزیع نداشت ، هزینه  توزیع سبد صفر است و توزیع با مشتری است
                     }
-                    if (parcel.NeedsDistribution == false)
+                    if (parcel.HasDistribution == false)
                     {
                         parcel.DistributionPrice = 0;
                     }
@@ -88,7 +88,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
         private BoxSizeDto? GetPriceByVolume(BoxPrice parcel)
         {
             var price = _query.CollectionDistributionPrices.Where(x =>
-                x.CityType == parcel.DestinationCityTypeId &&
+                x.CityType == parcel.DestinationCityTypeCode &&
                 x.Volume >= parcel.GetVolume()).FirstOrDefault();
 
             if (price != null)

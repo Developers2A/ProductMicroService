@@ -24,7 +24,7 @@ namespace Postex.Product.UnitTest.States.Commands
             return new UpdateStateCommand()
             {
                 Name = "تهران",
-                Code = "123",
+                Code = 1,
                 EnglishName = "Tehran"
             };
         }
