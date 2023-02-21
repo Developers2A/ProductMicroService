@@ -14,10 +14,10 @@ namespace Postex.Product.Infrastructure.Data.Configurations.Common
                 .IsRowVersion();
 
             entity.Property(e => e.CreatedBy)
-                .HasDefaultValue(0);
+                .HasDefaultValue(null);
 
             entity.Property(e => e.ModifiedBy)
-                .HasDefaultValue(0);
+                .HasDefaultValue(null);
         }
     }
 }

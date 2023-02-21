@@ -3,35 +3,91 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Product.Infrastructure.Migrations
+namespace Postex.Product.Infrastructure.Migrations
 {
     public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BoxPrices",
+                name: "BoxType",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Height = table.Column<double>(type: "float", nullable: false),
                     Width = table.Column<double>(type: "float", nullable: false),
                     Length = table.Column<double>(type: "float", nullable: false),
-                    SellPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    BuyPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BoxPrices", x => x.Id);
+                    table.PrimaryKey("PK_BoxType", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContractLeasings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false),
+                    ReturnRate = table.Column<double>(type: "float", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    WithdrawRate = table.Column<double>(type: "float", nullable: false),
+                    DailyDepositRateCeiling = table.Column<int>(type: "int", nullable: false),
+                    DailyDepositeRate = table.Column<double>(type: "float", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractLeasings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContractsInfo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContractNo = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractsInfo", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,9 +100,9 @@ namespace Product.Infrastructure.Migrations
                     Code = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -64,9 +120,9 @@ namespace Product.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -87,9 +143,9 @@ namespace Product.Infrastructure.Migrations
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -111,9 +167,9 @@ namespace Product.Infrastructure.Migrations
                     FixedPercent = table.Column<int>(type: "int", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -135,9 +191,9 @@ namespace Product.Infrastructure.Migrations
                     FixedPercent = table.Column<int>(type: "int", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -192,9 +248,9 @@ namespace Product.Infrastructure.Migrations
                     ShopDiscountPercent = table.Column<int>(type: "int", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -204,17 +260,23 @@ namespace Product.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "PostTokens",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.PrimaryKey("PK_PostTokens", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,13 +286,13 @@ namespace Product.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Code = table.Column<int>(type: "int", nullable: false),
                     EnglishName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -252,42 +314,15 @@ namespace Product.Infrastructure.Migrations
                     Type = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Statuses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -302,9 +337,9 @@ namespace Product.Infrastructure.Migrations
                     ValueAddedType = table.Column<int>(type: "int", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -323,9 +358,9 @@ namespace Product.Infrastructure.Migrations
                     Code = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -343,15 +378,318 @@ namespace Product.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Zones", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BoxPrices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BoxTypeId = table.Column<int>(type: "int", nullable: false),
+                    SellPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    BuyPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BoxPrices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BoxPrices_BoxType_BoxTypeId",
+                        column: x => x.BoxTypeId,
+                        principalTable: "BoxType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContractLeasingWarranties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContractLeasingId = table.Column<int>(type: "int", nullable: false),
+                    WarrantyNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WarrantyAmount = table.Column<int>(type: "int", nullable: false),
+                    WarrantyReqistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    WarrantyEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BankName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractLeasingWarranties", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContractLeasingWarranties_ContractLeasings_ContractLeasingId",
+                        column: x => x.ContractLeasingId,
+                        principalTable: "ContractLeasings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContractAccountingTemplates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContractInfoId = table.Column<int>(type: "int", nullable: false),
+                    ContractDetailType = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    ContractDetailId = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PercentValue = table.Column<double>(type: "float", nullable: false),
+                    FixedValue = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractAccountingTemplates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContractAccountingTemplates_ContractsInfo_ContractInfoId",
+                        column: x => x.ContractInfoId,
+                        principalTable: "ContractsInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContractBoxPrices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BoxTypeId = table.Column<int>(type: "int", nullable: false),
+                    ContractInfoId = table.Column<int>(type: "int", nullable: false),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SalePrice = table.Column<double>(type: "float", nullable: false),
+                    BuyPrice = table.Column<double>(type: "float", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractBoxPrices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContractBoxPrices_BoxType_BoxTypeId",
+                        column: x => x.BoxTypeId,
+                        principalTable: "BoxType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ContractBoxPrices_ContractsInfo_ContractInfoId",
+                        column: x => x.ContractInfoId,
+                        principalTable: "ContractsInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContractCods",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContractInfoId = table.Column<int>(type: "int", nullable: false),
+                    CourierId = table.Column<int>(type: "int", nullable: false),
+                    FromValue = table.Column<int>(type: "int", nullable: false),
+                    ToValue = table.Column<int>(type: "int", nullable: false),
+                    FixedPercent = table.Column<double>(type: "float", nullable: false),
+                    FixedValue = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    IsActice = table.Column<bool>(type: "bit", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractCods", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContractCods_ContractsInfo_ContractInfoId",
+                        column: x => x.ContractInfoId,
+                        principalTable: "ContractsInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContractCollectionDistributions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContractInfoId = table.Column<int>(type: "int", nullable: false),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    BoxTypeId = table.Column<int>(type: "int", nullable: false),
+                    SalePrice = table.Column<double>(type: "float", nullable: false),
+                    BuyPrice = table.Column<double>(type: "float", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    IsActice = table.Column<bool>(type: "bit", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractCollectionDistributions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContractCollectionDistributions_BoxType_BoxTypeId",
+                        column: x => x.BoxTypeId,
+                        principalTable: "BoxType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ContractCollectionDistributions_ContractsInfo_ContractInfoId",
+                        column: x => x.ContractInfoId,
+                        principalTable: "ContractsInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContractCouriers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContractInfoId = table.Column<int>(type: "int", nullable: false),
+                    CourierId = table.Column<int>(type: "int", nullable: false),
+                    FixedDiscount = table.Column<int>(type: "int", nullable: false),
+                    PercentDiscount = table.Column<double>(type: "float", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractCouriers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContractCouriers_ContractsInfo_ContractInfoId",
+                        column: x => x.ContractInfoId,
+                        principalTable: "ContractsInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContractInsurances",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContractInfoId = table.Column<int>(type: "int", nullable: false),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    FromValue = table.Column<int>(type: "int", nullable: false),
+                    ToValue = table.Column<int>(type: "int", nullable: false),
+                    FixedPercent = table.Column<double>(type: "float", nullable: false),
+                    FixedValue = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    IsActice = table.Column<bool>(type: "bit", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractInsurances", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContractInsurances_ContractsInfo_ContractInfoId",
+                        column: x => x.ContractInfoId,
+                        principalTable: "ContractsInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContractItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContractInfoId = table.Column<int>(type: "int", nullable: false),
+                    CourierId = table.Column<int>(type: "int", nullable: false),
+                    ContractItemType = table.Column<int>(type: "int", nullable: false),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    SalePrice = table.Column<double>(type: "float", nullable: false),
+                    BuyPrice = table.Column<double>(type: "float", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContractItems_ContractsInfo_ContractInfoId",
+                        column: x => x.ContractInfoId,
+                        principalTable: "ContractsInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -388,9 +726,9 @@ namespace Product.Infrastructure.Migrations
                     Days = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -417,9 +755,9 @@ namespace Product.Infrastructure.Migrations
                     EntryPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -434,27 +772,6 @@ namespace Product.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RoleClaims_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Cities",
                 columns: table => new
                 {
@@ -466,9 +783,9 @@ namespace Product.Infrastructure.Migrations
                     EnglishName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -496,9 +813,9 @@ namespace Product.Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -520,91 +837,6 @@ namespace Product.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserClaims_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserLogins",
-                columns: table => new
-                {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserLogins", x => new { x.LoginProvider, x.ProviderKey });
-                    table.ForeignKey(
-                        name: "FK_UserLogins_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_UserRoles_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserRoles_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserTokens",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
-                    table.ForeignKey(
-                        name: "FK_UserTokens_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CourierCods",
                 columns: table => new
                 {
@@ -618,9 +850,9 @@ namespace Product.Infrastructure.Migrations
                     FixedPercent = table.Column<int>(type: "int", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -649,9 +881,9 @@ namespace Product.Infrastructure.Migrations
                     FixedPercent = table.Column<int>(type: "int", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -682,9 +914,9 @@ namespace Product.Infrastructure.Migrations
                     SameState = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -710,9 +942,9 @@ namespace Product.Infrastructure.Migrations
                     Volume = table.Column<double>(type: "float", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -742,9 +974,9 @@ namespace Product.Infrastructure.Migrations
                     SameState = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -781,9 +1013,9 @@ namespace Product.Infrastructure.Migrations
                     IsValid = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -811,9 +1043,9 @@ namespace Product.Infrastructure.Migrations
                     CourierServiceId = table.Column<int>(type: "int", nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -853,9 +1085,9 @@ namespace Product.Infrastructure.Migrations
                     FromOrToType = table.Column<int>(type: "int", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -891,9 +1123,9 @@ namespace Product.Infrastructure.Migrations
                     CityId = table.Column<int>(type: "int", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -912,6 +1144,55 @@ namespace Product.Infrastructure.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PostCityShops",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ShopId = table.Column<int>(type: "int", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    CityName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    CityCode = table.Column<int>(type: "int", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostCityShops", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PostCityShops_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "BoxType",
+                columns: new[] { "Id", "CreatedBy", "CreatedOn", "Height", "IsRemoved", "Length", "ModifiedBy", "ModifiedOn", "Name", "RemovedOn", "Width" },
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 10.0, false, 15.0, null, null, "سایز 1", null, 10.0 },
+                    { 2, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 10.0, false, 20.0, null, null, "سایز 2", null, 15.0 },
+                    { 3, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 15.0, false, 20.0, null, null, "سایز 3", null, 20.0 },
+                    { 4, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 20.0, false, 30.0, null, null, "سایز 4", null, 20.0 },
+                    { 5, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 20.0, false, 35.0, null, null, "سایز 5", null, 25.0 },
+                    { 6, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 20.0, false, 45.0, null, null, "سایز 6", null, 35.0 }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BoxPrices_BoxTypeId",
+                table: "BoxPrices",
+                column: "BoxTypeId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Cities_StateId",
                 table: "Cities",
@@ -921,6 +1202,56 @@ namespace Product.Infrastructure.Migrations
                 name: "IX_CityZipCodes_CityId",
                 table: "CityZipCodes",
                 column: "CityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractAccountingTemplates_ContractInfoId",
+                table: "ContractAccountingTemplates",
+                column: "ContractInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractBoxPrices_BoxTypeId",
+                table: "ContractBoxPrices",
+                column: "BoxTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractBoxPrices_ContractInfoId",
+                table: "ContractBoxPrices",
+                column: "ContractInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractCods_ContractInfoId",
+                table: "ContractCods",
+                column: "ContractInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractCollectionDistributions_BoxTypeId",
+                table: "ContractCollectionDistributions",
+                column: "BoxTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractCollectionDistributions_ContractInfoId",
+                table: "ContractCollectionDistributions",
+                column: "ContractInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractCouriers_ContractInfoId",
+                table: "ContractCouriers",
+                column: "ContractInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractInsurances_ContractInfoId",
+                table: "ContractInsurances",
+                column: "ContractInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractItems_ContractInfoId",
+                table: "ContractItems",
+                column: "ContractInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractLeasingWarranties_ContractLeasingId",
+                table: "ContractLeasingWarranties",
+                column: "ContractLeasingId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourierCityMappings_CityId",
@@ -1018,43 +1349,9 @@ namespace Product.Infrastructure.Migrations
                 column: "CourierId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleClaims_RoleId",
-                table: "RoleClaims",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "Roles",
-                column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserClaims_UserId",
-                table: "UserClaims",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserLogins_UserId",
-                table: "UserLogins",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserRoles_RoleId",
-                table: "UserRoles",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                table: "Users",
-                column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "Users",
-                column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                name: "IX_PostCityShops_CityId",
+                table: "PostCityShops",
+                column: "CityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -1064,6 +1361,30 @@ namespace Product.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "CityZipCodes");
+
+            migrationBuilder.DropTable(
+                name: "ContractAccountingTemplates");
+
+            migrationBuilder.DropTable(
+                name: "ContractBoxPrices");
+
+            migrationBuilder.DropTable(
+                name: "ContractCods");
+
+            migrationBuilder.DropTable(
+                name: "ContractCollectionDistributions");
+
+            migrationBuilder.DropTable(
+                name: "ContractCouriers");
+
+            migrationBuilder.DropTable(
+                name: "ContractInsurances");
+
+            migrationBuilder.DropTable(
+                name: "ContractItems");
+
+            migrationBuilder.DropTable(
+                name: "ContractLeasingWarranties");
 
             migrationBuilder.DropTable(
                 name: "Countries");
@@ -1096,6 +1417,9 @@ namespace Product.Infrastructure.Migrations
                 name: "CourierZonePriceTemplates");
 
             migrationBuilder.DropTable(
+                name: "PostCityShops");
+
+            migrationBuilder.DropTable(
                 name: "PostexCods");
 
             migrationBuilder.DropTable(
@@ -1105,19 +1429,7 @@ namespace Product.Infrastructure.Migrations
                 name: "PostShops");
 
             migrationBuilder.DropTable(
-                name: "RoleClaims");
-
-            migrationBuilder.DropTable(
-                name: "UserClaims");
-
-            migrationBuilder.DropTable(
-                name: "UserLogins");
-
-            migrationBuilder.DropTable(
-                name: "UserRoles");
-
-            migrationBuilder.DropTable(
-                name: "UserTokens");
+                name: "PostTokens");
 
             migrationBuilder.DropTable(
                 name: "ValueAddedPrices");
@@ -1129,13 +1441,19 @@ namespace Product.Infrastructure.Migrations
                 name: "Zones");
 
             migrationBuilder.DropTable(
+                name: "BoxType");
+
+            migrationBuilder.DropTable(
+                name: "ContractsInfo");
+
+            migrationBuilder.DropTable(
+                name: "ContractLeasings");
+
+            migrationBuilder.DropTable(
                 name: "CourierLimits");
 
             migrationBuilder.DropTable(
                 name: "Statuses");
-
-            migrationBuilder.DropTable(
-                name: "Cities");
 
             migrationBuilder.DropTable(
                 name: "CourierZones");
@@ -1144,16 +1462,13 @@ namespace Product.Infrastructure.Migrations
                 name: "CourierServices");
 
             migrationBuilder.DropTable(
-                name: "Roles");
-
-            migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "States");
+                name: "Cities");
 
             migrationBuilder.DropTable(
                 name: "Couriers");
+
+            migrationBuilder.DropTable(
+                name: "States");
         }
     }
 }
