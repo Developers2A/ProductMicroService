@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Postex.Product.Application.Dtos;
 using Postex.Product.Application.Features.ContractLeasingWarranties.Command.Create;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
@@ -12,32 +13,32 @@ using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.ContractLeasingWarranties.Commands.Update
 {
-    public class UpdateContractLeasingWarrantyCommandHandler : IRequestHandler<UpdateContractLeasingWarrantyCommand>
+    public class UpdateContractLeasingWarrantyCommandHandler : IRequestHandler<UpdateContractLeasingWarrantyCommand, ContractLeasingWarrantyDto>
     {
-        private readonly IWriteRepository<ContractLeasingWarranty> writeRepository;
-        private readonly IReadRepository<ContractLeasingWarranty> readRepository;
-        private readonly IMapper mapper;
+        private readonly IWriteRepository<ContractLeasingWarranty> _writeRepository;
+        private readonly IReadRepository<ContractLeasingWarranty> _readRepository;
+        private readonly IMapper _mapper;
 
-        public UpdateContractLeasingWarrantyCommandHandler(IWriteRepository<ContractLeasingWarranty> writeRepository,IReadRepository<ContractLeasingWarranty> readRepository,IMapper mapper)
+        public UpdateContractLeasingWarrantyCommandHandler(IWriteRepository<ContractLeasingWarranty> writeRepository, IReadRepository<ContractLeasingWarranty> readRepository, IMapper mapper)
         {
-            this.writeRepository = writeRepository;
-            this.readRepository = readRepository;
-            this.mapper = mapper;
+            _writeRepository = writeRepository;
+            _readRepository = readRepository;
+            _mapper = mapper;
         }
-        public async Task<Unit> Handle(UpdateContractLeasingWarrantyCommand request, CancellationToken cancellationToken)
+
+
+        async Task<ContractLeasingWarrantyDto> IRequestHandler<UpdateContractLeasingWarrantyCommand, ContractLeasingWarrantyDto>.Handle(UpdateContractLeasingWarrantyCommand request, CancellationToken cancellationToken)
         {
-          
+            ContractLeasingWarranty contractLeasingWaranty = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
 
-            ContractLeasingWarranty warranty = await readRepository.GetByIdAsync(request.Id, cancellationToken);
-
-            if (warranty == null)
+            if (contractLeasingWaranty == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
 
-            var updateWarranty = mapper.Map(request, warranty);
-            await writeRepository.UpdateAsync(updateWarranty);
-            await writeRepository.SaveChangeAsync();
-
-            return Unit.Value;
+            contractLeasingWaranty = _mapper.Map<ContractLeasingWarranty>(request);
+            await _writeRepository.UpdateAsync(contractLeasingWaranty);
+            await _writeRepository.SaveChangeAsync();
+            var dto = _mapper.Map<ContractLeasingWarrantyDto>(contractLeasingWaranty);
+            return dto;
         }
     }
 }

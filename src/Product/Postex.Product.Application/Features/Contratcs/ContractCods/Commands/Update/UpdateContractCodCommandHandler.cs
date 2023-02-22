@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Postex.Product.Application.Dtos;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.ContractCods.Command.Update
 {
-    public class UpdateContractCodCommandHandler : IRequestHandler<UpdateContractCodCommand>
+    public class UpdateContractCodCommandHandler : IRequestHandler<UpdateContractCodCommand, ContractCodDto>
     {
         private readonly IWriteRepository<ContractCod> _writeRepository;
         private readonly IReadRepository<ContractCod> _readRepository;
@@ -23,7 +24,9 @@ namespace Postex.Product.Application.Features.ContractCods.Command.Update
             _readRepository = readRepository;
             _mapper = mapper;
         }
-        public async Task<Unit> Handle(UpdateContractCodCommand request, CancellationToken cancellationToken)
+       
+
+     async   Task<ContractCodDto> IRequestHandler<UpdateContractCodCommand, ContractCodDto>.Handle(UpdateContractCodCommand request, CancellationToken cancellationToken)
         {
             ContractCod contractCod = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -34,12 +37,12 @@ namespace Postex.Product.Application.Features.ContractCods.Command.Update
             contractCod.ToValue = request.ToValue;
             contractCod.FixedValue = request.FixedValue;
             contractCod.FixedPercent = request.FixedPercent;
-            contractCod.Description= request.Description;
+            contractCod.Description = request.Description;
 
             await _writeRepository.UpdateAsync(contractCod);
             await _writeRepository.SaveChangeAsync();
-
-            return Unit.Value;
+            var dto = _mapper.Map<ContractCodDto>(contractCod);
+            return dto;
         }
     }
 }

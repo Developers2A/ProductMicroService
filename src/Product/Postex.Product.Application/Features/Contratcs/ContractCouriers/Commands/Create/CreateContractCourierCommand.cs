@@ -1,8 +1,9 @@
 ﻿using Postex.Product.Application.Contracts;
+using Postex.Product.Application.Dtos;
 
 namespace Postex.Product.Application.Features.ContractCouriers.Command.Create
 {
-    public class CreateContractCourierCommand : ITransactionRequest
+    public class CreateContractCourierCommand : ITransactionRequest<ContractCourierDto>
     {
         public int ContractInfoId { get; set; }
         public int CourierId { get; set; }

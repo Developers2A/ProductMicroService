@@ -1,13 +1,9 @@
 ﻿using Postex.Product.Application.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Postex.Product.Application.Dtos;
 
 namespace Postex.Product.Application.Features.ContractCods.Command.Create
 {
-    public class CreateContractCodCommand:ITransactionRequest
+    public class CreateContractCodCommand:ITransactionRequest<ContractCodDto>
     {
         public int ContractInfoId { get; set; }
         public int FromValue { get; set; }

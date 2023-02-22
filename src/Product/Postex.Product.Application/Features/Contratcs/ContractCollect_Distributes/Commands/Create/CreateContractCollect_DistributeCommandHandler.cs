@@ -1,33 +1,30 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using Postex.Product.Application.Dtos;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.ContractCollect_Distributes.Command.Create
 {
-    internal class CreateContractCollect_DistributeCommandHandler : IRequestHandler<CreateContractCollect_DistributeCommand>
+    internal class CreateContractCollect_DistributeCommandHandler : IRequestHandler<CreateContractCollect_DistributeCommand, ContractCollectionDistributionDto>
     {
         private readonly IWriteRepository<ContractCollectionDistribution> _writeRepository;
+        private readonly IMapper _mapper;
 
-        public CreateContractCollect_DistributeCommandHandler(IWriteRepository<ContractCollectionDistribution> writeRepository)
+        public CreateContractCollect_DistributeCommandHandler(IWriteRepository<ContractCollectionDistribution> writeRepository,IMapper mapper)
         {
             _writeRepository = writeRepository;
+            this._mapper = mapper;
         }
-        public async Task<Unit> Handle(CreateContractCollect_DistributeCommand request, CancellationToken cancellationToken)
+        
+
+      async  Task<ContractCollectionDistributionDto> IRequestHandler<CreateContractCollect_DistributeCommand, ContractCollectionDistributionDto>.Handle(CreateContractCollect_DistributeCommand request, CancellationToken cancellationToken)
         {
-            var contractCollect_Distribute = new ContractCollectionDistribution
-            {
-                ContractInfoId = request.ContractInfoId,
-                BoxTypeId = request.BoxTypeId,
-                CityId = request.CityId,
-                ProvinceId = request.ProvinceId,
-                SalePrice = request.SalePrice,
-                BuyPrice = request.BuyPrice,
-                Description = request.Description,
-                IsActice = request.IsActice,
-            };
+            var contractCollect_Distribute = _mapper.Map<ContractCollectionDistribution>(request);
             await _writeRepository.AddAsync(contractCollect_Distribute);
             await _writeRepository.SaveChangeAsync(cancellationToken);
-            return Unit.Value;
+            var dto = _mapper.Map<ContractCollectionDistributionDto>(contractCollect_Distribute);
+            return dto;
         }
     }
 }

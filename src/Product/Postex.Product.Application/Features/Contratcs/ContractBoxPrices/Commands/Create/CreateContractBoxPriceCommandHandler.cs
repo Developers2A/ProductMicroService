@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using Postex.Product.Application.Dtos;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 using System;
@@ -9,31 +11,25 @@ using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.ContractBoxPrices.Command.Create
 {
-    internal class CreateContractBoxPriceCommandHandler : IRequestHandler<CreateContractBoxPriceCommand>
+    internal class CreateContractBoxPriceCommandHandler : IRequestHandler<CreateContractBoxPriceCommand, ContractBoxPriceDto>
     {
         private readonly IWriteRepository<ContractBoxPrice> _writeRepository;
+        private readonly IMapper _mapper;
 
-        public CreateContractBoxPriceCommandHandler(IWriteRepository<ContractBoxPrice> writeRepository)
+        public CreateContractBoxPriceCommandHandler(IWriteRepository<ContractBoxPrice> writeRepository,IMapper mapper)
         {
             _writeRepository = writeRepository;
+            this._mapper = mapper;
         }
-        public async Task<Unit> Handle(CreateContractBoxPriceCommand request, CancellationToken cancellationToken)
+         
+
+      async  Task<ContractBoxPriceDto> IRequestHandler<CreateContractBoxPriceCommand, ContractBoxPriceDto>.Handle(CreateContractBoxPriceCommand request, CancellationToken cancellationToken)
         {
-            var contractBoxType = new ContractBoxPrice
-            {
-                ContractInfoId = request.ContractInfoId,
-                BoxTypeId = request.BoxTypeId,
-                CityId = request.CityId,
-                ProvinceId = request.ProvinceId,
-                CustomerId = request.CustomerId,
-                SalePrice = request.SalePrice,
-                BuyPrice = request.BuyPrice,
-                Description = request.Description,
-                IsActive = request.IsActive
-            };
+            var contractBoxType = _mapper.Map<ContractBoxPrice>(request);
             await _writeRepository.AddAsync(contractBoxType);
             await _writeRepository.SaveChangeAsync(cancellationToken);
-            return Unit.Value;
+            var dto = _mapper.Map<ContractBoxPriceDto>(contractBoxType);
+            return dto;
         }
     }
 }

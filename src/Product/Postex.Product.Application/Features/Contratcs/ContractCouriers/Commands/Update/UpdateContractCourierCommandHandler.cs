@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Postex.Product.Application.Dtos;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.ContractCouriers.Command.Update
 {
-    public class UpdateContractCourierCommandHandler : IRequestHandler<UpdateContractCourierCommand>
+    public class UpdateContractCourierCommandHandler : IRequestHandler<UpdateContractCourierCommand, ContractCourierDto>
     {
         private readonly IWriteRepository<ContractCourier> _writeRepository;
         private readonly IReadRepository<ContractCourier> _readRepository;
@@ -23,23 +24,26 @@ namespace Postex.Product.Application.Features.ContractCouriers.Command.Update
             _readRepository = readRepository;
             _mapper = mapper;
         }
-        public async Task<Unit> Handle(UpdateContractCourierCommand request, CancellationToken cancellationToken)
+        
+
+      async  Task<ContractCourierDto> IRequestHandler<UpdateContractCourierCommand, ContractCourierDto>.Handle(UpdateContractCourierCommand request, CancellationToken cancellationToken)
         {
             ContractCourier contractCourier = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (contractCourier == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
-        
+
             contractCourier.CourierId = request.CourierId;
             contractCourier.FixedDiscount = request.FixedDiscount;
             contractCourier.PercentDiscount = request.PercentDiscount;
             contractCourier.IsActive = request.IsActive;
-            contractCourier.Description=request.Description;
+            contractCourier.Description = request.Description;
 
             await _writeRepository.UpdateAsync(contractCourier);
             await _writeRepository.SaveChangeAsync();
 
-            return Unit.Value;
+            var dto = _mapper.Map<ContractCourierDto>(contractCourier);
+            return dto;
         }
     }
 }

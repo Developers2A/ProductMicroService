@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using Postex.Product.Application.Dtos;
 using Postex.Product.Application.Features.ContractLeasings.Command.Create;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
@@ -10,32 +12,25 @@ using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.ContractLeasings.Commands.Create
 {
-    public class CreateContractLeasingCommandHandler : IRequestHandler<CreateContractLeasingCommand>
+    public class CreateContractLeasingCommandHandler : IRequestHandler<CreateContractLeasingCommand, ContractLeasingDto>
     {
-        private readonly IWriteRepository<ContractLeasing> writeRepository;
+        private readonly IWriteRepository<ContractLeasing> _writeRepository;
+        private readonly IMapper _mapper;
 
-        public CreateContractLeasingCommandHandler(IWriteRepository<ContractLeasing> writeRepository)
+        public CreateContractLeasingCommandHandler(IWriteRepository<ContractLeasing> writeRepository,IMapper mapper)
         {
-            this.writeRepository = writeRepository;
+            _writeRepository = writeRepository;
+            _mapper = mapper;
         }
-        public async Task<Unit> Handle(CreateContractLeasingCommand request, CancellationToken cancellationToken)
+       
+
+     async   Task<ContractLeasingDto> IRequestHandler<CreateContractLeasingCommand, ContractLeasingDto>.Handle(CreateContractLeasingCommand request, CancellationToken cancellationToken)
         {
-            var contractLeasing = new ContractLeasing()
-            {
-                CustomerId = request.CustomerId,
-                StartDate = request.StartDate,
-                EndDate = request.EndDate,
-                IsActive = request.IsActive,
-                Amount = request.Amount,
-                DailyDepositeRate = request.DailyDepositeRate,
-                DailyDepositRateCeiling = request.DailyDepositRateCeiling,
-                ReturnRate = request.ReturnRate,
-                WithdrawRate = request.WithdrawRate,
-                Description=request.Description,
-            };
-            await writeRepository.AddAsync(contractLeasing);
-            await writeRepository.SaveChangeAsync(cancellationToken);
-            return Unit.Value;
+            var contractLeasing = _mapper.Map<ContractLeasing>(request);
+            await _writeRepository.AddAsync(contractLeasing);
+            await _writeRepository.SaveChangeAsync(cancellationToken);
+            var dto = _mapper.Map<ContractLeasingDto>(contractLeasing);
+            return dto;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using Postex.Product.Application.Dtos;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 using System;
@@ -9,29 +11,25 @@ using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.ContractInsurances.Command
 {
-    public class CreateContractInsuranceCommandHandler : IRequestHandler<CreateContractInsuranceCommand>
+    public class CreateContractInsuranceCommandHandler : IRequestHandler<CreateContractInsuranceCommand, ContractInsuranceDto>
     {
         private readonly IWriteRepository<ContractInsurance> _writeRepositort;
+        private readonly IMapper _mapper;
 
-        public CreateContractInsuranceCommandHandler(IWriteRepository<ContractInsurance> writeRepositort)
+        public CreateContractInsuranceCommandHandler(IWriteRepository<ContractInsurance> writeRepositort,IMapper mapper)
         {
-            this._writeRepositort = writeRepositort;
+            _writeRepositort = writeRepositort;
+            _mapper = mapper;
         }
-        public async Task<Unit> Handle(CreateContractInsuranceCommand request, CancellationToken cancellationToken)
+ 
+
+     async   Task<ContractInsuranceDto> IRequestHandler<CreateContractInsuranceCommand, ContractInsuranceDto>.Handle(CreateContractInsuranceCommand request, CancellationToken cancellationToken)
         {
-            var contractInsurance = new ContractInsurance()
-            {
-                ContractInfoId = request.ContractInfoId,
-                FromValue=request.FromValue,
-                ToValue=request.ToValue,
-                FixedPercent = request.FixedPercent,
-                FixedValue=request.FixedValue,
-                Description=request.Description,
-                IsActice=request.IsActice
-            };
+            var contractInsurance = _mapper.Map<ContractInsurance>(request);
             await _writeRepositort.AddAsync(contractInsurance);
             await _writeRepositort.SaveChangeAsync(cancellationToken);
-            return Unit.Value;
+            var dto = _mapper.Map<ContractInsuranceDto>(contractInsurance);
+            return dto;
         }
     }
 }

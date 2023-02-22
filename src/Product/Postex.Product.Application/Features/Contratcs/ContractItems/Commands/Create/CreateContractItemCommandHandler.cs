@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
+using Postex.Product.Application.Dtos;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.ContractItems.Commands.CreateContractItem
 {
-    public class CreateContractItemCommandHandler : IRequestHandler<CreateContractItemCommand>
+    public class CreateContractItemCommandHandler : IRequestHandler<CreateContractItemCommand, ContractItemDto>
     {
         private readonly IWriteRepository<ContractItem> _writeRepository;
         private readonly IMapper _mapper;
@@ -15,24 +16,15 @@ namespace Postex.Product.Application.Features.ContractItems.Commands.CreateContr
             this._writeRepository = writeRepository;
             this._mapper = mapper;
         }
-        public async Task<Unit> Handle(CreateContractItemCommand request, CancellationToken cancellationToken)
-        {
+         
 
-            var contractItem = new ContractItem
-            {
-                ContractInfoId = request.ContractInfoId,
-                CourierId = request.CourierId,
-                ContractItemType = request.ContractItemType,
-                ProvinceId = request.ProvinceId,
-                CityId = request.CityId,
-                IsActive = request.IsActive,
-                SalePrice = request.SalePrice,
-                BuyPrice = request.BuyPrice,
-                Description = request.Description,
-            };
+      async  Task<ContractItemDto> IRequestHandler<CreateContractItemCommand, ContractItemDto>.Handle(CreateContractItemCommand request, CancellationToken cancellationToken)
+        {
+            var contractItem = _mapper.Map<ContractItem>(request);
             await _writeRepository.AddAsync(contractItem, cancellationToken);
             await _writeRepository.SaveChangeAsync(cancellationToken);
-            return Unit.Value;
+            var dto = _mapper.Map<ContractItemDto>(contractItem);
+            return dto;
         }
     }
 }

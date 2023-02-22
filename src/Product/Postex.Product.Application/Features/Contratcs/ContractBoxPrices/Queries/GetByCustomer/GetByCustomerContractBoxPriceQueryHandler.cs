@@ -23,7 +23,7 @@ namespace Postex.Product.Application.Features.ContractBoxPrices.Queries.GetByCus
         {
             var boxPriceDefualt = await _readRepository.Table
               .Include(b => b.BoxType)
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && (c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null))
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && (c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0))
               .Select(c => new ContractBoxPriceDto
               {
                   Id = c.Id,
@@ -46,7 +46,7 @@ namespace Postex.Product.Application.Features.ContractBoxPrices.Queries.GetByCus
               .ToListAsync(cancellationToken);
 
             var boxPriceCity = await _readRepository.Table
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == null)
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == 0)
               .Select(c => new ContractBoxPriceDto
               {
                   Id = c.Id,
@@ -61,7 +61,7 @@ namespace Postex.Product.Application.Features.ContractBoxPrices.Queries.GetByCus
               .ToListAsync(cancellationToken);
 
             var boxPriceCus = await _readRepository.Table
-                .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == request.CustomerId)
+                .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == request.CustomerId)
                 .Select(c => new ContractBoxPriceDto
                 {
                     Id = c.Id,

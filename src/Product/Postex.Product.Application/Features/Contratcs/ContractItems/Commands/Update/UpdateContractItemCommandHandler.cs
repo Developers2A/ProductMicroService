@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using MediatR;
+using Postex.Product.Application.Dtos;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.ContractItems.Commands.UpdateContractItem
 {
-    public class UpdateContractItemCommandHandler : IRequestHandler<UpdateContractItemCommand>
+    public class UpdateContractItemCommandHandler : IRequestHandler<UpdateContractItemCommand, ContractItemDto>
     {
         private readonly IWriteRepository<ContractItem> _writeRepository;
         private readonly IReadRepository<ContractItem> _readRepository;
@@ -18,7 +19,9 @@ namespace Postex.Product.Application.Features.ContractItems.Commands.UpdateContr
             this._readRepository = readRepository;
             this._mapper = mapper;
         }
-        public async Task<Unit> Handle(UpdateContractItemCommand request, CancellationToken cancellationToken)
+         
+
+       async Task<ContractItemDto> IRequestHandler<UpdateContractItemCommand, ContractItemDto>.Handle(UpdateContractItemCommand request, CancellationToken cancellationToken)
         {
             ContractItem contractitem = await _readRepository.GetByIdAsync(request.
                 Id, cancellationToken);
@@ -38,7 +41,8 @@ namespace Postex.Product.Application.Features.ContractItems.Commands.UpdateContr
             await _writeRepository.UpdateAsync(contractitem, cancellationToken);
             await _writeRepository.SaveChangeAsync(cancellationToken);
 
-            return Unit.Value;
+            var dto = _mapper.Map<ContractItemDto>(contractitem);
+            return dto;
         }
     }
 }

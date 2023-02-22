@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Postex.Product.Application.Dtos;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.ContractInsurances.Command.Update
 {
-    public class UpdateContractInsuranceCommandHandler : IRequestHandler<UpdateContractInsuranceCommand>
+    public class UpdateContractInsuranceCommandHandler : IRequestHandler<UpdateContractInsuranceCommand, ContractInsuranceDto>
     {
         private readonly IWriteRepository<ContractInsurance> _writeRepository;
         private readonly IReadRepository<ContractInsurance> _readRepository;
@@ -23,7 +24,9 @@ namespace Postex.Product.Application.Features.ContractInsurances.Command.Update
             _readRepository = readRepository;
             _mapper = mapper;
         }
-        public async Task<Unit> Handle(UpdateContractInsuranceCommand request, CancellationToken cancellationToken)
+         
+
+      async  Task<ContractInsuranceDto> IRequestHandler<UpdateContractInsuranceCommand, ContractInsuranceDto>.Handle(UpdateContractInsuranceCommand request, CancellationToken cancellationToken)
         {
             ContractInsurance contractInsurance = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -35,12 +38,13 @@ namespace Postex.Product.Application.Features.ContractInsurances.Command.Update
             contractInsurance.FixedValue = request.FixedValue;
             contractInsurance.FixedPercent = request.FixedPercent;
             contractInsurance.Description = request.Description;
-            contractInsurance.IsActice=request.IsActice;
+            contractInsurance.IsActice = request.IsActice;
 
             await _writeRepository.UpdateAsync(contractInsurance);
             await _writeRepository.SaveChangeAsync();
 
-            return Unit.Value;
+            var dto = _mapper.Map<ContractInsuranceDto>(contractInsurance);
+            return dto;
         }
     }
 }

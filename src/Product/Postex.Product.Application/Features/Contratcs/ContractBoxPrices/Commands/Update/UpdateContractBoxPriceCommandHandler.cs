@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using Postex.Product.Application.Dtos;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
@@ -10,37 +12,40 @@ using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.ContractBoxPrices.Command.Update
 {
-    public class UpdateContractBoxPriceCommandHandler : IRequestHandler<UpdateContractBoxPriceCommand>
+    public class UpdateContractBoxPriceCommandHandler : IRequestHandler<UpdateContractBoxPriceCommand, ContractBoxPriceDto>
     {
         private readonly IWriteRepository<ContractBoxPrice> _writeRepository;
         private readonly IReadRepository<ContractBoxPrice> _readRepository;
+        private readonly IMapper _mapper;
 
-        public UpdateContractBoxPriceCommandHandler(IWriteRepository<ContractBoxPrice> writeRepository, IReadRepository<ContractBoxPrice> readRepository)
+        public UpdateContractBoxPriceCommandHandler(IWriteRepository<ContractBoxPrice> writeRepository, IReadRepository<ContractBoxPrice> readRepository, AutoMapper.IMapper mapper)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
+            _mapper = mapper;
         }
-        public async Task<Unit> Handle(UpdateContractBoxPriceCommand request, CancellationToken cancellationToken)
+        
+
+     async   Task<ContractBoxPriceDto> IRequestHandler<UpdateContractBoxPriceCommand, ContractBoxPriceDto>.Handle(UpdateContractBoxPriceCommand request, CancellationToken cancellationToken)
         {
             var contractBoxType = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (contractBoxType == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
 
-
             contractBoxType.BoxTypeId = request.BoxTypeId;
             contractBoxType.CityId = request.CityId;
             contractBoxType.ProvinceId = request.ProvinceId;
-            contractBoxType.CustomerId= request.CustomerId;
+            contractBoxType.CustomerId = request.CustomerId;
             contractBoxType.SalePrice = request.SalePrice;
             contractBoxType.BuyPrice = request.BuyPrice;
-            contractBoxType.Description= request.Description;
+            contractBoxType.Description = request.Description;
             contractBoxType.IsActive = request.IsActive;
 
             await _writeRepository.UpdateAsync(contractBoxType);
             await _writeRepository.SaveChangeAsync();
-
-            return Unit.Value;
+            var dto = _mapper.Map<ContractBoxPriceDto>(contractBoxType);
+            return dto;
         }
     }
 }

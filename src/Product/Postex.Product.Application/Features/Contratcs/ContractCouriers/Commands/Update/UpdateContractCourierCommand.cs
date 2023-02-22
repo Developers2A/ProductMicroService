@@ -1,8 +1,9 @@
 ﻿using Postex.Product.Application.Contracts;
+using Postex.Product.Application.Dtos;
 
 namespace Postex.Product.Application.Features.ContractCouriers.Command.Update
 {
-    public class UpdateContractCourierCommand : ITransactionRequest
+    public class UpdateContractCourierCommand : ITransactionRequest<ContractCourierDto>
     {
         public int Id { get; set; }       
         public int CourierId { get; set; }

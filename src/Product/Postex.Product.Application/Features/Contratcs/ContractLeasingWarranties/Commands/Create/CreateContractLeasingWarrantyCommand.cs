@@ -1,13 +1,9 @@
 ﻿using Postex.Product.Application.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Postex.Product.Application.Dtos;
 
 namespace Postex.Product.Application.Features.ContractLeasingWarranties.Command.Create
 {
-    public class CreateContractLeasingWarrantyCommand : ITransactionRequest
+    public class CreateContractLeasingWarrantyCommand : ITransactionRequest<ContractLeasingWarrantyDto>
     {
         public int ContractLeasingId { get; set; }
 

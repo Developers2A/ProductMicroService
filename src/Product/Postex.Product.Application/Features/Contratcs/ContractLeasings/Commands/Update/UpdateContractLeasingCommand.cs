@@ -1,4 +1,5 @@
 ﻿using Postex.Product.Application.Contracts;
+using Postex.Product.Application.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.ContractLeasings.Commands.Update
 {
-    public class UpdateContractLeasingCommand : ITransactionRequest
+    public class UpdateContractLeasingCommand : ITransactionRequest<ContractLeasingDto>
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }

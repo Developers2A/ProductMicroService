@@ -1,4 +1,5 @@
 ﻿using Postex.Product.Application.Contracts;
+using Postex.Product.Application.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.ContractBoxPrices.Command.Create
 {
-    public class CreateContractBoxPriceCommand : ITransactionRequest
+    public class CreateContractBoxPriceCommand : ITransactionRequest<ContractBoxPriceDto>
     {
         public int BoxTypeId { get; set; }
         public int ContractInfoId { get; set; }

@@ -1,9 +1,10 @@
 ﻿using Postex.Product.Application.Contracts;
+using Postex.Product.Application.Dtos;
 using Postex.SharedKernel.Common.Enums;
 
 namespace Postex.Product.Application.Features.ContractItems.Commands.UpdateContractItem
 {
-    public class UpdateContractItemCommand : ITransactionRequest
+    public class UpdateContractItemCommand : ITransactionRequest<ContractItemDto>
     {
         public int Id { get; set; }
         public int CourierId { get; set; }
