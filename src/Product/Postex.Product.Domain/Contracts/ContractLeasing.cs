@@ -8,7 +8,7 @@ namespace Postex.Product.Domain.Contracts
         /// کد مشتری
         /// 
         /// </summary>
-        public Guid CustomerId { get; set; }
+        public int CustomerId { get; set; }
         /// <summary>
         /// مبلغ لیزینگ
         /// </summary>
