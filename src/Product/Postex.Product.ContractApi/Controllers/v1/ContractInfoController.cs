@@ -41,7 +41,7 @@ namespace Postex.Product.Api.Controllers
             return Ok(await mediator.Send(new GetContractById { Id = id }));
         }
         [HttpGet]
-        public async Task<IActionResult> GetByCustomer(Guid customerId,int? provinceId,int? cityId)
+        public async Task<IActionResult> GetByCustomer(int customerId,int? provinceId,int? cityId)
         {
             return Ok(await mediator.Send(new GetContractByCustomer{CustomerId=customerId, CityId = cityId,ProvinceId=provinceId }));
         }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Postex.Product.Infrastructure.Migrations
 {
-    public partial class Initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,12 +33,41 @@ namespace Postex.Product.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ContractInfos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContractNo = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: true),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractInfos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ContractLeasings",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     ReturnRate = table.Column<double>(type: "float", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -59,35 +88,6 @@ namespace Postex.Product.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ContractLeasings", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ContractsInfo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ContractNo = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CityId = table.Column<int>(type: "int", nullable: true),
-                    ProvinceId = table.Column<int>(type: "int", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
-                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ContractsInfo", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -418,38 +418,6 @@ namespace Postex.Product.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ContractLeasingWarranties",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ContractLeasingId = table.Column<int>(type: "int", nullable: false),
-                    WarrantyNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WarrantyAmount = table.Column<int>(type: "int", nullable: false),
-                    WarrantyReqistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    WarrantyEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BankName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
-                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ContractLeasingWarranties", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ContractLeasingWarranties_ContractLeasings_ContractLeasingId",
-                        column: x => x.ContractLeasingId,
-                        principalTable: "ContractLeasings",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ContractAccountingTemplates",
                 columns: table => new
                 {
@@ -458,7 +426,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     ContractInfoId = table.Column<int>(type: "int", nullable: false),
                     ContractDetailType = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     ContractDetailId = table.Column<int>(type: "int", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
                     PercentValue = table.Column<double>(type: "float", nullable: false),
                     FixedValue = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -474,9 +442,9 @@ namespace Postex.Product.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_ContractAccountingTemplates", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContractAccountingTemplates_ContractsInfo_ContractInfoId",
+                        name: "FK_ContractAccountingTemplates_ContractInfos_ContractInfoId",
                         column: x => x.ContractInfoId,
-                        principalTable: "ContractsInfo",
+                        principalTable: "ContractInfos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -491,7 +459,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     ContractInfoId = table.Column<int>(type: "int", nullable: false),
                     ProvinceId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: true),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CustomerId = table.Column<int>(type: "int", nullable: true),
                     SalePrice = table.Column<double>(type: "float", nullable: false),
                     BuyPrice = table.Column<double>(type: "float", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
@@ -514,9 +482,9 @@ namespace Postex.Product.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ContractBoxPrices_ContractsInfo_ContractInfoId",
+                        name: "FK_ContractBoxPrices_ContractInfos_ContractInfoId",
                         column: x => x.ContractInfoId,
-                        principalTable: "ContractsInfo",
+                        principalTable: "ContractInfos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -547,9 +515,9 @@ namespace Postex.Product.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_ContractCods", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContractCods_ContractsInfo_ContractInfoId",
+                        name: "FK_ContractCods_ContractInfos_ContractInfoId",
                         column: x => x.ContractInfoId,
-                        principalTable: "ContractsInfo",
+                        principalTable: "ContractInfos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -586,9 +554,9 @@ namespace Postex.Product.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ContractCollectionDistributions_ContractsInfo_ContractInfoId",
+                        name: "FK_ContractCollectionDistributions_ContractInfos_ContractInfoId",
                         column: x => x.ContractInfoId,
-                        principalTable: "ContractsInfo",
+                        principalTable: "ContractInfos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -617,9 +585,9 @@ namespace Postex.Product.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_ContractCouriers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContractCouriers_ContractsInfo_ContractInfoId",
+                        name: "FK_ContractCouriers_ContractInfos_ContractInfoId",
                         column: x => x.ContractInfoId,
-                        principalTable: "ContractsInfo",
+                        principalTable: "ContractInfos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -651,9 +619,9 @@ namespace Postex.Product.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_ContractInsurances", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContractInsurances_ContractsInfo_ContractInfoId",
+                        name: "FK_ContractInsurances_ContractInfos_ContractInfoId",
                         column: x => x.ContractInfoId,
-                        principalTable: "ContractsInfo",
+                        principalTable: "ContractInfos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -685,9 +653,41 @@ namespace Postex.Product.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_ContractItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContractItems_ContractsInfo_ContractInfoId",
+                        name: "FK_ContractItems_ContractInfos_ContractInfoId",
                         column: x => x.ContractInfoId,
-                        principalTable: "ContractsInfo",
+                        principalTable: "ContractInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContractLeasingWarranties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContractLeasingId = table.Column<int>(type: "int", nullable: false),
+                    WarrantyNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WarrantyAmount = table.Column<int>(type: "int", nullable: false),
+                    WarrantyReqistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    WarrantyEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BankName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractLeasingWarranties", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContractLeasingWarranties_ContractLeasings_ContractLeasingId",
+                        column: x => x.ContractLeasingId,
+                        principalTable: "ContractLeasings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1444,7 +1444,7 @@ namespace Postex.Product.Infrastructure.Migrations
                 name: "BoxType");
 
             migrationBuilder.DropTable(
-                name: "ContractsInfo");
+                name: "ContractInfos");
 
             migrationBuilder.DropTable(
                 name: "ContractLeasings");

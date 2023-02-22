@@ -12,8 +12,8 @@ using Postex.Product.Infrastructure.Data;
 namespace Postex.Product.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20230221072743_Initial")]
-    partial class Initial
+    [Migration("20230222081943_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,8 +100,8 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -164,8 +164,8 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -421,8 +421,8 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -469,7 +469,7 @@ namespace Postex.Product.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContractsInfo", (string)null);
+                    b.ToTable("ContractInfos", (string)null);
                 });
 
             modelBuilder.Entity("Postex.Product.Domain.Contracts.ContractInsurance", b =>
@@ -625,8 +625,8 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<int>("DailyDepositRateCeiling")
                         .HasColumnType("int");

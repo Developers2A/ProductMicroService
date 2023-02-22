@@ -98,8 +98,8 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -162,8 +162,8 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -419,8 +419,8 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -467,7 +467,7 @@ namespace Postex.Product.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContractsInfo", (string)null);
+                    b.ToTable("ContractInfos", (string)null);
                 });
 
             modelBuilder.Entity("Postex.Product.Domain.Contracts.ContractInsurance", b =>
@@ -623,8 +623,8 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<int>("DailyDepositRateCeiling")
                         .HasColumnType("int");
