@@ -3,6 +3,7 @@ using Postex.Product.Application.Dtos;
 using Postex.Product.Application.Features.ContractCods.Command.Create;
 using Postex.Product.Application.Features.ContractLeasingWarranties.Command.Create;
 using Postex.Product.Application.Features.ContractLeasingWarranties.Commands.Update;
+using Postex.Product.Application.Features.Contracts.Commands.CreateContractCommand;
 using Postex.Product.Domain.Contracts;
 
 namespace Postex.Product.Application.Mapping
@@ -17,6 +18,9 @@ namespace Postex.Product.Application.Mapping
 
             CreateMap<CreateContractLeasingWarrantyCommand, ContractLeasingWarranty>();
             CreateMap<UpdateContractLeasingWarrantyCommand, ContractLeasingWarranty>();
+
+            CreateMap<CreateContractCommand, ContractInfo>();
+               
         }
     }
 }

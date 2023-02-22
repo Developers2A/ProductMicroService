@@ -13,6 +13,7 @@ namespace Postex.Product.Application.Features.Contracts.Commands.CreateContractC
         {
             RuleFor(p=> p.ContractNo).
                 NotEmpty().NotNull().WithMessage("شماره قرارداد الزامی می باشد");
+            
         }
     }
 }

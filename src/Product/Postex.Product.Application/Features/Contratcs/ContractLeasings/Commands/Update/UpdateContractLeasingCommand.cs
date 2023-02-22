@@ -10,7 +10,7 @@ namespace Postex.Product.Application.Features.ContractLeasings.Commands.Update
     public class UpdateContractLeasingCommand : ITransactionRequest
     {
         public int Id { get; set; }
-        public Guid CustomerId { get; set; }
+        public int CustomerId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Amount { get; set; }

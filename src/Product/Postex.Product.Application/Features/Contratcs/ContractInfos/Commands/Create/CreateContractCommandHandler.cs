@@ -17,20 +17,21 @@ namespace Postex.Product.Application.Features.Contracts.Commands.CreateContractC
         }
         public async Task<Unit> Handle(CreateContractCommand request, CancellationToken cancellationToken)
         {
-            var contractInfo = new ContractInfo
-            {
-                ContractNo = request.ContractNo,
-                Title=request.Title,
-                Description=request.Description,
-                StartDate = request.StartDate,
-                EndDate = request.EndDate,
-                RegisterDate = request.RegisterDate,
-                IsActive = request.IsActive,
+            //var contractInfo = new ContractInfo
+            //{
+            //    ContractNo = request.ContractNo,
+            //    Title=request.Title,
+            //    Description=request.Description,
+            //    StartDate = request.StartDate,
+            //    EndDate = request.EndDate,
+            //    RegisterDate = request.RegisterDate,
+            //    IsActive = request.IsActive,
 
-                CustomerId = request.CustomerId,
-                CityId=request.CityId,
-                ProvinceId=request.ProvinceId,
-            };
+            //    CustomerId = request.CustomerId == Guid.Empty ? null : request.CustomerId,
+            //    CityId=request.CityId,
+            //    ProvinceId=request.ProvinceId,
+            //};
+            var contractInfo = _mapper.Map<ContractInfo>(request);
             await _writeRepository.AddAsync(contractInfo, cancellationToken);
             await _writeRepository.SaveChangeAsync(cancellationToken);
             return Unit.Value;
