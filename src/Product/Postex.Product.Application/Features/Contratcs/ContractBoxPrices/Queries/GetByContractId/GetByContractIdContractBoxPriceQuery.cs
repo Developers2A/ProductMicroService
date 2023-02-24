@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 
-namespace Postex.Product.Application.Features.ContractBoxPrices.Queries
+namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByContractId
 {
     public class GetByContractIdContractBoxPriceQuery : IRequest<List<ContractBoxPriceDto>>
     {

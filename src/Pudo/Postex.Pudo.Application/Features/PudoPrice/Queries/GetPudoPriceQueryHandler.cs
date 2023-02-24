@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Postex.Pudo.Application.Dtos.PudoPrice;
 using Postex.SharedKernel.Common;
+using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Settings;
 using System.Text;
 
@@ -11,13 +12,13 @@ namespace Postex.Pudo.Application.Features.PudoPrice.Queries;
 public class GetPudoPriceQueryHandler : IRequestHandler<GetPudoPriceQuery, BaseResponse<PudoPriceDto>>
 {
     private readonly IConfiguration _configuration;
-    private readonly CourierConfig _gateway;
+    private readonly string _productApiUrl;
     private readonly IMediator _mediator;
 
     public GetPudoPriceQueryHandler(IConfiguration configuration, IMediator mediator)
     {
         _configuration = configuration;
-        _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().DigikalaPudo;
+        _productApiUrl = _configuration.GetSection(nameof(ApiSetting)).Get<ApiSetting>().ProductApi;
         _mediator = mediator;
     }
 
@@ -52,14 +53,19 @@ public class GetPudoPriceQueryHandler : IRequestHandler<GetPudoPriceQuery, BaseR
 
     private async Task<HttpResponseMessage> SetHttpRequest(GetPudoPriceQuery request)
     {
-        HttpClient client = HttpClientUtilities.SetHttpClient(_gateway.BaseUrl);
+        if (string.IsNullOrEmpty(_productApiUrl))
+        {
+            throw new AppException("امکان اتصال به سرویس کاربران وجود ندارد");
+        }
+
+        HttpClient client = HttpClientUtilities.SetHttpClient(_productApiUrl);
 
         var serializedModel = JsonConvert.SerializeObject(request);
         var content = new StringContent(serializedModel,
             Encoding.UTF8,
             "application/json");
 
-        var pUrl = new Uri($"{_gateway.BaseUrl}price/pudo-price?cityName={request.CityName}");
+        var pUrl = new Uri($"{_productApiUrl}price/pudo-price?cityName={request.CityName}");
         var response = await client.PostAsync(pUrl, content);
         return response;
     }

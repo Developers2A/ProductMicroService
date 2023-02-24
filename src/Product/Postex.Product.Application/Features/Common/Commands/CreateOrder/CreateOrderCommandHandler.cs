@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Postex.Product.Application.Dtos.Commons;
 using Postex.Product.Application.Dtos.Couriers;
 using Postex.Product.Application.Dtos.CourierServices.Chapar.Common;
@@ -13,6 +14,7 @@ using Postex.Product.Application.Features.ServiceProviders.Kbk.Commands.CreateOr
 using Postex.Product.Application.Features.ServiceProviders.Mahex.Commands.CreateOrder;
 using Postex.Product.Application.Features.ServiceProviders.Post.Commands.CreateOrder;
 using Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetPrice;
+using Postex.Product.Application.Features.Users.Queries;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Exceptions;
@@ -22,12 +24,15 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
     public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, BaseResponse<CreateOrderResponse>>
     {
         private readonly IMediator _mediator;
+        private readonly HttpContext _httpContext;
         private CreateOrderCommand _command;
         private List<CourierCityMappingDto> _courierCityMappings;
+        private Guid? _userId;
 
-        public CreateOrderCommandHandler(IMediator mediator)
+        public CreateOrderCommandHandler(IMediator mediator, HttpContext httpContext)
         {
             _mediator = mediator;
+            _httpContext = httpContext;
         }
 
         public async Task<BaseResponse<CreateOrderResponse>> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
@@ -36,6 +41,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 
             if (_command.CourierServiceCode == (int)CourierServiceCode.PostSefareshi || _command.CourierServiceCode == (int)CourierServiceCode.PostVizhe || _command.CourierServiceCode == (int)CourierServiceCode.PostPishtaz)
             {
+                _userId = GetUserId();
                 _courierCityMappings = await GetCourierCityMapping(CourierCode.Post);
                 return await CreatePostOrder();
             }
@@ -85,6 +91,18 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                 DeliveryDate = _command.DeliveryDate,
                 PickupDate = _command.PickupDate,
             });
+        }
+
+        private Guid? GetUserId()
+        {
+            try
+            {
+                return Guid.Parse(_httpContext.Request.Headers["x-userid"]);
+            }
+            catch (Exception ex)
+            {
+                throw new AppException($"شناسه کاربر الزامی می باشد");
+            }
         }
 
         private async Task<BaseResponse<CreateOrderResponse>> CreatePostOrder()
@@ -187,15 +205,30 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 
         private async Task<int> GetShopIdByUserName()
         {
-            if (string.IsNullOrEmpty(_command.Sender.Mobile))
-            {
-                throw new AppException("نام کاربری الزامی می باشد");
-            }
+            //if (string.IsNullOrEmpty(_command.Sender.Mobile))
+            //{
+            //    throw new AppException("نام کاربری الزامی می باشد");
+            //}
+            var mobile = await GetUserMobile();
             return await _mediator.Send(new GetPostShopIdQuery()
             {
-                Mobile = _command.Sender.Mobile,
+                Mobile = mobile,
                 CityCode = _command.Sender.CityCode,
             });
+        }
+
+        private async Task<string> GetUserMobile()
+        {
+            var user = await _mediator.Send(new GetUserByIdQuery()
+            {
+                UserId = _userId.Value
+            });
+
+            if (!user.IsSuccess || user.Data == null)
+            {
+                throw new AppException("شاپ این کاربر یافت نشد");
+            }
+            return user.Data.Mobile;
         }
 
         private int GetPostServiceId()

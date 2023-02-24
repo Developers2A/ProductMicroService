@@ -1,7 +1,7 @@
 ﻿using Postex.Product.Application.Contracts;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 
-namespace Postex.Product.Application.Features.ContractInsurances.Command
+namespace Postex.Product.Application.Features.Contratcs.ContractInsurances.Commands.Create
 {
     public class CreateContractInsuranceCommand : ITransactionRequest<ContractInsuranceDto>
     {

@@ -5,7 +5,7 @@ using Microsoft.OpenApi.Models;
 using Postex.SharedKernel.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Postex.ProductService.Api.Extensions
+namespace Postex.Product.ServiceApi.Extensions
 {
     public static class SwaggerMiddlerwareExtension
     {

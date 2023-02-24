@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Features.ContractCods.Queries
+namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByContractId
 {
     public class GetByContractIdContractCodQueryHandler : IRequestHandler<GetByContractIdContractCodQuery, List<ContractCodDto>>
     {
@@ -17,7 +17,7 @@ namespace Postex.Product.Application.Features.ContractCods.Queries
 
         public GetByContractIdContractCodQueryHandler(IReadRepository<ContractCod> readRepository)
         {
-            this._readRepository = readRepository;
+            _readRepository = readRepository;
         }
         public async Task<List<ContractCodDto>> Handle(GetByContractIdContractCodQuery request, CancellationToken cancellationToken)
         {
@@ -30,12 +30,12 @@ namespace Postex.Product.Application.Features.ContractCods.Queries
                     ToValue = c.ToValue,
                     FixedPercent = c.FixedPercent,
                     FixedValue = c.FixedValue,
-                    Description=c.Description,
+                    Description = c.Description,
                     IsActice = c.IsActice,
                 })
                 .ToListAsync(cancellationToken);
             return cod;
         }
     }
-   
+
 }

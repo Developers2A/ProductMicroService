@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 
-namespace Postex.Product.Application.Features.Contracts.Queries.GetContractById
+namespace Postex.Product.Application.Features.Contratcs.ContractInfos.Queries.GetContractById
 {
-    public class GetContractById:IRequest<ContractInfoDto>
+    public class GetContractById : IRequest<ContractInfoDto>
     {
         public int Id { get; set; }
     }

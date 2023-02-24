@@ -1,6 +1,6 @@
 using Serilog;
 
-namespace Postex.ProductService.Api
+namespace Postex.Product.ServiceApi
 {
     public class Program
     {

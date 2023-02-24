@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Dtos
+namespace Postex.Product.Application.Dtos.Contratcs
 {
     public class ContractInfoDto
     {
@@ -16,13 +16,13 @@ namespace Postex.Product.Application.Dtos
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public DateTime RegisterDate { get; set; }      
+        public DateTime RegisterDate { get; set; }
         public int? CustomerId { get; set; }
         public int? CityId { get; set; }
         public int? ProvinceId { get; set; }
         public bool IsActive { get; set; }
 
-        public string StartDate_P =>  StartDate.ToPersianDate();  
+        public string StartDate_P => StartDate.ToPersianDate();
         public string EndDate_P => EndDate.ToPersianDate();
         public string RegisterDate_P => RegisterDate.ToPersianDate();
 

@@ -1,25 +1,24 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.Product.Application.Dtos;
-using Postex.Product.Application.Features.ContractLeasingWarranties.Command.Create;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Product.Application.Features.ContractLeasingWarranties.Commands.Create
+namespace Postex.Product.Application.Features.Contratcs.ContractLeasingWarranties.Commands.Create
 {
     public class CreateContractLeasingWarrantyCommandHandler : IRequestHandler<CreateContractLeasingWarrantyCommand, ContractLeasingWarrantyDto>
     {
         private readonly IWriteRepository<ContractLeasingWarranty> _writeRepository;
         private readonly IMapper _mapper;
 
-        public CreateContractLeasingWarrantyCommandHandler(IWriteRepository<ContractLeasingWarranty> writeRepository,IMapper mapper)
+        public CreateContractLeasingWarrantyCommandHandler(IWriteRepository<ContractLeasingWarranty> writeRepository, IMapper mapper)
         {
             _writeRepository = writeRepository;
             _mapper = mapper;
         }
-         
 
-       async Task<ContractLeasingWarrantyDto> IRequestHandler<CreateContractLeasingWarrantyCommand, ContractLeasingWarrantyDto>.Handle(CreateContractLeasingWarrantyCommand request, CancellationToken cancellationToken)
+
+        async Task<ContractLeasingWarrantyDto> IRequestHandler<CreateContractLeasingWarrantyCommand, ContractLeasingWarrantyDto>.Handle(CreateContractLeasingWarrantyCommand request, CancellationToken cancellationToken)
         {
             var contractLeasingWaranty = _mapper.Map<ContractLeasingWarranty>(request);
 

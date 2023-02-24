@@ -1,6 +1,6 @@
 ﻿using Postex.SharedKernel.Common.Enums;
 
-namespace Postex.Product.Application.Dtos
+namespace Postex.Product.Application.Dtos.Contratcs
 {
     public class ContractItemDto
     {

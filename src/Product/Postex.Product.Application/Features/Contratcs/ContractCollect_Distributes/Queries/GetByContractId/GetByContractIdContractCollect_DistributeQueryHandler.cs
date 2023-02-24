@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Product.Application.Features.ContractCollect_Distributes.Queries
+namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Queries.GetByContractId
 {
     public class GetByContractIdContractCollect_DistributeQueryHandler : IRequestHandler<GetByContractIdContractCollect_DistributeQuery, List<ContractCollectionDistributionDto>>
     {
@@ -12,7 +12,7 @@ namespace Postex.Product.Application.Features.ContractCollect_Distributes.Querie
 
         public GetByContractIdContractCollect_DistributeQueryHandler(IReadRepository<ContractCollectionDistribution> readRepository)
         {
-            this._readRepository = readRepository;
+            _readRepository = readRepository;
         }
         public async Task<List<ContractCollectionDistributionDto>> Handle(GetByContractIdContractCollect_DistributeQuery request, CancellationToken cancellationToken)
         {

@@ -1,7 +1,7 @@
 ﻿using Postex.Product.Application.Contracts;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 
-namespace Postex.Product.Application.Features.ContractCouriers.Command.Create
+namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Commands.Create
 {
     public class CreateContractCourierCommand : ITransactionRequest<ContractCourierDto>
     {

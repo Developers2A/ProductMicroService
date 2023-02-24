@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Postex.Product.Application.Dtos;
 using Postex.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Postex.Product.Domain.Contracts;
+using Postex.Product.Application.Dtos.Contratcs;
 
-namespace Postex.Product.Application.Features.ContractInsurances.Queries.GetByCustomer
+namespace Postex.Product.Application.Features.Contratcs.ContractInsurances.Queries.GetByCustomer
 {
     public class GetByCustomerContractInsuranceQueryHandler : IRequestHandler<GetByCustomerContractInsuranceQuery, List<ContractInsuranceDto>>
     {
@@ -17,7 +17,7 @@ namespace Postex.Product.Application.Features.ContractInsurances.Queries.GetByCu
 
         public GetByCustomerContractInsuranceQueryHandler(IReadRepository<ContractInsurance> readRepository)
         {
-            this._readRepository = readRepository;
+            _readRepository = readRepository;
         }
         public async Task<List<ContractInsuranceDto>> Handle(GetByCustomerContractInsuranceQuery request, CancellationToken cancellationToken)
         {
@@ -32,17 +32,17 @@ namespace Postex.Product.Application.Features.ContractInsurances.Queries.GetByCu
                    FixedPercent = c.FixedPercent,
                    FixedValue = c.FixedValue,
                    Description = c.Description,
-                   IsActice=c.IsActice,
+                   IsActice = c.IsActice,
                    LevelPrice = "Customer"
                })
                .ToListAsync(cancellationToken);
             if (insuranceCus.Count != 0)
                 return insuranceCus;
 
-         
+
 
             var insuranceCity = await _readRepository.Table
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == null )
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == null)
               .Select(c => new ContractInsuranceDto
               {
                   Id = c.Id,
@@ -52,15 +52,15 @@ namespace Postex.Product.Application.Features.ContractInsurances.Queries.GetByCu
                   FixedPercent = c.FixedPercent,
                   FixedValue = c.FixedValue,
                   Description = c.Description,
-                  IsActice=c.IsActice,
-                  LevelPrice="City"
+                  IsActice = c.IsActice,
+                  LevelPrice = "City"
               })
               .ToListAsync(cancellationToken);
             if (insuranceCity.Count != 0)
                 return insuranceCity;
 
             var insuranceDefualt = await _readRepository.Table
-           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && (c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null))
+           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null)
            .Select(c => new ContractInsuranceDto
            {
                Id = c.Id,
@@ -70,7 +70,7 @@ namespace Postex.Product.Application.Features.ContractInsurances.Queries.GetByCu
                FixedPercent = c.FixedPercent,
                FixedValue = c.FixedValue,
                Description = c.Description,
-               IsActice =c.IsActice,
+               IsActice = c.IsActice,
                LevelPrice = "Default"
 
            })

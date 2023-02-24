@@ -9,10 +9,10 @@ using Postex.Product.Application.Features.CourierCollectionDistributionPrices.Qu
 using Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries.GetPudoPrice;
 using Postex.Product.Application.Features.CourierZonePrices.Commands.CreateOfflineCourierZonePrice;
 using Postex.Product.Application.Features.CourierZonePrices.Queries.GetOfflinePrices;
-using Postex.ProductService.Api.Filters;
+using Postex.Product.ServiceApi.Filters;
 using Postex.SharedKernel.Api;
 
-namespace Postex.ProductService.Api.Controllers.v1
+namespace Postex.Product.ServiceApi.Controllers.v1
 {
     [ApiVersion("1")]
     [ApiKey]

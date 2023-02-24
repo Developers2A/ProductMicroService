@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Features.ContractLeasings.Queries.GetById
+namespace Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetById
 {
     public class GetByIdContractLeasingHandler : IRequestHandler<GetByIdContractLeasingCommand, ContractLeasingDto>
     {
@@ -24,19 +24,19 @@ namespace Postex.Product.Application.Features.ContractLeasings.Queries.GetById
             var leasing = await readRepository.Table
                 .Select(c => new ContractLeasingDto
                 {
-                    Id = c.Id,                   
+                    Id = c.Id,
                     CustomerId = c.CustomerId,
                     Amount = c.Amount,
-                    ReturnRate = c.ReturnRate,                   
+                    ReturnRate = c.ReturnRate,
                     WithdrawRate = c.WithdrawRate,
                     DailyDepositRateCeiling = c.DailyDepositRateCeiling,
-                    DailyDepositeRate= c.DailyDepositeRate,
-                    Description=c.Description,
+                    DailyDepositeRate = c.DailyDepositeRate,
+                    Description = c.Description,
                     IsActive = c.IsActive,
-                    StartDate=c.StartDate,
-                    EndDate=c.EndDate,
+                    StartDate = c.StartDate,
+                    EndDate = c.EndDate,
                 })
-                .Where(c=> c.Id == request.Id)
+                .Where(c => c.Id == request.Id)
                 .FirstOrDefaultAsync(cancellationToken);
             return leasing;
         }

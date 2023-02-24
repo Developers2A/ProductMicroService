@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Product.Application.Dtos;
 using Postex.SharedKernel.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,8 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Postex.SharedKernel.Utilities;
 using Postex.Product.Domain.Contracts;
+using Postex.Product.Application.Dtos.Contratcs;
 
-namespace Postex.Product.Application.Features.ContractLeasings.Queries.GetAll
+namespace Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetAll
 {
     public class GetAllContractLeasingHandler : IRequestHandler<GetAllContractLeasingCommand, List<ContractLeasingDto>>
     {
@@ -28,17 +28,17 @@ namespace Postex.Product.Application.Features.ContractLeasings.Queries.GetAll
             var items = await readRepository.Table.Select
                 (c => new ContractLeasingDto
                 {
-                    Id = c.Id,                   
+                    Id = c.Id,
                     CustomerId = c.CustomerId,
                     Amount = c.Amount,
-                    ReturnRate = c.ReturnRate,                   
+                    ReturnRate = c.ReturnRate,
                     WithdrawRate = c.WithdrawRate,
                     DailyDepositRateCeiling = c.DailyDepositRateCeiling,
-                    DailyDepositeRate= c.DailyDepositeRate,
-                    Description=c.Description,
+                    DailyDepositeRate = c.DailyDepositeRate,
+                    Description = c.Description,
                     IsActive = c.IsActive,
-                    EndDate=c.EndDate,
-                    StartDate=c.StartDate,                   
+                    EndDate = c.EndDate,
+                    StartDate = c.StartDate,
                 }
                 ).ToListAsync(cancellationToken);
 

@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Product.Application.Features.ContractCollect_Distributes.Queries
+namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Queries.GetByCustomer
 {
     public class GetByCustomerContractCollect_DistributeQueryHandler : IRequestHandler<GetByCustomerContractCollect_DistributeQuery, List<ContractCollectionDistributionDto>>
     {
@@ -13,14 +13,14 @@ namespace Postex.Product.Application.Features.ContractCollect_Distributes.Querie
 
         public GetByCustomerContractCollect_DistributeQueryHandler(IReadRepository<ContractCollectionDistribution> readRepository)
         {
-            this._readRepository = readRepository;
+            _readRepository = readRepository;
 
         }
         public async Task<List<ContractCollectionDistributionDto>> Handle(GetByCustomerContractCollect_DistributeQuery request, CancellationToken cancellationToken)
         {
             var collect_DistributeDefualt = await _readRepository.Table
                .Include(b => b.BoxType)
-               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && (c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null))
+               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null)
                .Select(c => new ContractCollectionDistributionDto
                {
                    Id = c.Id,

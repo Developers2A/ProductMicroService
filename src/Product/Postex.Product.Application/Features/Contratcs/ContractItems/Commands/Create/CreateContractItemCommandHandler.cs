@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Product.Application.Features.ContractItems.Commands.CreateContractItem
+namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Create
 {
     public class CreateContractItemCommandHandler : IRequestHandler<CreateContractItemCommand, ContractItemDto>
     {
@@ -13,12 +13,12 @@ namespace Postex.Product.Application.Features.ContractItems.Commands.CreateContr
 
         public CreateContractItemCommandHandler(IWriteRepository<ContractItem> writeRepository, IMapper mapper)
         {
-            this._writeRepository = writeRepository;
-            this._mapper = mapper;
+            _writeRepository = writeRepository;
+            _mapper = mapper;
         }
-         
 
-      async  Task<ContractItemDto> IRequestHandler<CreateContractItemCommand, ContractItemDto>.Handle(CreateContractItemCommand request, CancellationToken cancellationToken)
+
+        async Task<ContractItemDto> IRequestHandler<CreateContractItemCommand, ContractItemDto>.Handle(CreateContractItemCommand request, CancellationToken cancellationToken)
         {
             var contractItem = _mapper.Map<ContractItem>(request);
             await _writeRepository.AddAsync(contractItem, cancellationToken);

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Product.Application.Features.ContractCollect_Distributes.Command.Update
+namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Commands.Update
 {
     public class UpdateContractCollect_DistributeCommandHandler : IRequestHandler<UpdateContractCollect_DistributeCommand, ContractCollectionDistributionDto>
     {
@@ -13,15 +13,15 @@ namespace Postex.Product.Application.Features.ContractCollect_Distributes.Comman
         private readonly IReadRepository<ContractCollectionDistribution> _readRepository;
         private readonly IMapper _mapper;
 
-        public UpdateContractCollect_DistributeCommandHandler(IWriteRepository<ContractCollectionDistribution> writeRepository, IReadRepository<ContractCollectionDistribution> readRepository,IMapper mapper)
+        public UpdateContractCollect_DistributeCommandHandler(IWriteRepository<ContractCollectionDistribution> writeRepository, IReadRepository<ContractCollectionDistribution> readRepository, IMapper mapper)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
             _mapper = mapper;
         }
-       
 
-      async  Task<ContractCollectionDistributionDto> IRequestHandler<UpdateContractCollect_DistributeCommand, ContractCollectionDistributionDto>.Handle(UpdateContractCollect_DistributeCommand request, CancellationToken cancellationToken)
+
+        async Task<ContractCollectionDistributionDto> IRequestHandler<UpdateContractCollect_DistributeCommand, ContractCollectionDistributionDto>.Handle(UpdateContractCollect_DistributeCommand request, CancellationToken cancellationToken)
         {
             ContractCollectionDistribution contractCollect_Distribute = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
 

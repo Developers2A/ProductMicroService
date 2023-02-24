@@ -1,4 +1,4 @@
-﻿namespace Postex.ProductService.Api.Jobs
+﻿namespace Postex.Product.ServiceApi.Jobs
 {
     public interface IHangFireJob
     {

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Postex.Product.Application.Dtos;
 using Postex.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Postex.Product.Domain.Contracts;
+using Postex.Product.Application.Dtos.Contratcs;
 
-namespace Postex.Product.Application.Features.ContractBoxPrices.Queries.GetByCustomer
+namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomer
 {
     public class GetByCustomerContractBoxPriceQueryHandler : IRequestHandler<GetByCustomerContractBoxPriceQuery, List<ContractBoxPriceDto>>
     {
@@ -17,13 +17,13 @@ namespace Postex.Product.Application.Features.ContractBoxPrices.Queries.GetByCus
 
         public GetByCustomerContractBoxPriceQueryHandler(IReadRepository<ContractBoxPrice> readRepository)
         {
-            this._readRepository = readRepository;
+            _readRepository = readRepository;
         }
         public async Task<List<ContractBoxPriceDto>> Handle(GetByCustomerContractBoxPriceQuery request, CancellationToken cancellationToken)
         {
             var boxPriceDefualt = await _readRepository.Table
               .Include(b => b.BoxType)
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && (c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0))
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0)
               .Select(c => new ContractBoxPriceDto
               {
                   Id = c.Id,
@@ -31,7 +31,7 @@ namespace Postex.Product.Application.Features.ContractBoxPrices.Queries.GetByCus
                   BoxTypeId = c.BoxTypeId,
                   CityId = c.CityId,
                   ProvinceId = c.ProvinceId,
-                  CustomerId= c.CustomerId,
+                  CustomerId = c.CustomerId,
                   SalePrice = c.SalePrice,
                   BuyPrice = c.BuyPrice,
                   BoxName = c.BoxType.Name,

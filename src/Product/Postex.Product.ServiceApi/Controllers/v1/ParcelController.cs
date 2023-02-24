@@ -9,20 +9,22 @@ using Postex.Product.Application.Features.Common.Commands.EditOrder;
 using Postex.Product.Application.Features.Common.Commands.EditWeight;
 using Postex.Product.Application.Features.Common.Commands.ReadyOrder;
 using Postex.Product.Application.Features.Common.Queries.Track;
-using Postex.ProductService.Api.Filters;
+using Postex.Product.ServiceApi.Filters;
 using Postex.SharedKernel.Api;
 
-namespace Postex.ProductService.Api.Controllers.v1
+namespace Postex.Product.ServiceApi.Controllers.v1
 {
     [ApiVersion("1")]
     [ApiKey]
     public class ParcelController : BaseApiControllerWithDefaultRoute
     {
         private readonly IMediator _mediator;
+        private readonly HttpContext _httpContext;
 
-        public ParcelController(IMediator mediator)
+        public ParcelController(IMediator mediator, HttpContext httpContext)
         {
             _mediator = mediator;
+            _httpContext = httpContext;
         }
 
         [HttpGet("track")]

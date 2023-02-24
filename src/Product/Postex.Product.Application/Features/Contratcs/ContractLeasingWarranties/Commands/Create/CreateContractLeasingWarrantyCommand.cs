@@ -1,7 +1,7 @@
 ﻿using Postex.Product.Application.Contracts;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 
-namespace Postex.Product.Application.Features.ContractLeasingWarranties.Command.Create
+namespace Postex.Product.Application.Features.Contratcs.ContractLeasingWarranties.Commands.Create
 {
     public class CreateContractLeasingWarrantyCommand : ITransactionRequest<ContractLeasingWarrantyDto>
     {

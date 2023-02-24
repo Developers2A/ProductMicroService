@@ -1,6 +1,6 @@
 ﻿using Postex.Product.Domain.Contracts;
 
-namespace Postex.Product.Application.Dtos
+namespace Postex.Product.Application.Dtos.Contratcs
 {
     public class ContractCollectionDistributionDto
     {

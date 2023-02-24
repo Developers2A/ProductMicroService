@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Postex.Product.Application.Features.ContractCods.Command.Create;
-using Postex.Product.Application.Features.ContractCods.Command.Update;
-using Postex.Product.Application.Features.ContractCods.Queries;
+using Postex.Product.Application.Features.Contratcs.ContractCods.Commands.Create;
+using Postex.Product.Application.Features.Contratcs.ContractCods.Commands.Update;
+using Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByContractId;
+using Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByCustomer;
 
 namespace Postex.Product.Api.Controllers
 {
@@ -17,21 +17,25 @@ namespace Postex.Product.Api.Controllers
         {
             this._mediator = mediator;
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateContractCodCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
+
         [HttpPut]
         public async Task<IActionResult> Put(UpdateContractCodCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
+
         [HttpGet("GetByContarctId")]
         public async Task<IActionResult> GetByContractInfoId(int contractInfoId)
         {
             return Ok(await _mediator.Send(new GetByContractIdContractCodQuery { ContractInfoId = contractInfoId }));
         }
+
         [HttpGet("GetByCustomer")]
         public async Task<IActionResult> GetByCustomer(int? customerId, int? provinceId, int? cityId)
         {

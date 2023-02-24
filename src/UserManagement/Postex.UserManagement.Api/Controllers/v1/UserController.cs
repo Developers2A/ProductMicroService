@@ -11,6 +11,7 @@ using Postex.UserManagement.Application.Features.Users.Commands.LoginUserWithOtp
 using Postex.UserManagement.Application.Features.Users.Commands.RefreshToken;
 using Postex.UserManagement.Application.Features.Users.Commands.RevokeToken;
 using Postex.UserManagement.Application.Features.Users.Commands.VerifiyCode;
+using Postex.UserManagement.Application.Features.Users.Queries.GetUserById;
 using System.Security.Claims;
 
 namespace Postex.ProductService.Api.Controllers.v1;
@@ -23,6 +24,16 @@ public class UserController : BaseApiControllerWithDefaultRoute
     public UserController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet("id")]
+    [AllowAnonymous]
+    public async Task<ApiResult<UserDto>> Get(Guid id)
+    {
+        return await _mediator.Send(new GetUserByIdQuery()
+        {
+            Id = id
+        });
     }
 
     [HttpPost("register")]

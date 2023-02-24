@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Dtos
+namespace Postex.Product.Application.Dtos.Contratcs
 {
     public class ContractBoxPriceDto
     {
         public int Id { get; set; }
-        public int BoxTypeId { get; set; }        
+        public int BoxTypeId { get; set; }
         public string BoxName { get; set; }
         public double Height { get; set; }
         public double Width { get; set; }

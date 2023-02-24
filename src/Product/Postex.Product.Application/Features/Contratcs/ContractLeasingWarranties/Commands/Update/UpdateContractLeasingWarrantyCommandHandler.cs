@@ -1,17 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.Product.Application.Dtos;
-using Postex.Product.Application.Features.ContractLeasingWarranties.Command.Create;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Features.ContractLeasingWarranties.Commands.Update
+namespace Postex.Product.Application.Features.Contratcs.ContractLeasingWarranties.Commands.Update
 {
     public class UpdateContractLeasingWarrantyCommandHandler : IRequestHandler<UpdateContractLeasingWarrantyCommand, ContractLeasingWarrantyDto>
     {

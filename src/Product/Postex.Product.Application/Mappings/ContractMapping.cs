@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
-using Postex.Product.Application.Dtos;
-using Postex.Product.Application.Features.ContractBoxPrices.Command.Create;
-using Postex.Product.Application.Features.ContractCods.Command.Create;
-using Postex.Product.Application.Features.ContractCollect_Distributes.Command.Create;
-using Postex.Product.Application.Features.ContractCouriers.Command.Create;
-using Postex.Product.Application.Features.ContractInsurances.Command;
-using Postex.Product.Application.Features.ContractItems.Commands.CreateContractItem;
-using Postex.Product.Application.Features.ContractLeasings.Command.Create;
-using Postex.Product.Application.Features.ContractLeasingWarranties.Command.Create;
-using Postex.Product.Application.Features.ContractLeasingWarranties.Commands.Update;
-using Postex.Product.Application.Features.Contracts.Commands.CreateContractCommand;
-using Postex.Product.Application.Features.Contracts.Commands.UpdateContractCommand;
+using Postex.Product.Application.Dtos.Contratcs;
+using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Commands.Create;
+using Postex.Product.Application.Features.Contratcs.ContractCods.Commands.Create;
+using Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Commands.Create;
+using Postex.Product.Application.Features.Contratcs.ContractCouriers.Commands.Create;
+using Postex.Product.Application.Features.Contratcs.ContractInfos.Commands.Create;
+using Postex.Product.Application.Features.Contratcs.ContractInfos.Commands.Update;
+using Postex.Product.Application.Features.Contratcs.ContractInsurances.Commands.Create;
+using Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Create;
+using Postex.Product.Application.Features.Contratcs.ContractLeasings.Commands.Create;
+using Postex.Product.Application.Features.Contratcs.ContractLeasingWarranties.Commands.Create;
+using Postex.Product.Application.Features.Contratcs.ContractLeasingWarranties.Commands.Update;
 using Postex.Product.Domain.Contracts;
 
-namespace Postex.Product.Application.Mapping
+namespace Postex.Product.Application.Mappings
 {
     public class ContractMapping : Profile
     {
@@ -23,7 +23,7 @@ namespace Postex.Product.Application.Mapping
             CreateMap<CreateContractBoxPriceCommand, ContractBoxPrice>();
 
             CreateMap<ContractCod, ContractCodDto>();
-            CreateMap<CreateContractCodCommand, ContractCod>();           
+            CreateMap<CreateContractCodCommand, ContractCod>();
 
             CreateMap<ContractInfo, ContractInfoDto>();
             CreateMap<CreateContractCommand, ContractInfo>();

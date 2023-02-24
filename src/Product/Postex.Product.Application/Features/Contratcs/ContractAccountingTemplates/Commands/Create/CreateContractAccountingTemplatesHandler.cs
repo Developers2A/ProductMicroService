@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Features.ContractAccountingTemplates.Commands.Create
+namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.Create
 {
     public class CreateContractAccountingTemplatesHandler : IRequestHandler<CreateContractAccountingTemplatesCommand>
     {
@@ -15,7 +15,7 @@ namespace Postex.Product.Application.Features.ContractAccountingTemplates.Comman
 
         public CreateContractAccountingTemplatesHandler(IWriteRepository<ContractAccountingTemplate> writeRepository)
         {
-            this._writeRepository = writeRepository;
+            _writeRepository = writeRepository;
         }
         public async Task<Unit> Handle(CreateContractAccountingTemplatesCommand request, CancellationToken cancellationToken)
         {
@@ -23,7 +23,7 @@ namespace Postex.Product.Application.Features.ContractAccountingTemplates.Comman
             {
                 var contractAccountingTemplate = new ContractAccountingTemplate
                 {
-                    ContractInfoId=item.ContractInfoId,
+                    ContractInfoId = item.ContractInfoId,
                     CustomerId = item.CustomerId,
                     ContractDetailType = item.ContractDetailType,
                     ContractDetailId = item.ContractDetailId,

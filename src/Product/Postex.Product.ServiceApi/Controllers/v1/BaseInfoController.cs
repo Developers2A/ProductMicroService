@@ -10,11 +10,11 @@ using Postex.Product.Application.Features.CourierServices.Queries;
 using Postex.Product.Application.Features.CourierStatusMappings.Queries;
 using Postex.Product.Application.Features.PostShops.Commands.SyncPostShops;
 using Postex.Product.Application.Features.States.Queries;
-using Postex.ProductService.Api.Filters;
+using Postex.Product.ServiceApi.Filters;
 using Postex.SharedKernel.Api;
 using Postex.SharedKernel.Common.Enums;
 
-namespace Postex.ProductService.Api.Controllers.v1
+namespace Postex.Product.ServiceApi.Controllers.v1
 {
     [ApiVersion("1")]
     [ApiKey]

@@ -1,17 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.Product.Application.Dtos;
-using Postex.Product.Application.Features.ContractLeasings.Command.Create;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Features.ContractLeasings.Commands.Update
+namespace Postex.Product.Application.Features.Contratcs.ContractLeasings.Commands.Update
 {
     public class UpdateContractLeasingCommandHandler : IRequestHandler<UpdateContractLeasingCommand, ContractLeasingDto>
     {
@@ -19,15 +13,15 @@ namespace Postex.Product.Application.Features.ContractLeasings.Commands.Update
         private readonly IReadRepository<ContractLeasing> _readRepository;
         private readonly IMapper _mapper;
 
-        public UpdateContractLeasingCommandHandler(IWriteRepository<ContractLeasing> writeRepository,IReadRepository<ContractLeasing> readRepository,IMapper mapper)
+        public UpdateContractLeasingCommandHandler(IWriteRepository<ContractLeasing> writeRepository, IReadRepository<ContractLeasing> readRepository, IMapper mapper)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
             _mapper = mapper;
         }
-         
 
-      async  Task<ContractLeasingDto> IRequestHandler<UpdateContractLeasingCommand, ContractLeasingDto>.Handle(UpdateContractLeasingCommand request, CancellationToken cancellationToken)
+
+        async Task<ContractLeasingDto> IRequestHandler<UpdateContractLeasingCommand, ContractLeasingDto>.Handle(UpdateContractLeasingCommand request, CancellationToken cancellationToken)
         {
             var contractLeasing = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
 

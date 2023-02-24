@@ -1,9 +1,9 @@
 ﻿using Postex.Product.Application.Contracts;
 using Postex.Product.Domain;
 
-namespace Postex.Product.Application.Features.ContractAccountingTemplates.Commands.Create
+namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.Create
 {
-    public class CreateContractAccountingTemplateCommand: ITransactionRequest
+    public class CreateContractAccountingTemplateCommand : ITransactionRequest
     {
         public int ContractInfoId { get; set; }
         public string ContractDetailType { get; set; }

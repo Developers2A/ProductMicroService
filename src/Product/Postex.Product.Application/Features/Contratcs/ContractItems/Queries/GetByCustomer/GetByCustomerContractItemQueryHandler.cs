@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Product.Application.Features.ContractItems.Queries.GetByCustomer
+namespace Postex.Product.Application.Features.Contratcs.ContractItems.Queries.GetByCustomer
 {
     public class GetByCustomerContractItemQueryHandler : IRequestHandler<GetByCustomerContractItemQuery, List<ContractItemDto>>
     {
@@ -12,7 +12,7 @@ namespace Postex.Product.Application.Features.ContractItems.Queries.GetByCustome
 
         public GetByCustomerContractItemQueryHandler(IReadRepository<ContractItem> readRepository)
         {
-            this._readRepository = readRepository;
+            _readRepository = readRepository;
         }
         public async Task<List<ContractItemDto>> Handle(GetByCustomerContractItemQuery request, CancellationToken cancellationToken)
         {
@@ -52,7 +52,7 @@ namespace Postex.Product.Application.Features.ContractItems.Queries.GetByCustome
               .ToListAsync(cancellationToken);
 
             var itemDefualt = await _readRepository.Table
-           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && (c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null))
+           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null)
            .Select(c => new ContractItemDto
            {
                ContractInfoId = c.ContractInfoId,

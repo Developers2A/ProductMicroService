@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Features.ContractBoxPrices.Command.Update
+namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Commands.Update
 {
     public class UpdateContractBoxPriceCommandHandler : IRequestHandler<UpdateContractBoxPriceCommand, ContractBoxPriceDto>
     {
@@ -18,15 +18,15 @@ namespace Postex.Product.Application.Features.ContractBoxPrices.Command.Update
         private readonly IReadRepository<ContractBoxPrice> _readRepository;
         private readonly IMapper _mapper;
 
-        public UpdateContractBoxPriceCommandHandler(IWriteRepository<ContractBoxPrice> writeRepository, IReadRepository<ContractBoxPrice> readRepository, AutoMapper.IMapper mapper)
+        public UpdateContractBoxPriceCommandHandler(IWriteRepository<ContractBoxPrice> writeRepository, IReadRepository<ContractBoxPrice> readRepository, IMapper mapper)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
             _mapper = mapper;
         }
-        
 
-     async   Task<ContractBoxPriceDto> IRequestHandler<UpdateContractBoxPriceCommand, ContractBoxPriceDto>.Handle(UpdateContractBoxPriceCommand request, CancellationToken cancellationToken)
+
+        async Task<ContractBoxPriceDto> IRequestHandler<UpdateContractBoxPriceCommand, ContractBoxPriceDto>.Handle(UpdateContractBoxPriceCommand request, CancellationToken cancellationToken)
         {
             var contractBoxType = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
 

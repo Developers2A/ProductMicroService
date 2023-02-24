@@ -1,11 +1,11 @@
 using Hangfire;
 using Postex.Product.Application.Configuration;
 using Postex.Product.Infrastructure.Configuration;
-using Postex.ProductService.Api.Extensions;
-using Postex.ProductService.Api.Jobs;
+using Postex.Product.ServiceApi.Extensions;
+using Postex.Product.ServiceApi.Jobs;
 using Postex.SharedKernel.Extensions;
 
-namespace Postex.ProductService.Api
+namespace Postex.Product.ServiceApi
 {
     public class Startup
     {

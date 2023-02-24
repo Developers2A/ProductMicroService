@@ -10,7 +10,6 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
         public int CourierServiceCode { get; set; }
         public int PayType { get; set; }
         public string? ParcelId { get; set; }
-        public int? BoxSize { get; set; }
         public string? Content { get; set; }
         public int ApproximateValue { get; set; }
         public int Weight { get; set; }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Features.ContractCouriers.Command.Update
+namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Commands.Update
 {
     public class UpdateContractCourierCommandHandler : IRequestHandler<UpdateContractCourierCommand, ContractCourierDto>
     {
@@ -24,9 +24,9 @@ namespace Postex.Product.Application.Features.ContractCouriers.Command.Update
             _readRepository = readRepository;
             _mapper = mapper;
         }
-        
 
-      async  Task<ContractCourierDto> IRequestHandler<UpdateContractCourierCommand, ContractCourierDto>.Handle(UpdateContractCourierCommand request, CancellationToken cancellationToken)
+
+        async Task<ContractCourierDto> IRequestHandler<UpdateContractCourierCommand, ContractCourierDto>.Handle(UpdateContractCourierCommand request, CancellationToken cancellationToken)
         {
             ContractCourier contractCourier = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
 

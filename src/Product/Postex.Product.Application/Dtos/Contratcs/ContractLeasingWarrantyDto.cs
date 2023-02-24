@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Dtos
+namespace Postex.Product.Application.Dtos.Contratcs
 {
     public class ContractLeasingWarrantyDto
     {
@@ -14,7 +14,7 @@ namespace Postex.Product.Application.Dtos
         /// شناسه قرارداد لیزینگ
         /// </summary>
         public int ContractLeasingId { get; set; }
-       
+
         /// <summary>
         /// شماره ضمانتنامه
         /// </summary>

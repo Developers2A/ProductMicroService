@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.Product.Application.Dtos;
-using Postex.Product.Application.Features.ContractLeasings.Command.Create;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 using System;
@@ -10,21 +9,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Features.ContractLeasings.Commands.Create
+namespace Postex.Product.Application.Features.Contratcs.ContractLeasings.Commands.Create
 {
     public class CreateContractLeasingCommandHandler : IRequestHandler<CreateContractLeasingCommand, ContractLeasingDto>
     {
         private readonly IWriteRepository<ContractLeasing> _writeRepository;
         private readonly IMapper _mapper;
 
-        public CreateContractLeasingCommandHandler(IWriteRepository<ContractLeasing> writeRepository,IMapper mapper)
+        public CreateContractLeasingCommandHandler(IWriteRepository<ContractLeasing> writeRepository, IMapper mapper)
         {
             _writeRepository = writeRepository;
             _mapper = mapper;
         }
-       
 
-     async   Task<ContractLeasingDto> IRequestHandler<CreateContractLeasingCommand, ContractLeasingDto>.Handle(CreateContractLeasingCommand request, CancellationToken cancellationToken)
+
+        async Task<ContractLeasingDto> IRequestHandler<CreateContractLeasingCommand, ContractLeasingDto>.Handle(CreateContractLeasingCommand request, CancellationToken cancellationToken)
         {
             var contractLeasing = _mapper.Map<ContractLeasing>(request);
             await _writeRepository.AddAsync(contractLeasing);

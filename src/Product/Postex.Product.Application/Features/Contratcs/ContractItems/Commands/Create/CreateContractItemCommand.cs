@@ -1,8 +1,8 @@
 ﻿using Postex.Product.Application.Contracts;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.SharedKernel.Common.Enums;
 
-namespace Postex.Product.Application.Features.ContractItems.Commands.CreateContractItem
+namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Create
 {
     public class CreateContractItemCommand : ITransactionRequest<ContractItemDto>
     {

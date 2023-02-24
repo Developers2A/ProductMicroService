@@ -1,6 +1,6 @@
 ﻿using Hangfire;
 
-namespace Postex.ProductService.Api.Extensions
+namespace Postex.Product.ServiceApi.Extensions
 {
     public static class HangfireExtensions
     {

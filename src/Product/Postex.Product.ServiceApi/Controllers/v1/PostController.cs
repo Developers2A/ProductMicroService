@@ -14,10 +14,10 @@ using Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetShops
 using Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetStatus;
 using Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetUnits;
 using Postex.Product.Application.Features.ServiceProviders.Post.Queries.Track;
-using Postex.ProductService.Api.Filters;
+using Postex.Product.ServiceApi.Filters;
 using Postex.SharedKernel.Api;
 
-namespace Postex.ProductService.Api.Controllers.v1
+namespace Postex.Product.ServiceApi.Controllers.v1
 {
     [ApiVersion("1")]
     [ApiKey]

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Features.ContractInsurances.Command.Update
+namespace Postex.Product.Application.Features.Contratcs.ContractInsurances.Commands.Update
 {
     public class UpdateContractInsuranceCommandHandler : IRequestHandler<UpdateContractInsuranceCommand, ContractInsuranceDto>
     {
@@ -18,15 +18,15 @@ namespace Postex.Product.Application.Features.ContractInsurances.Command.Update
         private readonly IReadRepository<ContractInsurance> _readRepository;
         private readonly IMapper _mapper;
 
-        public UpdateContractInsuranceCommandHandler(IWriteRepository<ContractInsurance> writeRepository,IReadRepository<ContractInsurance> readRepository,IMapper mapper)
+        public UpdateContractInsuranceCommandHandler(IWriteRepository<ContractInsurance> writeRepository, IReadRepository<ContractInsurance> readRepository, IMapper mapper)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
             _mapper = mapper;
         }
-         
 
-      async  Task<ContractInsuranceDto> IRequestHandler<UpdateContractInsuranceCommand, ContractInsuranceDto>.Handle(UpdateContractInsuranceCommand request, CancellationToken cancellationToken)
+
+        async Task<ContractInsuranceDto> IRequestHandler<UpdateContractInsuranceCommand, ContractInsuranceDto>.Handle(UpdateContractInsuranceCommand request, CancellationToken cancellationToken)
         {
             ContractInsurance contractInsurance = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
 

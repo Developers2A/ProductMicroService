@@ -1,7 +1,7 @@
 ﻿using Hangfire.Annotations;
 using Hangfire.Dashboard;
 
-namespace Postex.ProductService.Api.Extensions
+namespace Postex.Product.ServiceApi.Extensions
 {
     public class HangfireAuthAdmin : IDashboardAuthorizationFilter
     {

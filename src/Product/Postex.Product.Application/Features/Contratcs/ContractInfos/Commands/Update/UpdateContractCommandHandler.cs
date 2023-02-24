@@ -3,9 +3,9 @@ using MediatR;
 using Postex.SharedKernel.Interfaces;
 using Postex.SharedKernel.Exceptions;
 using Postex.Product.Domain.Contracts;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 
-namespace Postex.Product.Application.Features.Contracts.Commands.UpdateContractCommand
+namespace Postex.Product.Application.Features.Contratcs.ContractInfos.Commands.Update
 {
     public class UpdateContractCommandHandler : IRequestHandler<UpdateContractCommand, ContractInfoDto>
     {
@@ -15,13 +15,13 @@ namespace Postex.Product.Application.Features.Contracts.Commands.UpdateContractC
 
         public UpdateContractCommandHandler(IWriteRepository<ContractInfo> writeRepository, IReadRepository<ContractInfo> readRepository, IMapper mapper)
         {
-            this._writeRepository = writeRepository;
-            this._readRepository = readRepository;
-            this._mapper = mapper;
+            _writeRepository = writeRepository;
+            _readRepository = readRepository;
+            _mapper = mapper;
         }
-      
 
-      async  Task<ContractInfoDto> IRequestHandler<UpdateContractCommand, ContractInfoDto>.Handle(UpdateContractCommand request, CancellationToken cancellationToken)
+
+        async Task<ContractInfoDto> IRequestHandler<UpdateContractCommand, ContractInfoDto>.Handle(UpdateContractCommand request, CancellationToken cancellationToken)
         {
             ContractInfo contractInfo = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
 

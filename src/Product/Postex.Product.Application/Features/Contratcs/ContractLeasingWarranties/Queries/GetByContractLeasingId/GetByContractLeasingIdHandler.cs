@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Features.ContractLeasingWarranties.Queries.GetById
+namespace Postex.Product.Application.Features.Contratcs.ContractLeasingWarranties.Queries.GetByContractLeasingId
 {
     public class GetByContractLeasingIdHandler : IRequestHandler<GetByContractLeasingIdCommand, ContractLeasingWarrantyDto>
     {
@@ -24,17 +24,17 @@ namespace Postex.Product.Application.Features.ContractLeasingWarranties.Queries.
             var leasing = await readRepository.Table
                 .Select(c => new ContractLeasingWarrantyDto
                 {
-                    Id = c.Id,                   
+                    Id = c.Id,
                     ContractLeasingId = c.ContractLeasingId,
-                    WarrantyAmount=c.WarrantyAmount,
-                    WarrantyEndDate=c.WarrantyEndDate,
-                    WarrantyReqistrationDate=c.WarrantyReqistrationDate,
-                    Description=c.Description,
-                    BankName=c.BankName,    
-                    WarrantyNo=c.WarrantyNo,
-                   
+                    WarrantyAmount = c.WarrantyAmount,
+                    WarrantyEndDate = c.WarrantyEndDate,
+                    WarrantyReqistrationDate = c.WarrantyReqistrationDate,
+                    Description = c.Description,
+                    BankName = c.BankName,
+                    WarrantyNo = c.WarrantyNo,
+
                 })
-                .Where(c=> c.ContractLeasingId == request.ContractLeasingId)
+                .Where(c => c.ContractLeasingId == request.ContractLeasingId)
                 .FirstOrDefaultAsync(cancellationToken);
             return leasing;
         }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
-namespace Postex.ProductService.Api.Filters
+namespace Postex.Product.ServiceApi.Filters
 {
     public class ApiKeyAttribute : Attribute, IAuthorizationFilter
     {

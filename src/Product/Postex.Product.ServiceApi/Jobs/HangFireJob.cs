@@ -2,7 +2,7 @@
 using Postex.Product.Application.Features.CourierZonePrices.Commands.CreateOfflineCourierZonePrice;
 using Postex.Product.Application.Features.PostShops.Commands.SyncPostShops;
 
-namespace Postex.ProductService.Api.Jobs
+namespace Postex.Product.ServiceApi.Jobs
 {
     public class HangFireJob : IHangFireJob
     {

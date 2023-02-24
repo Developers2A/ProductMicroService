@@ -1,11 +1,10 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Postex.Product.Application.Features.ContractLeasings.Command.Create;
-using Postex.Product.Application.Features.ContractLeasings.Commands.Update;
-using Postex.Product.Application.Features.ContractLeasings.Queries.GetAll;
-using Postex.Product.Application.Features.ContractLeasings.Queries.GetByCustomer;
-using Postex.Product.Application.Features.ContractLeasings.Queries.GetById;
+using Postex.Product.Application.Features.Contratcs.ContractLeasings.Commands.Create;
+using Postex.Product.Application.Features.Contratcs.ContractLeasings.Commands.Update;
+using Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetAll;
+using Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetByCustomer;
+using Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetById;
 
 namespace Postex.Product.Api.Controllers
 {
@@ -25,21 +24,25 @@ namespace Postex.Product.Api.Controllers
         {
             return Ok(await mediator.Send(command));
         }
+
         [HttpPut]
         public async Task<IActionResult> Put(UpdateContractLeasingCommand command)
         {
             return Ok(await mediator.Send(command));
         }
+
         [HttpGet("All")]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await mediator.Send(new GetAllContractLeasingCommand()));
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             return Ok(await mediator.Send(new GetByIdContractLeasingCommand { Id = id }));
         }
+
         [HttpGet("Customer")]
         public async Task<IActionResult> GetByCustomer(int customerId)
         {

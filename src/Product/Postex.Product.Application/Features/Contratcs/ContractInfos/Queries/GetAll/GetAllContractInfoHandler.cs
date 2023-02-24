@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Product.Application.Dtos;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Features.ContractInfos.Queries.GetAll
+namespace Postex.Product.Application.Features.Contratcs.ContractInfos.Queries.GetAll
 {
     public class GetAllContractInfoHandler : IRequestHandler<GetAllContractInfoCommand, List<ContractInfoDto>>
     {
