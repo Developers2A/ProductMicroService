@@ -6,8 +6,11 @@ namespace Postex.Product.Application.Features.BoxPrices.Commands.CreateBoxPrice
     {
         public CreateBoxPriceCommandValidator()
         {
-            RuleFor(p => p.Name)
-                  .NotNull().NotEmpty().WithMessage(" نام الزامی میباشد");
+            RuleFor(p => p.SellPrice)
+                  .NotEmpty().NotNull().WithMessage(" قیمت فروش الزامی میباشد");
+
+            RuleFor(p => p.BuyPrice)
+                 .NotEmpty().NotNull().WithMessage(" قیمت خرید الزامی میباشد");
         }
     }
 }

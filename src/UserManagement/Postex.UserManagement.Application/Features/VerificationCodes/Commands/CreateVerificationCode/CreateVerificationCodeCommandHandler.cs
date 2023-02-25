@@ -1,7 +1,6 @@
 ﻿using MediatR;
-using Postex.Application.Features.VerificationCodes.Commands.CreateVerificationCode;
 using Postex.SharedKernel.Interfaces;
-using Postex.UserManagement.Domain;
+using Postex.UserManagement.Domain.Users;
 
 namespace Postex.UserManagement.Application.Features.VerificationCodes.Commands.CreateVerificationCode;
 

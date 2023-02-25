@@ -2,7 +2,7 @@
 {
     public class GetPriceResponse
     {
-        public decimal CartonPrice { get; set; }
+        public decimal BoxPrice { get; set; }
         public decimal InsurancePrice { get; set; }
         public decimal PrintPrice { get; set; }
         public decimal AvatarPrice { get; set; }

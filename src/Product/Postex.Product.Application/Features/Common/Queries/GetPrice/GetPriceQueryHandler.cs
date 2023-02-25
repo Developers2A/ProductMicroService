@@ -2,6 +2,7 @@
 using Postex.Product.Application.Dtos.Couriers;
 using Postex.Product.Application.Dtos.CourierServices.Common;
 using Postex.Product.Application.Dtos.CourierServices.Mahex.Common;
+using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomerAndBoxType;
 using Postex.Product.Application.Features.CourierCityMappings.Queries;
 using Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries.GetPeykOfflinePrices;
 using Postex.Product.Application.Features.PostShops.Queries;
@@ -9,7 +10,6 @@ using Postex.Product.Application.Features.ServiceProviders.Chapar.Queries.GetPri
 using Postex.Product.Application.Features.ServiceProviders.Kbk.Queries.GetPrice;
 using Postex.Product.Application.Features.ServiceProviders.Mahex.Queries.GetPrice;
 using Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetPrice;
-using Postex.Product.Application.Features.ValueAddedPrices.Queries;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Common.Enums;
 
@@ -19,6 +19,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
     {
         private readonly IMediator _mediator;
         private List<CourierCityMappingDto> _courierCityMappings;
+        private GetPriceQuery _query;
 
         public GetPriceQueryHandler(IMediator mediator)
         {
@@ -30,64 +31,66 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             return await GetQuickPrice(request);
         }
 
-        public async Task<BaseResponse<GetPriceResponse>> GetQuickPrice(GetPriceQuery request)
+        public async Task<BaseResponse<GetPriceResponse>> GetQuickPrice(GetPriceQuery query)
         {
+            _query = query;
             GetPriceResponse priceResponse = new();
             List<ServicePrice> prices = new();
 
-            await ValueAddedPrice(priceResponse, request);
+            //TODO : read from contract value added
+            //await ValueAddedPrice(priceResponse, request);
 
-            _courierCityMappings = await GetCourierCityMapping(request.CourierCode, request.SenderCityCode, request.ReceiverCityCode);
+            _courierCityMappings = await GetCourierCityMapping(query.CourierCode, query.SenderCityCode, query.ReceiverCityCode);
 
-            if (request.CourierCode == (int)CourierCode.Kalaresan || request.CourierCode == (int)CourierCode.All)
+            if (query.CourierCode == (int)CourierCode.Kalaresan || query.CourierCode == (int)CourierCode.All)
             {
-                var kbkResponse = await KbkPrice(request);
+                var kbkResponse = await KbkPrice(query);
                 if (kbkResponse != null)
                 {
                     prices.Add(kbkResponse);
                 }
             }
 
-            if (request.CourierCode == (int)CourierCode.Mahex || request.CourierCode == (int)CourierCode.All)
+            if (query.CourierCode == (int)CourierCode.Mahex || query.CourierCode == (int)CourierCode.All)
             {
-                var mahexResponse = await MahexPrice(request);
+                var mahexResponse = await MahexPrice(query);
                 if (mahexResponse != null)
                 {
                     prices.Add(mahexResponse);
                 }
             }
 
-            if (request.CourierCode == (int)CourierCode.Chapar || request.CourierCode == (int)CourierCode.All)
+            if (query.CourierCode == (int)CourierCode.Chapar || query.CourierCode == (int)CourierCode.All)
             {
-                var chaparResponse = await ChaparPrice(request);
+                var chaparResponse = await ChaparPrice(query);
                 if (chaparResponse != default)
                 {
                     prices.AddRange(chaparResponse);
                 }
             }
 
-            if (request.CourierCode == (int)CourierCode.Post || request.CourierCode == (int)CourierCode.All)
+            if (query.CourierCode == (int)CourierCode.Post || query.CourierCode == (int)CourierCode.All)
             {
-                var postResponse = await PostPrice(request);
+                var postResponse = await PostPrice(query);
                 if (postResponse != default)
                 {
                     prices.AddRange(postResponse);
                 }
             }
 
-            if (request.HasCollection || request.HasDistribution)
+            if (query.HasCollection || query.HasDistribution)
             {
                 var collectionDistributionPrice = await _mediator.Send(new GetPeykOfflinePricesQuery()
                 {
-                    CourierCode = request.CourierCode,
-                    SenderCity = request.CourierCode,
+                    CourierCode = query.CourierCode,
+                    SenderCity = query.CourierCode,
                 });
 
-                if (request.HasCollection)
+                if (query.HasCollection)
                 {
                     priceResponse.CollectionPrices = collectionDistributionPrice.CollectionPrices;
                 }
-                if (request.HasDistribution)
+                if (query.HasDistribution)
                 {
                     priceResponse.DistributionPrices = collectionDistributionPrice.DistributionPrices;
                 }
@@ -98,32 +101,40 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             return new(true, "success", priceResponse); ;
         }
 
-        private async Task ValueAddedPrice(GetPriceResponse priceResponse, GetPriceQuery request)
+        private async Task GetBoxPrice()
         {
-            if (request.Avatar || request.Sms || request.Print)
+            var boxPrice = await _mediator.Send(new GetByCustomerAndBoxTypeContractBoxPriceQuery()
             {
-                var valueAddedPrices = await _mediator.Send(new GetValueAddedPricesQuery());
-                if (valueAddedPrices.Any())
-                {
-                    var avatarPrice = valueAddedPrices.FirstOrDefault(/*x => x.ValueAddedType == ValueAddedType.Avatar*/);
-                    var smsPrice = valueAddedPrices.FirstOrDefault(/*x => x.ValueAddedType == ValueAddedType.Sms*/);
-                    var printPrice = valueAddedPrices.FirstOrDefault(/*x => x.ValueAddedType == ValueAddedType.Print*/);
-
-                    if (request.Avatar && avatarPrice != null)
-                    {
-                        priceResponse.AvatarPrice = avatarPrice.SellPrice;
-                    }
-                    if (request.Sms && smsPrice != null)
-                    {
-                        priceResponse.SmsPrice = smsPrice.SellPrice;
-                    }
-                    if (request.Print && printPrice != null)
-                    {
-                        priceResponse.PrintPrice = printPrice.SellPrice;
-                    }
-                }
-            }
+                BoxTypeId = _query.BoxTypeId
+            });
         }
+
+        //private async Task ValueAddedPrice(GetPriceResponse priceResponse, GetPriceQuery request)
+        //{
+        //    if (request.Avatar || request.Sms || request.Print)
+        //    {
+        //        var valueAddedPrices = await _mediator.Send(new GetValueAddedPricesQuery());
+        //        if (valueAddedPrices.Any())
+        //        {
+        //            var avatarPrice = valueAddedPrices.FirstOrDefault(/*x => x.ValueAddedType == ValueAddedType.Avatar*/);
+        //            var smsPrice = valueAddedPrices.FirstOrDefault(/*x => x.ValueAddedType == ValueAddedType.Sms*/);
+        //            var printPrice = valueAddedPrices.FirstOrDefault(/*x => x.ValueAddedType == ValueAddedType.Print*/);
+
+        //            if (request.Avatar && avatarPrice != null)
+        //            {
+        //                priceResponse.AvatarPrice = avatarPrice.SellPrice;
+        //            }
+        //            if (request.Sms && smsPrice != null)
+        //            {
+        //                priceResponse.SmsPrice = smsPrice.SellPrice;
+        //            }
+        //            if (request.Print && printPrice != null)
+        //            {
+        //                priceResponse.PrintPrice = printPrice.SellPrice;
+        //            }
+        //        }
+        //    }
+        //}
 
         public async Task<List<CourierCityMappingDto>> GetCourierCityMapping(int courierCode, int senderCity, int receiverCity)
         {

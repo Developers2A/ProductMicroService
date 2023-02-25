@@ -12,6 +12,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         public int SenderCityCode { get; set; }
         public int ReceiverCityCode { get; set; }
         public int ReceiverStateCode { get; set; }
+        public int BoxTypeId { get; set; }
         public int Weight { get; set; }
         public int Value { get; set; }
         public double Height { get; set; }

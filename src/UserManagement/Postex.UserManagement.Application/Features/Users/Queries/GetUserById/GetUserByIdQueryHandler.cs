@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Postex.SharedKernel.Interfaces;
 using Postex.UserManagement.Application.Dtos.Users;
-using Postex.UserManagement.Domain;
+using Postex.UserManagement.Domain.Users;
 
 namespace Postex.UserManagement.Application.Features.Users.Queries.GetUserById;
 

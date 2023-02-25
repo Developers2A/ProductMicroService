@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Postex.Application.Features.VerificationCodes.Commands.CreateVerificationCode;
+namespace Postex.UserManagement.Application.Features.VerificationCodes.Commands.CreateVerificationCode;
 
 public class CreateVerificationCodeCommandValidator : AbstractValidator<CreateVerificationCodeCommand>
 {

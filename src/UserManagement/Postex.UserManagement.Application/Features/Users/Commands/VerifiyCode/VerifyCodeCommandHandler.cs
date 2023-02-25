@@ -5,7 +5,7 @@ using Postex.SharedKernel.Interfaces;
 using Postex.SharedKernel.Settings;
 using Postex.UserManagement.Application.Dtos.Users;
 using Postex.UserManagement.Application.Features.Users.Commands.GenerateToken;
-using Postex.UserManagement.Domain;
+using Postex.UserManagement.Domain.Users;
 
 namespace Postex.UserManagement.Application.Features.Users.Commands.VerifiyCode;
 

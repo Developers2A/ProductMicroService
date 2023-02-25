@@ -24,11 +24,10 @@ namespace Postex.Product.Application.Mappings
             CreateMap<Courier, CourierDto>();
             CreateMap<CourierStatusMapping, CourierStatusMappingDto>();
             CreateMap<CourierCityMapping, CourierCityMappingDto>().ReverseMap();
-            CreateMap<ValueAddedPrice, ValueAddedPriceDto>();
             CreateMap<Zone, ZoneDto>();
             CreateMap<Weight, WeightDto>();
             CreateMap<BoxSizePrice, BoxPriceDto>();
-            CreateMap<BoxSizePrice, BoxSizeDto>();
+            CreateMap<BoxType, BoxTypeDto>();
         }
     }
 }

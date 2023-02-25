@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Postex.SharedKernel.Interfaces;
-using Postex.UserManagement.Domain;
+using Postex.UserManagement.Domain.Users;
 
 namespace Postex.UserManagement.Application.Features.Users.Commands.DeleteUser;
 

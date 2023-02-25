@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Application.Features.VerificationCodes.Commands.CreateVerificationCode;
 using Postex.SharedKernel.Api;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 using Postex.SharedKernel.Utilities;
 using Postex.UserManagement.Application.Dtos.Users;
-using Postex.UserManagement.Domain;
+using Postex.UserManagement.Application.Features.VerificationCodes.Commands.CreateVerificationCode;
+using Postex.UserManagement.Domain.Users;
 
 namespace Postex.UserManagement.Application.Features.Users.Commands.CreateUser;
 

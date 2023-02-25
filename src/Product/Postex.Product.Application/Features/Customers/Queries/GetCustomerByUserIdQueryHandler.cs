@@ -19,7 +19,7 @@ public class GetCustomerByUserIdQueryHandler : IRequestHandler<GetCustomerByUser
     public GetCustomerByUserIdQueryHandler(IConfiguration configuration, IMediator mediator)
     {
         _configuration = configuration;
-        _customerApiUrl = _configuration.GetSection(nameof(ApiSetting)).Get<ApiSetting>().CustomerApi;
+        _customerApiUrl = _configuration.GetSection(nameof(ApiSetting)).Get<ApiSetting>().UserApi;
         _mediator = mediator;
     }
 

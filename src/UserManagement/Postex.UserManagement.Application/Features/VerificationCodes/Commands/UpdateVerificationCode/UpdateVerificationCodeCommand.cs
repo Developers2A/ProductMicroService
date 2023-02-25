@@ -1,6 +1,6 @@
 ﻿using Postex.UserManagement.Application.Contracts;
 
-namespace Postex.Application.Features.VerificationCodes.Commands.UpdateVerificationCode;
+namespace Postex.UserManagement.Application.Features.VerificationCodes.Commands.UpdateVerificationCode;
 
 public class UpdateVerificationCodeCommand : ITransactionRequest
 {

@@ -7,9 +7,9 @@ using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.BoxPrices.Queries
 {
-    public class GetBoxSizesQuery : IRequest<List<BoxSizeDto>>
+    public class GetBoxSizesQuery : IRequest<List<BoxTypeDto>>
     {
-        public class Handler : IRequestHandler<GetBoxSizesQuery, List<BoxSizeDto>>
+        public class Handler : IRequestHandler<GetBoxSizesQuery, List<BoxTypeDto>>
         {
             private readonly IReadRepository<BoxSizePrice> _boxPriceRepository;
             private readonly IMapper _mapper;
@@ -20,12 +20,12 @@ namespace Postex.Product.Application.Features.BoxPrices.Queries
                 _mapper = mapper;
             }
 
-            public async Task<List<BoxSizeDto>> Handle(GetBoxSizesQuery request, CancellationToken cancellationToken)
+            public async Task<List<BoxTypeDto>> Handle(GetBoxSizesQuery request, CancellationToken cancellationToken)
             {
                 var boxPrices = await _boxPriceRepository.TableNoTracking
                     .OrderBy(c => c.Id)
                     .ToListAsync(cancellationToken);
-                return _mapper.Map<List<BoxSizeDto>>(boxPrices);
+                return _mapper.Map<List<BoxTypeDto>>(boxPrices);
             }
         }
     }

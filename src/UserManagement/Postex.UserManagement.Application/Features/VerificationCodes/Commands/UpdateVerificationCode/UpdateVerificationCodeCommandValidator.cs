@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Postex.Application.Features.VerificationCodes.Commands.UpdateVerificationCode;
+namespace Postex.UserManagement.Application.Features.VerificationCodes.Commands.UpdateVerificationCode;
 
 public class UpdateVerificationCodeCommandValidator : AbstractValidator<UpdateVerificationCodeCommand>
 {

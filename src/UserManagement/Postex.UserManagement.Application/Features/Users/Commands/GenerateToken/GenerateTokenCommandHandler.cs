@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Postex.SharedKernel.Interfaces;
 using Postex.SharedKernel.Settings;
 using Postex.UserManagement.Application.Dtos.Users;
-using Postex.UserManagement.Domain;
+using Postex.UserManagement.Domain.Users;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;

@@ -1,7 +1,7 @@
 ﻿using Postex.UserManagement.Application.Contracts;
-using Postex.UserManagement.Domain;
+using Postex.UserManagement.Domain.Users;
 
-namespace Postex.Application.Features.VerificationCodes.Commands.CreateVerificationCode;
+namespace Postex.UserManagement.Application.Features.VerificationCodes.Commands.CreateVerificationCode;
 
 public class CreateVerificationCodeCommand : ITransactionRequest
 {

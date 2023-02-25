@@ -7,10 +7,13 @@ namespace Postex.Product.Application.Features.BoxPrices.Commands.UpdateBoxPrice
         public UpdateBoxPriceCommandValidator()
         {
             RuleFor(p => p.Id)
-                  .NotEmpty().WithMessage(" شناسه الزامی میباشد");
+                  .NotEmpty().NotNull().WithMessage(" شناسه الزامی میباشد");
 
-            RuleFor(p => p.Name)
-                  .NotEmpty().WithMessage(" نام الزامی میباشد");
+            RuleFor(p => p.SellPrice)
+                  .NotEmpty().NotNull().WithMessage(" قیمت فروش الزامی میباشد");
+
+            RuleFor(p => p.BuyPrice)
+                 .NotEmpty().NotNull().WithMessage(" قیمت خرید الزامی میباشد");
         }
     }
 }

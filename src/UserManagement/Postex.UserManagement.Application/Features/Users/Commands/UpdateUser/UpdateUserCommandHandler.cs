@@ -2,7 +2,7 @@
 using MediatR;
 using Postex.SharedKernel.Interfaces;
 using Postex.SharedKernel.Utilities;
-using Postex.UserManagement.Domain;
+using Postex.UserManagement.Domain.Users;
 
 namespace Postex.UserManagement.Application.Features.Users.Commands.UpdateUser;
 
