@@ -21,7 +21,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
                 {
                     ContractInfoId = c.ContractInfoId,
                     CourierId = c.CourierId,
-                    ContractItemTypeId = c.ContractItemTypeId,
+                    ValueAddedTypeId = c.ValueAddedTypeId,
                     ProvinceId = c.ProvinceId,
                     CityId = c.CityId,
                     IsActive = c.IsActive,

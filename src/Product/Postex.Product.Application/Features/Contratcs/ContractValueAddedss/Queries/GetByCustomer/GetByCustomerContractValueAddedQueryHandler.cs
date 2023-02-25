@@ -22,7 +22,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
                {
                    ContractInfoId = c.ContractInfoId,
                    CourierId = c.CourierId,
-                   ContractItemTypeId = c.ContractItemTypeId,
+                   ValueAddedTypeId = c.ValueAddedTypeId,
                    ProvinceId = c.ProvinceId,
                    CityId = c.CityId,
                    IsActive = c.IsActive,
@@ -40,7 +40,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
               {
                   ContractInfoId = c.ContractInfoId,
                   CourierId = c.CourierId,
-                  ContractItemTypeId = c.ContractItemTypeId,
+                  ValueAddedTypeId = c.ValueAddedTypeId,
                   ProvinceId = c.ProvinceId,
                   CityId = c.CityId,
                   IsActive = c.IsActive,
@@ -57,7 +57,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
            {
                ContractInfoId = c.ContractInfoId,
                CourierId = c.CourierId,
-               ContractItemTypeId = c.ContractItemTypeId,
+               ValueAddedTypeId = c.ValueAddedTypeId,
                ProvinceId = c.ProvinceId,
                CityId = c.CityId,
                IsActive = c.IsActive,
@@ -74,20 +74,20 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
             {
                 var item = itemDefualt[i];
 
-                if (itemCus.Where(c => c.ContractItemTypeId == item.ContractItemTypeId)
+                if (itemCus.Where(c => c.ValueAddedTypeId == item.ValueAddedTypeId)
                     .FirstOrDefault() != null)
                 {
-                    var cus = itemCus.Where(c => c.ContractItemTypeId == item.ContractItemTypeId)
+                    var cus = itemCus.Where(c => c.ValueAddedTypeId == item.ValueAddedTypeId)
                       .FirstOrDefault();
                     itemDefualt[i].SalePrice = cus.SalePrice;
                     itemDefualt[i].BuyPrice = cus.BuyPrice;
                     itemDefualt[i].LevelPrice = "Customer";
 
                 }
-                else if (itemCity.Where(c => c.ContractItemTypeId == item.ContractItemTypeId)
+                else if (itemCity.Where(c => c.ValueAddedTypeId == item.ValueAddedTypeId)
                     .FirstOrDefault() != null)
                 {
-                    var cus = itemCity.Where(c => c.ContractItemTypeId == item.ContractItemTypeId)
+                    var cus = itemCity.Where(c => c.ValueAddedTypeId == item.ValueAddedTypeId)
                       .FirstOrDefault();
                     itemDefualt[i].SalePrice = cus.SalePrice;
                     itemDefualt[i].BuyPrice = cus.BuyPrice;
