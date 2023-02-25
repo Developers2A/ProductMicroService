@@ -22,7 +22,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractInsurances.Queri
         public async Task<List<ContractInsuranceDto>> Handle(GetByCustomerContractInsuranceQuery request, CancellationToken cancellationToken)
         {
             var insuranceCus = await _readRepository.Table
-               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == request.CustomerId)
+               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == request.CustomerId && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now)
                .Select(c => new ContractInsuranceDto
                {
                    Id = c.Id,
@@ -42,7 +42,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractInsurances.Queri
 
 
             var insuranceCity = await _readRepository.Table
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == null)
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now)
               .Select(c => new ContractInsuranceDto
               {
                   Id = c.Id,
@@ -59,8 +59,26 @@ namespace Postex.Product.Application.Features.Contratcs.ContractInsurances.Queri
             if (insuranceCity.Count != 0)
                 return insuranceCity;
 
+            var insuranceProvince = await _readRepository.Table
+             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now)
+             .Select(c => new ContractInsuranceDto
+             {
+                 Id = c.Id,
+                 ContractInfoId = c.ContractInfoId,
+                 FromValue = c.FromValue,
+                 ToValue = c.ToValue,
+                 FixedPercent = c.FixedPercent,
+                 FixedValue = c.FixedValue,
+                 Description = c.Description,
+                 IsActice = c.IsActice,
+                 LevelPrice = "Province"
+             })
+             .ToListAsync(cancellationToken);
+            if (insuranceProvince.Count != 0)
+                return insuranceProvince;
+
             var insuranceDefualt = await _readRepository.Table
-           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null)
+           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now)
            .Select(c => new ContractInsuranceDto
            {
                Id = c.Id,
