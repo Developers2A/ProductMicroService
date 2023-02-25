@@ -7,10 +7,13 @@ namespace Postex.Product.Application.Features.ValueAddedPrices.Commands.UpdateVa
         public UpdateValueAddedPriceCommandValidator()
         {
             RuleFor(p => p.Id)
-                  .NotEmpty().WithMessage(" شناسه الزامی میباشد");
+                  .NotEmpty().NotNull().WithMessage(" شناسه الزامی میباشد");
 
-            RuleFor(p => p.Name)
-                  .NotEmpty().WithMessage(" نام الزامی میباشد");
+            RuleFor(p => p.BuyPrice)
+                  .NotEmpty().NotNull().WithMessage(" قیمت خرید الزامی میباشد");
+
+            RuleFor(p => p.SellPrice)
+                  .NotEmpty().NotNull().WithMessage(" قیمت فروش الزامی میباشد");
         }
     }
 }

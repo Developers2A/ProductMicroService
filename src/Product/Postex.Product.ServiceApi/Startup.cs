@@ -1,4 +1,5 @@
 using Hangfire;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Postex.Product.Application.Configuration;
 using Postex.Product.Infrastructure.Configuration;
 using Postex.Product.ServiceApi.Extensions;
@@ -25,6 +26,7 @@ namespace Postex.Product.ServiceApi
             services.AddApplicationCore(Configuration);
             services.AddHangfireService(Configuration);
             services.AddSingleton<IHangFireJob, HangFireJob>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)

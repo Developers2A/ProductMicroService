@@ -1,6 +1,5 @@
 ﻿using Postex.Product.Application.Contracts;
 using Postex.Product.Application.Dtos.Contratcs;
-using Postex.SharedKernel.Common.Enums;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Create
 {
@@ -8,12 +7,12 @@ namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.C
     {
         public int ContractInfoId { get; set; }
         public int CourierId { get; set; }
-        public ValueAddedType ContractItemType { get; set; }
+        public int ContractItemTypeId { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
         public bool IsActive { get; set; }
         public double SalePrice { get; set; }
         public double BuyPrice { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }

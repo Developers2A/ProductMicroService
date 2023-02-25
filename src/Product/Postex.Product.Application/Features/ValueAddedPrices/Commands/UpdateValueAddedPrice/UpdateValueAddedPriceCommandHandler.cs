@@ -24,13 +24,28 @@ namespace Postex.Product.Application.Features.ValueAddedPrices.Commands.UpdateVa
             if (valueAddedPrice == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
 
-            valueAddedPrice.Name = request.Name;
-            valueAddedPrice.SellPrice = request.SellPrice;
+            await UpdateOldAddedValuePrice(valueAddedPrice);
+            await CreateNewAddedValuePrice(request);
+            return Unit.Value;
+        }
+
+        private async Task UpdateOldAddedValuePrice(ValueAddedPrice valueAddedPrice)
+        {
+            valueAddedPrice.IsActive = false;
 
             await _valueAddedPriceWriteRepository.UpdateAsync(valueAddedPrice);
             await _valueAddedPriceWriteRepository.SaveChangeAsync();
+        }
 
-            return Unit.Value;
+        private async Task CreateNewAddedValuePrice(UpdateValueAddedPriceCommand request)
+        {
+            await _valueAddedPriceWriteRepository.AddAsync(new ValueAddedPrice()
+            {
+                BuyPrice = request.BuyPrice,
+                SellPrice = request.SellPrice,
+                IsActive = true
+            });
+            await _valueAddedPriceWriteRepository.SaveChangeAsync();
         }
     }
 }

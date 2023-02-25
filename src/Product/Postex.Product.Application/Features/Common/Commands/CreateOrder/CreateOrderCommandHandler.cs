@@ -29,10 +29,10 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
         private List<CourierCityMappingDto> _courierCityMappings;
         private Guid? _userId;
 
-        public CreateOrderCommandHandler(IMediator mediator, HttpContext httpContext)
+        public CreateOrderCommandHandler(IMediator mediator, IHttpContextAccessor contextAccessor)
         {
             _mediator = mediator;
-            _httpContext = httpContext;
+            _httpContext = contextAccessor.HttpContext;
         }
 
         public async Task<BaseResponse<CreateOrderResponse>> Handle(CreateOrderCommand command, CancellationToken cancellationToken)

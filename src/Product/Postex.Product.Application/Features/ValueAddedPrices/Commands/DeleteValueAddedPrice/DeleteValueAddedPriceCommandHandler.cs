@@ -24,7 +24,10 @@ namespace Postex.Product.Application.Features.ValueAddedPrices.Commands.DeleteVa
             if (valueAddedPrice == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
 
-            await _writeRepository.DeleteAsync(valueAddedPrice);
+            valueAddedPrice.IsRemoved = true;
+            valueAddedPrice.RemovedOn = DateTime.Now;
+
+            await _writeRepository.UpdateAsync(valueAddedPrice);
             await _writeRepository.SaveChangeAsync();
 
             return Unit.Value;

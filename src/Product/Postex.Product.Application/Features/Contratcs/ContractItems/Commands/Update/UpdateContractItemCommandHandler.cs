@@ -30,7 +30,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.U
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
 
             contractitem.CourierId = request.CourierId;
-            contractitem.ContractItemType = request.ContractItemType;
+            contractitem.ContractItemTypeId = request.ContractItemTypeId;
             contractitem.ProvinceId = request.ProvinceId;
             contractitem.CityId = request.CityId;
             contractitem.IsActive = request.IsActive;

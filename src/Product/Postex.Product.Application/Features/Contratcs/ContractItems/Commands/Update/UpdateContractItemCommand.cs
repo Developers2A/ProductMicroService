@@ -1,6 +1,5 @@
 ﻿using Postex.Product.Application.Contracts;
 using Postex.Product.Application.Dtos.Contratcs;
-using Postex.SharedKernel.Common.Enums;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Update
 {
@@ -8,7 +7,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.U
     {
         public int Id { get; set; }
         public int CourierId { get; set; }
-        public ValueAddedType ContractItemType { get; set; }
+        public int ContractItemTypeId { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
         public bool IsActive { get; set; }

@@ -105,9 +105,9 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                 var valueAddedPrices = await _mediator.Send(new GetValueAddedPricesQuery());
                 if (valueAddedPrices.Any())
                 {
-                    var avatarPrice = valueAddedPrices.FirstOrDefault(x => x.ValueAddedType == ValueAddedType.Avatar);
-                    var smsPrice = valueAddedPrices.FirstOrDefault(x => x.ValueAddedType == ValueAddedType.Sms);
-                    var printPrice = valueAddedPrices.FirstOrDefault(x => x.ValueAddedType == ValueAddedType.Print);
+                    var avatarPrice = valueAddedPrices.FirstOrDefault(/*x => x.ValueAddedType == ValueAddedType.Avatar*/);
+                    var smsPrice = valueAddedPrices.FirstOrDefault(/*x => x.ValueAddedType == ValueAddedType.Sms*/);
+                    var printPrice = valueAddedPrices.FirstOrDefault(/*x => x.ValueAddedType == ValueAddedType.Print*/);
 
                     if (request.Avatar && avatarPrice != null)
                     {

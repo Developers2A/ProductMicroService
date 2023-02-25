@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Postex.Product.Domain.ValueAddedPrices;
+using Postex.Product.Infrastructure.Data.Configurations.Common;
 
-namespace Postex.Product.Infrastructure.Data.Configurations.Common
+namespace Postex.Product.Infrastructure.Data.Configurations.ValueAddedPrices
 {
     public class ValueAddedPriceConfiguration : BaseEntityConfiguration<ValueAddedPrice>
     {
@@ -11,8 +12,9 @@ namespace Postex.Product.Infrastructure.Data.Configurations.Common
             base.Configure(builder);
             builder.ToTable("ValueAddedPrices");
 
-            builder.Property(i => i.Name)
-                .HasMaxLength(200);
+            builder.HasOne(i => i.ValueAddedType)
+             .WithMany(i => i.ValueAddedPrices)
+             .HasForeignKey(i => i.ValueAddedTypeId);
         }
     }
 }

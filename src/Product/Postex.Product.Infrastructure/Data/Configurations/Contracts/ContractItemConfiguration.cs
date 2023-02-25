@@ -14,7 +14,9 @@ namespace Postex.Product.Infrastructure.Data.Configurations
             entity.Property(c => c.Description)
                 .HasMaxLength(512);
 
-
+            entity.HasOne(i => i.ContractItemType)
+                .WithMany(i => i.ContractItems)
+                .HasForeignKey(i => i.ContractItemTypeId);
         }
     }
 }

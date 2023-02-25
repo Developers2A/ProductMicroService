@@ -1,6 +1,4 @@
-﻿using Postex.SharedKernel.Common.Enums;
-
-namespace Postex.Product.Application.Dtos.Couriers
+﻿namespace Postex.Product.Application.Dtos.Couriers
 {
     public class ValueAddedPriceDto
     {
@@ -8,6 +6,6 @@ namespace Postex.Product.Application.Dtos.Couriers
         public string Name { get; set; }
         public decimal SellPrice { get; set; }
         public decimal BuyPrice { get; set; }
-        public ValueAddedType ValueAddedType { get; set; }
+        public int ValueAddedTypeId { get; set; }
     }
 }

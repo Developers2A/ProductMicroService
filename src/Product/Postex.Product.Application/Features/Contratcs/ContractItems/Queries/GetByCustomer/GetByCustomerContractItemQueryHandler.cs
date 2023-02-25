@@ -22,7 +22,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractItems.Queries.Ge
                {
                    ContractInfoId = c.ContractInfoId,
                    CourierId = c.CourierId,
-                   ContractItemType = c.ContractItemType,
+                   ContractItemTypeId = c.ContractItemTypeId,
                    ProvinceId = c.ProvinceId,
                    CityId = c.CityId,
                    IsActive = c.IsActive,
@@ -40,7 +40,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractItems.Queries.Ge
               {
                   ContractInfoId = c.ContractInfoId,
                   CourierId = c.CourierId,
-                  ContractItemType = c.ContractItemType,
+                  ContractItemTypeId = c.ContractItemTypeId,
                   ProvinceId = c.ProvinceId,
                   CityId = c.CityId,
                   IsActive = c.IsActive,
@@ -57,7 +57,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractItems.Queries.Ge
            {
                ContractInfoId = c.ContractInfoId,
                CourierId = c.CourierId,
-               ContractItemType = c.ContractItemType,
+               ContractItemTypeId = c.ContractItemTypeId,
                ProvinceId = c.ProvinceId,
                CityId = c.CityId,
                IsActive = c.IsActive,
