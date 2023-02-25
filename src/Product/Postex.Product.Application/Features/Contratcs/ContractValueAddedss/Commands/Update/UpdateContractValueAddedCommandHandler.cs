@@ -7,13 +7,13 @@ using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Update
 {
-    public class UpdateContractItemCommandHandler : IRequestHandler<UpdateContractItemCommand, ContractItemDto>
+    public class UpdateContractValueAddedCommandHandler : IRequestHandler<UpdateContractValueAddedCommand, ContractItemDto>
     {
         private readonly IWriteRepository<ContractItem> _writeRepository;
         private readonly IReadRepository<ContractItem> _readRepository;
         private readonly IMapper _mapper;
 
-        public UpdateContractItemCommandHandler(IWriteRepository<ContractItem> writeRepository, IReadRepository<ContractItem> readRepository, IMapper mapper)
+        public UpdateContractValueAddedCommandHandler(IWriteRepository<ContractItem> writeRepository, IReadRepository<ContractItem> readRepository, IMapper mapper)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
@@ -21,7 +21,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.U
         }
 
 
-        async Task<ContractItemDto> IRequestHandler<UpdateContractItemCommand, ContractItemDto>.Handle(UpdateContractItemCommand request, CancellationToken cancellationToken)
+        async Task<ContractItemDto> IRequestHandler<UpdateContractValueAddedCommand, ContractItemDto>.Handle(UpdateContractValueAddedCommand request, CancellationToken cancellationToken)
         {
             ContractItem contractitem = await _readRepository.GetByIdAsync(request.
                 Id, cancellationToken);

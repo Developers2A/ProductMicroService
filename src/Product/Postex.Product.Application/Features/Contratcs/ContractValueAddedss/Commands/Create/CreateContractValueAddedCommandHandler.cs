@@ -6,19 +6,19 @@ using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Create
 {
-    public class CreateContractItemCommandHandler : IRequestHandler<CreateContractItemCommand, ContractItemDto>
+    public class CreateContractValueAddedCommandHandler : IRequestHandler<CreateContractContractValueAddedCommand, ContractItemDto>
     {
         private readonly IWriteRepository<ContractItem> _writeRepository;
         private readonly IMapper _mapper;
 
-        public CreateContractItemCommandHandler(IWriteRepository<ContractItem> writeRepository, IMapper mapper)
+        public CreateContractValueAddedCommandHandler(IWriteRepository<ContractItem> writeRepository, IMapper mapper)
         {
             _writeRepository = writeRepository;
             _mapper = mapper;
         }
 
 
-        async Task<ContractItemDto> IRequestHandler<CreateContractItemCommand, ContractItemDto>.Handle(CreateContractItemCommand request, CancellationToken cancellationToken)
+        async Task<ContractItemDto> IRequestHandler<CreateContractContractValueAddedCommand, ContractItemDto>.Handle(CreateContractContractValueAddedCommand request, CancellationToken cancellationToken)
         {
             var contractItem = _mapper.Map<ContractItem>(request);
             await _writeRepository.AddAsync(contractItem, cancellationToken);

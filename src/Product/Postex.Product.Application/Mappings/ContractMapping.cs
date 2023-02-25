@@ -36,7 +36,7 @@ namespace Postex.Product.Application.Mappings
             CreateMap<CreateContractInsuranceCommand, ContractInsurance>();
 
             CreateMap<ContractItem, ContractItemDto>();
-            CreateMap<CreateContractItemCommand, ContractItem>();
+            CreateMap<CreateContractContractValueAddedCommand, ContractItem>();
 
             CreateMap<ContractCollectionDistribution, ContractCollectionDistributionDto>();
             CreateMap<CreateContractCollect_DistributeCommand, ContractCollectionDistribution>();

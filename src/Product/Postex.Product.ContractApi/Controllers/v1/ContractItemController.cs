@@ -19,13 +19,13 @@ namespace Postex.Product.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateContractItemCommand command)
+        public async Task<IActionResult> Create(CreateContractContractValueAddedCommand command)
         {
             return Ok(await mediator.Send(command));
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(UpdateContractItemCommand command)
+        public async Task<IActionResult> Put(UpdateContractValueAddedCommand command)
         {
             return Ok(await mediator.Send(command));
         }
@@ -33,13 +33,13 @@ namespace Postex.Product.Api.Controllers
         [HttpGet("GetByContarctId")]
         public async Task<IActionResult> GetByContractInfoId(int contractInfoId)
         {
-            return Ok(await mediator.Send(new GetByContractIdContractItemQuery { ContractInfoId = contractInfoId }));
+            return Ok(await mediator.Send(new GetByContractIdContractValueAddedQuery { ContractInfoId = contractInfoId }));
         }
 
         [HttpGet("GetByCustomer")]
         public async Task<IActionResult> GetByCustomer(int? customerId, int? provinceId, int? cityId)
         {
-            return Ok(await mediator.Send(new GetByCustomerContractItemQuery { CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
+            return Ok(await mediator.Send(new GetByCustomerContractValueAddedQuery { CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
         }
     }
 }

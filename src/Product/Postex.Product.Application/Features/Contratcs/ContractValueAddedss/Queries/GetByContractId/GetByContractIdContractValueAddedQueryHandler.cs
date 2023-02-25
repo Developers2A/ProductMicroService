@@ -6,15 +6,15 @@ using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractItems.Queries.GetByContractId
 {
-    public class GetByContractIdContractItemQueryHandler : IRequestHandler<GetByContractIdContractItemQuery, List<ContractItemDto>>
+    public class GetByContractIdContractValueAddedQueryHandler : IRequestHandler<GetByContractIdContractValueAddedQuery, List<ContractItemDto>>
     {
         private readonly IReadRepository<ContractItem> _readRepository;
 
-        public GetByContractIdContractItemQueryHandler(IReadRepository<ContractItem> readRepository)
+        public GetByContractIdContractValueAddedQueryHandler(IReadRepository<ContractItem> readRepository)
         {
             _readRepository = readRepository;
         }
-        public async Task<List<ContractItemDto>> Handle(GetByContractIdContractItemQuery request, CancellationToken cancellationToken)
+        public async Task<List<ContractItemDto>> Handle(GetByContractIdContractValueAddedQuery request, CancellationToken cancellationToken)
         {
             var items = await _readRepository.Table.Include(b => b.ContractItemType)
                 .Select(c => new ContractItemDto

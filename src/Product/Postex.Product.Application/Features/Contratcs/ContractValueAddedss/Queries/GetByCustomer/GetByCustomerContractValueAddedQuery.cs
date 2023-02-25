@@ -3,7 +3,7 @@ using Postex.Product.Application.Dtos.Contratcs;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractItems.Queries.GetByCustomer
 {
-    public class GetByCustomerContractItemQuery : IRequest<List<ContractItemDto>>
+    public class GetByCustomerContractValueAddedQuery : IRequest<List<ContractItemDto>>
     {
         public int? CustomerId { get; set; }
         public int? ProvinceId { get; set; }
