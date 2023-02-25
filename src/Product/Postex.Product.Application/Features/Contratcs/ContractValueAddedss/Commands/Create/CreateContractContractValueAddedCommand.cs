@@ -3,7 +3,7 @@ using Postex.Product.Application.Dtos.Contratcs;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Create
 {
-    public class CreateContractContractValueAddedCommand : ITransactionRequest<ContractItemDto>
+    public class CreateContractContractValueAddedCommand : ITransactionRequest<ContractValueAddedDto>
     {
         public int ContractInfoId { get; set; }
         public int CourierId { get; set; }

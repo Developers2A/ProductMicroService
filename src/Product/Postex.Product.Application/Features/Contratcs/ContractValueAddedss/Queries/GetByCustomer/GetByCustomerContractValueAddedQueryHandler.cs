@@ -6,7 +6,7 @@ using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractItems.Queries.GetByCustomer
 {
-    public class GetByCustomerContractValueAddedQueryHandler : IRequestHandler<GetByCustomerContractValueAddedQuery, List<ContractItemDto>>
+    public class GetByCustomerContractValueAddedQueryHandler : IRequestHandler<GetByCustomerContractValueAddedQuery, List<ContractValueAddedDto>>
     {
         private readonly IReadRepository<ContractValueAdded> _readRepository;
 
@@ -14,11 +14,11 @@ namespace Postex.Product.Application.Features.Contratcs.ContractItems.Queries.Ge
         {
             _readRepository = readRepository;
         }
-        public async Task<List<ContractItemDto>> Handle(GetByCustomerContractValueAddedQuery request, CancellationToken cancellationToken)
+        public async Task<List<ContractValueAddedDto>> Handle(GetByCustomerContractValueAddedQuery request, CancellationToken cancellationToken)
         {
             var itemCus = await _readRepository.Table
                .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == request.CustomerId)
-               .Select(c => new ContractItemDto
+               .Select(c => new ContractValueAddedDto
                {
                    ContractInfoId = c.ContractInfoId,
                    CourierId = c.CourierId,
@@ -36,7 +36,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractItems.Queries.Ge
 
             var itemCity = await _readRepository.Table
               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == null)
-              .Select(c => new ContractItemDto
+              .Select(c => new ContractValueAddedDto
               {
                   ContractInfoId = c.ContractInfoId,
                   CourierId = c.CourierId,
@@ -53,7 +53,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractItems.Queries.Ge
 
             var itemDefualt = await _readRepository.Table
            .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null)
-           .Select(c => new ContractItemDto
+           .Select(c => new ContractValueAddedDto
            {
                ContractInfoId = c.ContractInfoId,
                CourierId = c.CourierId,

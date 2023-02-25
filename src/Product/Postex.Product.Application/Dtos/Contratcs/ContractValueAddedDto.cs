@@ -1,6 +1,6 @@
 ﻿namespace Postex.Product.Application.Dtos.Contratcs
 {
-    public class ContractItemDto
+    public class ContractValueAddedDto
     {
         public int ContractInfoId { get; set; }
         public int CourierId { get; set; }
