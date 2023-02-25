@@ -5,7 +5,7 @@ using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Update
+namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Commands.Update
 {
     public class UpdateContractValueAddedCommandHandler : IRequestHandler<UpdateContractValueAddedCommand, ContractValueAddedDto>
     {

@@ -1,7 +1,7 @@
 ﻿using Postex.Product.Application.Contracts;
 using Postex.Product.Application.Dtos.Contratcs;
 
-namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Create
+namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Commands.Create
 {
     public class CreateContractContractValueAddedCommand : ITransactionRequest<ContractValueAddedDto>
     {

@@ -4,7 +4,7 @@ using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Product.Application.Features.Contratcs.ContractItems.Queries.GetByCustomer
+namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByCustomer
 {
     public class GetByCustomerContractValueAddedQueryHandler : IRequestHandler<GetByCustomerContractValueAddedQuery, List<ContractValueAddedDto>>
     {

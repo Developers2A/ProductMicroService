@@ -4,7 +4,7 @@ using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Create
+namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Commands.Create
 {
     public class CreateContractValueAddedCommandHandler : IRequestHandler<CreateContractContractValueAddedCommand, ContractValueAddedDto>
     {

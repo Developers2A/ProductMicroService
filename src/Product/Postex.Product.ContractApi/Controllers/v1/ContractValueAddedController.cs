@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Features.ContractValueAddeds.Queries;
-using Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Create;
-using Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Update;
-using Postex.Product.Application.Features.Contratcs.ContractItems.Queries.GetByContractId;
-using Postex.Product.Application.Features.Contratcs.ContractItems.Queries.GetByCustomer;
+using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Commands.Create;
+using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Commands.Update;
+using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByContractId;
+using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByCustomer;
 
 namespace Postex.Product.Api.Controllers
 {
