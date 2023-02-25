@@ -9,7 +9,7 @@ namespace Postex.Product.Domain.Contracts
         public ContractInfo ContractInfo { get; set; }
         public int ContractInfoId { get; set; }
         public int CourierId { get; set; }
-        public int ContractItemTypeId { get; set; }
+        public int ValueAddedTypeId { get; set; }
         public ValueAddedType ContractItemType { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
