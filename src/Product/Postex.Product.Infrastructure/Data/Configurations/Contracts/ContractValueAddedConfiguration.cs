@@ -5,18 +5,18 @@ using Postex.Product.Infrastructure.Data.Configurations.Common;
 
 namespace Postex.Product.Infrastructure.Data.Configurations
 {
-    public class ContractItemConfiguration : BaseEntityConfiguration<ContractValueAdded>
+    public class ContractValueAddedConfiguration : BaseEntityConfiguration<ContractValueAdded>
     {
         public override void Configure(EntityTypeBuilder<ContractValueAdded> entity)
         {
             base.Configure(entity);
-            entity.ToTable("ContractItems");
+            entity.ToTable("ContractValueAddeds");
             entity.Property(c => c.Description)
                 .HasMaxLength(512);
 
             entity.HasOne(i => i.ContractItemType)
-                .WithMany(i => i.ContractItems)
-                .HasForeignKey(i => i.ContractItemTypeId);
+                .WithMany(i => i.ContractValueAddeds)
+                .HasForeignKey(i => i.ValueAddedTypeId);
         }
     }
 }
