@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Postex.Product.Application.Features.ContractCouriers.Queries;
 using Postex.Product.Application.Features.Contratcs.ContractCouriers.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractCouriers.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries.GetByContractId;

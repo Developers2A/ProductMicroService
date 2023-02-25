@@ -4,6 +4,7 @@ using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Commands.C
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByContractId;
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomer;
+using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomerAndBoxType;
 
 namespace Postex.Product.Api.Controllers
 {
