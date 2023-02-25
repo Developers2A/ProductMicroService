@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Postex.Product.Application.Features.ContractValueAddeds.Queries;
 using Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractItems.Queries.GetByContractId;
@@ -40,6 +41,11 @@ namespace Postex.Product.Api.Controllers
         public async Task<IActionResult> GetByCustomer(int? customerId, int? provinceId, int? cityId)
         {
             return Ok(await mediator.Send(new GetByCustomerContractValueAddedQuery { CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
+        }
+        [HttpGet("GetByCustomer")]
+        public async Task<IActionResult> GetByCustomerAndValueAdded(int ValueAddedId,int? customerId, int? provinceId, int? cityId)
+        {
+            return Ok(await mediator.Send(new GetByCustomerAndValueAddedContractValueAddedQuery { ValueAddedId = ValueAddedId, CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
         }
     }
 }
