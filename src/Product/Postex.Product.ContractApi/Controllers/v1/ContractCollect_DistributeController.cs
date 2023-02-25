@@ -41,5 +41,10 @@ namespace Postex.Product.Api.Controllers
         {
             return Ok(await _mediator.Send(new GetByCustomerContractCollect_DistributeQuery { CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
         }
+        [HttpGet("GetByCustomerAndBoxType")]
+        public async Task<IActionResult> GetByCustomerAndBoxType(int boxTypeId, int? customerId, int? provinceId, int? cityId)
+        {
+            return Ok(await _mediator.Send(new GetByCustomerAndBoxTypeContractCollect_DistributeQuery { BoxTypeId = boxTypeId, CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
+        }
     }
 }
