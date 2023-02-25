@@ -7,10 +7,10 @@ using Postex.Product.Application.Features.Contratcs.ContractCouriers.Commands.Cr
 using Postex.Product.Application.Features.Contratcs.ContractInfos.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractInfos.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractInsurances.Commands.Create;
-using Postex.Product.Application.Features.Contratcs.ContractItems.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractLeasings.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractLeasingWarranties.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractLeasingWarranties.Commands.Update;
+using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Commands.Create;
 using Postex.Product.Domain.Contracts;
 
 namespace Postex.Product.Application.Mappings
@@ -35,7 +35,7 @@ namespace Postex.Product.Application.Mappings
             CreateMap<ContractInsurance, ContractInsuranceDto>();
             CreateMap<CreateContractInsuranceCommand, ContractInsurance>();
 
-            CreateMap<ContractValueAdded, ContractItemDto>();
+            CreateMap<ContractValueAdded, ContractValueAddedDto>();
             CreateMap<CreateContractContractValueAddedCommand, ContractValueAdded>();
 
             CreateMap<ContractCollectionDistribution, ContractCollectionDistributionDto>();
