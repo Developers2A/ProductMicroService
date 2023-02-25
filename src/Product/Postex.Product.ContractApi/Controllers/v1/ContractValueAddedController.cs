@@ -9,11 +9,11 @@ namespace Postex.Product.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ContractItemController : Controller
+    public class ContractValueAddedController : Controller
     {
         private readonly IMediator mediator;
 
-        public ContractItemController(IMediator mediator)
+        public ContractValueAddedController(IMediator mediator)
         {
             this.mediator = mediator;
         }
