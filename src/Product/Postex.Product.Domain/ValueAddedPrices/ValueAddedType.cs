@@ -7,6 +7,6 @@ namespace Postex.Product.Domain.ValueAddedPrices
     {
         public string Name { get; set; }
         public ICollection<ValueAddedPrice> ValueAddedPrices { get; set; }
-        public ICollection<ContractItem> ContractItems { get; set; }
+        public ICollection<ContractValueAdded> ContractItems { get; set; }
     }
 }

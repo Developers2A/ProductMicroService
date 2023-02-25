@@ -5,9 +5,9 @@ using Postex.Product.Infrastructure.Data.Configurations.Common;
 
 namespace Postex.Product.Infrastructure.Data.Configurations
 {
-    public class ContractItemConfiguration : BaseEntityConfiguration<ContractItem>
+    public class ContractItemConfiguration : BaseEntityConfiguration<ContractValueAdded>
     {
-        public override void Configure(EntityTypeBuilder<ContractItem> entity)
+        public override void Configure(EntityTypeBuilder<ContractValueAdded> entity)
         {
             base.Configure(entity);
             entity.ToTable("ContractItems");

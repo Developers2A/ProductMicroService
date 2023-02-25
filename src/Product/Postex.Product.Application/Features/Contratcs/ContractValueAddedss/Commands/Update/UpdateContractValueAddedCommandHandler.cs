@@ -9,11 +9,11 @@ namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.U
 {
     public class UpdateContractValueAddedCommandHandler : IRequestHandler<UpdateContractValueAddedCommand, ContractItemDto>
     {
-        private readonly IWriteRepository<ContractItem> _writeRepository;
-        private readonly IReadRepository<ContractItem> _readRepository;
+        private readonly IWriteRepository<ContractValueAdded> _writeRepository;
+        private readonly IReadRepository<ContractValueAdded> _readRepository;
         private readonly IMapper _mapper;
 
-        public UpdateContractValueAddedCommandHandler(IWriteRepository<ContractItem> writeRepository, IReadRepository<ContractItem> readRepository, IMapper mapper)
+        public UpdateContractValueAddedCommandHandler(IWriteRepository<ContractValueAdded> writeRepository, IReadRepository<ContractValueAdded> readRepository, IMapper mapper)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
@@ -23,7 +23,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractItems.Commands.U
 
         async Task<ContractItemDto> IRequestHandler<UpdateContractValueAddedCommand, ContractItemDto>.Handle(UpdateContractValueAddedCommand request, CancellationToken cancellationToken)
         {
-            ContractItem contractitem = await _readRepository.GetByIdAsync(request.
+            ContractValueAdded contractitem = await _readRepository.GetByIdAsync(request.
                 Id, cancellationToken);
 
             if (contractitem == null)

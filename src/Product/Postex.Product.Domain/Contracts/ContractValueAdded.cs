@@ -4,7 +4,7 @@ using Postex.SharedKernel.Domain;
 namespace Postex.Product.Domain.Contracts
 {
 
-    public class ContractItem : BaseEntity<int>
+    public class ContractValueAdded : BaseEntity<int>
     {
         public ContractInfo ContractInfo { get; set; }
         public int ContractInfoId { get; set; }

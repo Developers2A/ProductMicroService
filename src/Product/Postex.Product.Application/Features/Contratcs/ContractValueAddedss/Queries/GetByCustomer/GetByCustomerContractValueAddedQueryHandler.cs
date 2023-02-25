@@ -8,9 +8,9 @@ namespace Postex.Product.Application.Features.Contratcs.ContractItems.Queries.Ge
 {
     public class GetByCustomerContractValueAddedQueryHandler : IRequestHandler<GetByCustomerContractValueAddedQuery, List<ContractItemDto>>
     {
-        private readonly IReadRepository<ContractItem> _readRepository;
+        private readonly IReadRepository<ContractValueAdded> _readRepository;
 
-        public GetByCustomerContractValueAddedQueryHandler(IReadRepository<ContractItem> readRepository)
+        public GetByCustomerContractValueAddedQueryHandler(IReadRepository<ContractValueAdded> readRepository)
         {
             _readRepository = readRepository;
         }
