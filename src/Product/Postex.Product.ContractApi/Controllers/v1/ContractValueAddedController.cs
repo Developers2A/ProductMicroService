@@ -42,7 +42,7 @@ namespace Postex.Product.Api.Controllers
         {
             return Ok(await mediator.Send(new GetByCustomerContractValueAddedQuery { CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
         }
-        [HttpGet("GetByCustomer")]
+        [HttpGet("GetByCustomerAndValueAdded")]
         public async Task<IActionResult> GetByCustomerAndValueAdded(int ValueAddedId,int? customerId, int? provinceId, int? cityId)
         {
             return Ok(await mediator.Send(new GetByCustomerAndValueAddedContractValueAddedQuery { ValueAddedId = ValueAddedId, CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));

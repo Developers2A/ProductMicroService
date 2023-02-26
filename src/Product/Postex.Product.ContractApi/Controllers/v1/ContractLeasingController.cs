@@ -37,13 +37,13 @@ namespace Postex.Product.Api.Controllers
             return Ok(await mediator.Send(new GetAllContractLeasingCommand()));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int id)
         {
             return Ok(await mediator.Send(new GetByIdContractLeasingCommand { Id = id }));
         }
 
-        [HttpGet("Customer")]
+        [HttpGet("GetByCustomer")]
         public async Task<IActionResult> GetByCustomer(int customerId)
         {
             return Ok(await mediator.Send(new GetByCustomerContractLeasingCommand { CustomerId = customerId }));
