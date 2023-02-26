@@ -11,7 +11,7 @@ using Postex.Product.Application.Dtos.Contratcs;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomerAndBoxType
 {
-    public class GetByCustomerAndBoxTypeContractBoxPriceQueryHandler : IRequestHandler<GetByCustomerAndBoxTypeContractBoxPriceQuery, List<ContractBoxPriceDto>>
+    public class GetByCustomerAndBoxTypeContractBoxPriceQueryHandler : IRequestHandler<GetByCustomerAndBoxTypeContractBoxPriceQuery, BoxPriceDto>
     {
         private readonly IReadRepository<ContractBoxPrice> _readRepository;
 
@@ -19,85 +19,88 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
         {
             _readRepository = readRepository;
         }
-        public async Task<List<ContractBoxPriceDto>> Handle(GetByCustomerAndBoxTypeContractBoxPriceQuery request, CancellationToken cancellationToken)
+        public async Task<BoxPriceDto> Handle(GetByCustomerAndBoxTypeContractBoxPriceQuery request, CancellationToken cancellationToken)
         {
+            var boxPrice = await _readRepository.Table
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && (c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0) && c.BoxTypeId == request.BoxTypeId)
+              .Select(c => new BoxPriceDto
+              {
+                  ContractId = c.ContractInfoId,
+                  ContractBoxPriceId = c.Id,
+                  BoxTypeId = c.BoxTypeId,
+                  DefaultSalePrice = c.SalePrice,
+                  DefaultBuyPrice = c.BuyPrice,
+                  ContractLevel = "Default"
+
+              })
+              .FirstOrDefaultAsync(cancellationToken);
 
             var boxPriceCus = await _readRepository.Table
                 .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == request.CustomerId && c.BoxTypeId == request.BoxTypeId)
-                .Select(c => new ContractBoxPriceDto
+                .Select(c => new BoxPriceDto
                 {
-                    Id = c.Id,
-                    ContractInfoId = c.ContractInfoId,
-                    BoxTypeId = c.BoxTypeId,
-                    CityId = c.CityId,
-                    ProvinceId = c.ProvinceId,
-                    SalePrice = c.SalePrice,
-                    BuyPrice = c.BuyPrice,
-                    Description = c.Description,
-                    LevelPrice = "Customer"
+                    ContractId = c.ContractInfoId,
+                    ContractBoxPriceId = c.Id,
+                    ContractSalePrice = c.SalePrice,
+                    ContractBuyPrice = c.BuyPrice,
                 })
-                .ToListAsync(cancellationToken);
+                .FirstOrDefaultAsync(cancellationToken);
 
-            if (boxPriceCus.Count > 0)
-                return boxPriceCus;
+            if (boxPriceCus != null)
+            {
+                boxPrice.ContractId = boxPriceCus.ContractId;
+                boxPrice.ContractBoxPriceId = boxPriceCus.ContractBoxPriceId;
+                boxPrice.ContractSalePrice = boxPriceCus.ContractSalePrice;
+                boxPrice.ContractBuyPrice = boxPriceCus.ContractBuyPrice;
+                boxPrice.ContractLevel = "Customer";
+                return boxPrice;
+            }
+
 
             var boxPriceCity = await _readRepository.Table
              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == 0 && c.BoxTypeId == request.BoxTypeId)
-             .Select(c => new ContractBoxPriceDto
-             {
-                 Id = c.Id,
-                 ContractInfoId = c.ContractInfoId,
-                 BoxTypeId = c.BoxTypeId,
-                 CityId = c.CityId,
-                 ProvinceId = c.ProvinceId,
-                 SalePrice = c.SalePrice,
-                 BuyPrice = c.BuyPrice,
-                 Description = c.Description,
-                 LevelPrice = "City"
-             })
-             .ToListAsync(cancellationToken);
+            .Select(c => new BoxPriceDto
+            {
+                ContractId = c.ContractInfoId,
+                ContractBoxPriceId = c.Id,
+                ContractSalePrice = c.SalePrice,
+                ContractBuyPrice = c.BuyPrice,
+            })
+             .FirstOrDefaultAsync(cancellationToken);
 
-            if (boxPriceCity.Count > 0)
-                return boxPriceCity;
+            if (boxPriceCity != null)
+            {
+                boxPrice.ContractId = boxPriceCity.ContractId;
+                boxPrice.ContractBoxPriceId = boxPriceCity.ContractBoxPriceId;
+                boxPrice.ContractSalePrice = boxPriceCity.ContractSalePrice;
+                boxPrice.ContractBuyPrice = boxPriceCity.ContractBuyPrice;
+                boxPrice.ContractLevel = "City";
+                return boxPrice;
+            }
 
             var boxPriceProvince = await _readRepository.Table
             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.BoxTypeId == request.BoxTypeId)
-            .Select(c => new ContractBoxPriceDto
+            .Select(c => new BoxPriceDto
             {
-                Id = c.Id,
-                ContractInfoId = c.ContractInfoId,
-                BoxTypeId = c.BoxTypeId,
-                CityId = c.CityId,
-                ProvinceId = c.ProvinceId,
-                SalePrice = c.SalePrice,
-                BuyPrice = c.BuyPrice,
-                Description = c.Description,
-                LevelPrice = "Province"
+                ContractId = c.ContractInfoId,
+                ContractBoxPriceId = c.Id,
+                ContractSalePrice = c.SalePrice,
+                ContractBuyPrice = c.BuyPrice,
             })
-            .ToListAsync(cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken);
 
-            if (boxPriceProvince.Count > 0)
-                return boxPriceProvince;
+            if (boxPriceProvince != null)
+            {
+                boxPrice.ContractId = boxPriceProvince.ContractId;
+                boxPrice.ContractBoxPriceId = boxPriceProvince.ContractBoxPriceId;
+                boxPrice.ContractSalePrice = boxPriceProvince.ContractSalePrice;
+                boxPrice.ContractBuyPrice = boxPriceProvince.ContractBuyPrice;
+                boxPrice.ContractLevel = "Province";
+                return boxPrice;
+            }
 
-            var boxPriceDefualt = await _readRepository.Table             
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && (c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0) && c.BoxTypeId == request.BoxTypeId)
-              .Select(c => new ContractBoxPriceDto
-              {
-                  Id = c.Id,
-                  ContractInfoId = c.ContractInfoId,
-                  BoxTypeId = c.BoxTypeId,
-                  CityId = c.CityId,
-                  ProvinceId = c.ProvinceId,
-                  SalePrice = c.SalePrice,
-                  BuyPrice = c.BuyPrice,
-                  Description = c.Description,
-                  IsActive = c.IsActive,
-                  LevelPrice = "Default"
 
-              })
-              .ToListAsync(cancellationToken);
-
-            return boxPriceDefualt;
+            return boxPrice;
 
         }
     }

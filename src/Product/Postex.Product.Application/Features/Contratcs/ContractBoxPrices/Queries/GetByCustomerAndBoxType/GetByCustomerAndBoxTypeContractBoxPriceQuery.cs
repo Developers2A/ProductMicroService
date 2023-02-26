@@ -3,7 +3,7 @@ using Postex.Product.Application.Dtos.Contratcs;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomerAndBoxType
 {
-    public class GetByCustomerAndBoxTypeContractBoxPriceQuery : IRequest<List<ContractBoxPriceDto>>
+    public class GetByCustomerAndBoxTypeContractBoxPriceQuery : IRequest<BoxPriceDto>
     {
         public int BoxTypeId { get; set; }
         public int? CustomerId { get; set; }
