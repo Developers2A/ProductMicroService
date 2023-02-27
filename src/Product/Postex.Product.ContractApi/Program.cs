@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
 using Postex.Product.Application.Configuration;
 using Postex.Product.Infrastructure.Configuration;
@@ -20,6 +21,7 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddApplicationCore(builder.Configuration);
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 Log.Logger = new LoggerConfiguration()
    .WriteTo.File(
