@@ -349,7 +349,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<int>("ContractInfoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CourierId")
+                    b.Property<int>("CourierServiceId")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("CreatedBy")
@@ -538,75 +538,6 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.ToTable("ContractInsurances", (string)null);
                 });
 
-            modelBuilder.Entity("Postex.Product.Domain.Contracts.ContractItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<double>("BuyPrice")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ContractInfoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ContractItemTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CourierId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ProvinceId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("RemovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<double>("SalePrice")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContractInfoId");
-
-                    b.HasIndex("ContractItemTypeId");
-
-                    b.ToTable("ContractItems", (string)null);
-                });
-
             modelBuilder.Entity("Postex.Product.Domain.Contracts.ContractLeasing", b =>
                 {
                     b.Property<int>("Id")
@@ -738,6 +669,75 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.HasIndex("ContractLeasingId");
 
                     b.ToTable("ContractLeasingWarranties", (string)null);
+                });
+
+            modelBuilder.Entity("Postex.Product.Domain.Contracts.ContractValueAdded", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double>("BuyPrice")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ContractInfoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourierId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ProvinceId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("RemovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<double>("SalePrice")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ValueAddedTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContractInfoId");
+
+                    b.HasIndex("ValueAddedTypeId");
+
+                    b.ToTable("ContractValueAddeds", (string)null);
                 });
 
             modelBuilder.Entity("Postex.Product.Domain.Couriers.Courier", b =>
@@ -2357,57 +2357,6 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.ToTable("PostexInsurances", (string)null);
                 });
 
-            modelBuilder.Entity("Postex.Product.Domain.ValueAddedPrices.ValueAddedPrice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<decimal>("BuyPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("RemovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<decimal>("SellPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ValueAddedTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ValueAddedTypeId");
-
-                    b.ToTable("ValueAddedPrices", (string)null);
-                });
-
             modelBuilder.Entity("Postex.Product.Domain.ValueAddedPrices.ValueAddedType", b =>
                 {
                     b.Property<int>("Id")
@@ -2543,25 +2492,6 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Navigation("ContractInfo");
                 });
 
-            modelBuilder.Entity("Postex.Product.Domain.Contracts.ContractItem", b =>
-                {
-                    b.HasOne("Postex.Product.Domain.Contracts.ContractInfo", "ContractInfo")
-                        .WithMany()
-                        .HasForeignKey("ContractInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Postex.Product.Domain.ValueAddedPrices.ValueAddedType", "ContractItemType")
-                        .WithMany("ContractItems")
-                        .HasForeignKey("ContractItemTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ContractInfo");
-
-                    b.Navigation("ContractItemType");
-                });
-
             modelBuilder.Entity("Postex.Product.Domain.Contracts.ContractLeasingWarranty", b =>
                 {
                     b.HasOne("Postex.Product.Domain.Contracts.ContractLeasing", "ContractLeasing")
@@ -2571,6 +2501,25 @@ namespace Postex.Product.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("ContractLeasing");
+                });
+
+            modelBuilder.Entity("Postex.Product.Domain.Contracts.ContractValueAdded", b =>
+                {
+                    b.HasOne("Postex.Product.Domain.Contracts.ContractInfo", "ContractInfo")
+                        .WithMany()
+                        .HasForeignKey("ContractInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Postex.Product.Domain.ValueAddedPrices.ValueAddedType", "ContractItemType")
+                        .WithMany("ContractValueAddeds")
+                        .HasForeignKey("ValueAddedTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ContractInfo");
+
+                    b.Navigation("ContractItemType");
                 });
 
             modelBuilder.Entity("Postex.Product.Domain.Couriers.CourierCityMapping", b =>
@@ -2781,17 +2730,6 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Navigation("BoxType");
                 });
 
-            modelBuilder.Entity("Postex.Product.Domain.ValueAddedPrices.ValueAddedPrice", b =>
-                {
-                    b.HasOne("Postex.Product.Domain.ValueAddedPrices.ValueAddedType", "ValueAddedType")
-                        .WithMany("ValueAddedPrices")
-                        .HasForeignKey("ValueAddedTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ValueAddedType");
-                });
-
             modelBuilder.Entity("Postex.Product.Domain.Contracts.ContractInfo", b =>
                 {
                     b.Navigation("ContractBoxPrices");
@@ -2869,9 +2807,7 @@ namespace Postex.Product.Infrastructure.Migrations
 
             modelBuilder.Entity("Postex.Product.Domain.ValueAddedPrices.ValueAddedType", b =>
                 {
-                    b.Navigation("ContractItems");
-
-                    b.Navigation("ValueAddedPrices");
+                    b.Navigation("ContractValueAddeds");
                 });
 #pragma warning restore 612, 618
         }
