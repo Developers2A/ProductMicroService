@@ -4,7 +4,7 @@ using Postex.Product.Application.Dtos.Contratcs;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Queries.GetByCustomerAndBoxType
 {
-    public class GetByCustomerAndBoxTypeContractCollect_DistributeQuery : IRequest<List<ContractCollectionDistributionDto>>
+    public class GetByCustomerAndBoxTypeContractCollect_DistributeQuery : IRequest<CollectionDistributionPriceDto>
     {
         public int BoxTypeId { get; set; }
         public int? CustomerId { get; set; }
