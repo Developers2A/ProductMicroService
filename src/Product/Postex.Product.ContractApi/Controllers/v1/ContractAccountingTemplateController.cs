@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Queries.GetContractById;
 
-namespace Postex.Product.Api.Controllers
+namespace Postex.Product.ContractApi.Controllers.v1
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -13,7 +13,7 @@ namespace Postex.Product.Api.Controllers
 
         public ContractAccountingTemplateController(IMediator mediator)
         {
-            this._mediator = mediator;
+            _mediator = mediator;
         }
 
         [HttpPost]

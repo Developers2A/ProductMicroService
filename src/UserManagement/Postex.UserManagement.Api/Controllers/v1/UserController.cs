@@ -14,7 +14,7 @@ using Postex.UserManagement.Application.Features.Users.Commands.VerifiyCode;
 using Postex.UserManagement.Application.Features.Users.Queries.GetUserById;
 using System.Security.Claims;
 
-namespace Postex.ProductService.Api.Controllers.v1;
+namespace Postex.UserManagement.Api.Controllers.v1;
 
 [ApiVersion("1")]
 public class UserController : BaseApiControllerWithDefaultRoute
@@ -89,7 +89,7 @@ public class UserController : BaseApiControllerWithDefaultRoute
     [Authorize]
     public async Task<ApiResult> Revoke()
     {
-        var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var command = new RevokeTokenCommand()
         {
             UserId = Guid.Parse(userId)

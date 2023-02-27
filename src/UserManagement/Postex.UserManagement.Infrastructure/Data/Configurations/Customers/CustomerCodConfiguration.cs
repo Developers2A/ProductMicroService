@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Postex.UserManagement.Domain.Customers;
-using Postex.UserManagement.Infrastructure.Data.Configurations.Common;
+using Postex.UserManagement.Infrastructure.Data.Configurations;
 
-namespace Postex.UserManagement.Infrastructure.Data.Configuration
+namespace Postex.UserManagement.Infrastructure.Data.Configurations.Customers
 {
     public class CustomerCodConfiguration : BaseEntityConfiguration<CustomerCod, int>
     {

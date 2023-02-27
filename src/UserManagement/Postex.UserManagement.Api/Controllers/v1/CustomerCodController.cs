@@ -7,7 +7,7 @@ using Postex.UserManagement.Application.Features.CustomerCods.Commands.Update;
 using Postex.UserManagement.Application.Features.CustomerCods.Queries.GetByCustomerId;
 using Postex.UserManagement.Application.Features.CustomerCods.Queries.GetById;
 
-namespace Postex.UserManagement.Api.Controllers
+namespace Postex.UserManagement.Api.Controllers.v1
 {
     [ApiVersion("1")]
     public class CustomerCodController : BaseApiControllerWithDefaultRoute

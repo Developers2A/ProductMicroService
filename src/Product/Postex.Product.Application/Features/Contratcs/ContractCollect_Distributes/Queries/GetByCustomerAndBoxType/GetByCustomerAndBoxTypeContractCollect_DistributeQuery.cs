@@ -2,7 +2,7 @@
 using Postex.Product.Application.Dtos;
 using Postex.Product.Application.Dtos.Contratcs;
 
-namespace Postex.Product.Application.Features.ContractCollect_Distributes.Queries
+namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Queries.GetByCustomerAndBoxType
 {
     public class GetByCustomerAndBoxTypeContractCollect_DistributeQuery : IRequest<List<ContractCollectionDistributionDto>>
     {

@@ -7,7 +7,7 @@ using Postex.UserManagement.Application.Features.CustomerInvoiceInfos.Commands.U
 using Postex.UserManagement.Application.Features.CustomerInvoiceInfos.Queries.GetByCustomerId;
 using Postex.UserManagement.Application.Features.CustomerInvoiceInfos.Queries.GetById;
 
-namespace Postex.UserManagement.Api.Controllers
+namespace Postex.UserManagement.Api.Controllers.v1
 {
     [ApiVersion("1")]
     public class CustomerInvoiceInfoController : BaseApiControllerWithDefaultRoute

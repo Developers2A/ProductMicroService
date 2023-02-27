@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Postex.Product.Application.Features.ContractCollect_Distributes.Queries;
 using Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Queries.GetByContractId;
 using Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Queries.GetByCustomer;
+using Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Queries.GetByCustomerAndBoxType;
 
-namespace Postex.Product.Api.Controllers
+namespace Postex.Product.ContractApi.Controllers.v1
 {
     [Route("api/[Controller]")]
     [ApiController]
@@ -16,7 +16,7 @@ namespace Postex.Product.Api.Controllers
 
         public ContractCollect_DistributeController(IMediator mediator)
         {
-            this._mediator = mediator;
+            _mediator = mediator;
         }
 
         [HttpPost]

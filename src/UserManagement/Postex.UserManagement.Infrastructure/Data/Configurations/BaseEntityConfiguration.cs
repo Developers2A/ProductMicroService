@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Postex.SharedKernel.Domain;
 
-namespace Postex.UserManagement.Infrastructure.Data.Configurations.Common
+namespace Postex.UserManagement.Infrastructure.Data.Configurations
 {
     public abstract class BaseEntityConfiguration<TBase, TKey> : IEntityTypeConfiguration<TBase>
       where TBase : BaseEntity<TKey>

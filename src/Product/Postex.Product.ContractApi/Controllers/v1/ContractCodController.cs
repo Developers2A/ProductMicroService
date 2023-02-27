@@ -5,7 +5,7 @@ using Postex.Product.Application.Features.Contratcs.ContractCods.Commands.Update
 using Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByContractId;
 using Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByCustomer;
 
-namespace Postex.Product.Api.Controllers
+namespace Postex.Product.ContractApi.Controllers.v1
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -15,7 +15,7 @@ namespace Postex.Product.Api.Controllers
 
         public ContractCodController(IMediator mediator)
         {
-            this._mediator = mediator;
+            _mediator = mediator;
         }
 
         [HttpPost]

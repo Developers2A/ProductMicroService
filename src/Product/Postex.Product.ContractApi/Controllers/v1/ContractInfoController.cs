@@ -6,7 +6,7 @@ using Postex.Product.Application.Features.Contratcs.ContractInfos.Queries.GetAll
 using Postex.Product.Application.Features.Contratcs.ContractInfos.Queries.GetContractByCustomer;
 using Postex.Product.Application.Features.Contratcs.ContractInfos.Queries.GetContractById;
 
-namespace Postex.Product.Api.Controllers
+namespace Postex.Product.ContractApi.Controllers.v1
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -6,7 +6,7 @@ using Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.Get
 using Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetByCustomer;
 using Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetById;
 
-namespace Postex.Product.Api.Controllers
+namespace Postex.Product.ContractApi.Controllers.v1
 {
     [Route("api/[controller]")]
     [ApiController]

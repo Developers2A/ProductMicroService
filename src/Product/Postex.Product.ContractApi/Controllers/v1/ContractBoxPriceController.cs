@@ -6,7 +6,7 @@ using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.Ge
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomer;
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomerAndBoxType;
 
-namespace Postex.Product.Api.Controllers
+namespace Postex.Product.ContractApi.Controllers.v1
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,7 +16,7 @@ namespace Postex.Product.Api.Controllers
 
         public ContractBoxPriceController(IMediator mediator)
         {
-            this._mediator = mediator;
+            _mediator = mediator;
         }
 
         [HttpPost]
@@ -42,10 +42,10 @@ namespace Postex.Product.Api.Controllers
         {
             return Ok(await _mediator.Send(new GetByCustomerContractBoxPriceQuery { CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
         }
-          [HttpGet("GetByCustomerAndBoxType")]
-        public async Task<IActionResult> GetByCustomerAndBoxType(int boxTypeId,int? customerId, int? provinceId, int? cityId)
+        [HttpGet("GetByCustomerAndBoxType")]
+        public async Task<IActionResult> GetByCustomerAndBoxType(int boxTypeId, int? customerId, int? provinceId, int? cityId)
         {
-            return Ok(await _mediator.Send(new GetByCustomerAndBoxTypeContractBoxPriceQuery { BoxTypeId =boxTypeId , CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
+            return Ok(await _mediator.Send(new GetByCustomerAndBoxTypeContractBoxPriceQuery { BoxTypeId = boxTypeId, CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
         }
     }
 }

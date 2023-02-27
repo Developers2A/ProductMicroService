@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Postex.Product.Application.Features.ContractCouriers.Queries;
 using Postex.Product.Application.Features.Contratcs.ContractCouriers.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractCouriers.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries.GetByContractId;
 using Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries.GetByCustomer;
+using Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries.GetByCustomerAndCourier;
 
-namespace Postex.Product.Api.Controllers
+namespace Postex.Product.ContractApi.Controllers.v1
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,7 +16,7 @@ namespace Postex.Product.Api.Controllers
 
         public ContractCourierController(IMediator mediator)
         {
-            this._mediator = mediator;
+            _mediator = mediator;
         }
 
         [HttpPost]
@@ -43,9 +43,9 @@ namespace Postex.Product.Api.Controllers
             return Ok(await _mediator.Send(new GetByCustomerContractCourierQuery { CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
         }
         [HttpGet("GetByCustomerAndCourier")]
-        public async Task<IActionResult> GetByCustomerAndCourier(int courierId,int? customerId, int? provinceId, int? cityId)
+        public async Task<IActionResult> GetByCustomerAndCourier(int courierId, int? customerId, int? provinceId, int? cityId)
         {
-            return Ok(await _mediator.Send(new GetByCustomerAndCourierContractCourierQuery { CourierId = courierId ,CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
+            return Ok(await _mediator.Send(new GetByCustomerAndCourierContractCourierQuery { CourierId = courierId, CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
         }
     }
 }

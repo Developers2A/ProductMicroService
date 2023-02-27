@@ -8,7 +8,7 @@ using Postex.UserManagement.Application.Features.Customers.Commands.Create;
 using Postex.UserManagement.Application.Features.Customers.Commands.Update;
 using Postex.UserManagement.Domain.Customers;
 
-namespace Postex.UserManagement.Application.Mapping
+namespace Postex.UserManagement.Application.Mappings
 {
     public class CustomerMapping : Profile
     {

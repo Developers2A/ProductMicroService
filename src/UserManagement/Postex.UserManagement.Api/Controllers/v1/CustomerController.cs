@@ -7,7 +7,7 @@ using Postex.UserManagement.Application.Features.Customers.Commands.Update;
 using Postex.UserManagement.Application.Features.Customers.Queries.GetById;
 using Postex.UserManagement.Application.Features.Customers.Queries.GetByUserId;
 
-namespace Postex.ProfileManagement.Api.Controllers
+namespace Postex.UserManagement.Api.Controllers.v1
 {
     [ApiVersion("1")]
     public class CustomerController : BaseApiControllerWithDefaultRoute

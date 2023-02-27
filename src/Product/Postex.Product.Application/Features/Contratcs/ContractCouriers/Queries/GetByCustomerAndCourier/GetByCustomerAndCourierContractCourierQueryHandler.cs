@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Postex.Product.Domain.Contracts;
 
-namespace Postex.Product.Application.Features.ContractCouriers.Queries 
+namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries.GetByCustomerAndCourier
 {
     public class GetByCustomerAndCourierContractCourierQueryHandler : IRequestHandler<GetByCustomerAndCourierContractCourierQuery, List<ContractCourierDto>>
     {
@@ -17,7 +17,7 @@ namespace Postex.Product.Application.Features.ContractCouriers.Queries
 
         public GetByCustomerAndCourierContractCourierQueryHandler(IReadRepository<ContractCourier> readRepository)
         {
-            this._readRepository = readRepository;
+            _readRepository = readRepository;
         }
         public async Task<List<ContractCourierDto>> Handle(GetByCustomerAndCourierContractCourierQuery request, CancellationToken cancellationToken)
         {
@@ -36,11 +36,11 @@ namespace Postex.Product.Application.Features.ContractCouriers.Queries
                })
                .ToListAsync(cancellationToken);
 
-            if (courierCus.Count>0)
+            if (courierCus.Count > 0)
                 return courierCus;
 
             var courierCity = await _readRepository.Table
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now  && c.CourierId == request.CourierId)
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.CourierId == request.CourierId)
               .Select(c => new ContractCourierDto
               {
                   Id = c.Id,
@@ -50,11 +50,11 @@ namespace Postex.Product.Application.Features.ContractCouriers.Queries
                   PercentDiscount = c.PercentDiscount,
                   IsActive = c.IsActive,
                   Description = c.Description,
-                  LevelPrice ="City"
+                  LevelPrice = "City"
               })
               .ToListAsync(cancellationToken);
 
-            if (courierCity.Count>0)
+            if (courierCity.Count > 0)
                 return courierCus;
 
             var courierProvince = await _readRepository.Table
@@ -71,11 +71,11 @@ namespace Postex.Product.Application.Features.ContractCouriers.Queries
                  LevelPrice = "Province"
              })
              .ToListAsync(cancellationToken);
-            if (courierProvince.Count >0)
+            if (courierProvince.Count > 0)
                 return courierProvince;
 
             var courierDefualt = await _readRepository.Table
-           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now  && c.CourierId == request.CourierId)
+           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.CourierId == request.CourierId)
            .Select(c => new ContractCourierDto
            {
                Id = c.Id,

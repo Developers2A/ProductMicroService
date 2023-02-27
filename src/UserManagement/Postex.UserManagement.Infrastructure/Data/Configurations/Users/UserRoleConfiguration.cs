@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Postex.UserManagement.Domain.Users;
-using Postex.UserManagement.Infrastructure.Data.Configurations.Common;
 
 namespace Postex.UserManagement.Infrastructure.Data.Configurations.Users
 {

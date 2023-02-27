@@ -4,7 +4,7 @@ using Postex.Product.Application.Features.Contratcs.ContractLeasingWarranties.Co
 using Postex.Product.Application.Features.Contratcs.ContractLeasingWarranties.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractLeasingWarranties.Queries.GetByContractLeasingId;
 
-namespace Postex.Product.Api.Controllers
+namespace Postex.Product.ContractApi.Controllers.v1
 {
     [Route("api/[controller]")]
     [ApiController]

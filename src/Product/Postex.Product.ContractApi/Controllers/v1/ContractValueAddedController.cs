@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Postex.Product.Application.Features.ContractValueAddeds.Queries;
 using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByContractId;
 using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByCustomer;
+using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByCustomerAndValueAdded;
 
-namespace Postex.Product.Api.Controllers
+namespace Postex.Product.ContractApi.Controllers.v1
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -43,7 +43,7 @@ namespace Postex.Product.Api.Controllers
             return Ok(await mediator.Send(new GetByCustomerContractValueAddedQuery { CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
         }
         [HttpGet("GetByCustomerAndValueAdded")]
-        public async Task<IActionResult> GetByCustomerAndValueAdded(int ValueAddedId,int? customerId, int? provinceId, int? cityId)
+        public async Task<IActionResult> GetByCustomerAndValueAdded(int ValueAddedId, int? customerId, int? provinceId, int? cityId)
         {
             return Ok(await mediator.Send(new GetByCustomerAndValueAddedContractValueAddedQuery { ValueAddedId = ValueAddedId, CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
         }

@@ -4,7 +4,7 @@ using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Product.Application.Features.ContractValueAddeds.Queries
+namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByCustomerAndValueAdded
 {
     public class GetByCustomerAndValueAddedContractValueAddedQueryHandler : IRequestHandler<GetByCustomerAndValueAddedContractValueAddedQuery, ValueAddedPriceDto>
     {
@@ -12,7 +12,7 @@ namespace Postex.Product.Application.Features.ContractValueAddeds.Queries
 
         public GetByCustomerAndValueAddedContractValueAddedQueryHandler(IReadRepository<ContractValueAdded> readRepository)
         {
-            this._readRepository = readRepository;
+            _readRepository = readRepository;
         }
         public async Task<ValueAddedPriceDto> Handle(GetByCustomerAndValueAddedContractValueAddedQuery request, CancellationToken cancellationToken)
         {

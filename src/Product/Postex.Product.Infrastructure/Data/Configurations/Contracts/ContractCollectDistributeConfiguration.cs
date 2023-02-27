@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Postex.Product.Domain.Contracts;
 using Postex.Product.Infrastructure.Data.Configurations.Common;
 
-namespace Postex.Product.Infrastructure.Data.Configurations
+namespace Postex.Product.Infrastructure.Data.Configurations.Contracts
 {
     public class ContractCollectDistributeConfiguration : BaseEntityConfiguration<ContractCollectionDistribution>
     {

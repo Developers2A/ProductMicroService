@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Postex.Product.Application.Dtos.Contratcs;
 
-namespace Postex.Product.Application.Features.ContractValueAddeds.Queries
+namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByCustomerAndValueAdded
 {
     public class GetByCustomerAndValueAddedContractValueAddedQuery : IRequest<ValueAddedPriceDto>
     {
