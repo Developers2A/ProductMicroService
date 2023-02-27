@@ -33,7 +33,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Command
             if (contractCourier == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
 
-            contractCourier.CourierId = request.CourierId;
+            contractCourier.CourierServiceId = request.CourierServiceId;
             contractCourier.FixedDiscount = request.FixedDiscount;
             contractCourier.PercentDiscount = request.PercentDiscount;
             contractCourier.IsActive = request.IsActive;

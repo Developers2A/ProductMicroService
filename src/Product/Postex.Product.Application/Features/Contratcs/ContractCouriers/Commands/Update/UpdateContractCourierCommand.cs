@@ -6,7 +6,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Command
     public class UpdateContractCourierCommand : ITransactionRequest<ContractCourierDto>
     {
         public int Id { get; set; }
-        public int CourierId { get; set; }
+        public int CourierServiceId { get; set; }
         public int FixedDiscount { get; set; }
         public double PercentDiscount { get; set; }
         public bool IsActive { get; set; }

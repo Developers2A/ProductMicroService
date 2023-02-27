@@ -27,7 +27,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries
                {
                    Id = c.Id,
                    ContractInfoId = c.ContractInfoId,
-                   CourierId = c.CourierId,
+                   CourierServiceId = c.CourierServiceId,
                    FixedDiscount = c.FixedDiscount,
                    PercentDiscount = c.PercentDiscount,
                    IsActive = c.IsActive,
@@ -43,7 +43,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries
               {
                   Id = c.Id,
                   ContractInfoId = c.ContractInfoId,
-                  CourierId = c.CourierId,
+                  CourierServiceId = c.CourierServiceId,
                   FixedDiscount = c.FixedDiscount,
                   PercentDiscount = c.PercentDiscount,
                   IsActive = c.IsActive,
@@ -58,7 +58,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries
            {
                Id = c.Id,
                ContractInfoId = c.ContractInfoId,
-               CourierId = c.CourierId,
+               CourierServiceId = c.CourierServiceId,
                FixedDiscount = c.FixedDiscount,
                PercentDiscount = c.PercentDiscount,
                IsActive = c.IsActive,
@@ -73,20 +73,20 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries
             {
                 var item = courierDefualt[i];
 
-                if (courierCus.Where(c => c.CourierId == item.CourierId)
+                if (courierCus.Where(c => c.CourierServiceId == item.CourierServiceId)
                     .FirstOrDefault() != null)
                 {
-                    var cus = courierCus.Where(c => c.CourierId == item.CourierId)
+                    var cus = courierCus.Where(c => c.CourierServiceId == item.CourierServiceId)
                       .FirstOrDefault();
                     courierDefualt[i].FixedDiscount = cus.FixedDiscount;
                     courierDefualt[i].PercentDiscount = cus.PercentDiscount;
                     courierDefualt[i].LevelPrice = "Customer";
 
                 }
-                else if (courierCity.Where(c => c.CourierId == item.CourierId)
+                else if (courierCity.Where(c => c.CourierServiceId == item.CourierServiceId)
                     .FirstOrDefault() != null)
                 {
-                    var cus = courierCity.Where(c => c.CourierId == item.CourierId)
+                    var cus = courierCity.Where(c => c.CourierServiceId == item.CourierServiceId)
                       .FirstOrDefault();
                     courierDefualt[i].FixedDiscount = cus.FixedDiscount;
                     courierDefualt[i].PercentDiscount = cus.PercentDiscount;

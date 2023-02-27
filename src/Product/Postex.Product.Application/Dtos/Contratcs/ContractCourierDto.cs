@@ -10,7 +10,7 @@ namespace Postex.Product.Application.Dtos.Contratcs
     {
         public int Id { get; set; }
         public int ContractInfoId { get; set; }
-        public int CourierId { get; set; }
+        public int CourierServiceId { get; set; }
         public int FixedDiscount { get; set; }
         public double PercentDiscount { get; set; }
         public bool IsActive { get; set; }

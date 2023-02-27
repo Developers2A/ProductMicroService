@@ -26,7 +26,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries
                 {
                     Id = c.Id,
                     ContractInfoId = c.ContractInfoId,
-                    CourierId = c.CourierId,
+                    CourierServiceId = c.CourierServiceId,
                     FixedDiscount = c.FixedDiscount,
                     PercentDiscount = c.PercentDiscount,
                     IsActive = c.IsActive,
