@@ -20,11 +20,12 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
         {
             var collect_DistributeDefualt = await _readRepository.Table
                .Include(b => b.BoxType)
-               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null)
+               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0)
                .Select(c => new ContractCollectionDistributionDto
                {
                    Id = c.Id,
                    ContractInfoId = c.ContractInfoId,
+                   CourierServiceId = c.CourierServiceId,
                    BoxTypeId = c.BoxTypeId,
                    CityId = c.CityId,
                    ProvinceId = c.ProvinceId,
@@ -41,11 +42,12 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
                .ToListAsync(cancellationToken);
 
             var collect_DistributeCity = await _readRepository.Table
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == null)
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == null)
               .Select(c => new ContractCollectionDistributionDto
               {
                   Id = c.Id,
                   ContractInfoId = c.ContractInfoId,
+                  CourierServiceId = c.CourierServiceId,
                   BoxTypeId = c.BoxTypeId,
                   CityId = c.CityId,
                   ProvinceId = c.ProvinceId,
@@ -57,11 +59,12 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
               .ToListAsync(cancellationToken);
 
             var collect_DistributeCus = await _readRepository.Table
-                .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == request.CustomerId)
+                .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.CustomerId == request.CustomerId)
                 .Select(c => new ContractCollectionDistributionDto
                 {
                     Id = c.Id,
                     ContractInfoId = c.ContractInfoId,
+                    CourierServiceId = c.CourierServiceId,
                     BoxTypeId = c.BoxTypeId,
                     CityId = c.CityId,
                     ProvinceId = c.ProvinceId,

@@ -22,6 +22,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
                     Id = c.Id,
                     ContractInfoId = c.ContractInfoId,
                     BoxTypeId = c.BoxTypeId,
+                    CourierServiceId = c.CourierServiceId,
                     CityId = c.CityId,
                     ProvinceId = c.ProvinceId,
                     SalePrice = c.SalePrice,

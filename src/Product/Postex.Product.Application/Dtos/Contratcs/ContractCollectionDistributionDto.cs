@@ -7,6 +7,7 @@ namespace Postex.Product.Application.Dtos.Contratcs
         public int Id { get; set; }
         public int ContractInfoId { get; set; }
         public ContractInfo ContractInfo { get; set; }
+        public int CourierServiceId { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
 

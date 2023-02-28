@@ -11,6 +11,7 @@ namespace Postex.Product.Application.Dtos.Contratcs
         public int BoxTypeId { get; set; }
         public int ContractId { get; set; }
         public int ContractCollect_DistibuteId { get; set; }
+        public int CourierServiceId { get; set; }
         public double DefaultSalePrice { get; set; }
         public double DefaultBuyPrice { get; set; }
         public double ContractSalePrice { get; set; }
