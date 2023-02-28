@@ -4,6 +4,7 @@ using Postex.Product.Application.Features.Contratcs.ContractCods.Commands.Create
 using Postex.Product.Application.Features.Contratcs.ContractCods.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByContractId;
 using Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByCustomer;
+using Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByCustomerAndValuePrice;
 
 namespace Postex.Product.ContractApi.Controllers.v1
 {
@@ -40,6 +41,11 @@ namespace Postex.Product.ContractApi.Controllers.v1
         public async Task<IActionResult> GetByCustomer(int? customerId, int? provinceId, int? cityId)
         {
             return Ok(await _mediator.Send(new GetByCustomerContractCodQuery { CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
+        }
+        [HttpGet("GetByCustomerAndValuePrice")]
+        public async Task<IActionResult> GetByCustomerAndValuePrice(double valuePrice,int? customerId, int? provinceId, int? cityId)
+        {
+            return Ok(await _mediator.Send(new GetByCustomerAndValuePriceContractCodQuery {ValuePrice =valuePrice, CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
         }
     }
 }

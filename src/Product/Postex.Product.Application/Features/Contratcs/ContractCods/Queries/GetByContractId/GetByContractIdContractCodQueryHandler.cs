@@ -25,7 +25,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.Get
                 .Select(c => new ContractCodDto
                 {
                     Id = c.Id,
-                    ContractInfoId = c.ContractInfoId,
+                    ContractInfoId = c.ContractInfoId,                 
                     FromValue = c.FromValue,
                     ToValue = c.ToValue,
                     FixedPercent = c.FixedPercent,
