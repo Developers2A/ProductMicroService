@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Dtos.CollectionDistributionPrices;
 using Postex.Product.Application.Dtos.CollectionDistributionPrices.Basket;
-using Postex.Product.Application.Dtos.CourierServices.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Features.Common.Queries.GetPrice;
 using Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries;
 using Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries.GetBasketPrices;
@@ -33,7 +33,7 @@ namespace Postex.Product.ServiceApi.Controllers.v1
         }
 
         [HttpPost("offline-price")]
-        public async Task<ApiResult<GetPriceResponse>> GetOfflinePrice(GetOfflinePricesQuery request)
+        public async Task<ApiResult<GetQuickPriceResponse>> GetOfflinePrice(GetOfflinePricesQuery request)
         {
             return await _mediator.Send(request);
         }

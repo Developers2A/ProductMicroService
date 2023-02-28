@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Postex.Product.Application.Dtos.CourierServices.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Common;
 
 namespace Postex.Product.Application.Features.Common.Queries.GetCities
 {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Postex.Product.Application.Dtos.CourierServices.Post;
+using Postex.Product.Application.Dtos.ServiceProviders.Post;
 using Postex.Product.Application.Features.ServiceProviders.Post.Commands.CreateOrder;
 using Postex.Product.Application.Features.ServiceProviders.Post.Commands.CreateShop;
 using Postex.Product.Application.Features.ServiceProviders.Post.Commands.DeleteOrder;

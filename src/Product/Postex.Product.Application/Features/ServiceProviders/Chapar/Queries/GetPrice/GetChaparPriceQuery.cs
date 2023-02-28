@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Postex.Product.Application.Contracts;
-using Postex.Product.Application.Dtos.CourierServices.Chapar;
+using Postex.Product.Application.Dtos.ServiceProviders.Chapar;
 using Postex.SharedKernel.Common;
 
 namespace Postex.Product.Application.Features.ServiceProviders.Chapar.Queries.GetPrice

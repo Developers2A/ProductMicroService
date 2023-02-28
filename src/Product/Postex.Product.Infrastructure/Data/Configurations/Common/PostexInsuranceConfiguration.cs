@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Postex.Product.Domain.ValueAddedPrices;
+using Postex.Product.Domain.Common;
 
 namespace Postex.Product.Infrastructure.Data.Configurations.Common
 {

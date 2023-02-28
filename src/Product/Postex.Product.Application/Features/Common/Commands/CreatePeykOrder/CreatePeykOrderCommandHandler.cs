@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Postex.Product.Application.Dtos.Couriers;
-using Postex.Product.Application.Dtos.CourierServices.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Features.CourierCityMappings.Queries;
 using Postex.Product.Application.Features.ServiceProviders.EcoPeyk.Commands.CreateOrder;
 using Postex.Product.Application.Features.ServiceProviders.Link.Commands.CreateOrder;

@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Postex.Product.Application.Dtos.Couriers;
-using Postex.Product.Domain.ValueAddedPrices;
+using Postex.Product.Domain.Common;
 using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.BoxTypes.Queries

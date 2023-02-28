@@ -16,7 +16,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
         }
         public async Task<List<ContractValueAddedDto>> Handle(GetByContractIdContractValueAddedQuery request, CancellationToken cancellationToken)
         {
-            var items = await _readRepository.Table.Include(b => b.ContractItemType)
+            var items = await _readRepository.Table.Include(b => b.ValueAddedType)
                 .Select(c => new ContractValueAddedDto
                 {
                     ContractInfoId = c.ContractInfoId,

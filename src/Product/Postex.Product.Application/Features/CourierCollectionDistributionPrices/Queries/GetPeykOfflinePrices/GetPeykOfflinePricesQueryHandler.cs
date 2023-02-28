@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Postex.Product.Application.Dtos.Commons;
 using Postex.Product.Application.Dtos.Couriers;
-using Postex.Product.Application.Dtos.CourierServices.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Features.Cities.Queries;
 using Postex.Product.Application.Features.CourierZoneCityMappings.Queries;
 using Postex.Product.Domain.CollectionDistributionPrices;
@@ -11,7 +11,7 @@ using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries.GetPeykOfflinePrices
 {
-    public class GetPeykOfflinePricesQueryHandler : IRequestHandler<GetPeykOfflinePricesQuery, GetPriceResponse>
+    public class GetPeykOfflinePricesQueryHandler : IRequestHandler<GetPeykOfflinePricesQuery, GetQuickPriceResponse>
     {
         private readonly IReadRepository<CourierZoneCollectionDistributionPrice> _readRepository;
         private readonly IMediator _mediator;
@@ -27,10 +27,10 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             _mediator = mediator;
         }
 
-        public async Task<GetPriceResponse> Handle(GetPeykOfflinePricesQuery request, CancellationToken cancellationToken)
+        public async Task<GetQuickPriceResponse> Handle(GetPeykOfflinePricesQuery request, CancellationToken cancellationToken)
         {
             _query = request;
-            GetPriceResponse response = new()
+            GetQuickPriceResponse response = new()
             {
                 ServicePrices = new()
             };

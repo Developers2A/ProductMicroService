@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using Postex.Product.Application.Dtos.CourierServices.Post;
+using Postex.Product.Application.Dtos.ServiceProviders.Post;
 using Postex.Product.Domain.Posts;
 using Postex.SharedKernel.Interfaces;
 using Postex.SharedKernel.Settings;

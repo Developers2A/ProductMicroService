@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Postex.Product.Application.Contracts;
-using Postex.Product.Application.Dtos.CourierServices.Chapar;
-using Postex.Product.Application.Dtos.CourierServices.Chapar.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Chapar;
+using Postex.Product.Application.Dtos.ServiceProviders.Chapar.Common;
 using Postex.SharedKernel.Common;
 
 namespace Postex.Product.Application.Features.ServiceProviders.Chapar.Commands.CreateOrder

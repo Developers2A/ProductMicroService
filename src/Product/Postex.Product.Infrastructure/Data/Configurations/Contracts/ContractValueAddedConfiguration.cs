@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Postex.Product.Domain.Contracts;
-using Postex.Product.Infrastructure.Data.Configurations.Common;
 
 namespace Postex.Product.Infrastructure.Data.Configurations.Contracts
 {
@@ -14,7 +13,7 @@ namespace Postex.Product.Infrastructure.Data.Configurations.Contracts
             entity.Property(c => c.Description)
                 .HasMaxLength(512);
 
-            entity.HasOne(i => i.ContractItemType)
+            entity.HasOne(i => i.ValueAddedType)
                 .WithMany(i => i.ContractValueAddeds)
                 .HasForeignKey(i => i.ValueAddedTypeId);
         }

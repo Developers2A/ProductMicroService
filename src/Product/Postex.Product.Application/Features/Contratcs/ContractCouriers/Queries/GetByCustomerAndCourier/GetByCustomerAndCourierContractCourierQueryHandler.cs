@@ -8,9 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Postex.Product.Domain.Contracts;
-using Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries.GetByCustomerAndCourier;
 
-namespace Postex.Product.Application.Features.ContractCouriers.Queries
+namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries.GetByCustomerAndCourier
 {
     public class GetByCustomerAndCourierContractCourierQueryHandler : IRequestHandler<GetByCustomerAndCourierContractCourierQuery, CourierServicePriceDto>
     {
@@ -18,7 +17,7 @@ namespace Postex.Product.Application.Features.ContractCouriers.Queries
 
         public GetByCustomerAndCourierContractCourierQueryHandler(IReadRepository<ContractCourier> readRepository)
         {
-            this._readRepository = readRepository;
+            _readRepository = readRepository;
         }
         public async Task<CourierServicePriceDto> Handle(GetByCustomerAndCourierContractCourierQuery request, CancellationToken cancellationToken)
         {

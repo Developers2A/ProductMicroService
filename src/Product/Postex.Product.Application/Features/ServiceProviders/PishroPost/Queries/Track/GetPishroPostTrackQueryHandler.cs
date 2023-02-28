@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using Postex.Product.Application.Dtos.CourierServices.Chapar;
-using Postex.Product.Application.Dtos.CourierServices.PishroPost;
+using Postex.Product.Application.Dtos.ServiceProviders.Chapar;
+using Postex.Product.Application.Dtos.ServiceProviders.PishroPost;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
 
