@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Postex.Product.Application.Dtos.CourierServices.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Features.ServiceProviders.Post.Commands.DeleteOrder;
 using Postex.Product.Application.Features.ServiceProviders.Taroff.Commands.DeleteOrder;
 using Postex.SharedKernel.Common;

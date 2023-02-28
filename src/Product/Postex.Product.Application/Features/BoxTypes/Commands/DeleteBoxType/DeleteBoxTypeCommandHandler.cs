@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Postex.Product.Domain.ValueAddedPrices;
+using Postex.Product.Domain.Common;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 

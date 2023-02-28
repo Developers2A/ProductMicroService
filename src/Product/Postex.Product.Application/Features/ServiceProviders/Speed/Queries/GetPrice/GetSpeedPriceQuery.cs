@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Postex.Product.Application.Contracts;
-using Postex.Product.Application.Dtos.CourierServices.Speed.Dtos;
+using Postex.Product.Application.Dtos.ServiceProviders.Speed.Dtos;
 using Postex.SharedKernel.Common;
 
 namespace Postex.Product.Application.Features.ServiceProviders.Speed.Queries.GetPrice

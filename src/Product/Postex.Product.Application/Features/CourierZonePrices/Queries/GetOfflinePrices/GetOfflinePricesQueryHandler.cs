@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Postex.Product.Application.Dtos.Commons;
 using Postex.Product.Application.Dtos.Couriers;
-using Postex.Product.Application.Dtos.CourierServices.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Features.Cities.Queries;
 using Postex.Product.Application.Features.CourierZoneCityMappings.Queries;
 using Postex.Product.Domain.Couriers;
@@ -12,7 +12,7 @@ using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOfflinePrices
 {
-    public class GetOfflinePricesQueryHandler : IRequestHandler<GetOfflinePricesQuery, GetPriceResponse>
+    public class GetOfflinePricesQueryHandler : IRequestHandler<GetOfflinePricesQuery, GetQuickPriceResponse>
     {
         private readonly IReadRepository<CourierZonePrice> _courierZonePriceReadRepository;
         private readonly IMediator _mediator;
@@ -27,10 +27,10 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
             _mediator = mediator;
         }
 
-        public async Task<GetPriceResponse> Handle(GetOfflinePricesQuery request, CancellationToken cancellationToken)
+        public async Task<GetQuickPriceResponse> Handle(GetOfflinePricesQuery request, CancellationToken cancellationToken)
         {
             _query = request;
-            GetPriceResponse response = new();
+            GetQuickPriceResponse response = new();
             response.ServicePrices = new();
             _cities = await GetCities();
             _sameState = _cities.Select(x => x.StateId).Distinct().Count() == 1 ? true : false;

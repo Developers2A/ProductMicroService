@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.Product.Application.Dtos.CourierServices.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Features.ServiceProviders.Chapar.Queries.GetCities;
 using Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetCities;
 using Postex.Product.Application.Features.ServiceProviders.Taroff.Queries.GetCities;

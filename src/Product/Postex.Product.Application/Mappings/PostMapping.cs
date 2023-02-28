@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Postex.Product.Application.Dtos.CourierServices.Post;
 using Postex.Product.Application.Dtos.Posts;
+using Postex.Product.Application.Dtos.ServiceProviders.Post;
 using Postex.Product.Domain.Posts;
 
 namespace Postex.Product.Application.Mappings

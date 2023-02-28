@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.Product.Domain.ValueAddedPrices;
+using Postex.Product.Domain.Common;
 using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.PostexCods.Commands.CreatePostexCod

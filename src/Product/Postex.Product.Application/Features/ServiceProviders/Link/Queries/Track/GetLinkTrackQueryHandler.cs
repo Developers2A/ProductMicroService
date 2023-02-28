@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using Postex.Product.Application.Dtos.CourierServices.Link;
+using Postex.Product.Application.Dtos.ServiceProviders.Link;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
 using System.Net.Http.Headers;

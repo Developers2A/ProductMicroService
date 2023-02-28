@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Postex.Product.Application.Dtos.CourierServices.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Common;
 
 namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOfflinePrices
 {
-    public class GetOfflinePricesQuery : IRequest<GetPriceResponse>
+    public class GetOfflinePricesQuery : IRequest<GetQuickPriceResponse>
     {
         public int CourierCode { get; set; } = 0;
         public int ServiceCode { get; set; } = 0;

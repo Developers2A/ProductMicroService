@@ -16,14 +16,14 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
         }
         public async Task<ValueAddedPriceDto> Handle(GetByCustomerAndValueAddedContractValueAddedQuery request, CancellationToken cancellationToken)
         {
-
-            var ValueAddedPrice = await _readRepository.Table
-             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ValueAddedTypeId == request.ValueAddedId)
+            var ValueAddedPrice = await _readRepository.TableNoTracking
+             .Include(c => c.ContractInfo).Include(x => x.ValueAddedType).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ValueAddedTypeId == request.ValueAddedId)
              .Select(c => new ValueAddedPriceDto
              {
                  ContractId = c.ContractInfoId,
                  ContractValueAddedId = c.Id,
                  ValueAddedTypeId = c.ValueAddedTypeId,
+                 ValueAddedTypeName = c.ValueAddedType.Name,
                  DefaultSalePrice = c.SalePrice,
                  DefaultBuyPrice = c.BuyPrice,
                  ContractLevel = "Default"
@@ -37,6 +37,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
                     ContractId = c.ContractInfoId,
                     ContractValueAddedId = c.Id,
                     ValueAddedTypeId = c.ValueAddedTypeId,
+                    ValueAddedTypeName = c.ValueAddedType.Name,
                     DefaultSalePrice = c.SalePrice,
                     DefaultBuyPrice = c.BuyPrice
                 })
@@ -46,6 +47,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
             {
                 ValueAddedPrice.ContractId = itemCus.ContractId;
                 ValueAddedPrice.ContractValueAddedId = itemCus.ContractValueAddedId;
+                ValueAddedPrice.ValueAddedTypeName = itemCus.ValueAddedTypeName;
                 ValueAddedPrice.ContractSalePrice = itemCus.ContractSalePrice;
                 ValueAddedPrice.ContractBuyPrice = itemCus.ContractBuyPrice;
                 ValueAddedPrice.ContractLevel = "Customer";
@@ -60,6 +62,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
                  ContractId = c.ContractInfoId,
                  ContractValueAddedId = c.Id,
                  ValueAddedTypeId = c.ValueAddedTypeId,
+                 ValueAddedTypeName = c.ValueAddedType.Name,
                  DefaultSalePrice = c.SalePrice,
                  DefaultBuyPrice = c.BuyPrice
              })
@@ -68,6 +71,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
             {
                 ValueAddedPrice.ContractId = itemCity.ContractId;
                 ValueAddedPrice.ContractValueAddedId = itemCity.ContractValueAddedId;
+                ValueAddedPrice.ValueAddedTypeName = itemCity.ValueAddedTypeName;
                 ValueAddedPrice.ContractSalePrice = itemCity.ContractSalePrice;
                 ValueAddedPrice.ContractBuyPrice = itemCity.ContractBuyPrice;
                 ValueAddedPrice.ContractLevel = "City";
@@ -81,6 +85,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
                   ContractId = c.ContractInfoId,
                   ContractValueAddedId = c.Id,
                   ValueAddedTypeId = c.ValueAddedTypeId,
+                  ValueAddedTypeName = c.ValueAddedType.Name,
                   DefaultSalePrice = c.SalePrice,
                   DefaultBuyPrice = c.BuyPrice
               })
@@ -89,6 +94,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
             {
                 ValueAddedPrice.ContractId = itemProvince.ContractId;
                 ValueAddedPrice.ContractValueAddedId = itemProvince.ContractValueAddedId;
+                ValueAddedPrice.ValueAddedTypeName = itemProvince.ValueAddedTypeName;
                 ValueAddedPrice.ContractSalePrice = itemProvince.ContractSalePrice;
                 ValueAddedPrice.ContractBuyPrice = itemProvince.ContractBuyPrice;
                 ValueAddedPrice.ContractLevel = "Province";

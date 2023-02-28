@@ -1,4 +1,4 @@
-﻿using Postex.Product.Domain.ValueAddedPrices;
+﻿using Postex.Product.Domain.Common;
 using Postex.SharedKernel.Domain;
 
 namespace Postex.Product.Domain.Contracts;

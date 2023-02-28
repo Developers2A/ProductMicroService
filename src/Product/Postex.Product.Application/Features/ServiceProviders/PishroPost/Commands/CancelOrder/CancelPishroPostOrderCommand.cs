@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Postex.Product.Application.Contracts;
-using Postex.Product.Application.Dtos.CourierServices.PishroPost;
+using Postex.Product.Application.Dtos.ServiceProviders.PishroPost;
 using Postex.SharedKernel.Common;
 
 namespace Postex.Product.Application.Features.ServiceProviders.PishroPost.Commands.CancelOrder

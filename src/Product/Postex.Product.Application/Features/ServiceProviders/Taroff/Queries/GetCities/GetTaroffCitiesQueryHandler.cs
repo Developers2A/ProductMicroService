@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using Postex.Product.Application.Dtos.CourierServices.Taroff.Dtos;
+using Postex.Product.Application.Dtos.ServiceProviders.Taroff.Dtos;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
 using System.Text;

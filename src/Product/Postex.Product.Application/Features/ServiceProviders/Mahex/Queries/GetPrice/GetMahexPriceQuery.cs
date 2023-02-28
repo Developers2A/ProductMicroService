@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Postex.Product.Application.Contracts;
-using Postex.Product.Application.Dtos.CourierServices.Mahex;
-using Postex.Product.Application.Dtos.CourierServices.Mahex.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Mahex;
+using Postex.Product.Application.Dtos.ServiceProviders.Mahex.Common;
 using Postex.SharedKernel.Common;
 
 namespace Postex.Product.Application.Features.ServiceProviders.Mahex.Queries.GetPrice

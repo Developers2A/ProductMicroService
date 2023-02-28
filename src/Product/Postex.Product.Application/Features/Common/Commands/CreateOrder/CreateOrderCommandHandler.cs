@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Postex.Product.Application.Dtos.Commons;
 using Postex.Product.Application.Dtos.Couriers;
-using Postex.Product.Application.Dtos.CourierServices.Chapar.Common;
-using Postex.Product.Application.Dtos.CourierServices.Common;
-using Postex.Product.Application.Dtos.CourierServices.Mahex.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Chapar.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Mahex.Common;
 using Postex.Product.Application.Features.Cities.Queries;
 using Postex.Product.Application.Features.Common.Commands.CreatePeykOrder;
 using Postex.Product.Application.Features.CourierCityMappings.Queries;

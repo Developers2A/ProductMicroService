@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using Postex.Product.Application.Dtos.CourierServices.EcoPeyk;
+using Postex.Product.Application.Dtos.ServiceProviders.EcoPeyk;
 using Postex.Product.Application.Features.ServiceProviders.EcoPeyk.Queries.GetToken;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;

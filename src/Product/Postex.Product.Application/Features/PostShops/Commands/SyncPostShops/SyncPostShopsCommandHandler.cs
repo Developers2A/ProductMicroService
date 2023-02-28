@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Product.Application.Dtos.CourierServices.Post;
+using Postex.Product.Application.Dtos.ServiceProviders.Post;
 using Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetShops;
 using Postex.Product.Domain.Posts;
 using Postex.SharedKernel.Common;

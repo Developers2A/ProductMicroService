@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using Postex.Product.Application.Dtos.CourierServices.Chapar;
-using Postex.Product.Application.Dtos.CourierServices.Chapar.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Chapar;
+using Postex.Product.Application.Dtos.ServiceProviders.Chapar.Common;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
 
@@ -21,7 +21,6 @@ namespace Postex.Product.Application.Features.ServiceProviders.Chapar.Commands.C
 
         public async Task<BaseResponse<ChaparCreateOrderResponse>> Handle(CreateChaparOrderCommand request, CancellationToken cancellationToken)
         {
-            BaseResponse<ChaparCreateOrderResponse> result = new();
             try
             {
                 HttpResponseMessage response = await SetHttpRequest(request);
@@ -37,7 +36,7 @@ namespace Postex.Product.Application.Features.ServiceProviders.Chapar.Commands.C
                     return new(true, "success", resModel);
                 }
 
-                return new(false, resModel.Message.ToString());
+                return new(false, resModel.Message.ToString()!);
             }
             catch (Exception ex)
             {

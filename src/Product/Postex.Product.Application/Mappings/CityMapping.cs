@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Postex.Product.Application.Dtos.Commons;
-using Postex.Product.Application.Dtos.CourierServices.Chapar;
-using Postex.Product.Application.Dtos.CourierServices.Common;
-using Postex.Product.Application.Dtos.CourierServices.Post;
-using Postex.Product.Application.Dtos.CourierServices.Taroff.Dtos;
+using Postex.Product.Application.Dtos.ServiceProviders.Chapar;
+using Postex.Product.Application.Dtos.ServiceProviders.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Post;
+using Postex.Product.Application.Dtos.ServiceProviders.Taroff.Dtos;
 using Postex.Product.Domain.Locations;
 
 namespace Postex.Product.Application.Mappings

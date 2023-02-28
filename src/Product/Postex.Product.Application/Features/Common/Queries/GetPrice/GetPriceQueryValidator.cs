@@ -14,6 +14,8 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                .NotNull().NotEmpty().WithMessage(" استان گیرنده الزامی می باشد");
             RuleFor(p => p.ReceiverCityCode)
                .NotNull().NotEmpty().WithMessage(" شهر گیرنده الزامی می باشد");
+            RuleFor(p => p.BoxTypeId)
+                .NotNull().NotEmpty().GreaterThan(0).WithMessage(" نوع جعبه الزامی می باشد");
         }
     }
 }

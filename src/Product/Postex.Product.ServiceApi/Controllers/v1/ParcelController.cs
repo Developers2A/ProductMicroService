@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Postex.Product.Application.Dtos.CourierServices.Common;
+using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Dtos.Trackings;
 using Postex.Product.Application.Features.Common.Commands.CancelOrder;
 using Postex.Product.Application.Features.Common.Commands.CreateOrder;
