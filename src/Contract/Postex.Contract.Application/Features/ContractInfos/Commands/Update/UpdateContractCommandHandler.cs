@@ -4,7 +4,7 @@ using Postex.SharedKernel.Interfaces;
 using Postex.Contract.Domain;
 using Postex.SharedKernel.Exceptions;
 
-namespace Postex.Contract.Application.Features.Contracts.Commands.UpdateContractCommand
+namespace Postex.Contract.Application.Features.ContractInfos.Commands.Update
 {
     public class UpdateContractCommandHandler : IRequestHandler<UpdateContractCommand>
     {
@@ -14,9 +14,9 @@ namespace Postex.Contract.Application.Features.Contracts.Commands.UpdateContract
 
         public UpdateContractCommandHandler(IWriteRepository<ContractInfo> writeRepository, IReadRepository<ContractInfo> readRepository, IMapper mapper)
         {
-            this._writeRepository = writeRepository;
-            this._readRepository = readRepository;
-            this._mapper = mapper;
+            _writeRepository = writeRepository;
+            _readRepository = readRepository;
+            _mapper = mapper;
         }
         public async Task<Unit> Handle(UpdateContractCommand request, CancellationToken cancellationToken)
         {
@@ -27,13 +27,13 @@ namespace Postex.Contract.Application.Features.Contracts.Commands.UpdateContract
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
 
             contractInfo.ContractNo = request.ContractNo;
-            contractInfo.Title=request.Title;
-            contractInfo.Description=request.Description;
+            contractInfo.Title = request.Title;
+            contractInfo.Description = request.Description;
             contractInfo.StartDate = request.StartDate;
             contractInfo.EndDate = request.EndDate;
             contractInfo.RegisterDate = request.RegisterDate;
             contractInfo.IsActive = request.IsActive;
-           
+
             contractInfo.CustomerId = request.CustomerId;
 
             await _writeRepository.UpdateAsync(contractInfo);

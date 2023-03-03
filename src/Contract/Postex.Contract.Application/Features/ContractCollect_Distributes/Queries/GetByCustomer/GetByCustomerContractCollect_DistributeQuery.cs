@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Queries
+namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Queries.GetByCustomer
 {
     public class GetByCustomerContractCollect_DistributeQuery : IRequest<List<ContractCollect_DistributeDto>>
     {

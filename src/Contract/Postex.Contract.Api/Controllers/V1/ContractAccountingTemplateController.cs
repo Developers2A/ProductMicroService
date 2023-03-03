@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Postex.Contract.Application.Features.ContractAccountingTemplates.Commands.Create;
 using Postex.Contract.Application.Features.ContractAccountingTemplates.Queries.GetContractById;
 
-namespace Postex.Contract.Api.Controllers
+namespace Postex.Contract.Api.Controllers.V1
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -14,7 +14,7 @@ namespace Postex.Contract.Api.Controllers
 
         public ContractAccountingTemplateController(IMediator mediator)
         {
-            this._mediator = mediator;
+            _mediator = mediator;
         }
         [HttpPost]
         public async Task<IActionResult> Create(CreateContractAccountingTemplateCommand command)

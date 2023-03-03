@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Postex.Contract.Application.Features.ContractItemTypes.Commands.CreateContractItemType;
-using Postex.Contract.Application.Features.ContractItemTypes.Commands.UpdateContractItemType;
+using Postex.Contract.Application.Features.ContractItemTypes.Commands.Create;
+using Postex.Contract.Application.Features.ContractItemTypes.Commands.Update;
 using Postex.Contract.Application.Features.ContractItemTypes.Queries;
 
-namespace Postex.Contract.Api.Controllers
+namespace Postex.Contract.Api.Controllers.V1
 {
     [Route("api/[controller]")]
     [ApiController]

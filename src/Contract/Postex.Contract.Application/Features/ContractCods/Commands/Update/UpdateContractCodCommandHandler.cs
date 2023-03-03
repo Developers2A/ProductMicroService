@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractCods.Command.Update
+namespace Postex.Contract.Application.Features.ContractCods.Commands.Update
 {
     public class UpdateContractCodCommandHandler : IRequestHandler<UpdateContractCodCommand>
     {
@@ -34,7 +34,7 @@ namespace Postex.Contract.Application.Features.ContractCods.Command.Update
             contractCod.ToValue = request.ToValue;
             contractCod.FixedValue = request.FixedValue;
             contractCod.FixedPercent = request.FixedPercent;
-            contractCod.Description= request.Description;
+            contractCod.Description = request.Description;
 
             await _writeRepository.UpdateAsync(contractCod);
             await _writeRepository.SaveChangeAsync();

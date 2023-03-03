@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Postex.Contract.Application.Features.ContractItems.Commands.CreateContractItem;
-using Postex.Contract.Application.Features.ContractItems.Commands.UpdateContractItem;
-using Postex.Contract.Application.Features.ContractItems.Queries;
+using Postex.Contract.Application.Features.ContractItems.Commands.Create;
+using Postex.Contract.Application.Features.ContractItems.Commands.Update;
+using Postex.Contract.Application.Features.ContractItems.Queries.GetByContractId;
+using Postex.Contract.Application.Features.ContractItems.Queries.GetByCustomer;
 
-namespace Postex.Contract.Api.Controllers
+namespace Postex.Contract.Api.Controllers.V1
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -26,11 +27,13 @@ namespace Postex.Contract.Api.Controllers
         {
             return Ok(await mediator.Send(command));
         }
+
         [HttpGet("GetByContarctId")]
         public async Task<IActionResult> GetByContractInfoId(int contractInfoId)
         {
             return Ok(await mediator.Send(new GetByContractIdContractItemQuery { ContractInfoId = contractInfoId }));
         }
+
         [HttpGet("GetByCustomer")]
         public async Task<IActionResult> GetByCustomer(Guid? customerId, int? provinceId, int? cityId)
         {

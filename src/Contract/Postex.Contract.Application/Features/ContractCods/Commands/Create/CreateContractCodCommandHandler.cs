@@ -2,20 +2,15 @@
 using MediatR;
 using Postex.Contract.Domain;
 using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractCods.Command.Create
+namespace Postex.Contract.Application.Features.ContractCods.Commands.Create
 {
     public class CreateContractCodCommandHandler : IRequestHandler<CreateContractCodCommand>
     {
         private readonly IWriteRepository<ContractCod> _writeRepository;
         private readonly IMapper _mapper;
 
-        public CreateContractCodCommandHandler(IWriteRepository<ContractCod> writeRepository,IMapper mapper)
+        public CreateContractCodCommandHandler(IWriteRepository<ContractCod> writeRepository, IMapper mapper)
         {
             _writeRepository = writeRepository;
             _mapper = mapper;

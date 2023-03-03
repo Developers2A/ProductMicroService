@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Command.Create
+namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Commands.Create
 {
     public class CreateContractCollect_DistributeCommand : ITransactionRequest
     {

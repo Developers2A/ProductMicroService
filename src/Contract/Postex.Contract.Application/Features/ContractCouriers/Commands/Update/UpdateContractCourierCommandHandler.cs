@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractCouriers.Command.Update
+namespace Postex.Contract.Application.Features.ContractCouriers.Commands.Update
 {
     public class UpdateContractCourierCommandHandler : IRequestHandler<UpdateContractCourierCommand>
     {
@@ -29,12 +29,12 @@ namespace Postex.Contract.Application.Features.ContractCouriers.Command.Update
 
             if (contractCourier == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
-        
+
             contractCourier.CourierId = request.CourierId;
             contractCourier.FixedDiscount = request.FixedDiscount;
             contractCourier.PercentDiscount = request.PercentDiscount;
             contractCourier.IsActive = request.IsActive;
-            contractCourier.Description=request.Description;
+            contractCourier.Description = request.Description;
 
             await _writeRepository.UpdateAsync(contractCourier);
             await _writeRepository.SaveChangeAsync();

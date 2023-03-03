@@ -3,7 +3,7 @@ using MediatR;
 using Postex.SharedKernel.Interfaces;
 using Postex.Contract.Domain;
 
-namespace Postex.Contract.Application.Features.ContractItems.Commands.CreateContractItem
+namespace Postex.Contract.Application.Features.ContractItems.Commands.Create
 {
     public class CreateContractItemCommandHandler : IRequestHandler<CreateContractItemCommand>
     {
@@ -12,8 +12,8 @@ namespace Postex.Contract.Application.Features.ContractItems.Commands.CreateCont
 
         public CreateContractItemCommandHandler(IWriteRepository<ContractItem> writeRepository, IMapper mapper)
         {
-            this._writeRepository = writeRepository;
-            this._mapper = mapper;
+            _writeRepository = writeRepository;
+            _mapper = mapper;
         }
         public async Task<Unit> Handle(CreateContractItemCommand request, CancellationToken cancellationToken)
         {
@@ -27,8 +27,8 @@ namespace Postex.Contract.Application.Features.ContractItems.Commands.CreateCont
                 CityId = request.CityId,
                 IsActive = request.IsActive,
                 SalePrice = request.SalePrice,
-                BuyPrice= request.BuyPrice,
-                Description= request.Description,
+                BuyPrice = request.BuyPrice,
+                Description = request.Description,
             };
             await _writeRepository.AddAsync(contractItem, cancellationToken);
             await _writeRepository.SaveChangeAsync(cancellationToken);

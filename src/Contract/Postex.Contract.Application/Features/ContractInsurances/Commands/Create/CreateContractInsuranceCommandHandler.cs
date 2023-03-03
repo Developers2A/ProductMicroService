@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractInsurances.Command
+namespace Postex.Contract.Application.Features.ContractInsurances.Commands.Create
 {
     public class CreateContractInsuranceCommandHandler : IRequestHandler<CreateContractInsuranceCommand>
     {
@@ -15,19 +15,19 @@ namespace Postex.Contract.Application.Features.ContractInsurances.Command
 
         public CreateContractInsuranceCommandHandler(IWriteRepository<ContractInsurance> writeRepositort)
         {
-            this._writeRepositort = writeRepositort;
+            _writeRepositort = writeRepositort;
         }
         public async Task<Unit> Handle(CreateContractInsuranceCommand request, CancellationToken cancellationToken)
         {
             var contractInsurance = new ContractInsurance()
             {
                 ContractInfoId = request.ContractInfoId,
-                FromValue=request.FromValue,
-                ToValue=request.ToValue,
+                FromValue = request.FromValue,
+                ToValue = request.ToValue,
                 FixedPercent = request.FixedPercent,
-                FixedValue=request.FixedValue,
-                Description=request.Description,
-                IsActice=request.IsActice
+                FixedValue = request.FixedValue,
+                Description = request.Description,
+                IsActice = request.IsActice
             };
             await _writeRepositort.AddAsync(contractInsurance);
             await _writeRepositort.SaveChangeAsync(cancellationToken);

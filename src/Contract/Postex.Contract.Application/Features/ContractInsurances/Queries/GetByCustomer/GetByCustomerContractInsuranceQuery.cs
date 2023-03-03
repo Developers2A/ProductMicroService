@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Postex.Contract.Application.Dtos;
 
-namespace Postex.Contract.Application.Features.ContractInsurances.Queries
+namespace Postex.Contract.Application.Features.ContractInsurances.Queries.GetByCustomer
 {
     public class GetByCustomerContractInsuranceQuery : IRequest<List<ContractInsuranceDto>>
     {

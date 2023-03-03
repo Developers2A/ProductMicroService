@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractInsurances.Command.Update
+namespace Postex.Contract.Application.Features.ContractInsurances.Commands.Update
 {
     public class UpdateContractInsuranceCommand : ITransactionRequest
     {

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractCods.Command.Update
+namespace Postex.Contract.Application.Features.ContractCods.Commands.Update
 {
-    public class UpdateContractCodCommand:ITransactionRequest
+    public class UpdateContractCodCommand : ITransactionRequest
     {
         public int Id { get; set; }
         public int FromValue { get; set; }

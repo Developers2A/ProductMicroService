@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Postex.Contract.Application.Dtos;
 
-namespace Postex.Contract.Application.Features.ContractCouriers.Queries
+namespace Postex.Contract.Application.Features.ContractCouriers.Queries.GetByCustomer
 {
     public class GetByCustomerContractCourierQuery : IRequest<List<ContractCourierDto>>
     {

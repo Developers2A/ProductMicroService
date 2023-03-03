@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractItems.Queries
+namespace Postex.Contract.Application.Features.ContractItems.Queries.GetByContractId
 {
     public class GetByContractIdContractItemQueryHandler : IRequestHandler<GetByContractIdContractItemQuery, List<ContractItemDto>>
     {
@@ -17,11 +17,11 @@ namespace Postex.Contract.Application.Features.ContractItems.Queries
 
         public GetByContractIdContractItemQueryHandler(IReadRepository<ContractItem> readRepository)
         {
-            this._readRepository = readRepository;
+            _readRepository = readRepository;
         }
         public async Task<List<ContractItemDto>> Handle(GetByContractIdContractItemQuery request, CancellationToken cancellationToken)
         {
-            var items = await _readRepository.Table.Include(b=> b.ContractItemType)
+            var items = await _readRepository.Table.Include(b => b.ContractItemType)
                 .Select(c => new ContractItemDto
                 {
                     ContractInfoId = c.ContractInfoId,
@@ -30,11 +30,11 @@ namespace Postex.Contract.Application.Features.ContractItems.Queries
                     ContractTypeCode = c.ContractItemType.ContractTypeCode,
                     ContractTypeName = c.ContractItemType.ContractTypeName,
                     ProvinceId = c.ProvinceId,
-                    CityId = c.CityId,                   
+                    CityId = c.CityId,
                     IsActive = c.IsActive,
                     SalePrice = c.SalePrice,
                     BuyPrice = c.BuyPrice,
-                    Description=c.Description,
+                    Description = c.Description,
                 })
                 .ToListAsync(cancellationToken);
             return items;

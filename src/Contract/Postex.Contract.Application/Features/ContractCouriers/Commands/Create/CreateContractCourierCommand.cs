@@ -1,6 +1,6 @@
 ﻿using Postex.Contract.Application.Contracts;
 
-namespace Postex.Contract.Application.Features.ContractCouriers.Command.Create
+namespace Postex.Contract.Application.Features.ContractCouriers.Commands.Create
 {
     public class CreateContractCourierCommand : ITransactionRequest
     {

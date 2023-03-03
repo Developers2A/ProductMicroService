@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractInsurances.Command.Update
+namespace Postex.Contract.Application.Features.ContractInsurances.Commands.Update
 {
     public class UpdateContractInsuranceCommandHandler : IRequestHandler<UpdateContractInsuranceCommand>
     {
@@ -17,7 +17,7 @@ namespace Postex.Contract.Application.Features.ContractInsurances.Command.Update
         private readonly IReadRepository<ContractInsurance> _readRepository;
         private readonly IMapper _mapper;
 
-        public UpdateContractInsuranceCommandHandler(IWriteRepository<ContractInsurance> writeRepository,IReadRepository<ContractInsurance> readRepository,IMapper mapper)
+        public UpdateContractInsuranceCommandHandler(IWriteRepository<ContractInsurance> writeRepository, IReadRepository<ContractInsurance> readRepository, IMapper mapper)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
@@ -35,7 +35,7 @@ namespace Postex.Contract.Application.Features.ContractInsurances.Command.Update
             contractInsurance.FixedValue = request.FixedValue;
             contractInsurance.FixedPercent = request.FixedPercent;
             contractInsurance.Description = request.Description;
-            contractInsurance.IsActice=request.IsActice;
+            contractInsurance.IsActice = request.IsActice;
 
             await _writeRepository.UpdateAsync(contractInsurance);
             await _writeRepository.SaveChangeAsync();
