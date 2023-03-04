@@ -19,6 +19,13 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
         {
             _readRepository = readRepository;
         }
+        /// <summary>
+        /// بدست آوردن قیمت های فعال برای همه اندازه های باکس بر اساس مشتری 
+        /// قیمت همه سایز های جعبه ها برگشت داده میشود
+        /// برای هر سایز بسته قرارداد پیش فرض ، مشتری ، شهر ، استان بررسی میشود
+        /// با اولویت  ابتدا قرارداد مشتری ، سپس قرارداد شهر ، بعد از آن قرارداد استان  در اخر قرارداد پیش فرض هر اندازه باکس بدست می آید
+        /// </summary>     
+        /// <returns>قیمت همه سایر های  جعبه  به عنوان خروجی برگشت داده میشود</returns>
         public async Task<List<ContractBoxPriceDto>> Handle(GetByCustomerContractBoxPriceQuery request, CancellationToken cancellationToken)
         {
             var boxPriceDefualt = await _readRepository.Table
@@ -41,7 +48,6 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
                   Description = c.Description,
                   IsActive = c.IsActive,
                   LevelPrice = "Default"
-
               })
               .ToListAsync(cancellationToken);
 
@@ -59,6 +65,21 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
                   Description = c.Description
               })
               .ToListAsync(cancellationToken);
+
+            var boxPriceProvince = await _readRepository.Table
+             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.CustomerId == 0)
+             .Select(c => new ContractBoxPriceDto
+             {
+                 Id = c.Id,
+                 ContractInfoId = c.ContractInfoId,
+                 BoxTypeId = c.BoxTypeId,
+                 CityId = c.CityId,
+                 ProvinceId = c.ProvinceId,
+                 SalePrice = c.SalePrice,
+                 BuyPrice = c.BuyPrice,
+                 Description = c.Description
+             })
+             .ToListAsync(cancellationToken);
 
             var boxPriceCus = await _readRepository.Table
                 .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == request.CustomerId)
@@ -99,10 +120,17 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
                     boxPriceDefualt[i].LevelPrice = "City";
 
                 }
+                else if (boxPriceProvince.Where(c => c.BoxTypeId == item.BoxTypeId)
+                    .FirstOrDefault() != null)
+                {
+                    var cus = boxPriceCity.Where(c => c.BoxTypeId == item.BoxTypeId)
+                      .FirstOrDefault();
+                    boxPriceDefualt[i].SalePrice = cus.SalePrice;
+                    boxPriceDefualt[i].BuyPrice = cus.BuyPrice;
+                    boxPriceDefualt[i].LevelPrice = "Province";
+                }
             }
-
             return boxPriceDefualt;
-
         }
     }
 }

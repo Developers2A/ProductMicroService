@@ -14,6 +14,12 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
         {
             _readRepository = readRepository;
         }
+        /// <summary>
+        /// اطلاعات قیمت جعبه ها بر اساس شناسه قرارداد برگشت داده می شود
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<List<ContractBoxPriceDto>> Handle(GetByContractIdContractBoxPriceQuery request, CancellationToken cancellationToken)
         {
             var boxPrice = await _readRepository.Table.Include(b => b.BoxType)
