@@ -11,6 +11,7 @@ using Postex.Product.Application.Dtos.Contratcs;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomerAndBoxType
 {
+
     public class GetByCustomerAndBoxTypeContractBoxPriceQueryHandler : IRequestHandler<GetByCustomerAndBoxTypeContractBoxPriceQuery, BoxPriceDto>
     {
         private readonly IReadRepository<ContractBoxPrice> _readRepository;
@@ -19,6 +20,12 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
         {
             _readRepository = readRepository;
         }
+        /// <summary>
+        /// بدست آوردن قیمت پیش فرض و قراردادی برای مشتری
+        /// در صورتی که برای مشتری قرارداد مشخص و فعال داشته باشیم همراه با قیمت پیش فرض ، مبلغ قرارداد با مشتری بر گشت داده می شود
+        /// در صورتی که مشتری قرارداد فعالی نداشته باشد ، ابتدا بر اساس شهر مشتری و در صورت نبود قرارداد برای شهر ، قرارداد استان نیز بررسی میشود
+        /// </summary>     
+        /// <returns>قیمت پیش فرض و قرارداد بر اساس یک سایز کارتن</returns>
         public async Task<BoxPriceDto> Handle(GetByCustomerAndBoxTypeContractBoxPriceQuery request, CancellationToken cancellationToken)
         {
             var boxPrice = await _readRepository.Table
