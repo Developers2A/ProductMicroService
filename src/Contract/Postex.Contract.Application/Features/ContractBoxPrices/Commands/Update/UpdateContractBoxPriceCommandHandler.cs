@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractBoxPrices.Command.Update
+namespace Postex.Contract.Application.Features.ContractBoxPrices.Commands.Update
 {
     public class UpdateContractBoxPriceCommandHandler : IRequestHandler<UpdateContractBoxPriceCommand>
     {
@@ -31,10 +31,10 @@ namespace Postex.Contract.Application.Features.ContractBoxPrices.Command.Update
             contractBoxType.BoxTypeId = request.BoxTypeId;
             contractBoxType.CityId = request.CityId;
             contractBoxType.ProvinceId = request.ProvinceId;
-            contractBoxType.CustomerId= request.CustomerId;
+            contractBoxType.CustomerId = request.CustomerId;
             contractBoxType.SalePrice = request.SalePrice;
             contractBoxType.BuyPrice = request.BuyPrice;
-            contractBoxType.Description= request.Description;
+            contractBoxType.Description = request.Description;
             contractBoxType.IsActive = request.IsActive;
 
             await _writeRepository.UpdateAsync(contractBoxType);

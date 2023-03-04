@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.UpdateContractItemType
+namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.Update
 {
     internal class UpdateContractItemTypeCommandHandler : IRequestHandler<UpdateContractItemTypeCommand>
     {
@@ -17,12 +17,12 @@ namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.Update
         private readonly IReadRepository<ContractItemType> _readRepository;
         private readonly IMapper _mapper;
 
-        public UpdateContractItemTypeCommandHandler(IWriteRepository<ContractItemType> writeRepository,IReadRepository<ContractItemType> readRepository,IMapper mapper)
+        public UpdateContractItemTypeCommandHandler(IWriteRepository<ContractItemType> writeRepository, IReadRepository<ContractItemType> readRepository, IMapper mapper)
         {
-            this._writeRepository = writeRepository;
-            this._readRepository = readRepository;
-            this._mapper = mapper;
-           
+            _writeRepository = writeRepository;
+            _readRepository = readRepository;
+            _mapper = mapper;
+
         }
         public async Task<Unit> Handle(UpdateContractItemTypeCommand request, CancellationToken cancellationToken)
         {

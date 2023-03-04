@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Queries
+namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Queries.GetByContractId
 {
     public class GetByContractIdContractCollect_DistributeQueryHandler : IRequestHandler<GetByContractIdContractCollect_DistributeQuery, List<ContractCollect_DistributeDto>>
     {
@@ -17,7 +17,7 @@ namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Queri
 
         public GetByContractIdContractCollect_DistributeQueryHandler(IReadRepository<ContractCollect_Distribute> readRepository)
         {
-            this._readRepository = readRepository;
+            _readRepository = readRepository;
         }
         public async Task<List<ContractCollect_DistributeDto>> Handle(GetByContractIdContractCollect_DistributeQuery request, CancellationToken cancellationToken)
         {
@@ -35,10 +35,10 @@ namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Queri
                     Height = c.BoxType.Height,
                     Width = c.BoxType.Width,
                     Length = c.BoxType.Length,
-                    Description=c.Description,
-                    IsActice=c.IsActice,
+                    Description = c.Description,
+                    IsActice = c.IsActice,
                 })
-                .Where(c=> c.ContractInfoId == request.ContractInfoId)
+                .Where(c => c.ContractInfoId == request.ContractInfoId)
                 .ToListAsync(cancellationToken);
             return collect_Distribute;
         }

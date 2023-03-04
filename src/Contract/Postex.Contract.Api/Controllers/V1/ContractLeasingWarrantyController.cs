@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Postex.Contract.Application.Features.ContractLeasingWarranties.Command.Create;
+using Postex.Contract.Application.Features.ContractLeasingWarranties.Commands.Create;
 using Postex.Contract.Application.Features.ContractLeasingWarranties.Commands.Update;
-using Postex.Contract.Application.Features.ContractLeasingWarranties.Queries.GetById;
+using Postex.Contract.Application.Features.ContractLeasingWarranties.Queries.GetByContractLeasingId;
 
-namespace Postex.Contract.Api.Controllers
+namespace Postex.Contract.Api.Controllers.V1
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -27,11 +27,11 @@ namespace Postex.Contract.Api.Controllers
         {
             return Ok(await mediator.Send(command));
         }
-       
+
         [HttpGet("GetByContractLeasingId")]
         public async Task<IActionResult> GetByContractLeasingId(int contractLeasingId)
         {
-            return Ok(await mediator.Send(new GetByContractLeasingIdCommand { ContractLeasingId = contractLeasingId }));
+            return Ok(await mediator.Send(new GetByContractLeasingWarrantyIdCommand { ContractLeasingId = contractLeasingId }));
         }
     }
 }

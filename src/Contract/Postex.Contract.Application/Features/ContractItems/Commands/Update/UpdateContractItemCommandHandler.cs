@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractItems.Commands.UpdateContractItem
+namespace Postex.Contract.Application.Features.ContractItems.Commands.Update
 {
     public class UpdateContractItemCommandHandler : IRequestHandler<UpdateContractItemCommand>
     {
@@ -17,11 +17,11 @@ namespace Postex.Contract.Application.Features.ContractItems.Commands.UpdateCont
         private readonly IReadRepository<ContractItem> _readRepository;
         private readonly IMapper _mapper;
 
-        public UpdateContractItemCommandHandler(IWriteRepository<ContractItem> writeRepository,IReadRepository<ContractItem> readRepository,IMapper mapper)
+        public UpdateContractItemCommandHandler(IWriteRepository<ContractItem> writeRepository, IReadRepository<ContractItem> readRepository, IMapper mapper)
         {
-            this._writeRepository = writeRepository;
-            this._readRepository = readRepository;
-            this._mapper = mapper;
+            _writeRepository = writeRepository;
+            _readRepository = readRepository;
+            _mapper = mapper;
         }
         public async Task<Unit> Handle(UpdateContractItemCommand request, CancellationToken cancellationToken)
         {
@@ -30,7 +30,7 @@ namespace Postex.Contract.Application.Features.ContractItems.Commands.UpdateCont
 
             if (contractitem == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
-        
+
             contractitem.CourierId = request.CourierId;
             contractitem.ContractItemTypeId = request.ContractItemTypeId;
             contractitem.ProvinceId = request.ProvinceId;
@@ -38,9 +38,9 @@ namespace Postex.Contract.Application.Features.ContractItems.Commands.UpdateCont
             contractitem.IsActive = request.IsActive;
             contractitem.SalePrice = request.SalePrice;
             contractitem.BuyPrice = request.BuyPrice;
-            contractitem.Description= request.Description;
+            contractitem.Description = request.Description;
 
-            await _writeRepository.UpdateAsync(contractitem,cancellationToken);
+            await _writeRepository.UpdateAsync(contractitem, cancellationToken);
             await _writeRepository.SaveChangeAsync(cancellationToken);
 
             return Unit.Value;

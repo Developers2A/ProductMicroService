@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.CreateContractItemType
+namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.Create
 {
-    public class CreateContractItemTypeCommandValidator: AbstractValidator<CreateContractItemTypeCommand>
+    public class CreateContractItemTypeCommandValidator : AbstractValidator<CreateContractItemTypeCommand>
     {
         public CreateContractItemTypeCommandValidator()
         {

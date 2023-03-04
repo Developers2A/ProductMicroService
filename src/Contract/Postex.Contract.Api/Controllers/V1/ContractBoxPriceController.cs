@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Postex.Contract.Application.Features.ContractBoxPrices.Command.Create;
-using Postex.Contract.Application.Features.ContractBoxPrices.Command.Update;
-using Postex.Contract.Application.Features.ContractBoxPrices.Queries;
+using Postex.Contract.Application.Features.ContractBoxPrices.Commands.Create;
+using Postex.Contract.Application.Features.ContractBoxPrices.Commands.Update;
+using Postex.Contract.Application.Features.ContractBoxPrices.Queries.GetByContractId;
+using Postex.Contract.Application.Features.ContractBoxPrices.Queries.GetByCustomer;
 
-namespace Postex.Contract.Api.Controllers
+namespace Postex.Contract.Api.Controllers.V1
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -15,7 +15,7 @@ namespace Postex.Contract.Api.Controllers
 
         public ContractBoxPriceController(IMediator mediator)
         {
-            this._mediator = mediator;
+            _mediator = mediator;
         }
         [HttpPost]
         public async Task<IActionResult> Create(CreateContractBoxPriceCommand command)

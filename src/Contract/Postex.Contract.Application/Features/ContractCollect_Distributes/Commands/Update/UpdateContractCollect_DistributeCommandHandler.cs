@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Command.Update
+namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Commands.Update
 {
     public class UpdateContractCollect_DistributeCommandHandler : IRequestHandler<UpdateContractCollect_DistributeCommand>
     {
@@ -33,8 +33,8 @@ namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Comma
             contractCollect_Distribute.ProvinceId = request.ProvinceId;
             contractCollect_Distribute.SalePrice = request.SalePrice;
             contractCollect_Distribute.BuyPrice = request.BuyPrice;
-            contractCollect_Distribute.Description= request.Description;
-            contractCollect_Distribute.IsActice= request.IsActice;
+            contractCollect_Distribute.Description = request.Description;
+            contractCollect_Distribute.IsActice = request.IsActice;
 
             await _writeRepository.UpdateAsync(contractCollect_Distribute);
             await _writeRepository.SaveChangeAsync();

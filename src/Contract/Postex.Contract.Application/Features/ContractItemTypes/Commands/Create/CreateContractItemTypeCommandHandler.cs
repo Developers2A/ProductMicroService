@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.CreateContractItemType
+namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.Create
 {
     public class CreateContractItemTypeCommandHandler : IRequestHandler<CreateContractItemTypeCommand, ContractItemType>
     {
@@ -18,8 +18,8 @@ namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.Create
 
         public CreateContractItemTypeCommandHandler(IWriteRepository<ContractItemType> contratcItemTypeWriteRepository, IMapper mapper)
         {
-            this._writeRepository = contratcItemTypeWriteRepository;
-            this._mapper = mapper;
+            _writeRepository = contratcItemTypeWriteRepository;
+            _mapper = mapper;
         }
 
         //public async Task<Unit> Handle(CreateContractItemTypeCommand request, CancellationToken cancellationToken)
@@ -35,7 +35,7 @@ namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.Create
         //    return Unit.Value;
         //}
 
-        async  Task<ContractItemType> IRequestHandler<CreateContractItemTypeCommand, ContractItemType>.Handle(CreateContractItemTypeCommand request, CancellationToken cancellationToken)
+        async Task<ContractItemType> IRequestHandler<CreateContractItemTypeCommand, ContractItemType>.Handle(CreateContractItemTypeCommand request, CancellationToken cancellationToken)
         {
             var contractItemType = new ContractItemType
             {

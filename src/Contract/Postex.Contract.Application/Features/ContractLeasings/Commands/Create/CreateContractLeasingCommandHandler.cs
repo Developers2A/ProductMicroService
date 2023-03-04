@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Postex.Contract.Application.Features.ContractLeasings.Command.Create;
 using Postex.Contract.Domain;
 using Postex.SharedKernel.Interfaces;
 using System;

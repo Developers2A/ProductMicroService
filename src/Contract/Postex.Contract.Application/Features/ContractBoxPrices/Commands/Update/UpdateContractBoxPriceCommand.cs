@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractBoxPrices.Command.Update
+namespace Postex.Contract.Application.Features.ContractBoxPrices.Commands.Update
 {
-    public class UpdateContractBoxPriceCommand:ITransactionRequest
+    public class UpdateContractBoxPriceCommand : ITransactionRequest
     {
         public int Id { get; set; }
-        public int BoxTypeId { get; set; }        
+        public int BoxTypeId { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
         public Guid? CustomerId { get; set; }

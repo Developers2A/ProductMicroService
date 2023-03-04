@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Command.Update
+namespace Postex.Contract.Application.Features.ContractCollect_Distributes.Commands.Update
 {
     public class UpdateContractCollect_DistributeCommand : ITransactionRequest
     {
-        public int Id { get; set; }    
+        public int Id { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
         public int BoxTypeId { get; set; }

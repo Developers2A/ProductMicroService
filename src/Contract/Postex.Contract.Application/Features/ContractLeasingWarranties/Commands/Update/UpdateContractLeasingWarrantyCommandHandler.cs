@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.Contract.Application.Features.ContractLeasingWarranties.Command.Create;
 using Postex.Contract.Domain;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postex.Contract.Application.Features.ContractLeasingWarranties.Commands.Update
 {
@@ -18,7 +12,7 @@ namespace Postex.Contract.Application.Features.ContractLeasingWarranties.Command
         private readonly IReadRepository<ContractLeasingWarranty> readRepository;
         private readonly IMapper mapper;
 
-        public UpdateContractLeasingWarrantyCommandHandler(IWriteRepository<ContractLeasingWarranty> writeRepository,IReadRepository<ContractLeasingWarranty> readRepository,IMapper mapper)
+        public UpdateContractLeasingWarrantyCommandHandler(IWriteRepository<ContractLeasingWarranty> writeRepository, IReadRepository<ContractLeasingWarranty> readRepository, IMapper mapper)
         {
             this.writeRepository = writeRepository;
             this.readRepository = readRepository;
@@ -26,7 +20,7 @@ namespace Postex.Contract.Application.Features.ContractLeasingWarranties.Command
         }
         public async Task<Unit> Handle(UpdateContractLeasingWarrantyCommand request, CancellationToken cancellationToken)
         {
-          
+
 
             ContractLeasingWarranty warranty = await readRepository.GetByIdAsync(request.Id, cancellationToken);
 

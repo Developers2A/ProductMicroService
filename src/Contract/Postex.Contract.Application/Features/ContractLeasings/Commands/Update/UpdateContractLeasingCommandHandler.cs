@@ -1,13 +1,7 @@
 ﻿using MediatR;
-using Postex.Contract.Application.Features.ContractLeasings.Command.Create;
 using Postex.Contract.Domain;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postex.Contract.Application.Features.ContractLeasings.Commands.Update
 {
@@ -16,7 +10,7 @@ namespace Postex.Contract.Application.Features.ContractLeasings.Commands.Update
         private readonly IWriteRepository<ContractLeasing> writeRepository;
         private readonly IReadRepository<ContractLeasing> readRepository;
 
-        public UpdateContractLeasingCommandHandler(IWriteRepository<ContractLeasing> writeRepository,IReadRepository<ContractLeasing> readRepository)
+        public UpdateContractLeasingCommandHandler(IWriteRepository<ContractLeasing> writeRepository, IReadRepository<ContractLeasing> readRepository)
         {
             this.writeRepository = writeRepository;
             this.readRepository = readRepository;
@@ -29,16 +23,16 @@ namespace Postex.Contract.Application.Features.ContractLeasings.Commands.Update
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
 
             contractLeasing.CustomerId = request.CustomerId;
-            contractLeasing.StartDate= request.StartDate;
-            contractLeasing.EndDate= request.EndDate;
+            contractLeasing.StartDate = request.StartDate;
+            contractLeasing.EndDate = request.EndDate;
             contractLeasing.IsActive = request.IsActive;
             contractLeasing.Amount = request.Amount;
             contractLeasing.DailyDepositeRate = request.DailyDepositeRate;
             contractLeasing.DailyDepositRateCeiling = request.DailyDepositRateCeiling;
             contractLeasing.ReturnRate = request.ReturnRate;
             contractLeasing.WithdrawRate = request.WithdrawRate;
-            contractLeasing.Description= request.Description;
-      
+            contractLeasing.Description = request.Description;
+
             await writeRepository.UpdateAsync(contractLeasing);
             await writeRepository.SaveChangeAsync(cancellationToken);
             return Unit.Value;

@@ -4,7 +4,7 @@ using Postex.Contract.Application.Dtos;
 using Postex.Contract.Domain;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Contract.Application.Features.ContractBoxPrices.Queries
+namespace Postex.Contract.Application.Features.ContractBoxPrices.Queries.GetByContractId
 {
     public class GetByCustomerContractBoxPriceQueryHandler : IRequestHandler<GetByContractIdContractBoxPriceQuery, List<ContractBoxPriceDto>>
     {
@@ -12,7 +12,7 @@ namespace Postex.Contract.Application.Features.ContractBoxPrices.Queries
 
         public GetByCustomerContractBoxPriceQueryHandler(IReadRepository<ContractBoxPrice> readRepository)
         {
-            this._readRepository = readRepository;
+            _readRepository = readRepository;
         }
         public async Task<List<ContractBoxPriceDto>> Handle(GetByContractIdContractBoxPriceQuery request, CancellationToken cancellationToken)
         {
@@ -24,18 +24,18 @@ namespace Postex.Contract.Application.Features.ContractBoxPrices.Queries
                     BoxTypeId = c.BoxTypeId,
                     CityId = c.CityId,
                     ProvinceId = c.ProvinceId,
-                    CustomerId= c.CustomerId,
+                    CustomerId = c.CustomerId,
                     SalePrice = c.SalePrice,
                     BuyPrice = c.BuyPrice,
                     BoxName = c.BoxType.Name,
                     Height = c.BoxType.Height,
                     Width = c.BoxType.Width,
                     Length = c.BoxType.Length,
-                    Description=c.Description,
+                    Description = c.Description,
                     IsActive = c.IsActive,
 
                 })
-                .Where(c=> c.ContractInfoId == request.ContractInfoId)
+                .Where(c => c.ContractInfoId == request.ContractInfoId)
                 .ToListAsync(cancellationToken);
             return boxPrice;
         }

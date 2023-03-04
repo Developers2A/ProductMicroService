@@ -2,7 +2,7 @@
 using Postex.Contract.Domain;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Contract.Application.Features.ContractCouriers.Command.Create
+namespace Postex.Contract.Application.Features.ContractCouriers.Commands.Create
 {
     public class CreateContractCourierCommandHandler : IRequestHandler<CreateContractCourierCommand>
     {
@@ -17,11 +17,11 @@ namespace Postex.Contract.Application.Features.ContractCouriers.Command.Create
             var contractCourier = new ContractCourier
             {
                 ContractInfoId = request.ContractInfoId,
-                CourierId=request.CourierId,
-                FixedDiscount=request.FixedDiscount,
-                PercentDiscount=request.PercentDiscount,
-                IsActive =request.IsActive,
-                Description=request.Description,
+                CourierId = request.CourierId,
+                FixedDiscount = request.FixedDiscount,
+                PercentDiscount = request.PercentDiscount,
+                IsActive = request.IsActive,
+                Description = request.Description,
 
             };
             await _writeRepository.AddAsync(contractCourier);

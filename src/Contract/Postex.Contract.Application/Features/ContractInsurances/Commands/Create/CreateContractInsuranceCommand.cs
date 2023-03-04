@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractInsurances.Command
+namespace Postex.Contract.Application.Features.ContractInsurances.Commands.Create
 {
     public class CreateContractInsuranceCommand : ITransactionRequest
     {

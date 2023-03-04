@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.CreateContractItemType
+namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.Create
 {
-    public class CreateContractItemTypeCommand:ITransactionRequest<ContractItemType>
+    public class CreateContractItemTypeCommand : ITransactionRequest<ContractItemType>
     {
         public string ContractTypeCode { get; set; }
         public string ContractTypeName { get; set; }

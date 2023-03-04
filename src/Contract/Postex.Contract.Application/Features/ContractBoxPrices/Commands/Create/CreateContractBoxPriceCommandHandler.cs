@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractBoxPrices.Command.Create
+namespace Postex.Contract.Application.Features.ContractBoxPrices.Commands.Create
 {
     internal class CreateContractBoxPriceCommandHandler : IRequestHandler<CreateContractBoxPriceCommand>
     {

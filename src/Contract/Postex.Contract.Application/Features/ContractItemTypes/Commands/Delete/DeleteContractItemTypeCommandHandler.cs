@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.DeleteContratcItemType
+namespace Postex.Contract.Application.Features.ContractItemTypes.Commands.Delete
 {
     public class DeleteContractItemTypeCommandHandler : IRequestHandler<DeleteContractItemTypeCommand>
     {

@@ -1,13 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Postex.Contract.Application.Features.ContractLeasings.Command.Create;
+using Postex.Contract.Application.Features.ContractLeasings.Commands.Create;
 using Postex.Contract.Application.Features.ContractLeasings.Commands.Update;
 using Postex.Contract.Application.Features.ContractLeasings.Queries.GetAll;
 using Postex.Contract.Application.Features.ContractLeasings.Queries.GetByCustomer;
 using Postex.Contract.Application.Features.ContractLeasings.Queries.GetById;
 
-namespace Postex.Contract.Api.Controllers
+namespace Postex.Contract.Api.Controllers.V1
 {
     [Route("api/[controller]")]
     [ApiController]
