@@ -12,5 +12,6 @@ namespace Postex.Product.Domain.Contracts
         public double PercentValue { get; set; }
         public int FixedValue { get; set; }
         public string Description { get; set; }
+        public bool IsActive { get; set; }
     }
 }

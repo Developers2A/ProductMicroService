@@ -30,7 +30,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTempla
                     PercentValue = item.PercentValue,
                     FixedValue = item.FixedValue,
                     Description = item.Description,
-
+                    IsActive = true
                 };
                 await _writeRepository.AddAsync(contractAccountingTemplate);
             };

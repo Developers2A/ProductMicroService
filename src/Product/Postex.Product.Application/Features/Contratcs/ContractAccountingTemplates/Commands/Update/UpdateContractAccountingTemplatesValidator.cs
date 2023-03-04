@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.Update
 {
-    public class UpdateContractAccountingTemplateCommand
+    public class UpdateContractAccountingTemplatesValidator
     {
     }
 }

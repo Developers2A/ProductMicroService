@@ -28,6 +28,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTempla
                 PercentValue = request.PercentValue,
                 FixedValue = request.FixedValue,
                 Description = request.Description,
+                IsActive = true
             };
             await _writeRepository.AddAsync(item);
             await _writeRepository.SaveChangeAsync(cancellationToken);

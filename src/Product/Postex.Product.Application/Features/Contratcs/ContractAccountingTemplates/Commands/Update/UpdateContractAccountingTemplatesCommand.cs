@@ -1,0 +1,15 @@
+﻿using Postex.Product.Application.Contracts;
+using Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.Create;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.Update
+{
+    public class UpdateContractAccountingTemplatesCommand: ITransactionRequest
+    {
+        public List<CreateContractAccountingTemplateCommand> ContractAccountingTemplates { get; set; }
+    }
+}
