@@ -14,6 +14,13 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
         {
             _readRepository = readRepository;
         }
+        /// <summary>
+        /// قیمت توزیع و جمع آوری بر اساس نوع شهر ونوع کارتن متفاوت خواهد بود و این قیمت از سرویس مخصوص توزیع و جمع آوری بدست می آید
+        /// در این بخش ما ممکن است برای یک مشتری خاص یا یک شهر و با یک استان بخواهیم قیمت توزیع و جمع آوری را بر اساس نوع کارتن ها مختلف تغییر دهیم
+        /// 
+        /// در این متد بر اساس شناسه قرارداد ، لیست قیمت های ثبت شده توزیع و یا جمع آوری برای انواع اندازه های کارتن بدست می آید
+        /// </summary>
+        /// <param name="شناسه قرارداد"></param>
         public async Task<List<ContractCollectionDistributionDto>> Handle(GetByContractIdContractCollect_DistributeQuery request, CancellationToken cancellationToken)
         {
             var collect_Distribute = await _readRepository.Table.Include(b => b.BoxType)
