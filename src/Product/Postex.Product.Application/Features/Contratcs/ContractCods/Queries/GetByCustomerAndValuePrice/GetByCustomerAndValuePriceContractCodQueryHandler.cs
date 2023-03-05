@@ -6,6 +6,14 @@ using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByCustomerAndValuePrice
 {
+    /// <summary>
+    /// در قرارداد های پرداخت در محل مشتری درصد مشخصی حق پستکس درنظر گرفته میشود 
+    /// همچنین ممکن بر اساس قراردادهایی در یک استان یا شهر خاص ویا حتی برای یک مشتری این عدد حق پستکس تغییر کند  
+    /// این متد برای محاسبه حق پرداخت در محل پستکس در زمان اعلام قیمت استفاده می شود
+    /// در این متد هم اطلاعات پیش فرض ( عمومی ) و هم در صورتی که قراردادی با مشتری / شهر / و یا استان وجود داشته باشد به عنوان خروجی برگشت داده می شود
+    /// در این متد بر اساس ارزش کالا ،  مبلغ ثابت و درصد حق پستکس بدست می آید
+    /// همچین در این متد شناسه الگو تسهیم سود بدست می آید
+    /// </summary>  
     public class GetByCustomerAndValuePriceContractCodQueryHandler : IRequestHandler<GetByCustomerAndValuePriceContractCodQuery, CodPriceDto>
     {
         private readonly IReadRepository<ContractCod> _readRepository;

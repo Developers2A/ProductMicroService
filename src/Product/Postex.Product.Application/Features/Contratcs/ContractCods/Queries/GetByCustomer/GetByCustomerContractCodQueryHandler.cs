@@ -6,6 +6,14 @@ using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByCustomer
 {
+    /// <summary>
+    /// در قرارداد های پرداخت در محل مشتری درصد مشخصی حق پستکس درنظر گرفته میشود 
+    /// همچنین ممکن بر اساس قراردادهایی در یک استان یا شهر خاص ویا حتی برای یک مشتری این عدد حق پستکس تغییر کند  
+    /// این متد لیست سطوح مختلف حق پستکس را به عنوان خروجی برمی گرداند
+    /// با اولویت  ابتدا قرارداد مشتری ، سپس قرارداد شهر ، بعد از آن قرارداد استان  در اخر قرارداد پیش فرض سطوح قیمت بدست می آید    
+    /// در این متد یکی از اولویت ها انتخاب می شود و همه سطوح ان به عنوان خروجی برگشت داده میشود 
+    /// </summary>     
+    
     public class GetByCustomerContractCodQueryHandler : IRequestHandler<GetByCustomerContractCodQuery, List<ContractCodDto>>
     {
         private readonly IReadRepository<ContractCod> _readRepository;

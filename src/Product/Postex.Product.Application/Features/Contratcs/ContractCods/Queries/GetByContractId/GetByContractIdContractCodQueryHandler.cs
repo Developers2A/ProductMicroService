@@ -19,6 +19,11 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.Get
         {
             _readRepository = readRepository;
         }
+        /// <summary>
+        /// در این متد بر اساس شناسه قرارداد همه اطلاعات و سطوح مشخص شده برای حق پرداخت در محل پستکس بدست می آید
+        /// </summary>
+        /// <param name="شناسه قرارداد "></param>      
+        /// <returns></returns>
         public async Task<List<ContractCodDto>> Handle(GetByContractIdContractCodQuery request, CancellationToken cancellationToken)
         {
             var cod = await _readRepository.Table
