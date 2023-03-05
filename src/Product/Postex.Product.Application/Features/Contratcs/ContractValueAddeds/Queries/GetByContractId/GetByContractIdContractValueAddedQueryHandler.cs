@@ -22,7 +22,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
                     ContractInfoId = c.ContractInfoId,
                     CourierId = c.CourierId,
                     ValueAddedTypeId = c.ValueAddedTypeId,
-                    ProvinceId = c.ProvinceId,
+                    StateId = c.StateId,
                     CityId = c.CityId,
                     IsActive = c.IsActive,
                     SalePrice = c.SalePrice,

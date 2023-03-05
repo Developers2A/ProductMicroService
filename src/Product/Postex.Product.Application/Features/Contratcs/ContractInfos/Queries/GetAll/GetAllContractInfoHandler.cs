@@ -3,11 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractInfos.Queries.GetAll
 {
@@ -29,7 +24,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractInfos.Queries.Ge
                     Description = c.Description,
                     CustomerId = c.CustomerId,
                     CityId = c.CityId,
-                    ProvinceId = c.ProvinceId,
+                    StateId = c.StateId,
                     IsActive = c.IsActive,
                     StartDate = c.StartDate,
                     EndDate = c.EndDate

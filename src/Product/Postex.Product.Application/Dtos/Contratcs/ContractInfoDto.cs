@@ -1,10 +1,5 @@
 ﻿using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Dtos.Contratcs
 {
@@ -19,7 +14,7 @@ namespace Postex.Product.Application.Dtos.Contratcs
         public DateTime RegisterDate { get; set; }
         public int? CustomerId { get; set; }
         public int? CityId { get; set; }
-        public int? ProvinceId { get; set; }
+        public int? StateId { get; set; }
         public bool IsActive { get; set; }
 
         public string StartDate_P => StartDate.ToPersianDate();

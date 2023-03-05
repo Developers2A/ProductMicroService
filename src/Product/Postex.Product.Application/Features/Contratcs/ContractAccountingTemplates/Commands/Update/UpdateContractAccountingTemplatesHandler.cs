@@ -1,11 +1,6 @@
 ﻿using MediatR;
-using Postex.Contract.Domain;
+using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.Update
 {
@@ -32,7 +27,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTempla
                 {
                     item.IsActive = false;
                 }
-                await _writeRepository.UpdateRangeAsync(items );
+                await _writeRepository.UpdateRangeAsync(items);
             }
 
             foreach (var item in request.ContractAccountingTemplates)
@@ -46,13 +41,12 @@ namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTempla
                     PercentValue = item.PercentValue,
                     FixedValue = item.FixedValue,
                     Description = item.Description,
-                    IsActive=true
+                    IsActive = true
                 };
                 await _writeRepository.AddAsync(contractAccountingTemplate, cancellationToken);
             };
             await _writeRepository.SaveChangeAsync(cancellationToken);
             return Unit.Value;
         }
-
     }
 }

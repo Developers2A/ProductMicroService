@@ -1,13 +1,8 @@
 ﻿using MediatR;
-using Postex.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Postex.Product.Domain.Contracts;
 using Postex.Product.Application.Dtos.Contratcs;
+using Postex.Product.Domain.Contracts;
+using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries.GetByCustomer
 {
@@ -53,7 +48,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries
               .ToListAsync(cancellationToken);
 
             var courierDefualt = await _readRepository.Table
-           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null)
+           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.StateId == null)
            .Select(c => new ContractCourierDto
            {
                Id = c.Id,

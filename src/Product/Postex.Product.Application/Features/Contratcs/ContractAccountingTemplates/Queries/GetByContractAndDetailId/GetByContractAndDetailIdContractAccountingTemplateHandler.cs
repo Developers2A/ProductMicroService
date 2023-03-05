@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.Contract.Domain;
+using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Queries.GetByContractAndDetailId
 {
@@ -35,7 +30,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTempla
                     FixedValue = c.FixedValue,
                     Description = c.Description,
                 })
-                .Where(c => c.ContractInfoId == request.ContractInfoId && c.ContractDetailId == request.ContractDeatilId && c.ContractDetailType == request.ContractDetailType && c.IsActive==true)
+                .Where(c => c.ContractInfoId == request.ContractInfoId && c.ContractDetailId == request.ContractDeatilId && c.ContractDetailType == request.ContractDetailType && c.IsActive == true)
                 .ToListAsync(cancellationToken);
 
             return info;

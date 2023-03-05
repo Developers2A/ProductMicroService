@@ -1,13 +1,8 @@
 ﻿using MediatR;
-using Postex.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Postex.Product.Domain.Contracts;
 using Postex.Product.Application.Dtos.Contratcs;
+using Postex.Product.Domain.Contracts;
+using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByCustomer
 {
@@ -42,7 +37,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.Get
 
             var codCity = await _readRepository.Table
                  .Include(c => c.ContractInfo)
-                 .Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId  && c.ContractInfo.CustomerId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now)
+                 .Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now)
                  .Select(c => new ContractCodDto
                  {
                      Id = c.Id,
@@ -61,7 +56,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.Get
 
             var codProvince = await _readRepository.Table
                 .Include(c => c.ContractInfo)
-                .Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now)
+                .Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StateId == request.StateId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now)
                 .Select(c => new ContractCodDto
                 {
                     Id = c.Id,
@@ -80,7 +75,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.Get
 
             var codDefualt = await _readRepository.Table
            .Include(c => c.ContractInfo)
-           .Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now)
+           .Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.StateId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now)
            .Select(c => new ContractCodDto
            {
                Id = c.Id,

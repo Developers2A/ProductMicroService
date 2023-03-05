@@ -17,7 +17,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
         public async Task<ValueAddedPriceDto> Handle(GetByCustomerAndValueAddedContractValueAddedQuery request, CancellationToken cancellationToken)
         {
             var ValueAddedPrice = await _readRepository.TableNoTracking
-             .Include(c => c.ContractInfo).Include(x => x.ValueAddedType).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ValueAddedTypeId == request.ValueAddedId)
+             .Include(c => c.ContractInfo).Include(x => x.ValueAddedType).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.StateId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ValueAddedTypeId == request.ValueAddedId)
              .Select(c => new ValueAddedPriceDto
              {
                  ContractId = c.ContractInfoId,
@@ -31,7 +31,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
             .FirstOrDefaultAsync(cancellationToken);
 
             var itemCus = await _readRepository.Table
-               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == request.CustomerId && c.ContractInfo.ProvinceId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ValueAddedTypeId == request.ValueAddedId)
+               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == request.CustomerId && c.ContractInfo.StateId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ValueAddedTypeId == request.ValueAddedId)
                 .Select(c => new ValueAddedPriceDto
                 {
                     ContractId = c.ContractInfoId,
@@ -79,7 +79,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
             }
 
             var itemProvince = await _readRepository.Table
-             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ValueAddedTypeId == request.ValueAddedId)
+             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StateId == request.StateId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ValueAddedTypeId == request.ValueAddedId)
               .Select(c => new ValueAddedPriceDto
               {
                   ContractId = c.ContractInfoId,

@@ -4,6 +4,7 @@ using Postex.Product.Application.Dtos.Couriers;
 using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Dtos.ServiceProviders.Mahex.Common;
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomerAndBoxType;
+using Postex.Product.Application.Features.Contratcs.ContractInsurances.Queries.GetByCustomerAndValuePrice;
 using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByCustomerAndValueAdded;
 using Postex.Product.Application.Features.CourierCityMappings.Queries;
 using Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries.GetPeykOfflinePrices;
@@ -25,7 +26,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         private readonly HttpContext _httpContext;
         private List<CourierCityMappingDto> _courierCityMappings;
         private GetPriceQuery _query;
-        private int _customerId;
+        private int? _customerId;
 
         public GetPriceQueryHandler(IMediator mediator, IHttpContextAccessor contextAccessor)
         {
@@ -39,7 +40,8 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             _customerId = await GetCustomerId();
             if (_customerId == 0)
             {
-                throw new AppException($"شناسه مشتری یافت نشد");
+                _customerId = null;
+                //mina for test throw new AppException($"شناسه مشتری یافت نشد");
             }
             return await GetPrice();
         }
@@ -139,23 +141,29 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             }
 
             priceResponse.ServicePrices = prices;
+            foreach (var servicePrice in priceResponse.ServicePrices)
+            {
+                servicePrice.ContractInsurancePrice = await GetInsurancePrices(servicePrice.InsurancePrice);
+            }
             priceResponse.BoxPrice = await GetBoxPrice();
             priceResponse.ValueAddedPrices = await GetValueAddedPrices();
             return new(true, "success", priceResponse); ;
         }
 
-        private async Task<PriceDto> GetBoxPrice()
+        private async Task<ContractPriceDto> GetBoxPrice()
         {
             var boxPrice = await _mediator.Send(new GetByCustomerAndBoxTypeContractBoxPriceQuery()
             {
-                CustomerId = null,
-                CityId = null,
-                ProvinceId = null,
+                CustomerId = _customerId,
+                CityId = _courierCityMappings.FirstOrDefault().CityId,
+                ProvinceId = _courierCityMappings.FirstOrDefault().StateId,
                 BoxTypeId = _query.BoxTypeId
             });
 
-            return new PriceDto()
+            return new ContractPriceDto()
             {
+                ContractId = boxPrice.ContractId,
+                ContractItemId = boxPrice.ContractBoxPriceId,
                 DefaultSalePrice = boxPrice.DefaultSalePrice,
                 DefaultBuyPrice = boxPrice.DefaultBuyPrice,
                 ContractSalePrice = boxPrice.ContractSalePrice,
@@ -163,23 +171,25 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             };
         }
 
-        private async Task<List<ValueAddedPriceGetDto>> GetValueAddedPrices()
+        private async Task<List<ContractValueAddedPriceDto>> GetValueAddedPrices()
         {
-            List<ValueAddedPriceGetDto> valueAddedPriceGetDtos = new();
+            List<ContractValueAddedPriceDto> valueAddedPriceGetDtos = new();
             if (_query.ValueAddedIds != null && _query.ValueAddedIds.Any())
             {
                 foreach (var item in _query.ValueAddedIds)
                 {
                     var valueAddedPrice = await _mediator.Send(new GetByCustomerAndValueAddedContractValueAddedQuery()
                     {
-                        CustomerId = null,
-                        CityId = null,
-                        ProvinceId = null,
+                        CustomerId = _customerId,
+                        CityId = _courierCityMappings.FirstOrDefault().CityId,
+                        StateId = _courierCityMappings.FirstOrDefault().StateId,
                         ValueAddedId = item
                     });
 
-                    valueAddedPriceGetDtos.Add(new ValueAddedPriceGetDto()
+                    valueAddedPriceGetDtos.Add(new ContractValueAddedPriceDto()
                     {
+                        ContractId = valueAddedPrice.ContractId,
+                        ContractValueAddedId = valueAddedPrice.ContractValueAddedId,
                         Name = valueAddedPrice.ValueAddedTypeName,
                         DefaultBuyPrice = valueAddedPrice.DefaultBuyPrice,
                         DefaultSalePrice = valueAddedPrice.DefaultSalePrice,
@@ -191,6 +201,30 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 
             return valueAddedPriceGetDtos;
         }
+
+        private async Task<ContractInsurancePriceDto> GetInsurancePrices(long courierInsurancePrice)
+        {
+            List<ContractPriceDto> valueAddedPriceGetDtos = new();
+            var insurancePrice = await _mediator.Send(new GetByCustomerAndValuePriceContractInsuranceQuery()
+            {
+                CustomerId = _customerId,
+                CityId = _courierCityMappings.FirstOrDefault().CityId,
+                ProvinceId = _courierCityMappings.FirstOrDefault().StateId,
+                ValuePrice = _query.Value
+            });
+
+            var defaultInsurancePrice = courierInsurancePrice + insurancePrice.DefaultFixedValue + courierInsurancePrice * insurancePrice.DefaultFixedPercent;
+            var contractInsurancePrice = courierInsurancePrice + insurancePrice.ContractFixedValue + courierInsurancePrice * insurancePrice.ContractFixedPercent;
+
+            return new ContractInsurancePriceDto()
+            {
+                ContractId = insurancePrice.ContractId,
+                ContractInsuranceId = insurancePrice.ContractInsuranceId,
+                DefaultPrice = Convert.ToDecimal(defaultInsurancePrice),
+                ContractPrice = Convert.ToDecimal(contractInsurancePrice),
+            };
+        }
+
 
         public async Task<List<CourierCityMappingDto>> GetCourierCityMapping(int courierCode, int senderCity, int receiverCity)
         {
@@ -428,7 +462,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                         CourierName = courier,
                         CourierCode = (int)CourierCode.Post,
                         DiscountAmount = result.Data.DiscountAmount,
-
+                        InsurancePrice = result.Data.InsurancePrice
                     };
                     priceResult.Add(servicePrice);
                 }

@@ -35,7 +35,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Comman
 
             contractBoxType.BoxTypeId = request.BoxTypeId;
             contractBoxType.CityId = request.CityId;
-            contractBoxType.ProvinceId = request.ProvinceId;
+            contractBoxType.StateId = request.ProvinceId;
             contractBoxType.CustomerId = request.CustomerId;
             contractBoxType.SalePrice = request.SalePrice;
             contractBoxType.BuyPrice = request.BuyPrice;

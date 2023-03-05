@@ -20,7 +20,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
         {
             var collect_DistributeDefualt = await _readRepository.Table
                .Include(b => b.BoxType)
-               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0)
+               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.StateId == 0)
                .Select(c => new ContractCollectionDistributionDto
                {
                    Id = c.Id,
@@ -28,7 +28,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
                    CourierServiceId = c.CourierServiceId,
                    BoxTypeId = c.BoxTypeId,
                    CityId = c.CityId,
-                   ProvinceId = c.ProvinceId,
+                   ProvinceId = c.StateId,
                    SalePrice = c.SalePrice,
                    BuyPrice = c.BuyPrice,
                    BoxName = c.BoxType.Name,
@@ -50,7 +50,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
                   CourierServiceId = c.CourierServiceId,
                   BoxTypeId = c.BoxTypeId,
                   CityId = c.CityId,
-                  ProvinceId = c.ProvinceId,
+                  ProvinceId = c.StateId,
                   SalePrice = c.SalePrice,
                   BuyPrice = c.BuyPrice,
                   Description = c.Description,
@@ -67,7 +67,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
                     CourierServiceId = c.CourierServiceId,
                     BoxTypeId = c.BoxTypeId,
                     CityId = c.CityId,
-                    ProvinceId = c.ProvinceId,
+                    ProvinceId = c.StateId,
                     SalePrice = c.SalePrice,
                     BuyPrice = c.BuyPrice,
                     Description = c.Description,

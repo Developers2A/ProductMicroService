@@ -1,13 +1,8 @@
 ﻿using MediatR;
-using Postex.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Postex.Product.Domain.Contracts;
 using Postex.Product.Application.Dtos.Contratcs;
+using Postex.Product.Domain.Contracts;
+using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractInsurances.Queries.GetByCustomerAndValuePrice
 {
@@ -22,7 +17,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractInsurances.Queri
         public async Task<InsurancePriceDto> Handle(GetByCustomerAndValuePriceContractInsuranceQuery request, CancellationToken cancellationToken)
         {
             var insurance = await _readRepository.Table
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0 && c.FromValue >= request.ValuePrice && c.ToValue <= request.ValuePrice)
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.StateId == 0 && c.FromValue >= request.ValuePrice && c.ToValue <= request.ValuePrice)
               .Select(c => new InsurancePriceDto
               {
                   ContractId = c.ContractInfoId,
@@ -40,9 +35,9 @@ namespace Postex.Product.Application.Features.Contratcs.ContractInsurances.Queri
                 .Select(c => new InsurancePriceDto
                 {
                     ContractId = c.ContractInfoId,
-                    ContractInsuranceId = c.Id,                   
+                    ContractInsuranceId = c.Id,
                     ContractFixedValue = c.FixedValue,
-                    ContractFixedPercent = c.FixedPercent,                    
+                    ContractFixedPercent = c.FixedPercent,
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -79,7 +74,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractInsurances.Queri
             }
 
             var insuranceProvince = await _readRepository.Table
-            .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.FromValue >= request.ValuePrice && c.ToValue <= request.ValuePrice)
+            .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.StateId == request.ProvinceId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.FromValue >= request.ValuePrice && c.ToValue <= request.ValuePrice)
             .Select(c => new InsurancePriceDto
             {
                 ContractId = c.ContractInfoId,

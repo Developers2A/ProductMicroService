@@ -8,7 +8,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Comm
         public int Id { get; set; }
         public int CourierId { get; set; }
         public int ValueAddedTypeId { get; set; }
-        public int? ProvinceId { get; set; }
+        public int? StateId { get; set; }
         public int? CityId { get; set; }
         public bool IsActive { get; set; }
         public decimal SalePrice { get; set; }

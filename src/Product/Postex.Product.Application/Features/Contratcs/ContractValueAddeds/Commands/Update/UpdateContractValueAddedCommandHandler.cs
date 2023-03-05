@@ -31,7 +31,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Comm
 
             contractitem.CourierId = request.CourierId;
             contractitem.ValueAddedTypeId = request.ValueAddedTypeId;
-            contractitem.ProvinceId = request.ProvinceId;
+            contractitem.StateId = request.StateId;
             contractitem.CityId = request.CityId;
             contractitem.IsActive = request.IsActive;
             contractitem.SalePrice = request.SalePrice;

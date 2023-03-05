@@ -46,11 +46,10 @@ namespace Postex.Product.Domain.Contracts
         /// <summary>
         /// توضیحات
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
         /// <summary>
         /// لیست ضمانتنامه ها
         /// </summary>
         public List<ContractLeasingWarranty> Warranties { get; set; }
-
     }
 }

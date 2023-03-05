@@ -10,7 +10,7 @@ namespace Postex.Product.Domain.Contracts
         public BoxType BoxType { get; set; }
         public int ContractInfoId { get; set; }
         public ContractInfo ContractInfo { get; set; }
-        public int? ProvinceId { get; set; }
+        public int? StateId { get; set; }
         public int? CityId { get; set; }
         public int? CustomerId { get; set; }
         public decimal SalePrice { get; set; }

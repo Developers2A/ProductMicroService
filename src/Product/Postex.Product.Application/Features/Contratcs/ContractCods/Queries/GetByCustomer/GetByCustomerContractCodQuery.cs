@@ -6,7 +6,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.Get
     public class GetByCustomerContractCodQuery : IRequest<List<ContractCodDto>>
     {
         public int? CustomerId { get; set; }
-        public int? ProvinceId { get; set; }
+        public int? StateId { get; set; }
         public int? CityId { get; set; }
     }
 }

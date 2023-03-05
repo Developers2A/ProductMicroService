@@ -45,7 +45,7 @@ namespace Postex.Product.ContractApi.Controllers.v1
         [HttpGet("GetByCustomerAndBoxType")]
         public async Task<IActionResult> GetByCustomerBoxTypeCourierService(int courierServiceId,int boxTypeId, int? customerId, int? provinceId, int? cityId)
         {
-            return Ok(await _mediator.Send(new GetByCustomerAndBoxTypeContractCollect_DistributeQuery { CourierServiceId= courierServiceId, BoxTypeId = boxTypeId, CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
+            return Ok(await _mediator.Send(new GetByCustomerAndBoxTypeContractCollect_DistributeQuery { CourierServiceId= courierServiceId, BoxTypeId = boxTypeId, CustomerId = customerId, StateId = provinceId, CityId = cityId }));
         }
     }
 }

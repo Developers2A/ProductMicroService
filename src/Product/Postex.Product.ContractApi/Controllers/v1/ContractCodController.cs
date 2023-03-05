@@ -40,7 +40,7 @@ namespace Postex.Product.ContractApi.Controllers.v1
         [HttpGet("GetByCustomer")]
         public async Task<IActionResult> GetByCustomer(int? customerId, int? provinceId, int? cityId)
         {
-            return Ok(await _mediator.Send(new GetByCustomerContractCodQuery { CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
+            return Ok(await _mediator.Send(new GetByCustomerContractCodQuery { CustomerId = customerId, StateId = provinceId, CityId = cityId }));
         }
         [HttpGet("GetByCustomerAndValuePrice")]
         public async Task<IActionResult> GetByCustomerAndValuePrice(double valuePrice,int? customerId, int? provinceId, int? cityId)

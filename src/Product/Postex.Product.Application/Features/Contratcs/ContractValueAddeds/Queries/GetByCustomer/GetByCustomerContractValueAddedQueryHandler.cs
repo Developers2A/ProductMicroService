@@ -23,7 +23,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
                    ContractInfoId = c.ContractInfoId,
                    CourierId = c.CourierId,
                    ValueAddedTypeId = c.ValueAddedTypeId,
-                   ProvinceId = c.ProvinceId,
+                   StateId = c.StateId,
                    CityId = c.CityId,
                    IsActive = c.IsActive,
                    SalePrice = c.SalePrice,
@@ -41,7 +41,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
                   ContractInfoId = c.ContractInfoId,
                   CourierId = c.CourierId,
                   ValueAddedTypeId = c.ValueAddedTypeId,
-                  ProvinceId = c.ProvinceId,
+                  StateId = c.StateId,
                   CityId = c.CityId,
                   IsActive = c.IsActive,
                   SalePrice = c.SalePrice,
@@ -52,13 +52,13 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
               .ToListAsync(cancellationToken);
 
             var itemDefualt = await _readRepository.Table
-           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.ProvinceId == null)
+           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.StateId == null)
            .Select(c => new ContractValueAddedDto
            {
                ContractInfoId = c.ContractInfoId,
                CourierId = c.CourierId,
                ValueAddedTypeId = c.ValueAddedTypeId,
-               ProvinceId = c.ProvinceId,
+               StateId = c.StateId,
                CityId = c.CityId,
                IsActive = c.IsActive,
                SalePrice = c.SalePrice,
@@ -82,7 +82,6 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
                     itemDefualt[i].SalePrice = cus.SalePrice;
                     itemDefualt[i].BuyPrice = cus.BuyPrice;
                     itemDefualt[i].LevelPrice = "Customer";
-
                 }
                 else if (itemCity.Where(c => c.ValueAddedTypeId == item.ValueAddedTypeId)
                     .FirstOrDefault() != null)
