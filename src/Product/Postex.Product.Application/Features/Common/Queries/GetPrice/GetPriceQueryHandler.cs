@@ -1,9 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Application.Dtos.Couriers;
 using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Dtos.ServiceProviders.Mahex.Common;
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomerAndBoxType;
+using Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByCustomerAndValuePrice;
 using Postex.Product.Application.Features.Contratcs.ContractInsurances.Queries.GetByCustomerAndValuePrice;
 using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByCustomerAndValueAdded;
 using Postex.Product.Application.Features.CourierCityMappings.Queries;
@@ -20,6 +22,9 @@ using Postex.SharedKernel.Exceptions;
 
 namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 {
+    /// <summary>
+    /// بعد از اینکه قیمت از ای پی آی کوریر مربوطه گرفته شد. قیمت های پیشفرض پستکس و قیمت های کانترکن بر روی آن اعمال می شود
+    /// </summary>
     public class GetPriceQueryHandler : IRequestHandler<GetPriceQuery, BaseResponse<GetPriceResponse>>
     {
         private readonly IMediator _mediator;
@@ -37,6 +42,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         public async Task<BaseResponse<GetPriceResponse>> Handle(GetPriceQuery query, CancellationToken cancellationToken)
         {
             _query = query;
+            var tasviePrice = await ApplyPayType();
             _customerId = await GetCustomerId();
             if (_customerId == 0)
             {
@@ -46,8 +52,86 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             return await GetPrice();
         }
 
+        private async Task<int> ApplyPayType()
+        {
+            var codValues = await GetCodValues();
+            var insuranceValues = await GetInsuranceValues();
+
+            //هزینه اعلامی به شرکت پستی : هزینه کالا + حق سی او دی پستکس + حق بیمه پستکس
+            if (_query.PayType == (int)PayType.Cod)
+            {
+                _query.Value = Convert.ToInt32(_query.Value + _query.Value * codValues.DefaultFixedPercent / 100 + codValues.DefaultFixedValue +
+                    _query.Value * insuranceValues.DefaultFixedPercent / 100 + insuranceValues.DefaultFixedValue);
+
+                return _query.Value;
+            }
+            //در زمان دریافت هزینه از تحویل گیرنده تنها ارزش کالا از گیرنده دریافت میشود
+            else if (_query.PayType == (int)PayType.FreePost)
+            {
+                return _query.Value;
+            }
+            //هزینه پستی + خدمات ارزش افزوده ( پیامک ، پرینت ) محاسبه میشود و به عنوان ارزش کالا به شرکت پستی اعلام میگردد .
+            else if (_query.PayType == (int)PayType.Online)
+            {
+                var valueAddedPrices = await GetValueAddedPrices();
+                _query.Value = Convert.ToInt32(_query.Value + valueAddedPrices.Sum(x => x.DefaultSalePrice));
+                //اگر مبلغ کمتر از پنج هزار تومان بود همان پنج هزار تومان در نظر گرفته می شود
+                if (_query.Value <= 5000)
+                {
+                    _query.Value = 5000;
+                }
+                return _query.Value;
+            }
+            return 0;
+        }
+
+        private async Task<CodPriceDto> GetCodValues()
+        {
+            //مقدار پیشرض و مقدار کانترکت برحسب شهر، استان و مشتری
+            var boxPrice = await _mediator.Send(new GetByCustomerAndValuePriceContractCodQuery()
+            {
+                CustomerId = _customerId,
+                CityId = _courierCityMappings.FirstOrDefault().CityId,
+                ProvinceId = _courierCityMappings.FirstOrDefault().StateId,
+                ValuePrice = _query.Value
+            });
+
+            return new CodPriceDto()
+            {
+                ContractId = boxPrice.ContractId,
+                ContractCodId = boxPrice.ContractCodId,
+                DefaultFixedPercent = boxPrice.DefaultFixedPercent,
+                DefaultFixedValue = boxPrice.DefaultFixedValue,
+                ContractFixedPercent = boxPrice.ContractFixedPercent,
+                ContractFixedValue = boxPrice.ContractFixedValue,
+            };
+        }
+
+        private async Task<InsurancePriceDto> GetInsuranceValues()
+        {
+            //مقدار پیشرض و مقدار کانترکت برحسب شهر، استان و مشتری
+            var insurancePrice = await _mediator.Send(new GetByCustomerAndValuePriceContractInsuranceQuery()
+            {
+                CustomerId = _customerId,
+                CityId = _courierCityMappings.FirstOrDefault().CityId,
+                ProvinceId = _courierCityMappings.FirstOrDefault().StateId,
+                ValuePrice = _query.Value
+            });
+
+            return new InsurancePriceDto()
+            {
+                ContractId = insurancePrice.ContractId,
+                ContractInsuranceId = insurancePrice.ContractInsuranceId,
+                DefaultFixedPercent = insurancePrice.DefaultFixedPercent,
+                DefaultFixedValue = insurancePrice.DefaultFixedValue,
+                ContractFixedPercent = insurancePrice.ContractFixedPercent,
+                ContractFixedValue = insurancePrice.ContractFixedValue,
+            };
+        }
+
         private async Task<int> GetCustomerId()
         {
+            // دریافت آی دی مشتری با استفاده از یورآی دی موجود در هدر درخواست
             var userId = GetUserId();
             try
             {
@@ -69,6 +153,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 
         private Guid? GetUserId()
         {
+            // دریافت شناسه جی یو آی دی مشتری با هدر درخواست
             try
             {
                 return Guid.Parse(_httpContext.Request.Headers["x-userid"]);
@@ -130,13 +215,23 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                     SenderCity = _query.CourierCode,
                 });
 
-                if (_query.HasCollection)
+                if (_query.HasCollection && collectionDistributionPrice.CollectionPrices != null)
                 {
-                    //priceResponse.CollectionPrices = collectionDistributionPrice.CollectionPrices;
+                    priceResponse.CollectionPrices = collectionDistributionPrice.CollectionPrices.Select(x => new Dtos.ServiceProviders.Common.CollectionDistributionPriceDto()
+                    {
+                        CourierCode = x.CourierCode,
+                        CourierName = x.CourierName,
+                        Price = x.Price
+                    }).ToList();
                 }
-                if (_query.HasDistribution)
+                if (_query.HasDistribution && collectionDistributionPrice.DistributionPrices != null)
                 {
-                    //priceResponse.DistributionPrices = collectionDistributionPrice.DistributionPrices;
+                    priceResponse.CollectionPrices = collectionDistributionPrice.DistributionPrices.Select(x => new Dtos.ServiceProviders.Common.CollectionDistributionPriceDto()
+                    {
+                        CourierCode = x.CourierCode,
+                        CourierName = x.CourierName,
+                        Price = x.Price
+                    }).ToList();
                 }
             }
 
@@ -152,6 +247,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 
         private async Task<ContractPriceDto> GetBoxPrice()
         {
+            //مقدار پیشرض و مقدار کانترکت برحسب شهر، استان و مشتری
             var boxPrice = await _mediator.Send(new GetByCustomerAndBoxTypeContractBoxPriceQuery()
             {
                 CustomerId = _customerId,
@@ -173,6 +269,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 
         private async Task<List<ContractValueAddedPriceDto>> GetValueAddedPrices()
         {
+            //دریافت لیست مبالغ پیشفرض و کانترکت ارزش های افزوده درخواستی برحسب شهر، استان و مشتری
             List<ContractValueAddedPriceDto> valueAddedPriceGetDtos = new();
             if (_query.ValueAddedIds != null && _query.ValueAddedIds.Any())
             {
@@ -204,14 +301,9 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 
         private async Task<ContractInsurancePriceDto> GetInsurancePrices(long courierInsurancePrice)
         {
-            List<ContractPriceDto> valueAddedPriceGetDtos = new();
-            var insurancePrice = await _mediator.Send(new GetByCustomerAndValuePriceContractInsuranceQuery()
-            {
-                CustomerId = _customerId,
-                CityId = _courierCityMappings.FirstOrDefault().CityId,
-                ProvinceId = _courierCityMappings.FirstOrDefault().StateId,
-                ValuePrice = _query.Value
-            });
+            //اعمال مبالغ پیشفرض و کانترکت بر روی مبلغ بیمه اعلامی کوریر
+
+            var insurancePrice = await GetInsuranceValues();
 
             var defaultInsurancePrice = courierInsurancePrice + insurancePrice.DefaultFixedValue + courierInsurancePrice * insurancePrice.DefaultFixedPercent;
             var contractInsurancePrice = courierInsurancePrice + insurancePrice.ContractFixedValue + courierInsurancePrice * insurancePrice.ContractFixedPercent;
@@ -285,32 +377,6 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                 return Convert.ToInt64(changePrice);
             }
         }
-
-        private long PostChangePriceFormula(CourierCode courierCode, long price, long insurancePrice = 0)
-        {
-            var courier = _courierCityMappings.FirstOrDefault(x => x.Courier.Code == courierCode).Courier;
-            if (courier == null)
-            {
-                return price;
-            }
-            else
-            {
-                double A = 20;// courier.DiscountPercent; // 20
-                var B = price; // totalprice
-                double C = insurancePrice;
-                long D = 0; // courier.FixBasePrice;
-                double E = 0;// courier.PriceHasTax ? B / 1.09 : B; // totalPrice : hastax = true ;
-                double F = E - C - D;
-                double G = 0;// courier.PriceHasDiscount ? 100 / (100 - A) * F : F;
-                var I = 0; // courier.PostexPercent;
-                var J = 0; // courier.PostexFixPrice;
-
-                var X = (G + G * I / 100 + C + D) * 0.09 + J;
-
-                return Convert.ToInt64(X);
-            }
-        }
-
 
         private string GetCityMappedCode(CourierCode courierCode, int cityCode)
         {

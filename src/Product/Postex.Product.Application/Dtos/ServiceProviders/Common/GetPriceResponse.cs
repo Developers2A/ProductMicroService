@@ -8,6 +8,8 @@
         public List<CollectionDistributionPriceDto> CollectionPrices { get; set; }
         public List<CollectionDistributionPriceDto> DistributionPrices { get; set; }
         public List<ContractValueAddedPriceDto> ValueAddedPrices { get; set; }
+
+        public int TasviePrice { get; set; }
     }
 
     public class ServicePriceDto

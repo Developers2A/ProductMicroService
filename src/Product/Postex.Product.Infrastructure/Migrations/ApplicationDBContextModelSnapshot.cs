@@ -185,114 +185,6 @@ namespace Postex.Product.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Postex.Product.Domain.Common.PostexCod", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("FixedPercent")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FixedValue")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FromValue")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime?>("RemovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int>("ToValue")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PostexCods", (string)null);
-                });
-
-            modelBuilder.Entity("Postex.Product.Domain.Common.PostexInsurance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("FixedPercent")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FixedValue")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FromValue")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime?>("RemovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int>("ToValue")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PostexInsurances", (string)null);
-                });
-
             modelBuilder.Entity("Postex.Product.Domain.Common.ValueAddedType", b =>
                 {
                     b.Property<int>("Id")
@@ -394,11 +286,13 @@ namespace Postex.Product.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FixedValue")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
@@ -474,9 +368,6 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ProvinceId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("RemovedOn")
                         .HasColumnType("datetime2");
 
@@ -488,6 +379,9 @@ namespace Postex.Product.Infrastructure.Migrations
 
                     b.Property<decimal>("SalePrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("StateId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -509,7 +403,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<int>("ContractInfoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CourierId")
+                    b.Property<int>("CourierServiceId")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("CreatedBy")
@@ -519,7 +413,6 @@ namespace Postex.Product.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
@@ -583,6 +476,9 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<int>("ContractInfoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CourierServiceId")
+                        .HasColumnType("int");
+
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -590,7 +486,6 @@ namespace Postex.Product.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
@@ -606,9 +501,6 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ProvinceId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("RemovedOn")
                         .HasColumnType("datetime2");
 
@@ -620,6 +512,9 @@ namespace Postex.Product.Infrastructure.Migrations
 
                     b.Property<double>("SalePrice")
                         .HasColumnType("float");
+
+                    b.Property<int?>("StateId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -734,9 +629,6 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ProvinceId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
 
@@ -751,6 +643,9 @@ namespace Postex.Product.Infrastructure.Migrations
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("StateId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -808,9 +703,6 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ProvinceId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("RemovedOn")
                         .HasColumnType("datetime2");
 
@@ -819,6 +711,9 @@ namespace Postex.Product.Infrastructure.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
+
+                    b.Property<int?>("StateId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ToValue")
                         .HasColumnType("int");
@@ -857,7 +752,6 @@ namespace Postex.Product.Infrastructure.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
@@ -921,7 +815,6 @@ namespace Postex.Product.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
@@ -1005,9 +898,6 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ProvinceId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("RemovedOn")
                         .HasColumnType("datetime2");
 
@@ -1019,6 +909,9 @@ namespace Postex.Product.Infrastructure.Migrations
 
                     b.Property<decimal>("SalePrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("StateId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ValueAddedTypeId")
                         .HasColumnType("int");

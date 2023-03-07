@@ -46,7 +46,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: true),
-                    ProvinceId = table.Column<int>(type: "int", nullable: true),
+                    StateId = table.Column<int>(type: "int", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -76,7 +76,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     DailyDepositRateCeiling = table.Column<int>(type: "int", nullable: false),
                     DailyDepositeRate = table.Column<double>(type: "float", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -152,54 +152,6 @@ namespace Postex.Product.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Couriers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PostexCods",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    FromValue = table.Column<int>(type: "int", nullable: false),
-                    ToValue = table.Column<int>(type: "int", nullable: false),
-                    FixedValue = table.Column<int>(type: "int", nullable: false),
-                    FixedPercent = table.Column<int>(type: "int", nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
-                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PostexCods", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PostexInsurances",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    FromValue = table.Column<int>(type: "int", nullable: false),
-                    ToValue = table.Column<int>(type: "int", nullable: false),
-                    FixedValue = table.Column<int>(type: "int", nullable: false),
-                    FixedPercent = table.Column<int>(type: "int", nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
-                    RemovedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PostexInsurances", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -398,7 +350,8 @@ namespace Postex.Product.Infrastructure.Migrations
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     PercentValue = table.Column<double>(type: "float", nullable: false),
                     FixedValue = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -426,7 +379,7 @@ namespace Postex.Product.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BoxTypeId = table.Column<int>(type: "int", nullable: false),
                     ContractInfoId = table.Column<int>(type: "int", nullable: false),
-                    ProvinceId = table.Column<int>(type: "int", nullable: true),
+                    StateId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     SalePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -465,12 +418,12 @@ namespace Postex.Product.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ContractInfoId = table.Column<int>(type: "int", nullable: false),
-                    CourierId = table.Column<int>(type: "int", nullable: false),
+                    CourierServiceId = table.Column<int>(type: "int", nullable: false),
                     FromValue = table.Column<int>(type: "int", nullable: false),
                     ToValue = table.Column<int>(type: "int", nullable: false),
                     FixedPercent = table.Column<double>(type: "float", nullable: false),
                     FixedValue = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     IsActice = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -498,12 +451,13 @@ namespace Postex.Product.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ContractInfoId = table.Column<int>(type: "int", nullable: false),
-                    ProvinceId = table.Column<int>(type: "int", nullable: true),
+                    CourierServiceId = table.Column<int>(type: "int", nullable: false),
+                    StateId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: true),
                     BoxTypeId = table.Column<int>(type: "int", nullable: false),
                     SalePrice = table.Column<double>(type: "float", nullable: false),
                     BuyPrice = table.Column<double>(type: "float", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     IsActice = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -568,7 +522,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ContractInfoId = table.Column<int>(type: "int", nullable: false),
-                    ProvinceId = table.Column<int>(type: "int", nullable: true),
+                    StateId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: true),
                     FromValue = table.Column<int>(type: "int", nullable: false),
                     ToValue = table.Column<int>(type: "int", nullable: false),
@@ -607,7 +561,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     WarrantyReqistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     WarrantyEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BankName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -780,7 +734,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     ContractInfoId = table.Column<int>(type: "int", nullable: false),
                     CourierId = table.Column<int>(type: "int", nullable: false),
                     ValueAddedTypeId = table.Column<int>(type: "int", nullable: false),
-                    ProvinceId = table.Column<int>(type: "int", nullable: true),
+                    StateId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     SalePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -1401,12 +1355,6 @@ namespace Postex.Product.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "PostCityShops");
-
-            migrationBuilder.DropTable(
-                name: "PostexCods");
-
-            migrationBuilder.DropTable(
-                name: "PostexInsurances");
 
             migrationBuilder.DropTable(
                 name: "PostShops");

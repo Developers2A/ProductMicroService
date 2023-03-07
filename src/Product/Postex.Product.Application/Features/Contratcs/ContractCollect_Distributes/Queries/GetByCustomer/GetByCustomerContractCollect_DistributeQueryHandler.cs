@@ -86,7 +86,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
                 .ToListAsync(cancellationToken);
 
             var collect_DistributeProvince = await _readRepository.Table
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0)
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.StateId == request.ProvinceId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0)
               .Select(c => new ContractCollectionDistributionDto
               {
                   Id = c.Id,
@@ -94,7 +94,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
                   CourierServiceId = c.CourierServiceId,
                   BoxTypeId = c.BoxTypeId,
                   CityId = c.CityId,
-                  ProvinceId = c.ProvinceId,
+                  ProvinceId = c.StateId,
                   SalePrice = c.SalePrice,
                   BuyPrice = c.BuyPrice,
                   Description = c.Description,
