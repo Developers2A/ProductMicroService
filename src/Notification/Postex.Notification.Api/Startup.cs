@@ -22,8 +22,7 @@ namespace Postex.Notification.Api
             services.AddControllers();
             services.AddCustomVersioningSwagger();
             services.AddApplicationCore(Configuration);
-            services.Configure<JwtSetting>(Configuration.GetSection("JwtSetting"));
-            services.Configure<CodeExpirationSetting>(Configuration.GetSection("CodeExpirationSetting"));
+            services.Configure<SmsSetting>(Configuration.GetSection("SmsSetting"));
         }
 
         public void Configure(IApplicationBuilder app)

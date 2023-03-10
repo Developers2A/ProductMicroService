@@ -2,8 +2,10 @@
 {
     public class CourierServiceCommonDto
     {
-        public string Name { get; set; }
+        public string CourierServiceName { get; set; }
         public int CourierCode { get; set; }
+        public string CourierName { get; set; }
         public int CourierServiceCode { get; set; }
+        public string Days { get; set; }
     }
 }

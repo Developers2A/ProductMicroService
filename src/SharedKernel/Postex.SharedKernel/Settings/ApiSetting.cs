@@ -4,6 +4,6 @@
     {
         public string UserApi { get; set; }
         public string ProductApi { get; set; }
-        public string CustomerApi { get; set; }
+        public string NotificationApi { get; set; }
     }
 }

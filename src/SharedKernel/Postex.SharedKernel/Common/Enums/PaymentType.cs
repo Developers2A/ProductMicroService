@@ -2,7 +2,7 @@
 
 namespace Postex.SharedKernel.Common.Enums
 {
-    public enum PayType
+    public enum PaymentType
     {
         [Description("پرداخت در محل")] Cod = 0,
         [Description("پرداخت آنلاين")] Online = 1,

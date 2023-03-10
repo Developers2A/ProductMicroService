@@ -1,25 +1,33 @@
-﻿using Postex.Product.Application.Contracts;
+﻿using Newtonsoft.Json;
+using Postex.Product.Application.Contracts;
 using Postex.Product.Application.Dtos.Commons;
-using Postex.Product.Application.Dtos.ServiceProviders.Common;
+using Postex.Product.Application.Dtos.Commons.CreateOrder.Request;
+using Postex.Product.Application.Dtos.Commons.CreateOrder.Response;
 using Postex.SharedKernel.Common;
 
 namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 {
-    public class CreateOrderCommand : ITransactionRequest<BaseResponse<CreateOrderResponse>>
+    public class CreateOrderCommand : ITransactionRequest<BaseResponse<CreateOrderResponseDto>>
     {
-        public int CourierServiceCode { get; set; }
-        public int PayType { get; set; }
-        public string? ParcelId { get; set; }
-        public string? Content { get; set; }
-        public int ApproximateValue { get; set; }
-        public int Weight { get; set; }
-        public SenderDto Sender { get; set; }
-        public ReceiverDto Receiver { get; set; }
-        public decimal Width { get; set; }
-        public decimal Height { get; set; }
-        public decimal Length { get; set; }
-        public DateTime DeliveryDate { get; set; }
-        public DateTime PickupDate { get; set; }
-        public bool IsLiquidOrBroken { get; set; }
+        [JsonProperty("from")]
+        public SenderReceiverDto From { get; set; }
+
+        [JsonProperty("to")]
+        public SenderReceiverDto To { get; set; }
+
+        [JsonProperty("parcel_properties")]
+        public ParcelDto Parcel { get; set; }
+
+        [JsonProperty("courier")]
+        public CourierDto Courier { get; set; }
+
+        [JsonProperty("value_added_service")]
+        public List<int> ValueAddedTypeIds { get; set; }
+
+        [JsonProperty("request_pickup")]
+        public DeliveryPickupDto Pickup { get; set; }
+
+        [JsonProperty("request_delivery")]
+        public DeliveryPickupDto Delivery { get; set; }
     }
 }

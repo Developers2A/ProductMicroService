@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.Create
+namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.CreateList
 {
     public class CreateContractAccountingTemplatesValidator : AbstractValidator<CreateContractAccountingTemplatesCommand>
     {

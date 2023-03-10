@@ -58,7 +58,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             var insuranceValues = await GetInsuranceValues();
 
             //هزینه اعلامی به شرکت پستی : هزینه کالا + حق سی او دی پستکس + حق بیمه پستکس
-            if (_query.PayType == (int)PayType.Cod)
+            if (_query.PayType == (int)PaymentType.Cod)
             {
                 _query.Value = Convert.ToInt32(_query.Value + _query.Value * codValues.DefaultFixedPercent / 100 + codValues.DefaultFixedValue +
                     _query.Value * insuranceValues.DefaultFixedPercent / 100 + insuranceValues.DefaultFixedValue);
@@ -66,12 +66,12 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                 return _query.Value;
             }
             //در زمان دریافت هزینه از تحویل گیرنده تنها ارزش کالا از گیرنده دریافت میشود
-            else if (_query.PayType == (int)PayType.FreePost)
+            else if (_query.PayType == (int)PaymentType.FreePost)
             {
                 return _query.Value;
             }
             //هزینه پستی + خدمات ارزش افزوده ( پیامک ، پرینت ) محاسبه میشود و به عنوان ارزش کالا به شرکت پستی اعلام میگردد .
-            else if (_query.PayType == (int)PayType.Online)
+            else if (_query.PayType == (int)PaymentType.Online)
             {
                 var valueAddedPrices = await GetValueAddedPrices();
                 _query.Value = Convert.ToInt32(_query.Value + valueAddedPrices.Sum(x => x.DefaultSalePrice));
@@ -287,7 +287,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                     {
                         ContractId = valueAddedPrice.ContractId,
                         ContractValueAddedId = valueAddedPrice.ContractValueAddedId,
-                        Name = valueAddedPrice.ValueAddedTypeName,
+                        ValueTypeName = valueAddedPrice.ValueAddedTypeName,
                         DefaultBuyPrice = valueAddedPrice.DefaultBuyPrice,
                         DefaultSalePrice = valueAddedPrice.DefaultSalePrice,
                         ContractBuyPrice = valueAddedPrice.ContractBuyPrice,

@@ -1,12 +1,6 @@
-﻿namespace Postex.Product.Application.Dtos.ServiceProviders.Common
+﻿namespace Postex.Product.Application.Dtos.Commons.CreateOrder.Response
 {
-    public class CreateOrderResponse
-    {
-        public string ParcelCode { get; set; }
-        public CreateOrderPriceResponse? Price { get; set; }
-    }
-
-    public class CreateOrderPriceResponse
+    public class PostPriceResponseDto
     {
         public int PostFare { get; set; }
         public int InsurancePrice { get; set; }
@@ -23,5 +17,7 @@
         public int EcommercePrice { get; set; }
         public int Tax { get; set; }
         public int TotalPrice { get; set; }
+        public int ReturnPrice { get; set; }
+        public int ReturnTax { get; set; }
     }
 }

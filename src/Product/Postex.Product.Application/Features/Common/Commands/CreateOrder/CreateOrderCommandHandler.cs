@@ -1,13 +1,16 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Postex.Product.Application.Dtos.Commons;
+using Postex.Product.Application.Dtos.Commons.CreateOrder.Response;
 using Postex.Product.Application.Dtos.Couriers;
 using Postex.Product.Application.Dtos.ServiceProviders.Chapar.Common;
 using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Dtos.ServiceProviders.Mahex.Common;
 using Postex.Product.Application.Features.Cities.Queries;
 using Postex.Product.Application.Features.Common.Commands.CreatePeykOrder;
+using Postex.Product.Application.Features.Common.Queries.GetValueAddedPrices;
 using Postex.Product.Application.Features.CourierCityMappings.Queries;
+using Postex.Product.Application.Features.CourierServices.Queries;
 using Postex.Product.Application.Features.PostShops.Queries;
 using Postex.Product.Application.Features.ServiceProviders.Chapar.Commands.CreateOrder;
 using Postex.Product.Application.Features.ServiceProviders.Kbk.Commands.CreateOrder;
@@ -21,13 +24,14 @@ using Postex.SharedKernel.Exceptions;
 
 namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 {
-    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, BaseResponse<CreateOrderResponse>>
+    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, BaseResponse<CreateOrderResponseDto>>
     {
         private readonly IMediator _mediator;
         private readonly HttpContext _httpContext;
         private CreateOrderCommand _command;
         private List<CourierCityMappingDto> _courierCityMappings;
         private Guid? _userId;
+        private CourierServiceCommonDto _courierInfo;
 
         public CreateOrderCommandHandler(IMediator mediator, IHttpContextAccessor contextAccessor)
         {
@@ -35,32 +39,57 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             _httpContext = contextAccessor.HttpContext;
         }
 
-        public async Task<BaseResponse<CreateOrderResponse>> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
+        public async Task<BaseResponse<CreateOrderResponseDto>> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
         {
             _command = command;
-
-            if (_command.CourierServiceCode == (int)CourierServiceCode.PostSefareshi || _command.CourierServiceCode == (int)CourierServiceCode.PostVizhe || _command.CourierServiceCode == (int)CourierServiceCode.PostPishtaz)
+            await SetCourierInfo();
+            BaseResponse<CreateOrderResponseDto> result = new();
+            var valueAddedPriceDtos = await GetValueAddedPrices();
+            if (_command.Courier.ServiceType == (int)CourierServiceCode.PostSefareshi || _command.Courier.ServiceType == (int)CourierServiceCode.PostVizhe || _command.Courier.ServiceType == (int)CourierServiceCode.PostPishtaz)
             {
                 _userId = GetUserId();
                 _courierCityMappings = await GetCourierCityMapping(CourierCode.Post);
-                return await CreatePostOrder();
+                result = await CreatePostOrder();
             }
-            if (_command.CourierServiceCode == (int)CourierServiceCode.Mahex)
+            if (_command.Courier.ServiceType == (int)CourierServiceCode.Mahex)
             {
                 _courierCityMappings = await GetCourierCityMapping(CourierCode.Mahex);
-                return await CreateMahexOrder();
+                result = await CreateMahexOrder();
             }
-            if (_command.CourierServiceCode == (int)CourierServiceCode.Chapar || _command.CourierServiceCode == (int)CourierServiceCode.ChaparExpress)
+            if (_command.Courier.ServiceType == (int)CourierServiceCode.Chapar || _command.Courier.ServiceType == (int)CourierServiceCode.ChaparExpress)
             {
                 _courierCityMappings = await GetCourierCityMapping(CourierCode.Chapar);
-                return await CreateChaparOrder();
+                result = await CreateChaparOrder();
             }
-            if (_command.CourierServiceCode == (int)CourierServiceCode.Kalaresan)
+            if (_command.Courier.ServiceType == (int)CourierServiceCode.Kalaresan)
             {
                 _courierCityMappings = await GetCourierCityMapping(CourierCode.Kalaresan);
-                return await CreateKbkOrder();
+                result = await CreateKbkOrder();
             }
-            return await CreatePeykOrder();
+            result = await CreatePeykOrder();
+
+            result.Data.ValueAddedService = valueAddedPriceDtos.Select(x => new ValueAddedServiceResponseDto()
+            {
+                BuyPrice = Convert.ToInt32(x.ContractBuyPrice),
+                SalePrice = Convert.ToInt32(x.ContractSalePrice),
+                ContractId = x.ContractId,
+                ContractDetailId = x.ContractValueAddedId,
+                ValueTypeId = x.ContractValueAddedId,
+                ValueTypeName = x.ValueTypeName
+            }).ToList();
+
+            return result;
+        }
+
+        private async Task<List<ContractValueAddedPriceDto>> GetValueAddedPrices()
+        {
+            return await _mediator.Send(new GetValueAddedPricesQuery()
+            {
+                CustomerId = 0,
+                CityId = 0,
+                StateId = 0,
+                ValueAddedIds = _command.ValueAddedTypeIds
+            });
         }
 
         public async Task<List<CourierCityMappingDto>> GetCourierCityMapping(CourierCode courierCode)
@@ -68,28 +97,20 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             return await _mediator.Send(new GetCourierCityMappingsByCourierAndCitiesQuery()
             {
                 CourierCode = (int)courierCode,
-                CityCodes = new List<int> { _command.Sender.CityCode, _command.Receiver.CityCode }
+                CityCodes = new List<int> { _command.From.Location.CityId, _command.To.Location.CityId }
             });
         }
 
-        private async Task<BaseResponse<CreateOrderResponse>> CreatePeykOrder()
+        private async Task<BaseResponse<CreateOrderResponseDto>> CreatePeykOrder()
         {
             return await _mediator.Send(new CreatePeykOrderCommand()
             {
-                CourierServiceCode = _command.CourierServiceCode,
-                PayType = _command.PayType,
-                ParcelId = _command.ParcelId,
-                ApproximateValue = _command.ApproximateValue,
-                Content = _command.Content,
-                Receiver = _command.Receiver,
-                Sender = _command.Sender,
-                Length = _command.Length,
-                Height = _command.Height,
-                Width = _command.Width,
-                Weight = _command.Weight,
-                BoxSize = Convert.ToInt32(_command.Length * _command.Width * _command.Height),
-                DeliveryDate = _command.DeliveryDate,
-                PickupDate = _command.PickupDate,
+                Courier = _command.Courier,
+                From = _command.From,
+                To = _command.To,
+                Pickup = _command.Pickup,
+                Delivery = _command.Delivery,
+                Parcel = _command.Parcel,
             });
         }
 
@@ -105,19 +126,29 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             }
         }
 
-        private async Task<BaseResponse<CreateOrderResponse>> CreatePostOrder()
+        private async Task SetCourierInfo()
+        {
+            var couriers = await _mediator.Send(new GetCourierServicesCommonQuery
+            {
+                CourierServiceCode = _command.Courier.ServiceType
+            });
+
+            _courierInfo = couriers.FirstOrDefault()!;
+        }
+
+        private async Task<BaseResponse<CreateOrderResponseDto>> CreatePostOrder()
         {
             var shopId = await GetShopIdByUserName();
             if (shopId == 0)
             {
-                throw new AppException($"برای این شخص  {_command.Sender.Mobile} شاپ یافت نشد");
+                throw new AppException($"برای این شخص  {_command.From.Contact.Mobile} شاپ یافت نشد");
             }
             GetPostPriceQuery getPostPriceQuery = CreatePostGetPriceQuery(shopId);
             var getPostPrice = await _mediator.Send(getPostPriceQuery);
 
             if (!getPostPrice.IsSuccess)
             {
-                return new BaseResponse<CreateOrderResponse>()
+                return new BaseResponse<CreateOrderResponseDto>()
                 {
                     IsSuccess = getPostPrice.IsSuccess,
                     Message = getPostPrice.Message,
@@ -126,32 +157,71 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 
             CreatePostOrderCommand createPostOrderCommand = CreatePostOrderCommand(getPostPriceQuery);
             var result = await _mediator.Send(createPostOrderCommand);
-            return new BaseResponse<CreateOrderResponse>()
+            if (result.IsSuccess && result.Data != null)
+            {
+                return new BaseResponse<CreateOrderResponseDto>()
+                {
+                    IsSuccess = result.IsSuccess,
+                    Message = result.Message,
+                    Data = new CreateOrderResponseDto()
+                    {
+                        AdditionalData = new AdditionalDataResponseDto()
+                        {
+                            GeneratedPostCode = result.Data != null ? result.Data.ParcelCode : ""
+                        },
+                        Shipments = new List<ShipmentResponseDto>()
+                        {
+                            new ShipmentResponseDto()
+                            {
+                                Courier = new CourierResponseDto()
+                                {
+                                    Courier = _courierInfo.CourierName,
+                                    Service = _courierInfo.CourierServiceName,
+                                    TransitTime = _courierInfo.Days,
+                                    Description = "",
+                                },
+                                Step = 1,
+                                Tracking = new TrackingResponseDto()
+                                {
+                                    Barcode = result.Data != null ? result.Data.ParcelCode : "",
+                                    TrackingNumber = result.Data != null ? result.Data.ParcelCode : ""
+                                },
+                                ShippingRate = new ShippingRateResponseDto()
+                                {
+                                    BuyPrice = result.Data.Price.PostFare,
+                                    SalePrice = result.Data.Price.TotalPrice,
+                                    Vat = result.Data.Price.Tax,
+                                    PostPrice = new PostPriceResponseDto()
+                                    {
+                                        PostFare =  result.Data.Price.PostFare,
+                                        TotalPrice = result.Data.Price.TotalPrice,
+                                        COD = result.Data.Price.COD,
+                                        DeliveryNotifyPrice = result.Data.Price.DeliveryNotifyPrice,
+                                        DiscountAmount = result.Data.Price.DiscountAmount,
+                                        DiscountPercent = result.Data.Price.DiscountPercent,
+                                        EcommercePrice = result.Data.Price.EcommercePrice,
+                                        ElectronicIDPrice = result.Data.Price.ElectronicIDPrice,
+                                        InsurancePrice = result.Data.Price.InsurancePrice,
+                                        NonStandardPrice = result.Data.Price.NonStandardPrice,
+                                        PostPayFarePrice = result.Data.Price.PostPayFarePrice,
+                                        PostPrice = result.Data.Price.PostPrice,
+                                        SendPlacePrice = result.Data.Price.SendPlacePrice,
+                                        Tax = result.Data.Price.Tax,
+                                        SMSPrice = result.Data.Price.SMSPrice
+                                    }
+                                }
+                            }
+                        },
+                        IsOversized = false,
+                        ServiceCategory = "",
+                        ValueAddedService = new List<ValueAddedServiceResponseDto>()
+                    }
+                };
+            }
+            return new BaseResponse<CreateOrderResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateOrderResponse()
-                {
-                    ParcelCode = result.Data != null ? result.Data.ParcelCode : "",
-                    Price = result.Data == null ? null : new CreateOrderPriceResponse()
-                    {
-                        COD = result.Data.Price.COD,
-                        DeliveryNotifyPrice = result.Data.Price.DeliveryNotifyPrice,
-                        DiscountAmount = result.Data.Price.DiscountAmount,
-                        DiscountPercent = result.Data.Price.DiscountPercent,
-                        EcommercePrice = result.Data.Price.EcommercePrice,
-                        ElectronicIDPrice = result.Data.Price.ElectronicIDPrice,
-                        InsurancePrice = result.Data.Price.InsurancePrice,
-                        NonStandardPrice = result.Data.Price.NonStandardPrice,
-                        PostFare = result.Data.Price.PostFare,
-                        PostPayFarePrice = result.Data.Price.PostPayFarePrice,
-                        PostPrice = result.Data.Price.PostPrice,
-                        SendPlacePrice = result.Data.Price.SendPlacePrice,
-                        Tax = result.Data.Price.Tax,
-                        TotalPrice = result.Data.Price.TotalPrice,
-                        SMSPrice = result.Data.Price.SMSPrice,
-                    }
-                }
             };
         }
 
@@ -159,26 +229,26 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
         {
             var createPostOrderCommand = new CreatePostOrderCommand
             {
-                CustomerName = _command.Receiver.FristName,
-                CustomerFamily = _command.Receiver.LastName,
-                CustomerAddress = _command.Receiver.Address,
-                ParcelContent = _command.Content,
-                CustomerMobile = _command.Receiver.Mobile,
-                CustomerPostalCode = _command.Receiver.PostCode,
-                ClientOrderID = _command.ParcelId,
-                CustomerEmail = _command.Receiver.Email,
-                CustomerNID = _command.Receiver.NationalCode,
+                CustomerName = _command.To.Contact.FirstName,
+                CustomerFamily = _command.To.Contact.LastName,
+                CustomerAddress = _command.To.Location.Address,
+                ParcelContent = _command.Parcel.ItemName,
+                CustomerMobile = _command.To.Contact.Mobile,
+                CustomerEmail = _command.To.Contact.Email,
+                CustomerNID = _command.To.Contact.NationalCode,
+                CustomerPostalCode = _command.To.Location.PostCode,
+                ClientOrderID = "1",
                 ParcelCategoryID = 0,
                 Price = new PostPriceRequest()
                 {
-                    ParcelValue = _command.ApproximateValue,
+                    ParcelValue = _command.Parcel.TotalValue,
                     ToCityID = priceQuery.ToCityID,
-                    Weight = _command.Weight,
+                    Weight = _command.Parcel.TotalWeight,
                     SMSService = false,
                     ShopID = priceQuery.ShopID,
                     PayTypeID = priceQuery.PayTypeID,
                     CollectNeed = true,
-                    NonStandardPackage = _command.IsLiquidOrBroken,
+                    NonStandardPackage = _command.Parcel.IsLiquid || _command.Parcel.IsFragile,
                     ServiceTypeID = priceQuery.ServiceTypeID
                 }
             };
@@ -189,7 +259,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
         {
             return await _mediator.Send(new GetCitiesQuery()
             {
-                CityCodes = new List<int> { _command.Sender.CityCode, _command.Receiver.CityCode }
+                CityCodes = new List<int> { _command.From.Location.CityId, _command.To.Location.CityId }
             });
         }
 
@@ -213,7 +283,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             return await _mediator.Send(new GetPostShopIdQuery()
             {
                 Mobile = mobile,
-                CityCode = _command.Sender.CityCode,
+                CityCode = _command.From.Location.CityId,
             });
         }
 
@@ -226,18 +296,18 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 
             if (!user.IsSuccess || user.Data == null)
             {
-                throw new AppException("شاپ این کاربر یافت نشد");
+                throw new AppException("فروشگاهی برای این کاربر یافت نشد");
             }
             return user.Data.Mobile;
         }
 
         private int GetPostServiceId()
         {
-            if (_command.CourierServiceCode == (int)CourierServiceCode.PostPishtaz)
+            if (_command.Courier.ServiceType == (int)CourierServiceCode.PostPishtaz)
             {
                 return 1;
             }
-            else if (_command.CourierServiceCode == (int)CourierServiceCode.PostSefareshi)
+            else if (_command.Courier.ServiceType == (int)CourierServiceCode.PostSefareshi)
             {
                 return 2;
             }
@@ -246,11 +316,11 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 
         private int GetPayTypeId()
         {
-            if (_command.PayType == (int)PayType.Cod)
+            if (_command.Courier.PaymentType == (int)PaymentType.Cod)
             {
                 return 0;
             }
-            else if (_command.PayType == (int)PayType.FreePost)
+            else if (_command.Courier.PaymentType == (int)PaymentType.FreePost)
             {
                 return 88;
             }
@@ -261,9 +331,9 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
         {
             return new GetPostPriceQuery()
             {
-                ParcelValue = _command.ApproximateValue,
-                ToCityID = Convert.ToInt32(GetCityMappedCode(CourierCode.Post, _command.Receiver.CityCode)),
-                Weight = _command.Weight,
+                ParcelValue = _command.Parcel.TotalValue,
+                ToCityID = Convert.ToInt32(GetCityMappedCode(CourierCode.Post, _command.To.Location.CityId)),
+                Weight = _command.Parcel.TotalWeight,
                 SMSService = false,
                 ShopID = shopId,
                 ServiceTypeID = GetPostServiceId(),
@@ -271,16 +341,16 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             };
         }
 
-        private async Task<BaseResponse<CreateOrderResponse>> CreateMahexOrder()
+        private async Task<BaseResponse<CreateOrderResponseDto>> CreateMahexOrder()
         {
             var result = await _mediator.Send(CreateMahexCommand());
-            return new BaseResponse<CreateOrderResponse>()
+            return new BaseResponse<CreateOrderResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateOrderResponse()
+                Data = new CreateOrderResponseDto()
                 {
-                    ParcelCode = result.Data != null ? result.Data.Data.ShipmentUuid : ""
+                    //ParcelCode = result.Data != null ? result.Data.Data.ShipmentUuid : ""
                 }
             };
         }
@@ -293,58 +363,104 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                 Reference = random.Next(100, 9999).ToString(),
                 ToAddress = new MahexAddressDetails()
                 {
-                    FirstName = _command.Receiver.FristName,
-                    LastName = _command.Receiver.LastName,
-                    Mobile = _command.Receiver.Mobile,
-                    Street = _command.Receiver.Address,
-                    PostalCode = _command.Receiver.PostCode,
+                    FirstName = _command.To.Contact.FirstName,
+                    LastName = _command.To.Contact.LastName,
+                    Mobile = _command.To.Contact.Mobile,
+                    Street = _command.To.Location.Address,
+                    PostalCode = _command.To.Location.PostCode,
                     ClientId = "",
-                    NationalId = _command.Receiver.NationalCode,
-                    Organization = _command.Receiver.Company,
+                    NationalId = _command.To.Contact.NationalCode,
+                    Organization = _command.To.Contact.Company,
                     Type = "LEGAL",
-                    Phone = _command.Receiver.Phone,
-                    CityCode = GetCityMappedCode(CourierCode.Mahex, _command.Receiver.CityCode)
+                    Phone = _command.To.Contact.Phone,
+                    CityCode = GetCityMappedCode(CourierCode.Mahex, _command.To.Location.CityId)
                 },
                 FromAddress = new MahexAddressDetails()
                 {
-                    FirstName = _command.Sender.FristName,
-                    LastName = _command.Sender.LastName,
-                    Mobile = _command.Sender.Mobile,
-                    Street = _command.Sender.Address,
-                    PostalCode = _command.Sender.PostCode,
+                    FirstName = _command.From.Contact.FirstName,
+                    LastName = _command.From.Contact.LastName,
+                    Mobile = _command.From.Contact.Mobile,
+                    Street = _command.From.Location.Address,
+                    PostalCode = _command.From.Location.PostCode,
                     ClientId = "",
-                    NationalId = _command.Sender.NationalCode,
-                    Organization = _command.Sender.Company,
+                    NationalId = _command.From.Contact.NationalCode,
+                    Organization = _command.From.Contact.Company,
                     Type = "LEGAL",
-                    CityCode = GetCityMappedCode(CourierCode.Mahex, _command.Sender.CityCode)
+                    CityCode = GetCityMappedCode(CourierCode.Mahex, _command.From.Location.CityId)
                 },
                 Parcels = new List<MahexGetPriceParcel>()
                 {
                     new MahexGetPriceParcel()
                     {
-                        Id = _command.ParcelId,
-                        Weight = _command.Weight,
-                        Content = _command.Content,
-                        DeclaredValue = _command.ApproximateValue,
-                        Height = _command.Height ,
-                        Length = _command.Length,
-                        Width = _command.Width,
+                        Id = "1",
+                        Weight = _command.Parcel.TotalWeight,
+                        Content = _command.Parcel.ItemName,
+                        DeclaredValue = _command.Parcel.TotalValue,
+                        Height = _command.Parcel.Height ,
+                        Length = _command.Parcel.Length,
+                        Width = _command.Parcel.Width,
                         PackageType = "",
                     }
                 },
             };
         }
 
-        private async Task<BaseResponse<CreateOrderResponse>> CreateChaparOrder()
+        private async Task<BaseResponse<CreateOrderResponseDto>> CreateChaparOrder()
         {
             var result = await _mediator.Send(CreateChaparCommand());
-            return new BaseResponse<CreateOrderResponse>()
+            return new BaseResponse<CreateOrderResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateOrderResponse()
+                Data = new CreateOrderResponseDto()
                 {
-                    ParcelCode = result.Data.Objects != null ? result.Data.Objects.Result!.FirstOrDefault()!.Tracking : ""
+                    AdditionalData = new AdditionalDataResponseDto()
+                    {
+                        GeneratedPostCode = ""
+                    },
+                    Shipments = new List<ShipmentResponseDto>()
+                    {
+                        new ShipmentResponseDto()
+                        {
+                            Courier = new CourierResponseDto()
+                            {
+                                Courier = "post",
+                                Service = "",
+                                TransitTime = "",
+                                Description = "",
+                            },
+                            Step = 1,
+                            Tracking = new TrackingResponseDto()
+                            {
+                                Barcode = result.Data.Objects != null ? result.Data.Objects.Result!.FirstOrDefault()!.Tracking :"",
+                                TrackingNumber = result.Data.Objects != null ? result.Data.Objects.Result!.FirstOrDefault()!.Tracking : ""
+                            },
+                            ShippingRate = new ShippingRateResponseDto()
+                            {
+                                PostPrice = new PostPriceResponseDto()
+                                {
+                                    PostFare =  0,
+                                    TotalPrice = 0,
+                                    COD = 0,
+                                    DeliveryNotifyPrice = 0,
+                                    DiscountAmount = 0,
+                                    DiscountPercent = 0,
+                                    EcommercePrice = 0,
+                                    ElectronicIDPrice = 0,
+                                    InsurancePrice = 0,
+                                    NonStandardPrice = 0,
+                                    PostPayFarePrice = 0,
+                                    PostPrice = 0,
+                                    SendPlacePrice = 0,
+                                    Tax = 0,
+                                    SMSPrice = 0
+                                }
+                            }
+                        }
+                    },
+                    IsOversized = false,
+                    ServiceCategory = "",
+                    ValueAddedService = new List<ValueAddedServiceResponseDto>()
                 }
             };
         }
@@ -359,39 +475,39 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                     {
                         sender = new ChaparSenderReceiver()
                         {
-                            address = _command.Sender.Address,
-                            mobile = _command.Sender.Mobile,
-                            person = _command.Sender.FristName + " " + _command.Sender.LastName,
-                            telephone = _command.Sender.Mobile,
-                            city_no = GetCityMappedCode(CourierCode.Chapar, _command.Sender.CityCode),
-                            postcode = _command.Sender.PostCode,
-                            company = _command.Sender.Company,
-                            email = _command.Sender.Email
+                            address = _command.From.Location.Address,
+                            mobile = _command.From.Contact.Mobile,
+                            person = _command.From.Contact.FirstName + " " + _command.From.Contact.LastName,
+                            telephone = _command.From.Contact.Mobile,
+                            city_no = GetCityMappedCode(CourierCode.Chapar, _command.From.Location.CityId),
+                            postcode = _command.From.Location.PostCode,
+                            company = _command.From.Contact.Company,
+                            email = _command.From.Contact.Email
                         },
                         receiver = new ChaparSenderReceiver()
                         {
-                            address = _command.Receiver.Address,
-                            mobile = _command.Receiver.Mobile,
-                            person = _command.Receiver.FristName + " " + _command.Receiver.LastName,
-                            telephone = _command.Receiver.Mobile,
-                            city_no =  GetCityMappedCode(CourierCode.Chapar, _command.Receiver.CityCode),
-                            postcode = _command.Receiver.PostCode,
-                            company = _command.Receiver.Company,
-                            email = _command.Receiver.Email
+                            address = _command.To.Location.Address,
+                            mobile = _command.To.Contact.Mobile,
+                            person = _command.To.Contact.FirstName + " " + _command.To.Contact.LastName,
+                            telephone = _command.To.Contact.Mobile,
+                            city_no =  GetCityMappedCode(CourierCode.Chapar, _command.To.Location.CityId),
+                            postcode = _command.To.Location.PostCode,
+                            company = _command.To.Contact.Company,
+                            email = _command.To.Contact.Email
                         },
                         cn = new CnBulkImport()
                         {
-                            weight = _command.Weight.ToString(),
-                            content = _command.Content,
-                            value = _command.ApproximateValue.ToString(),
+                            weight = _command.Parcel.TotalWeight.ToString(),
+                            content = _command.Parcel.ItemName,
+                            value = _command.Parcel.TotalValue.ToString(),
                             assinged_pieces = "1",
                             inv_value = 0 , //
-                            payment_term = _command.PayType == (int)PayType.Cod ? 1 : 0 , //
+                            payment_term = _command.Courier.PaymentType == (int)PaymentType.Cod ? 1 : 0 , //
                             payment_terms = 0,//
-                            height = Convert.ToInt32(_command.Height),
-                            length =  Convert.ToInt32(_command.Length),
-                            width = Convert.ToInt32(_command.Width),
-                            service = _command.CourierServiceCode == (int)CourierServiceCode.ChaparExpress ? "6" : "11", //
+                            height = Convert.ToInt32(_command.Parcel.Height),
+                            length =  Convert.ToInt32(_command.Parcel.Length),
+                            width = Convert.ToInt32(_command.Parcel.Width),
+                            service = _command.Courier.ServiceType == (int)CourierServiceCode.ChaparExpress ? "6" : "11", //
                             date = DateTime.Now.ToString("yyyy-MM-dd")//
                         }
                     }
@@ -399,16 +515,16 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             };
         }
 
-        private async Task<BaseResponse<CreateOrderResponse>> CreateKbkOrder()
+        private async Task<BaseResponse<CreateOrderResponseDto>> CreateKbkOrder()
         {
             var result = await _mediator.Send(CreateKbkCommand());
-            return new BaseResponse<CreateOrderResponse>()
+            return new BaseResponse<CreateOrderResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateOrderResponse()
+                Data = new CreateOrderResponseDto()
                 {
-                    ParcelCode = result.Data != null ? result.Data.ShipmentCode : ""
+                    //ParcelCode = result.Data != null ? result.Data.ShipmentCode : ""
                 }
             };
         }
@@ -417,22 +533,22 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
         {
             return new CreateKbkOrderCommand()
             {
-                PostexShipmentCode = _command.ParcelId,
-                OriginCity = Convert.ToInt32(GetCityMappedCode(CourierCode.Kalaresan, _command.Sender.CityCode)),
-                DestinationCity = Convert.ToInt32(GetCityMappedCode(CourierCode.Kalaresan, _command.Receiver.CityCode)),
-                SenderName = _command.Sender.FristName + " " + _command.Sender.LastName,
-                SenderPhone = _command.Sender.Mobile,
-                SenderAddr = _command.Sender.Address,
-                ReceiverName = _command.Receiver.FristName + " " + _command.Receiver.LastName,
-                ReceiverPhone = _command.Receiver.Mobile,
-                ReceiverAddr = _command.Receiver.Address,
+                PostexShipmentCode = "1",
+                OriginCity = Convert.ToInt32(GetCityMappedCode(CourierCode.Kalaresan, _command.From.Location.CityId)),
+                DestinationCity = Convert.ToInt32(GetCityMappedCode(CourierCode.Kalaresan, _command.To.Location.CityId)),
+                SenderName = _command.From.Contact.FirstName + " " + _command.From.Contact.LastName,
+                SenderPhone = _command.From.Contact.Mobile,
+                SenderAddr = _command.From.Location.Address,
+                ReceiverName = _command.To.Contact.FirstName + " " + _command.To.Contact.LastName,
+                ReceiverPhone = _command.To.Contact.Mobile,
+                ReceiverAddr = _command.To.Location.Address,
                 Detail = new List<PacketsDetail>()
                 {
                     new PacketsDetail()
                     {
                         Count = 1,
-                        Size = Convert.ToInt32(_command.Width*_command.Height*_command.Length),
-                        Description = _command.Content,
+                        Size = _command.Parcel.TotalWeight,
+                        Description = _command.Parcel.ItemName,
                     }
                 }
             };

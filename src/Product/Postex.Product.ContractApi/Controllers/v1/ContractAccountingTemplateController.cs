@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.Create;
+using Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.CreateList;
 using Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Queries.GetContractById;
 
 namespace Postex.Product.ContractApi.Controllers.v1

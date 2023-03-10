@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Postex.Product.Application.Dtos.Commons.CreateOrder.Response;
 using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Dtos.Trackings;
 using Postex.Product.Application.Features.Common.Commands.CancelOrder;
@@ -39,10 +40,10 @@ namespace Postex.Product.ServiceApi.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<ApiResult<CreateOrderResponse>> CreateOrder(CreateOrderCommand request)
+        public async Task<ApiResult<CreateOrderResponseDto>> CreateOrder(CreateOrderCommand request)
         {
             var result = await _mediator.Send(request);
-            return new ApiResult<CreateOrderResponse>(result.IsSuccess, result.Data, result.Message);
+            return new ApiResult<CreateOrderResponseDto>(result.IsSuccess, result.Data, result.Message);
         }
 
         [HttpPut]

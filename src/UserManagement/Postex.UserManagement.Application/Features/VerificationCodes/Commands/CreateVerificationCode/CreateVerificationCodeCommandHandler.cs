@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Postex.SharedKernel.Interfaces;
+using Postex.UserManagement.Application.Features.Messages.Commands;
 using Postex.UserManagement.Domain.Users;
 
 namespace Postex.UserManagement.Application.Features.VerificationCodes.Commands.CreateVerificationCode;
@@ -8,11 +9,13 @@ public class CreateVerificationCodeCommandHandler : IRequestHandler<CreateVerifi
 {
     private readonly IWriteRepository<VerificationCode> _writeRepository;
     private readonly IReadRepository<VerificationCode> _readRepository;
+    private readonly IMediator _mediator;
 
-    public CreateVerificationCodeCommandHandler(IWriteRepository<VerificationCode> writeRepository, IReadRepository<VerificationCode> readRepository)
+    public CreateVerificationCodeCommandHandler(IWriteRepository<VerificationCode> writeRepository, IReadRepository<VerificationCode> readRepository, IMediator mediator)
     {
         _writeRepository = writeRepository;
         _readRepository = readRepository;
+        _mediator = mediator;
     }
 
     public async Task<Unit> Handle(CreateVerificationCodeCommand request, CancellationToken cancellationToken)
@@ -34,8 +37,18 @@ public class CreateVerificationCodeCommandHandler : IRequestHandler<CreateVerifi
 
         await _writeRepository.AddAsync(verificationCode);
         await _writeRepository.SaveChangeAsync();
-
+        await SendSms(request, code);
         return Unit.Value;
+    }
+
+    private async Task SendSms(CreateVerificationCodeCommand request, int code)
+    {
+        await _mediator.Send(new SendSmsCommand()
+        {
+            Code = code.ToString(),
+            Mobile = request.Mobile,
+            Template = request.VerificationCodeType.ToString()
+        });
     }
 }
 

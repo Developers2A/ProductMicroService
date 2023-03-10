@@ -11,6 +11,6 @@ namespace Postex.Product.Application.Features.Common.Commands.EditOrder
         public string ParcelId { get; set; }
         public string SenderMobile { get; set; }
         public string Content { get; set; }
-        public ReceiverDto Receiver { get; set; }
+        public SenderReceiverDto To { get; set; }
     }
 }

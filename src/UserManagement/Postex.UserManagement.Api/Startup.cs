@@ -23,6 +23,7 @@ namespace Postex.UserManagement.Api
             services.AddCustomVersioningSwagger();
             services.AddApplicationCore(Configuration);
             services.Configure<JwtSetting>(Configuration.GetSection("JwtSetting"));
+            services.Configure<ApiSetting>(Configuration.GetSection("ApiSetting"));
             services.Configure<CodeExpirationSetting>(Configuration.GetSection("CodeExpirationSetting"));
         }
 

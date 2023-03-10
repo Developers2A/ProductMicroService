@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Postex.Notification.Application.Behaviours;
+using Postex.Notification.Application.Services;
 using System.Reflection;
 
 namespace Postex.Notification.Application.Configuration
@@ -19,7 +20,7 @@ namespace Postex.Notification.Application.Configuration
             services.AddValidatorsFromAssembly(assembly);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionPipelineBehaviour<,>));
-
+            services.AddScoped<ISmsSender, SmsSender>();
             return services;
         }
     }
