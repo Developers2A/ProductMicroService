@@ -3,25 +3,29 @@ using MediatR;
 using Postex.Notification.Domain.Templates;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Notification.Application.Features.Templates.Commands.Create
+namespace Postex.Notification.Application.Features.Templates.Commands.Create;
+
+public class CreateTemplateCommandHandler : IRequestHandler<CreateTemplateCommand, Template>
 {
-    public class CreateTemplateCommandHandler : IRequestHandler<CreateTemplateCommand, Template>
+    private readonly IWriteRepository<Template> _writeRepository;
+    private readonly IMapper _mapper;
+
+    public CreateTemplateCommandHandler(IWriteRepository<Template> writeRepository, IMapper mapper)
     {
-        private readonly IWriteRepository<Template> _writeRepository;
-        private readonly IMapper _mapper;
+        _writeRepository = writeRepository;
+        _mapper = mapper;
+    }
 
-        public CreateTemplateCommandHandler(IWriteRepository<Template> writeRepository, IMapper mapper)
+    async Task<Template> IRequestHandler<CreateTemplateCommand, Template>.Handle(CreateTemplateCommand request, CancellationToken cancellationToken)
+    {
+        var template = _mapper.Map<Template>(request);
+        template.Parameters = request.Parameters.Select(x => new TemplateParameter()
         {
-            _writeRepository = writeRepository;
-            _mapper = mapper;
-        }
-
-        async Task<Template> IRequestHandler<CreateTemplateCommand, Template>.Handle(CreateTemplateCommand request, CancellationToken cancellationToken)
-        {
-            var customer = _mapper.Map<Template>(request);
-            await _writeRepository.AddAsync(customer, cancellationToken);
-            await _writeRepository.SaveChangeAsync(cancellationToken);
-            return customer;
-        }
+            Key = x.Key,
+            Value = x.Value
+        }).ToList();
+        await _writeRepository.AddAsync(template, cancellationToken);
+        await _writeRepository.SaveChangeAsync(cancellationToken);
+        return template;
     }
 }

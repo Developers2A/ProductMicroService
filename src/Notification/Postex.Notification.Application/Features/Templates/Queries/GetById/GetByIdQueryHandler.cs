@@ -17,13 +17,14 @@ public class GetByIdQueryHandler : IRequestHandler<GetByIdQuery, TemplateDto>
         _readRepository = readRepository;
         _mapper = mapper;
     }
+
     public async Task<TemplateDto> Handle(GetByIdQuery request, CancellationToken cancellationToken)
     {
         var template = await _readRepository.Table
             .Where(c => c.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
-        var customerDto = _mapper.Map<TemplateDto>(template);
-        return customerDto;
+        var templateDto = _mapper.Map<TemplateDto>(template);
+        return templateDto;
     }
 }
 

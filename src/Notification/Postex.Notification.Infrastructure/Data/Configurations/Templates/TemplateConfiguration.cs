@@ -11,7 +11,11 @@ public class TemplateConfiguration : BaseEntityConfiguration<Template, int>
         base.Configure(builder);
 
         builder.ToTable("Templates");
-        builder.Property(i => i.TemplateContent)
-           .HasMaxLength(100);
+        builder.Property(i => i.Content)
+           .HasMaxLength(1000);
+
+        builder.HasMany(i => i.Parameters)
+          .WithOne(i => i.Template)
+          .HasForeignKey(i => i.TemplateId);
     }
 }

@@ -6,11 +6,9 @@ public class CreateTemplateCommandValidator : AbstractValidator<CreateTemplateCo
 {
     public CreateTemplateCommandValidator()
     {
-        RuleFor(p => p.FirstName).
-            NotEmpty().NotNull().WithMessage("نام الزامی می باشد");
-        RuleFor(p => p.FirstName).
-            NotEmpty().NotNull().WithMessage("نام خانوادگی الزامی می باشد");
-        RuleFor(p => p.Email)
-           .EmailAddress().WithMessage("فرمت آدرس ایمیل معتبر نمی باشد");
+        RuleFor(p => p.Content).
+            NotEmpty().NotNull().WithMessage("محتوای الگو الزامی می باشد");
+        RuleFor(p => p.TemplateType).
+            NotEmpty().NotNull().WithMessage("نوع الگو الزامی می باشد");
     }
 }

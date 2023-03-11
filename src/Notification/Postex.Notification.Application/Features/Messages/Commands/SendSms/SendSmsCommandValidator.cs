@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using Postex.Notification.Application.Features.Messages.Commands.SendSms;
 
-namespace Postex.Notification.Application.Features.Messages.Commands.Create;
+namespace Postex.Notification.Application.Features.Messages.Commands.SendSms;
 
 public class SendSmsCommandValidator : AbstractValidator<SendSmsCommand>
 {

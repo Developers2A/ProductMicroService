@@ -4,15 +4,15 @@ using Postex.Notification.Application.Features.Templates.Commands.Create;
 using Postex.Notification.Application.Features.Templates.Commands.Update;
 using Postex.Notification.Domain.Templates;
 
-namespace Postex.Notification.Application.Mappings
+namespace Postex.Notification.Application.Mappings;
+
+public class TemplateMapping : Profile
 {
-    public class TemplateMapping : Profile
+    public TemplateMapping()
     {
-        public TemplateMapping()
-        {
-            CreateMap<CreateTemplateCommand, Template>();
-            CreateMap<UpdateTemplateCommand, Template>();
-            CreateMap<Template, TemplateDto>();
-        }
+        CreateMap<CreateTemplateCommand, Template>();
+        CreateMap<UpdateTemplateCommand, Template>();
+        CreateMap<Template, TemplateDto>();
+        CreateMap<TemplateParameter, TemplateParameterDto>();
     }
 }

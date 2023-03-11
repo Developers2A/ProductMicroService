@@ -2,12 +2,14 @@
 {
     public class TemplateParameter
     {
-        public string TemlateContent { get; set; }
-        public string Parameter { get; set; }
+        public int TemplateId { get; set; }
+        public Template Template { get; set; }
+        public string Key { get; set; }
+        public string Value { get; set; }
 
         public override string ToString()
         {
-            return string.Format(TemlateContent, Parameter);
+            return string.Format(Key, Value);
         }
     }
 }
