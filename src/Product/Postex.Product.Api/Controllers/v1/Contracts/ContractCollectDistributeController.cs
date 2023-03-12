@@ -1,20 +1,22 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Queries.GetByContractId;
 using Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Queries.GetByCustomer;
 using Postex.Product.Application.Features.Contratcs.ContractCollect_Distributes.Queries.GetByCustomerAndBoxType;
+using Postex.SharedKernel.Api;
 
-namespace Postex.Product.ContractApi.Controllers.v1
+namespace Postex.Product.Api.Controllers.v1.Contracts
 {
-    [Route("api/[Controller]")]
-    [ApiController]
-    public class ContractCollect_DistributeController : Controller
+    [ApiVersion("1")]
+    [AllowAnonymous]
+    public class ContractCollectDistributeController : BaseApiControllerWithDefaultRoute
     {
         private readonly IMediator _mediator;
 
-        public ContractCollect_DistributeController(IMediator mediator)
+        public ContractCollectDistributeController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -43,9 +45,9 @@ namespace Postex.Product.ContractApi.Controllers.v1
             return Ok(await _mediator.Send(new GetByCustomerContractCollect_DistributeQuery { CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
         }
         [HttpGet("GetByCustomerAndBoxType")]
-        public async Task<IActionResult> GetByCustomerBoxTypeCourierService(int courierServiceId,int boxTypeId, int? customerId, int? provinceId, int? cityId)
+        public async Task<IActionResult> GetByCustomerBoxTypeCourierService(int courierServiceId, int boxTypeId, int? customerId, int? provinceId, int? cityId)
         {
-            return Ok(await _mediator.Send(new GetByCustomerAndBoxTypeContractCollect_DistributeQuery { CourierServiceId= courierServiceId, BoxTypeId = boxTypeId, CustomerId = customerId, StateId = provinceId, CityId = cityId }));
+            return Ok(await _mediator.Send(new GetByCustomerAndBoxTypeContractCollect_DistributeQuery { CourierServiceId = courierServiceId, BoxTypeId = boxTypeId, CustomerId = customerId, StateId = provinceId, CityId = cityId }));
         }
     }
 }

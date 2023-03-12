@@ -1,16 +1,18 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByContractId;
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomer;
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomerAndBoxType;
+using Postex.SharedKernel.Api;
 
-namespace Postex.Product.ContractApi.Controllers.v1
+namespace Postex.Product.Api.Controllers.v1.Contracts
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ContractBoxPriceController : Controller
+    [ApiVersion("1")]
+    [AllowAnonymous]
+    public class ContractBoxPriceController : BaseApiControllerWithDefaultRoute
     {
         private readonly IMediator _mediator;
 

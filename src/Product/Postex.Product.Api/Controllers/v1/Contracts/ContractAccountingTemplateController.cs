@@ -1,14 +1,16 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.CreateList;
 using Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Queries.GetContractById;
+using Postex.SharedKernel.Api;
 
-namespace Postex.Product.ContractApi.Controllers.v1
+namespace Postex.Product.Api.Controllers.v1.Contracts
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ContractAccountingTemplateController : ControllerBase
+    [ApiVersion("1")]
+    [AllowAnonymous]
+    public class ContractAccountingTemplateController : BaseApiControllerWithDefaultRoute
     {
         private readonly IMediator _mediator;
 

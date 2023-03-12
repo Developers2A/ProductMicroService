@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Postex.Product.Api.Swagger;
 using Postex.Product.Application.Configuration;
 using Postex.Product.Infrastructure.Configuration;
@@ -26,6 +27,7 @@ namespace Postex.Product.Api
             services.AddControllers();
             services.AddCustomVersioningSwagger();
             services.AddApplicationCore(Configuration);
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

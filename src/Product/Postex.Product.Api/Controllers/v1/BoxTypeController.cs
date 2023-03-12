@@ -43,7 +43,7 @@ namespace Postex.Product.Api.Controllers.v1
         }
 
         [HttpGet]
-        public async Task<ApiResult<List<BoxPriceDto>>> Get(CancellationToken cancellationToken = default)
+        public async Task<ApiResult<List<BoxTypeDto>>> Get(CancellationToken cancellationToken = default)
         {
             var query = new GetBoxTypesQuery();
             var result = await _mediator.Send(query);
@@ -51,7 +51,7 @@ namespace Postex.Product.Api.Controllers.v1
         }
 
         [HttpGet("{id}")]
-        public async Task<ApiResult<BoxPriceDto>> Get([FromRoute] int id, CancellationToken cancellationToken = default)
+        public async Task<ApiResult<BoxTypeDto>> Get([FromRoute] int id, CancellationToken cancellationToken = default)
         {
             var query = new GetBoxTypeByIdQuery() { Id = id };
             var result = await _mediator.Send(query);

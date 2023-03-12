@@ -19,7 +19,7 @@ namespace Postex.UserManagement.Infrastructure.Data
         {
             foreach (var entry in ChangeTracker.Entries())
             {
-                if (entry.Entity is not BaseEntity<int> || entry.Entity is not BaseEntity<Guid>)
+                if (entry.Entity is not BaseEntity<int> && entry.Entity is not BaseEntity<Guid>)
                     continue;
 
                 switch (entry.State)

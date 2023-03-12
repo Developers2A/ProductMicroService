@@ -1,16 +1,18 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Features.Contratcs.ContractLeasings.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractLeasings.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetAll;
 using Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetByCustomer;
 using Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetById;
+using Postex.SharedKernel.Api;
 
-namespace Postex.Product.ContractApi.Controllers.v1
+namespace Postex.Product.Api.Controllers.v1.Contracts
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ContractLeasingController : ControllerBase
+    [ApiVersion("1")]
+    [AllowAnonymous]
+    public class ContractLeasingController : BaseApiControllerWithDefaultRoute
     {
         private readonly IMediator mediator;
 

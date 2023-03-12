@@ -1,16 +1,18 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Features.Contratcs.ContractCouriers.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractCouriers.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries.GetByContractId;
 using Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries.GetByCustomer;
 using Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries.GetByCustomerAndCourier;
+using Postex.SharedKernel.Api;
 
-namespace Postex.Product.ContractApi.Controllers.v1
+namespace Postex.Product.Api.Controllers.v1.Contracts
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ContractCourierController : ControllerBase
+    [ApiVersion("1")]
+    [AllowAnonymous]
+    public class ContractCourierController : BaseApiControllerWithDefaultRoute
     {
         private readonly IMediator _mediator;
 
