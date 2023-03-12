@@ -43,7 +43,7 @@ namespace Postex.UserManagement.Api.Controllers.v1
         }
 
         [HttpGet("GetByCustomerId")]
-        public async Task<ApiResult<CustomerCodDto>> GetByCustomerId(Guid customerId)
+        public async Task<ApiResult<CustomerCodDto>> GetByCustomerId(int customerId)
         {
             var result = await mediator.Send(new GetByCustomerIdQuery { CustomerId = customerId });
             if (result == null)

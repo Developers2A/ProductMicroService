@@ -6,7 +6,7 @@ namespace Postex.UserManagement.Application.Features.CustomerCods.Commands.Updat
     public class UpdateCustomerCodCommand : ITransactionRequest<CustomerCod>
     {
         public int Id { get; set; }
-        public Guid CustomerId { get; set; }
+        public int CustomerId { get; set; }
         public string BirthDate { get; set; }
         public string NationalIDSerial { get; set; }
         public string AccountNumber { get; set; }

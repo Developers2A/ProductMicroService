@@ -4,7 +4,7 @@ namespace Postex.UserManagement.Domain.Customers
 {
     public class CustomerCod : BaseEntity<int>
     {
-        public Guid CustomerId { get; set; }
+        public int CustomerId { get; set; }
         public Customer Customer { get; set; }
         public string BirthDate { get; set; }
         public string NationalIDSerial { get; set; }

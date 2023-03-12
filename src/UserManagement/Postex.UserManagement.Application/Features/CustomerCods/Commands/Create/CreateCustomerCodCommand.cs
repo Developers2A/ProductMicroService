@@ -5,7 +5,7 @@ namespace Postex.UserManagement.Application.Features.CustomerCods.Commands.Creat
 {
     public class CreateCustomerCodCommand : ITransactionRequest<CustomerCod>
     {
-        public Guid CustomerId { get; set; }
+        public int CustomerId { get; set; }
         public string BirthDate { get; set; }
         public string NationalIDSerial { get; set; }
         public string AccountNumber { get; set; }
