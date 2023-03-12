@@ -48,7 +48,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries
               .ToListAsync(cancellationToken);
 
             var courierDefualt = await _readRepository.Table
-           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.StateId == null)
+           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0)
            .Select(c => new ContractCourierDto
            {
                Id = c.Id,

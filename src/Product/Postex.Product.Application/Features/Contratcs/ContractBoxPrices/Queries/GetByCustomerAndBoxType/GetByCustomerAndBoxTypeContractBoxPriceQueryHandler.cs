@@ -24,7 +24,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
         public async Task<BoxPriceDto> Handle(GetByCustomerAndBoxTypeContractBoxPriceQuery request, CancellationToken cancellationToken)
         {
             var boxPrice = await _readRepository.Table
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && (c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.StateId == 0) && c.BoxTypeId == request.BoxTypeId)
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && (c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0) && c.BoxTypeId == request.BoxTypeId)
               .Select(c => new BoxPriceDto
               {
                   ContractId = c.ContractInfoId,
@@ -81,7 +81,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
             }
 
             var boxPriceProvince = await _readRepository.Table
-            .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.StateId == request.ProvinceId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.BoxTypeId == request.BoxTypeId)
+            .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.BoxTypeId == request.BoxTypeId)
             .Select(c => new BoxPriceDto
             {
                 ContractId = c.ContractInfoId,

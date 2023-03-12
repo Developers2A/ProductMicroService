@@ -12,7 +12,7 @@ public class ContractInfo : BaseEntity<int>
     public DateTime RegisterDate { get; set; }
     public int? CustomerId { get; set; }
     public int? CityId { get; set; }
-    public int? StateId { get; set; }
+    public int? ProvinceId { get; set; }
     public bool IsActive { get; set; }
     public ICollection<ContractInsurance> ContractInsurances { get; set; }
     public ICollection<ContractBoxPrice> ContractBoxPrices { get; set; }

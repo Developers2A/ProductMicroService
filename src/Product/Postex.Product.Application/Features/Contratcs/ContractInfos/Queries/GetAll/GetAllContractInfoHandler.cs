@@ -24,7 +24,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractInfos.Queries.Ge
                     Description = c.Description,
                     CustomerId = c.CustomerId,
                     CityId = c.CityId,
-                    StateId = c.StateId,
+                    ProvinceId = c.ProvinceId,
                     IsActive = c.IsActive,
                     StartDate = c.StartDate,
                     EndDate = c.EndDate

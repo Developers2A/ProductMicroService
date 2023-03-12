@@ -8,7 +8,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
         public int CourierServiceId { get; set; }
         public int BoxTypeId { get; set; }
         public int? CustomerId { get; set; }
-        public int? StateId { get; set; }
+        public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
     }
 }

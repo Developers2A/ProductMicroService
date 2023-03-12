@@ -14,7 +14,7 @@ namespace Postex.Product.Application.Dtos.Contratcs
         public DateTime RegisterDate { get; set; }
         public int? CustomerId { get; set; }
         public int? CityId { get; set; }
-        public int? StateId { get; set; }
+        public int? ProvinceId { get; set; }
         public bool IsActive { get; set; }
 
         public string StartDate_P => StartDate.ToPersianDate();

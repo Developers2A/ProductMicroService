@@ -23,7 +23,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
                    ContractInfoId = c.ContractInfoId,
                    CourierId = c.CourierId,
                    ValueAddedTypeId = c.ValueAddedTypeId,
-                   StateId = c.StateId,
+                   ProvinceId = c.ProvinceId,
                    CityId = c.CityId,
                    IsActive = c.IsActive,
                    SalePrice = c.SalePrice,
@@ -41,7 +41,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
                   ContractInfoId = c.ContractInfoId,
                   CourierId = c.CourierId,
                   ValueAddedTypeId = c.ValueAddedTypeId,
-                  StateId = c.StateId,
+                  ProvinceId = c.ProvinceId,
                   CityId = c.CityId,
                   IsActive = c.IsActive,
                   SalePrice = c.SalePrice,
@@ -52,13 +52,13 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
               .ToListAsync(cancellationToken);
 
             var itemDefualt = await _readRepository.Table
-           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == null && c.ContractInfo.CityId == null && c.ContractInfo.StateId == null)
+           .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0)
            .Select(c => new ContractValueAddedDto
            {
                ContractInfoId = c.ContractInfoId,
                CourierId = c.CourierId,
                ValueAddedTypeId = c.ValueAddedTypeId,
-               StateId = c.StateId,
+               ProvinceId = c.ProvinceId,
                CityId = c.CityId,
                IsActive = c.IsActive,
                SalePrice = c.SalePrice,

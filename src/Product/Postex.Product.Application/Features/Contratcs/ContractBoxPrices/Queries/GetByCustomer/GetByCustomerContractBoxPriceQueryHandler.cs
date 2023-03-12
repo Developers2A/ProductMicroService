@@ -25,14 +25,14 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
         {
             var boxPriceDefualt = await _readRepository.Table
               .Include(b => b.BoxType)
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.StateId == 0)
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0)
               .Select(c => new ContractBoxPriceDto
               {
                   Id = c.Id,
                   ContractInfoId = c.ContractInfoId,
                   BoxTypeId = c.BoxTypeId,
                   CityId = c.CityId,
-                  ProvinceId = c.StateId,
+                  ProvinceId = c.ProvinceId,
                   CustomerId = c.CustomerId,
                   SalePrice = c.SalePrice,
                   BuyPrice = c.BuyPrice,
@@ -54,7 +54,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
                   ContractInfoId = c.ContractInfoId,
                   BoxTypeId = c.BoxTypeId,
                   CityId = c.CityId,
-                  ProvinceId = c.StateId,
+                  ProvinceId = c.ProvinceId,
                   SalePrice = c.SalePrice,
                   BuyPrice = c.BuyPrice,
                   Description = c.Description
@@ -62,14 +62,14 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
               .ToListAsync(cancellationToken);
 
             var boxPriceProvince = await _readRepository.Table
-             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CityId == 0 && c.ContractInfo.StateId == request.ProvinceId && c.ContractInfo.CustomerId == 0)
+             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.CustomerId == 0)
              .Select(c => new ContractBoxPriceDto
              {
                  Id = c.Id,
                  ContractInfoId = c.ContractInfoId,
                  BoxTypeId = c.BoxTypeId,
                  CityId = c.CityId,
-                 ProvinceId = c.StateId,
+                 ProvinceId = c.ProvinceId,
                  SalePrice = c.SalePrice,
                  BuyPrice = c.BuyPrice,
                  Description = c.Description
@@ -84,7 +84,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
                     ContractInfoId = c.ContractInfoId,
                     BoxTypeId = c.BoxTypeId,
                     CityId = c.CityId,
-                    ProvinceId = c.StateId,
+                    ProvinceId = c.ProvinceId,
                     SalePrice = c.SalePrice,
                     BuyPrice = c.BuyPrice,
                     Description = c.Description

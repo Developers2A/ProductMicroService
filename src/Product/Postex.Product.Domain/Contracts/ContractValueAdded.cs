@@ -10,7 +10,7 @@ public class ContractValueAdded : BaseEntity<int>
     public int CourierId { get; set; }
     public int ValueAddedTypeId { get; set; }
     public ValueAddedType ValueAddedType { get; set; }
-    public int? StateId { get; set; }
+    public int? ProvinceId { get; set; }
     public int? CityId { get; set; }
     public bool IsActive { get; set; }
     public decimal SalePrice { get; set; }

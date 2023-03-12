@@ -18,7 +18,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries
         {
 
             var courierDefualt = await _readRepository.Table
-               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.StateId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.CourierServiceId == request.CourierServiceId)
+               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.CourierServiceId == request.CourierServiceId)
                .Select(c => new CourierServicePriceDto
                {
                    ContractId = c.ContractInfoId,
@@ -75,7 +75,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries
             }
 
             var courierProvince = await _readRepository.Table
-             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.ContractInfo.StateId == request.StateId && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.CourierServiceId == request.CourierServiceId)
+             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.CourierServiceId == request.CourierServiceId)
              .Select(c => new CourierServicePriceDto
              {
                  ContractId = c.ContractInfoId,

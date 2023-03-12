@@ -32,7 +32,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
             contractCollect_Distribute.BoxTypeId = request.BoxTypeId;
             contractCollect_Distribute.CourierServiceId = request.CourierServiceId;            
             contractCollect_Distribute.CityId = request.CityId;
-            contractCollect_Distribute.StateId = request.ProvinceId;
+            contractCollect_Distribute.ProvinceId = request.ProvinceId;
             contractCollect_Distribute.SalePrice = request.SalePrice;
             contractCollect_Distribute.BuyPrice = request.BuyPrice;
             contractCollect_Distribute.Description = request.Description;

@@ -20,7 +20,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
         {
 
             var collect_DistributeDefualt = await _readRepository.Table
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.CustomerId == 0 && ((c.ContractInfo.StateId == request.StateId && c.ContractInfo.CityId == 0) || (c.ContractInfo.CityId == request.CityId && c.ContractInfo.StateId == request.StateId)) && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.BoxTypeId == request.BoxTypeId)
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.CustomerId == 0 && ((c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.CityId == 0) || (c.ContractInfo.CityId == request.CityId && c.ContractInfo.ProvinceId == request.ProvinceId)) && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.BoxTypeId == request.BoxTypeId)
               .Select(c => new CollectionDistributionPriceDto
               {
                   BoxTypeId = c.BoxTypeId,
@@ -37,7 +37,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
 
 
             var CusCity = await _readRepository.Table
-               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.CustomerId == request.CustomerId && c.StateId == request.StateId && c.CityId == request.CityId
+               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.CustomerId == request.CustomerId && c.ProvinceId == request.ProvinceId && c.CityId == request.CityId
                                              && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.BoxTypeId == request.BoxTypeId)
             .Select(c => new CollectionDistributionPriceDto
             {
@@ -70,7 +70,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
             }
 
             var CusProvince = await _readRepository.Table
-                .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.CustomerId == request.CustomerId && c.StateId == request.StateId && c.CityId == 0
+                .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.CustomerId == request.CustomerId && c.ProvinceId == request.ProvinceId && c.CityId == 0
                                               && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.BoxTypeId == request.BoxTypeId)
                 .Select(c => new CollectionDistributionPriceDto
                 {
@@ -102,7 +102,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCollect_Distribu
             }
 
             var Cus = await _readRepository.Table
-               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.CustomerId == request.CustomerId && c.StateId == 0 && c.CityId == 0
+               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.CourierServiceId == request.CourierServiceId && c.ContractInfo.CustomerId == request.CustomerId && c.ProvinceId == 0 && c.CityId == 0
                                              && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.BoxTypeId == request.BoxTypeId)
                .Select(c => new CollectionDistributionPriceDto
                {
