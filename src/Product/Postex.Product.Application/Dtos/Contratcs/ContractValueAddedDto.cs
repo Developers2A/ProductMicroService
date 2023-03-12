@@ -5,7 +5,7 @@
         public int ContractInfoId { get; set; }
         public int CourierId { get; set; }
         public int ValueAddedTypeId { get; set; }
-        public string ContractTypeName { get; set; }
+        public string ValueAddedTypeName { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
         public bool IsActive { get; set; }

@@ -16,19 +16,20 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
         }
         public async Task<List<ContractValueAddedDto>> Handle(GetByContractIdContractValueAddedQuery request, CancellationToken cancellationToken)
         {
-            var items = await _readRepository.Table.Include(b => b.ValueAddedType)
+            var items = await _readRepository.Table.Include(b => b.ValueAddedType )
                 .Select(c => new ContractValueAddedDto
                 {
                     ContractInfoId = c.ContractInfoId,
                     CourierId = c.CourierId,
                     ValueAddedTypeId = c.ValueAddedTypeId,
+                    ValueAddedTypeName=c.ValueAddedType.Name,
                     ProvinceId = c.ProvinceId,
                     CityId = c.CityId,
                     IsActive = c.IsActive,
                     SalePrice = c.SalePrice,
                     BuyPrice = c.BuyPrice,
                     Description = c.Description,
-                })
+                }).Where(b => b.ContractInfoId == request.ContractInfoId)
                 .ToListAsync(cancellationToken);
             return items;
         }
