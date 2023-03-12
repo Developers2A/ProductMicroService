@@ -31,6 +31,8 @@ namespace Postex.UserManagement.Infrastructure.Data.Configurations.Customers
 
             entity.Property(c => c.PostalCode)
            .HasMaxLength(10);
+            entity.Property(c => c.MobileNo)
+           .HasMaxLength(20);
         }
     }
 }
