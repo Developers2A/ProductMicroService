@@ -32,6 +32,7 @@ public class GenerateTokenCommandHandler : IRequestHandler<GenerateTokenCommand,
 
         return new TokenDto()
         {
+            UserId = request.User.Id,
             Token = GenerateJwtToken(request.User),
             RefreshToken = refreshToken
         };
