@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
@@ -27,22 +28,23 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCods.Commands.Up
 
 
         async Task<ContractCodDto> IRequestHandler<UpdateContractCodCommand, ContractCodDto>.Handle(UpdateContractCodCommand request, CancellationToken cancellationToken)
-        {
-            ContractCod contractCod = await _readRepository.GetByIdAsync(request.Id, cancellationToken);
+        {            
+                var contractCod = await _readRepository.Table
+                    .Where(c => c.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
+                if (contractCod == null)
+                    throw new AppException("اطلاعات مورد نظر یافت نشد");
 
-            if (contractCod == null)
-                throw new AppException("اطلاعات مورد نظر یافت نشد");
+                contractCod.FromValue = request.FromValue;
+                contractCod.ToValue = request.ToValue;
+                contractCod.FixedValue = request.FixedValue;
+                contractCod.FixedPercent = request.FixedPercent;
+                contractCod.Description = request.Description;
 
-            contractCod.FromValue = request.FromValue;
-            contractCod.ToValue = request.ToValue;
-            contractCod.FixedValue = request.FixedValue;
-            contractCod.FixedPercent = request.FixedPercent;
-            contractCod.Description = request.Description;
+                await _writeRepository.UpdateAsync(contractCod);
+                await _writeRepository.SaveChangeAsync();
+                var dto = _mapper.Map<ContractCodDto>(contractCod);
+                return dto;         
 
-            await _writeRepository.UpdateAsync(contractCod);
-            await _writeRepository.SaveChangeAsync();
-            var dto = _mapper.Map<ContractCodDto>(contractCod);
-            return dto;
         }
     }
 }

@@ -38,6 +38,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.Get
                     Description = c.Description,
                     IsActice = c.IsActice,
                 })
+                .Where(c=> c.ContractInfoId == request.ContractInfoId)
                 .ToListAsync(cancellationToken);
             return cod;
         }
