@@ -9,8 +9,7 @@ namespace Postex.Product.Application.Dtos.Contratcs
     public class ContractCodDto
     {
         public int Id { get; set; }
-        public int ContractInfoId { get; set; }
-        public int CourierServiceId { get; set; }
+        public int ContractInfoId { get; set; }      
         public int FromValue { get; set; }
         public int ToValue { get; set; }
         public double FixedPercent { get; set; }

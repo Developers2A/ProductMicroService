@@ -10,7 +10,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCods.Commands.Up
 {
     public class UpdateContractCodCommand : ITransactionRequest<ContractCodDto>
     {
-        public int Id { get; set; }
+        public int Id { get; set; }      
         public int FromValue { get; set; }
         public int ToValue { get; set; }
         public double FixedPercent { get; set; }

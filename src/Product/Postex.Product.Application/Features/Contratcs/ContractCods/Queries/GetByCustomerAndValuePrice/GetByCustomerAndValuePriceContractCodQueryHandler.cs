@@ -25,7 +25,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.Get
         public async Task<CodPriceDto> Handle(GetByCustomerAndValuePriceContractCodQuery request, CancellationToken cancellationToken)
         {
             var cod = await _readRepository.Table
-              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0 && c.FromValue >= request.ValuePrice && c.ToValue <= request.ValuePrice)
+              .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == 0 && c.ContractInfo.CityId == 0 && c.ContractInfo.ProvinceId == 0 && c.FromValue <= request.ValuePrice && c.ToValue >= request.ValuePrice)
               .Select(c => new CodPriceDto
               {
                   ContractId = c.ContractInfoId,
@@ -39,7 +39,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.Get
               .FirstOrDefaultAsync(cancellationToken);
 
             var codCus = await _readRepository.Table
-                .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == request.CustomerId && c.FromValue >= request.ValuePrice && c.ToValue <= request.ValuePrice)
+                .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == request.CustomerId && c.FromValue <= request.ValuePrice && c.ToValue >= request.ValuePrice)
                 .Select(c => new CodPriceDto
                 {
                     ContractId = c.ContractInfoId,
@@ -61,7 +61,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.Get
 
 
             var codCity = await _readRepository.Table
-             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == 0 && c.FromValue >= request.ValuePrice && c.ToValue <= request.ValuePrice)
+             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CityId == request.CityId && c.ContractInfo.CustomerId == 0 && c.FromValue <= request.ValuePrice && c.ToValue >= request.ValuePrice)
             .Select(c => new CodPriceDto
             {
                 ContractId = c.ContractInfoId,
@@ -82,7 +82,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCods.Queries.Get
             }
 
             var codProvince = await _readRepository.Table
-            .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.FromValue >= request.ValuePrice && c.ToValue <= request.ValuePrice)
+            .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.FromValue <= request.ValuePrice && c.ToValue >= request.ValuePrice)
             .Select(c => new CodPriceDto
             {
                 ContractId = c.ContractInfoId,
