@@ -4,5 +4,6 @@ namespace Postex.Notification.Application.Services;
 
 public interface ISmsSender
 {
-    Task<SendResult> SendSms(Dictionary<string, string> values, List<string> mobile, string template);
+    Task<SendResult> SendSms(List<string> mobile, string message);
+    Task<SendResult> SendSms(List<string> mobile, string template, Dictionary<string, string> values);
 }

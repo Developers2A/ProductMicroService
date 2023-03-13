@@ -12,8 +12,8 @@ using Postex.Product.Infrastructure.Data;
 namespace Postex.Product.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20230311101804_Initial")]
-    partial class Initial
+    [Migration("20230312213547_InitialProduct")]
+    partial class InitialProduct
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -129,41 +129,41 @@ namespace Postex.Product.Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
-                            Height = 10.0,
+                            Height = 2.0,
                             IsRemoved = false,
-                            Length = 15.0,
-                            Name = "سایز 1",
-                            Width = 10.0
+                            Length = 22.0,
+                            Name = "سایز A5(22*11)",
+                            Width = 11.0
                         },
                         new
                         {
                             Id = 2,
                             CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
-                            Height = 10.0,
+                            Height = 22.0,
                             IsRemoved = false,
-                            Length = 20.0,
-                            Name = "سایز 2",
-                            Width = 15.0
+                            Length = 31.0,
+                            Name = "سایز A4(31*22)",
+                            Width = 22.0
                         },
                         new
                         {
                             Id = 3,
                             CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
-                            Height = 15.0,
+                            Height = 2.0,
                             IsRemoved = false,
-                            Length = 20.0,
-                            Name = "سایز 3",
-                            Width = 20.0
+                            Length = 45.0,
+                            Name = "سایز A3(30*45)",
+                            Width = 30.0
                         },
                         new
                         {
                             Id = 4,
                             CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
-                            Height = 20.0,
+                            Height = 15.0,
                             IsRemoved = false,
-                            Length = 30.0,
-                            Name = "سایز 4",
-                            Width = 20.0
+                            Length = 10.0,
+                            Name = "سایز 1(10*10*15)",
+                            Width = 10.0
                         },
                         new
                         {
@@ -171,9 +171,9 @@ namespace Postex.Product.Infrastructure.Migrations
                             CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
                             Height = 20.0,
                             IsRemoved = false,
-                            Length = 35.0,
-                            Name = "سایز 5",
-                            Width = 25.0
+                            Length = 15.0,
+                            Name = "سایز 2(10*15*20)",
+                            Width = 10.0
                         },
                         new
                         {
@@ -181,8 +181,68 @@ namespace Postex.Product.Infrastructure.Migrations
                             CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
                             Height = 20.0,
                             IsRemoved = false,
+                            Length = 20.0,
+                            Name = "سایز 3(15*20*20)",
+                            Width = 15.0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
+                            Height = 30.0,
+                            IsRemoved = false,
+                            Length = 20.0,
+                            Name = "سایز 4(20*20*30)",
+                            Width = 20.0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
+                            Height = 35.0,
+                            IsRemoved = false,
+                            Length = 25.0,
+                            Name = "سایز 5(20*25*35)",
+                            Width = 25.0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
+                            Height = 45.0,
+                            IsRemoved = false,
+                            Length = 35.0,
+                            Name = "سایز 6(20*35*45)",
+                            Width = 20.0
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
+                            Height = 40.0,
+                            IsRemoved = false,
+                            Length = 30.0,
+                            Name = "سایز 7(25*30*40)",
+                            Width = 25.0
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
+                            Height = 45.0,
+                            IsRemoved = false,
+                            Length = 40.0,
+                            Name = "سایز 8(30*40*45)",
+                            Width = 30.0
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
+                            Height = 50.0,
+                            IsRemoved = false,
                             Length = 45.0,
-                            Name = "سایز 6",
+                            Name = "سایز 9(35*45*55)",
                             Width = 35.0
                         });
                 });
@@ -248,7 +308,7 @@ namespace Postex.Product.Infrastructure.Migrations
                             Id = 3,
                             CreatedOn = new DateTime(2023, 2, 28, 12, 12, 0, 0, DateTimeKind.Unspecified),
                             IsRemoved = false,
-                            Name = "لوگو"
+                            Name = "ثبت"
                         },
                         new
                         {
@@ -370,6 +430,9 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ProvinceId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("RemovedOn")
                         .HasColumnType("datetime2");
 
@@ -381,9 +444,6 @@ namespace Postex.Product.Infrastructure.Migrations
 
                     b.Property<decimal>("SalePrice")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("StateId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -503,6 +563,9 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ProvinceId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("RemovedOn")
                         .HasColumnType("datetime2");
 
@@ -514,9 +577,6 @@ namespace Postex.Product.Infrastructure.Migrations
 
                     b.Property<double>("SalePrice")
                         .HasColumnType("float");
-
-                    b.Property<int?>("StateId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -631,6 +691,9 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ProvinceId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
 
@@ -645,9 +708,6 @@ namespace Postex.Product.Infrastructure.Migrations
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("StateId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -705,6 +765,9 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ProvinceId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("RemovedOn")
                         .HasColumnType("datetime2");
 
@@ -713,9 +776,6 @@ namespace Postex.Product.Infrastructure.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
-
-                    b.Property<int?>("StateId")
-                        .HasColumnType("int");
 
                     b.Property<int>("ToValue")
                         .HasColumnType("int");
@@ -900,6 +960,9 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ProvinceId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("RemovedOn")
                         .HasColumnType("datetime2");
 
@@ -911,9 +974,6 @@ namespace Postex.Product.Infrastructure.Migrations
 
                     b.Property<decimal>("SalePrice")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("StateId")
-                        .HasColumnType("int");
 
                     b.Property<int>("ValueAddedTypeId")
                         .HasColumnType("int");

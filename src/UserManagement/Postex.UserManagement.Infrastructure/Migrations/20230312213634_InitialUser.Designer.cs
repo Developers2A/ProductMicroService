@@ -12,7 +12,7 @@ using Postex.UserManagement.Infrastructure.Data;
 namespace Postex.UserManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20230311102252_InitialUser")]
+    [Migration("20230312213634_InitialUser")]
     partial class InitialUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,8 +65,10 @@ namespace Postex.UserManagement.Infrastructure.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<int>("MobileNo")
-                        .HasColumnType("int");
+                    b.Property<string>("MobileNo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
@@ -140,10 +142,7 @@ namespace Postex.UserManagement.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("CustomerId1")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ExpireDate")
@@ -189,7 +188,7 @@ namespace Postex.UserManagement.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("CustomerCods", (string)null);
                 });
@@ -211,10 +210,7 @@ namespace Postex.UserManagement.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("CustomerId1")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<string>("EconomicCode")
@@ -251,7 +247,7 @@ namespace Postex.UserManagement.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("CustomerInvoiceInfos", (string)null);
                 });
@@ -386,7 +382,7 @@ namespace Postex.UserManagement.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("273e464a-0317-41c1-828d-039800bedd6b"),
+                            Id = new Guid("d57f2b71-bdfd-44ff-b781-6e7cbdc65711"),
                             CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
                             DefaultAddressId = 0,
                             FirstName = "ادمین",
@@ -519,7 +515,7 @@ namespace Postex.UserManagement.Infrastructure.Migrations
                 {
                     b.HasOne("Postex.UserManagement.Domain.Customers.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId1")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -530,7 +526,7 @@ namespace Postex.UserManagement.Infrastructure.Migrations
                 {
                     b.HasOne("Postex.UserManagement.Domain.Customers.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId1")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

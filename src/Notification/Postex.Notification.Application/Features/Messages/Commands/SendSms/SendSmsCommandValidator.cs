@@ -6,11 +6,9 @@ public class SendSmsCommandValidator : AbstractValidator<SendSmsCommand>
 {
     public SendSmsCommandValidator()
     {
-        RuleFor(p => p.Template).
-            NotEmpty().NotNull().WithMessage("الگو الزامی می باشد");
+        RuleFor(customer => customer.Message).NotEmpty().NotNull().When(x => x.TemplateId == 0 || x.TemplateId == null)
+            .WithMessage("متن پیام و یا شناسه الگو را وارد نمایید");
         RuleFor(p => p.Mobile).
             NotEmpty().NotNull().WithMessage("شماره موبایل الزامی می باشد");
-        RuleFor(p => p.Code)
-           .NotEmpty().NotNull().WithMessage("کد معتبر نمی باشد");
     }
 }

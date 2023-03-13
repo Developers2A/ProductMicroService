@@ -22,7 +22,6 @@ public class CreateTemplateCommandHandler : IRequestHandler<CreateTemplateComman
         template.Parameters = request.Parameters.Select(x => new TemplateParameter()
         {
             Key = x.Key,
-            Value = x.Value
         }).ToList();
         await _writeRepository.AddAsync(template, cancellationToken);
         await _writeRepository.SaveChangeAsync(cancellationToken);

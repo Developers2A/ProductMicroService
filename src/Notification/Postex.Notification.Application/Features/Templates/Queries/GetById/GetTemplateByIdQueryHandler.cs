@@ -7,20 +7,20 @@ using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Notification.Application.Features.Templates.Queries.GetById;
 
-public class GetByIdQueryHandler : IRequestHandler<GetByIdQuery, TemplateDto>
+public class GetTemplateByIdQueryHandler : IRequestHandler<GetTemplateByIdQuery, TemplateDto>
 {
     private readonly IReadRepository<Template> _readRepository;
     private readonly IMapper _mapper;
 
-    public GetByIdQueryHandler(IReadRepository<Template> readRepository, IMapper mapper)
+    public GetTemplateByIdQueryHandler(IReadRepository<Template> readRepository, IMapper mapper)
     {
         _readRepository = readRepository;
         _mapper = mapper;
     }
 
-    public async Task<TemplateDto> Handle(GetByIdQuery request, CancellationToken cancellationToken)
+    public async Task<TemplateDto> Handle(GetTemplateByIdQuery request, CancellationToken cancellationToken)
     {
-        var template = await _readRepository.Table
+        var template = await _readRepository.TableNoTracking
             .Where(c => c.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
         var templateDto = _mapper.Map<TemplateDto>(template);

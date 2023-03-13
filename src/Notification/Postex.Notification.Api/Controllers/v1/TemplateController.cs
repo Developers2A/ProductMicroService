@@ -33,7 +33,7 @@ namespace Postex.Notification.Api.Controllers.v1
         [HttpGet("GetById")]
         public async Task<ApiResult<TemplateDto>> GetById(int id)
         {
-            var result = await mediator.Send(new GetByIdQuery { Id = id });
+            var result = await mediator.Send(new GetTemplateByIdQuery { Id = id });
             if (result == null)
             {
                 return new ApiResult<TemplateDto>(true, null, "اطلاعاتی پیدا نشد");

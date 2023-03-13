@@ -99,7 +99,6 @@ namespace Postex.Notification.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
@@ -117,6 +116,10 @@ namespace Postex.Notification.Infrastructure.Migrations
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("RemovedOn")
                         .HasColumnType("datetime2");
@@ -174,10 +177,6 @@ namespace Postex.Notification.Infrastructure.Migrations
 
                     b.Property<int>("TemplateId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

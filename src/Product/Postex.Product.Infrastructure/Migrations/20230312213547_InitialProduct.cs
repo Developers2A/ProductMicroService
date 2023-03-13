@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Postex.Product.Infrastructure.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialProduct : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,7 +46,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: true),
-                    StateId = table.Column<int>(type: "int", nullable: true),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -379,7 +379,7 @@ namespace Postex.Product.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BoxTypeId = table.Column<int>(type: "int", nullable: false),
                     ContractInfoId = table.Column<int>(type: "int", nullable: false),
-                    StateId = table.Column<int>(type: "int", nullable: true),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     SalePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -452,7 +452,7 @@ namespace Postex.Product.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ContractInfoId = table.Column<int>(type: "int", nullable: false),
                     CourierServiceId = table.Column<int>(type: "int", nullable: false),
-                    StateId = table.Column<int>(type: "int", nullable: true),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: true),
                     BoxTypeId = table.Column<int>(type: "int", nullable: false),
                     SalePrice = table.Column<double>(type: "float", nullable: false),
@@ -522,7 +522,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ContractInfoId = table.Column<int>(type: "int", nullable: false),
-                    StateId = table.Column<int>(type: "int", nullable: true),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: true),
                     FromValue = table.Column<int>(type: "int", nullable: false),
                     ToValue = table.Column<int>(type: "int", nullable: false),
@@ -734,7 +734,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     ContractInfoId = table.Column<int>(type: "int", nullable: false),
                     CourierId = table.Column<int>(type: "int", nullable: false),
                     ValueAddedTypeId = table.Column<int>(type: "int", nullable: false),
-                    StateId = table.Column<int>(type: "int", nullable: true),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     SalePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -1109,12 +1109,18 @@ namespace Postex.Product.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "Height", "IsRemoved", "Length", "ModifiedBy", "ModifiedOn", "Name", "RemovedOn", "Width" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 10.0, false, 15.0, null, null, "سایز 1", null, 10.0 },
-                    { 2, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 10.0, false, 20.0, null, null, "سایز 2", null, 15.0 },
-                    { 3, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 15.0, false, 20.0, null, null, "سایز 3", null, 20.0 },
-                    { 4, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 20.0, false, 30.0, null, null, "سایز 4", null, 20.0 },
-                    { 5, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 20.0, false, 35.0, null, null, "سایز 5", null, 25.0 },
-                    { 6, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 20.0, false, 45.0, null, null, "سایز 6", null, 35.0 }
+                    { 1, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 2.0, false, 22.0, null, null, "سایز A5(22*11)", null, 11.0 },
+                    { 2, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 22.0, false, 31.0, null, null, "سایز A4(31*22)", null, 22.0 },
+                    { 3, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 2.0, false, 45.0, null, null, "سایز A3(30*45)", null, 30.0 },
+                    { 4, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 15.0, false, 10.0, null, null, "سایز 1(10*10*15)", null, 10.0 },
+                    { 5, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 20.0, false, 15.0, null, null, "سایز 2(10*15*20)", null, 10.0 },
+                    { 6, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 20.0, false, 20.0, null, null, "سایز 3(15*20*20)", null, 15.0 },
+                    { 7, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 30.0, false, 20.0, null, null, "سایز 4(20*20*30)", null, 20.0 },
+                    { 8, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 35.0, false, 25.0, null, null, "سایز 5(20*25*35)", null, 25.0 },
+                    { 9, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 45.0, false, 35.0, null, null, "سایز 6(20*35*45)", null, 20.0 },
+                    { 10, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 40.0, false, 30.0, null, null, "سایز 7(25*30*40)", null, 25.0 },
+                    { 11, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 45.0, false, 40.0, null, null, "سایز 8(30*40*45)", null, 30.0 },
+                    { 12, null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 50.0, false, 45.0, null, null, "سایز 9(35*45*55)", null, 35.0 }
                 });
 
             migrationBuilder.InsertData(
@@ -1124,7 +1130,7 @@ namespace Postex.Product.Infrastructure.Migrations
                 {
                     { 1, null, new DateTime(2023, 2, 28, 12, 12, 0, 0, DateTimeKind.Unspecified), false, null, null, "پیامک", null },
                     { 2, null, new DateTime(2023, 2, 28, 12, 12, 0, 0, DateTimeKind.Unspecified), false, null, null, "آواتار", null },
-                    { 3, null, new DateTime(2023, 2, 28, 12, 12, 0, 0, DateTimeKind.Unspecified), false, null, null, "لوگو", null },
+                    { 3, null, new DateTime(2023, 2, 28, 12, 12, 0, 0, DateTimeKind.Unspecified), false, null, null, "ثبت", null },
                     { 4, null, new DateTime(2023, 2, 28, 12, 12, 0, 0, DateTimeKind.Unspecified), false, null, null, "پرینت", null }
                 });
 
