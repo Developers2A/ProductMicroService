@@ -38,7 +38,7 @@ namespace Postex.Product.Infrastructure.Data.Configurations.Common
                 new BoxType
                 {
                     Id = 3,
-                    Name = "لوگو",
+                    Name = "ثبت",
                     IsRemoved = false,
                     CreatedOn = createDate
                 },

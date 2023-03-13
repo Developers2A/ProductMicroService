@@ -6,8 +6,8 @@ namespace Postex.Notification.Application.Features.Templates.Commands.Create;
 
 public class CreateTemplateCommand : ITransactionRequest<Template>
 {
-    public string Content { get; set; }
+    public string Name { get; set; }
+    public string? Content { get; set; }
     public TemplateType TemplateType { get; set; }
-
     public List<TemplateParameterDto> Parameters { get; set; }
 }

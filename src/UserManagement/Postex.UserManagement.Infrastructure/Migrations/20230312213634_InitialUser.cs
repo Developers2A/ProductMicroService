@@ -95,7 +95,7 @@ namespace Postex.UserManagement.Infrastructure.Migrations
                     FatherName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
                     NationalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-                    MobileNo = table.Column<int>(type: "int", nullable: false),
+                    MobileNo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     PostalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     IsShahkarValidate = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -159,8 +159,7 @@ namespace Postex.UserManagement.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerId1 = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
                     BirthDate = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     NationalIDSerial = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     AccountNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
@@ -185,8 +184,8 @@ namespace Postex.UserManagement.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_CustomerCods", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CustomerCods_Customers_CustomerId1",
-                        column: x => x.CustomerId1,
+                        name: "FK_CustomerCods_Customers_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -198,8 +197,7 @@ namespace Postex.UserManagement.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerId1 = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
                     AddressId = table.Column<int>(type: "int", nullable: false),
                     TelNo = table.Column<int>(type: "int", maxLength: 30, nullable: false),
                     NationalCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
@@ -216,8 +214,8 @@ namespace Postex.UserManagement.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_CustomerInvoiceInfos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CustomerInvoiceInfos_Customers_CustomerId1",
-                        column: x => x.CustomerId1,
+                        name: "FK_CustomerInvoiceInfos_Customers_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -226,17 +224,17 @@ namespace Postex.UserManagement.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "DefaultAddressId", "Email", "FirstName", "IbanNumber", "IsActive", "IsRemoved", "IsVerified", "LastName", "Mobile", "ModifiedBy", "ModifiedOn", "NationalCode", "Password", "RefreshToken", "RefreshTokenExpiryTime", "RemovedOn", "UserName" },
-                values: new object[] { new Guid("273e464a-0317-41c1-828d-039800bedd6b"), null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 0, null, "ادمین", null, false, false, false, "سیستم", "09394066727", null, null, null, "123", null, null, null, "Admin" });
+                values: new object[] { new Guid("d57f2b71-bdfd-44ff-b781-6e7cbdc65711"), null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 0, null, "ادمین", null, false, false, false, "سیستم", "09394066727", null, null, null, "123", null, null, null, "Admin" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerCods_CustomerId1",
+                name: "IX_CustomerCods_CustomerId",
                 table: "CustomerCods",
-                column: "CustomerId1");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerInvoiceInfos_CustomerId1",
+                name: "IX_CustomerInvoiceInfos_CustomerId",
                 table: "CustomerInvoiceInfos",
-                column: "CustomerId1");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_UserId",

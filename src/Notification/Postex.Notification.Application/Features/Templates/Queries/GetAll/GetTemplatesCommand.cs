@@ -3,6 +3,7 @@ using Postex.Notification.Application.Dtos.Templates;
 
 namespace Postex.Notification.Application.Features.Templates.Queries.GetAll;
 
-public class GetTemplatesCommand : ITransactionRequest<List<TemplateDto>>
+public class GetTemplatesQuery : ITransactionRequest<List<TemplateDto>>
 {
+    public int? TemplateType { get; set; }
 }

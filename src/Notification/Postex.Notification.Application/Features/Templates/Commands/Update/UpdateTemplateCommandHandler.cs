@@ -32,7 +32,6 @@ public class UpdateTemplateCommandHandler : IRequestHandler<UpdateTemplateComman
         template.Parameters = request.Parameters.Select(x => new TemplateParameter()
         {
             Key = x.Key,
-            Value = x.Value
         }).ToList();
         await _writeRepository.UpdateAsync(template, cancellationToken);
         await _writeRepository.SaveChangeAsync(cancellationToken);

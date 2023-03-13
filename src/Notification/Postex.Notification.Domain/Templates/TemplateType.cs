@@ -1,8 +1,7 @@
-﻿namespace Postex.Notification.Domain.Templates
+﻿namespace Postex.Notification.Domain.Templates;
+
+public enum TemplateType : int
 {
-    public enum TemplateType : int
-    {
-        //فراموشی رمز عبور
-        ForgetPassword = 1,
-    }
+    Sms = 1,
+    Email
 }

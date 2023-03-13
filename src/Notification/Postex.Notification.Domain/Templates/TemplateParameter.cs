@@ -1,17 +1,10 @@
 ﻿using Postex.SharedKernel.Domain;
 
-namespace Postex.Notification.Domain.Templates
-{
-    public class TemplateParameter : BaseEntity<int>
-    {
-        public int TemplateId { get; set; }
-        public Template Template { get; set; }
-        public string Key { get; set; }
-        public string Value { get; set; }
+namespace Postex.Notification.Domain.Templates;
 
-        public override string ToString()
-        {
-            return string.Format(Key, Value);
-        }
-    }
+public class TemplateParameter : BaseEntity<int>
+{
+    public int TemplateId { get; set; }
+    public Template Template { get; set; }
+    public string Key { get; set; }
 }

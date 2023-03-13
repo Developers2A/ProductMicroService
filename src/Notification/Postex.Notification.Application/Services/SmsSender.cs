@@ -2,6 +2,7 @@
 using Kavenegar.Core.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Settings;
 
 namespace Postex.Notification.Application.Services;
@@ -12,32 +13,32 @@ public class SmsSender : ISmsSender
     public KavenegarApi kavenegar { get; set; }
     private readonly IConfiguration _configuration;
 
-    public SmsSender(ILogger<SmsSender> logger)
+    public SmsSender(ILogger<SmsSender> logger, IConfiguration configuration)
     {
+        _configuration = configuration;
         smsApiKey = _configuration.GetSection(nameof(SmsSetting)).Get<SmsSetting>().KavenegarApiKey;
         kavenegar = new KavenegarApi(smsApiKey);
     }
 
-    public async Task<bool> SendSmsWithMessage(string mobile, string message)
+    public async Task<SendResult> SendSms(List<string> mobiles, string message)
     {
+        SendResult result = new();
+
         try
         {
-            if (!ValidateMobile(mobile))
-                return false;
-
-            SendResult result = null;
-            result = await kavenegar.Send("", mobile, message);
-
-            if (result.Status == 1 || result.Status == 2 || result.Status == 4 || result.Status == 5 || result.Status == 10)
+            foreach (var mobile in mobiles)
             {
-                return true;
+                if (!ValidateMobile(mobile))
+                    continue;
+
+                return await kavenegar.Send("", mobile, message);
             }
-            return false;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            return false;
+            throw new AppException(ex.Message);
         }
+        return result;
     }
 
     private bool ValidateMobile(string mobile)
@@ -60,7 +61,7 @@ public class SmsSender : ISmsSender
         return true;
     }
 
-    public async Task<SendResult> SendSms(Dictionary<string, string> values, List<string> mobiles, string template)
+    public async Task<SendResult> SendSms(List<string> mobiles, string template, Dictionary<string, string> values)
     {
         SendResult result = new();
         foreach (var mobile in mobiles)
@@ -70,28 +71,27 @@ public class SmsSender : ISmsSender
                 if (!ValidateMobile(mobile))
                     continue;
 
-                var temp = values.Select(v => v.Value);
-                var finalValues = temp.ToList();
+                var parameters = values.Select(v => v.Value).ToList();
 
                 if (values.Count == 1)
                 {
-                    result = await kavenegar.VerifyLookup(mobile.ToString(), finalValues[0], template.ToString());
+                    return await kavenegar.VerifyLookup(mobile.ToString(), parameters[0], template.ToString());
                 }
                 if (values.Count == 2)
                 {
-                    result = await kavenegar.VerifyLookup(mobile.ToString(), finalValues[0], finalValues[1], null, template.ToString());
+                    return await kavenegar.VerifyLookup(mobile.ToString(), parameters[0], parameters[1], null, template.ToString());
                 }
                 if (values.Count == 3)
                 {
-                    result = await kavenegar.VerifyLookup(mobile.ToString(), finalValues[0], finalValues[1], finalValues[2], template.ToString());
+                    return await kavenegar.VerifyLookup(mobile.ToString(), parameters[0], parameters[1], parameters[2], template.ToString());
                 }
                 if (values.Count == 4)
                 {
-                    result = await kavenegar.VerifyLookup(mobile.ToString(), finalValues[0], finalValues[1], finalValues[2], finalValues[3], template.ToString());
+                    return await kavenegar.VerifyLookup(mobile.ToString(), parameters[0], parameters[1], parameters[2], parameters[3], template.ToString());
                 }
                 if (values.Count == 5)
                 {
-                    result = await kavenegar.VerifyLookup(mobile.ToString(), finalValues[0], finalValues[1], finalValues[2], finalValues[3], finalValues[4], template.ToString(), Kavenegar.Core.Models.Enums.VerifyLookupType.Sms);
+                    return await kavenegar.VerifyLookup(mobile.ToString(), parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], template.ToString(), Kavenegar.Core.Models.Enums.VerifyLookupType.Sms);
                 }
 
                 //if (result!.Status == 1 || result.Status == 2 || result.Status == 4 || result.Status == 5 || result.Status == 10)
@@ -100,8 +100,9 @@ public class SmsSender : ISmsSender
                 //}
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                throw new AppException(ex.Message);
             }
         }
         return result;
