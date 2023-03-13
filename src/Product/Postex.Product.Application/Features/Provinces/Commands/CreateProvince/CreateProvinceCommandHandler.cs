@@ -2,20 +2,20 @@
 using Postex.Product.Domain.Locations;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Product.Application.Features.States.Commands.CreateState
+namespace Postex.Product.Application.Features.Provinces.Commands.CreateProvince
 {
-    public class CreateStateCommandHandler : IRequestHandler<CreateStateCommand>
+    public class CreateProvinceCommandHandler : IRequestHandler<CreateProvinceCommand>
     {
-        private readonly IWriteRepository<State> _stateWriteRepository;
+        private readonly IWriteRepository<Province> _stateWriteRepository;
 
-        public CreateStateCommandHandler(IWriteRepository<State> stateWriteRepository)
+        public CreateProvinceCommandHandler(IWriteRepository<Province> stateWriteRepository)
         {
             _stateWriteRepository = stateWriteRepository;
         }
 
-        public async Task<Unit> Handle(CreateStateCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateProvinceCommand request, CancellationToken cancellationToken)
         {
-            var state = new State()
+            var state = new Province()
             {
                 Name = request.Name,
                 Code = request.Code,

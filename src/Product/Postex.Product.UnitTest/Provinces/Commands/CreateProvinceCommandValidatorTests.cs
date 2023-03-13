@@ -1,16 +1,16 @@
-﻿using Postex.Product.Application.Features.States.Commands.CreateState;
+﻿using Postex.Product.Application.Features.Provinces.Commands.CreateProvince;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Postex.Product.UnitTest.States.Commands
 {
-    public class CreateStateCommandValidatorTests
+    public class CreateProvinceCommandValidatorTests
     {
-        private readonly CreateStateCommandValidator _commandValidator;
+        private readonly CreateProvinceCommandValidator _commandValidator;
 
-        public CreateStateCommandValidatorTests()
+        public CreateProvinceCommandValidatorTests()
         {
-            _commandValidator = new CreateStateCommandValidator();
+            _commandValidator = new CreateProvinceCommandValidator();
         }
 
         [Theory]
@@ -18,7 +18,7 @@ namespace Postex.Product.UnitTest.States.Commands
         [InlineData(null)]
         public async Task ValidateAsync_NameIsNullOrEmpty_ValidationFailed(string name)
         {
-            CreateStateCommand command = new()
+            CreateProvinceCommand command = new()
             {
                 Name = name
             };
@@ -33,7 +33,7 @@ namespace Postex.Product.UnitTest.States.Commands
         [InlineData(null)]
         public async Task ValidateAsync_CodeIsNullOrEmpty_ValidationFailed(int code)
         {
-            CreateStateCommand command = new()
+            CreateProvinceCommand command = new()
             {
                 Code = code
             };

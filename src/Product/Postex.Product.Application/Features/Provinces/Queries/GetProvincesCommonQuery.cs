@@ -4,23 +4,23 @@ using Postex.Product.Application.Dtos.Commons;
 using Postex.Product.Domain.Locations;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Product.Application.Features.States.Queries
+namespace Postex.Product.Application.Features.Provinces.Queries
 {
-    public class GetStatesCommonQuery : IRequest<List<StateCommonDto>>
+    public class GetProvincesCommonQuery : IRequest<List<ProvinceCommonDto>>
     {
-        public class Handler : IRequestHandler<GetStatesCommonQuery, List<StateCommonDto>>
+        public class Handler : IRequestHandler<GetProvincesCommonQuery, List<ProvinceCommonDto>>
         {
-            private readonly IReadRepository<State> _stateRepository;
+            private readonly IReadRepository<Province> _stateRepository;
 
-            public Handler(IReadRepository<State> stateRepository)
+            public Handler(IReadRepository<Province> stateRepository)
             {
                 _stateRepository = stateRepository;
             }
 
-            public async Task<List<StateCommonDto>> Handle(GetStatesCommonQuery request, CancellationToken cancellationToken)
+            public async Task<List<ProvinceCommonDto>> Handle(GetProvincesCommonQuery request, CancellationToken cancellationToken)
             {
                 var states = await _stateRepository.Table
-                    .Select(c => new StateCommonDto
+                    .Select(c => new ProvinceCommonDto
                     {
                         Code = c.Code,
                         Name = c.Name,

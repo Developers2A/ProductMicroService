@@ -13,9 +13,9 @@ namespace Postex.Product.Application.Mappings
         public CityMapping()
         {
             CreateMap<City, CityDto>();
-            CreateMap<State, StateDto>();
+            CreateMap<Province, ProvinceDto>();
             CreateMap<City, CityCommonDto>();
-            CreateMap<State, StateCommonDto>();
+            CreateMap<Province, ProvinceCommonDto>();
 
             CreateMap<PostGetStatesResponse, CourierStateDto>()
                 .ForMember(dest => dest.Name,

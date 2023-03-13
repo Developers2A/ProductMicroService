@@ -35,7 +35,7 @@ namespace Postex.Product.Api.Controllers.v1
         }
 
         [HttpGet]
-        public async Task<ApiResult<List<CourierDto>>> Get(CancellationToken cancellationToken = default)
+        public async Task<ApiResult<List<CourierServiceDto>>> Get(CancellationToken cancellationToken = default)
         {
             var query = new GetCourierServicesQuery();
             var result = await _mediator.Send(query, cancellationToken);
@@ -43,7 +43,7 @@ namespace Postex.Product.Api.Controllers.v1
         }
 
         [HttpGet("{id}")]
-        public async Task<ApiResult<CourierDto>> Get([FromRoute] int id, CancellationToken cancellationToken = default)
+        public async Task<ApiResult<CourierServiceDto>> Get([FromRoute] int id, CancellationToken cancellationToken = default)
         {
             var query = new GetCourierServiceByIdQuery() { Id = id };
             var result = await _mediator.Send(query, cancellationToken);

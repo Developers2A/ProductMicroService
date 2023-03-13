@@ -3,24 +3,24 @@ using Postex.Product.Domain.Locations;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 
-namespace Postex.Product.Application.Features.States.Commands.UpdateState
+namespace Postex.Product.Application.Features.Provinces.Commands.UpdateProvince
 {
-    public class UpdateStateCommandHandler : IRequestHandler<UpdateStateCommand>
+    public class UpdateProvinceCommandHandler : IRequestHandler<UpdateProvinceCommand>
     {
-        private readonly IWriteRepository<State> _stateWriteRepository;
-        private readonly IReadRepository<State> _stateReadRepository;
+        private readonly IWriteRepository<Province> _stateWriteRepository;
+        private readonly IReadRepository<Province> _stateReadRepository;
 
-        public UpdateStateCommandHandler(
-            IWriteRepository<State> stateWriteRepository,
-            IReadRepository<State> stateReadRepository)
+        public UpdateProvinceCommandHandler(
+            IWriteRepository<Province> stateWriteRepository,
+            IReadRepository<Province> stateReadRepository)
         {
             _stateWriteRepository = stateWriteRepository;
             _stateReadRepository = stateReadRepository;
         }
 
-        public async Task<Unit> Handle(UpdateStateCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateProvinceCommand request, CancellationToken cancellationToken)
         {
-            State state = await _stateReadRepository.GetByIdAsync(request.Id, cancellationToken);
+            Province state = await _stateReadRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (state == null)
                 throw new AppException("اطلاعات یافت نشد");

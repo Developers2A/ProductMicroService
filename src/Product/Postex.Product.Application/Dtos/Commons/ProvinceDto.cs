@@ -1,6 +1,6 @@
 ﻿namespace Postex.Product.Application.Dtos.Commons
 {
-    public class StateDto
+    public class ProvinceDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -2,7 +2,7 @@
 
 namespace Postex.Product.Domain.Locations
 {
-    public class State : BaseEntity<int>
+    public class Province : BaseEntity<int>
     {
         public string Name { get; set; }
         public int Code { get; set; }

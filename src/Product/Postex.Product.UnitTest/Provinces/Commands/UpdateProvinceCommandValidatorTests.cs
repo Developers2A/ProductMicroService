@@ -1,15 +1,15 @@
-﻿using Postex.Product.Application.Features.States.Commands.UpdateState;
+﻿using Postex.Product.Application.Features.Provinces.Commands.UpdateProvince;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Postex.Product.UnitTest.States.Commands
 {
-    public class UpdateStateCommandValidatorTests
+    public class UpdateProvinceCommandValidatorTests
     {
-        private readonly UpdateStateCommandValidator _commandValidator;
-        public UpdateStateCommandValidatorTests()
+        private readonly UpdateProvinceCommandValidator _commandValidator;
+        public UpdateProvinceCommandValidatorTests()
         {
-            _commandValidator = new UpdateStateCommandValidator();
+            _commandValidator = new UpdateProvinceCommandValidator();
         }
 
         [Theory]
@@ -17,7 +17,7 @@ namespace Postex.Product.UnitTest.States.Commands
         [InlineData(null)]
         public async Task ValidateAsync_NameIsNullOrEmpty_ValidationFailed(string name)
         {
-            UpdateStateCommand updateStateCommand = new()
+            UpdateProvinceCommand updateStateCommand = new()
             {
                 Name = name
             };
@@ -32,7 +32,7 @@ namespace Postex.Product.UnitTest.States.Commands
         [InlineData(-1)]
         public async Task ValidateAsync_IdIsDefault_ValidationFailed(int id)
         {
-            UpdateStateCommand updateStateCommand = new()
+            UpdateProvinceCommand updateStateCommand = new()
             {
                 Name = "test",
                 Id = id

@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Postex.Product.Application.Features.States.Commands.CreateState
+namespace Postex.Product.Application.Features.Provinces.Commands.CreateProvince
 {
-    public class CreateStateCommandValidator : AbstractValidator<CreateStateCommand>
+    public class CreateProvinceCommandValidator : AbstractValidator<CreateProvinceCommand>
     {
-        public CreateStateCommandValidator()
+        public CreateProvinceCommandValidator()
         {
             RuleFor(p => p.Name)
                  .NotEmpty().WithMessage(" نام الزامی میباشد");

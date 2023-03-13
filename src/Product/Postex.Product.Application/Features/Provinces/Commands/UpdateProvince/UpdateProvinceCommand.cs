@@ -1,8 +1,8 @@
 ﻿using Postex.Product.Application.Contracts;
 
-namespace Postex.Product.Application.Features.States.Commands.UpdateState
+namespace Postex.Product.Application.Features.Provinces.Commands.UpdateProvince
 {
-    public class UpdateStateCommand : ITransactionRequest
+    public class UpdateProvinceCommand : ITransactionRequest
     {
         public int Id { get; set; }
         public string Name { get; set; }

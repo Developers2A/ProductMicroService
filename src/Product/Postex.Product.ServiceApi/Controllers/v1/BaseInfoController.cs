@@ -9,7 +9,7 @@ using Postex.Product.Application.Features.Couriers.Queries;
 using Postex.Product.Application.Features.CourierServices.Queries;
 using Postex.Product.Application.Features.CourierStatusMappings.Queries;
 using Postex.Product.Application.Features.PostShops.Commands.SyncPostShops;
-using Postex.Product.Application.Features.States.Queries;
+using Postex.Product.Application.Features.Provinces.Queries;
 using Postex.Product.ServiceApi.Filters;
 using Postex.SharedKernel.Api;
 using Postex.SharedKernel.Common.Enums;
@@ -39,10 +39,10 @@ namespace Postex.Product.ServiceApi.Controllers.v1
             return await _mediator.Send(new GetCourierServicesCommonQuery() { });
         }
 
-        [HttpGet("states")]
-        public async Task<ApiResult<List<StateCommonDto>>> GetStates()
+        [HttpGet("provinces")]
+        public async Task<ApiResult<List<ProvinceCommonDto>>> GetProvinces()
         {
-            return await _mediator.Send(new GetStatesCommonQuery());
+            return await _mediator.Send(new GetProvincesCommonQuery());
         }
 
         [HttpPost("cities")]

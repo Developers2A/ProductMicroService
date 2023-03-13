@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
-using MediatR;
 using Moq;
-using Postex.Product.Application.Features.States.Commands.UpdateState;
+using Postex.Product.Application.Features.Provinces.Commands.CreateProvince;
 using Postex.Product.Domain.Locations;
 using Postex.Product.UnitTest.Common;
 using System.Threading;
@@ -10,18 +9,18 @@ using Xunit;
 
 namespace Postex.Product.UnitTest.States.Commands
 {
-    public class UpdateStateCommandHandlerTests : BaseHandlerTest<State>
+    public class CreateProvinceCommandHandlerTests : BaseHandlerTest<Province>
     {
-        private readonly UpdateStateCommandHandler _commandHandler;
+        private readonly CreateProvinceCommandHandler _commandHandler;
 
-        public UpdateStateCommandHandlerTests()
+        public CreateProvinceCommandHandlerTests()
         {
-            _commandHandler = new UpdateStateCommandHandler(_writeRepository.Object, _readRepository.Object);
+            _commandHandler = new CreateProvinceCommandHandler(_writeRepository.Object);
         }
 
-        private UpdateStateCommand CreateValidCommand()
+        private CreateProvinceCommand CreateValidCommand()
         {
-            return new UpdateStateCommand()
+            return new CreateProvinceCommand()
             {
                 Name = "تهران",
                 Code = 1,
@@ -34,15 +33,15 @@ namespace Postex.Product.UnitTest.States.Commands
         {
             var result = await _commandHandler.Handle(CreateValidCommand(), new CancellationToken());
 
-            _writeRepository.Verify(e => e.UpdateAsync(It.IsAny<State>(), CancellationToken.None), Times.Once);
+            _writeRepository.Verify(e => e.AddAsync(It.IsAny<Province>(), CancellationToken.None), Times.Once);
         }
 
         [Fact]
-        public async Task HandleAsync_CommandIsValid_EntityIsUpdated()
+        public async Task HandleAsync_CommandIsValid_EntityIsCreated()
         {
             var result = await _commandHandler.Handle(CreateValidCommand(), new CancellationToken());
 
-            result.Should().Be(Unit.Value);
+            result.Should().Be(MediatR.Unit.Value);
         }
     }
 }

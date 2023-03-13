@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Postex.Product.Application.Features.States.Commands.UpdateState
+namespace Postex.Product.Application.Features.Provinces.Commands.UpdateProvince
 {
-    public class UpdateStateCommandValidator : AbstractValidator<UpdateStateCommand>
+    public class UpdateProvinceCommandValidator : AbstractValidator<UpdateProvinceCommand>
     {
-        public UpdateStateCommandValidator()
+        public UpdateProvinceCommandValidator()
         {
             RuleFor(p => p.Id)
                   .NotEmpty().GreaterThan(0).WithMessage(" شناسه الزامی میباشد");

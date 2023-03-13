@@ -4,9 +4,9 @@ using Postex.Product.Domain.Locations;
 
 namespace Postex.Product.Infrastructure.Data.Configurations.Locations
 {
-    public class StateConfiguration : BaseEntityConfiguration<State>
+    public class ProvinceConfiguration : BaseEntityConfiguration<Province>
     {
-        public override void Configure(EntityTypeBuilder<State> builder)
+        public override void Configure(EntityTypeBuilder<Province> builder)
         {
             base.Configure(builder);
 
