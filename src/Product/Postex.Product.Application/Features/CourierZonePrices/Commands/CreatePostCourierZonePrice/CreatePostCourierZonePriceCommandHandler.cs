@@ -98,7 +98,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Commands.CreateP
                             FromCourierZoneId = template.FromCourierZoneId,
                             ToCourierZoneId = template.ToCourierZoneId,
                             CourierServiceId = template.CourierServiceId,
-                            SameState = template.SameState
+                            SameProvince = template.SameProvince
                         });
                     }
                 }

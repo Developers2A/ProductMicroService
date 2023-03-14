@@ -10,7 +10,7 @@ public class GetValueAddedPricesQueryValidator : AbstractValidator<GetValueAdded
             .NotNull().NotEmpty().WithMessage(" شناسه مشتری الزامی میباشد");
         RuleFor(p => p.CityId)
             .NotNull().NotEmpty().WithMessage(" شناسه شهر الزامی میباشد");
-        RuleFor(p => p.StateId)
+        RuleFor(p => p.ProvinceId)
             .NotNull().NotEmpty().WithMessage(" شناسه استان الزامی میباشد");
         RuleFor(p => p.ValueAddedIds)
             .NotNull().NotEmpty().WithMessage(" سرویس های ارزش افزوده الزامی میباشد");

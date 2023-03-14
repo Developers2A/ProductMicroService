@@ -33,7 +33,7 @@ public class GetValueAddedPricesQueryHandler : IRequestHandler<GetValueAddedPric
                 {
                     CustomerId = _query.CustomerId,
                     CityId = _query.CityId,
-                    StateId = _query.StateId,
+                    ProvinceId = _query.ProvinceId,
                     ValueAddedId = item
                 });
 

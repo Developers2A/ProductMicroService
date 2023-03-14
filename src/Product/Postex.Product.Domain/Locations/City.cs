@@ -7,8 +7,8 @@ namespace Postex.Product.Domain.Locations
 {
     public class City : BaseEntity<int>
     {
-        public int StateId { get; set; }
-        public Province State { get; set; }
+        public int ProvinceId { get; set; }
+        public Province Province { get; set; }
         public string Name { get; set; }
         public int Code { get; set; }
         public string? EnglishName { get; set; }

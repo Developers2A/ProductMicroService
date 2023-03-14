@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Dtos.ServiceProviders.Post;
+using Postex.Product.Application.Features.PostShops.Commands.SyncPostShops;
 using Postex.Product.Application.Features.ServiceProviders.Post.Commands.CreateOrder;
 using Postex.Product.Application.Features.ServiceProviders.Post.Commands.CreateShop;
 using Postex.Product.Application.Features.ServiceProviders.Post.Commands.DeleteOrder;
@@ -162,6 +163,17 @@ namespace Postex.Product.ServiceApi.Controllers.v1
         {
             var result = await _mediator.Send(request);
             return new ApiResult<PostTrackResponse>(result.IsSuccess, result.Data, result.Message);
+        }
+
+        [HttpPost("sync-shops")]
+        public async Task<IActionResult> SyncShops()
+        {
+            var result = await _mediator.Send(new SyncPostShopsCommand()
+            {
+                FromDate = DateTime.Now.AddYears(-15),
+                ToDate = DateTime.Now.AddYears(10),
+            });
+            return Ok();
         }
     }
 }

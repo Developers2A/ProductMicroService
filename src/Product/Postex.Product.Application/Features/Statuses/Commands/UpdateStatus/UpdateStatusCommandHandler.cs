@@ -8,27 +8,27 @@ namespace Postex.Product.Application.Features.Statuses.Commands.UpdateStatus
     public class UpdateStatusCommandHandler : IRequestHandler<UpdateStatusCommand>
     {
         private readonly IWriteRepository<Status> _statusWriteRepository;
-        private readonly IReadRepository<Status> _stateReadRepository;
+        private readonly IReadRepository<Status> _statusReadRepository;
 
         public UpdateStatusCommandHandler(
-            IWriteRepository<Status> stateWriteRepository,
-            IReadRepository<Status> stateReadRepository)
+            IWriteRepository<Status> statusWriteRepository,
+            IReadRepository<Status> statusReadRepository)
         {
-            _statusWriteRepository = stateWriteRepository;
-            _stateReadRepository = stateReadRepository;
+            _statusWriteRepository = statusWriteRepository;
+            _statusReadRepository = statusReadRepository;
         }
 
         public async Task<Unit> Handle(UpdateStatusCommand request, CancellationToken cancellationToken)
         {
-            Status state = await _stateReadRepository.GetByIdAsync(request.Id, cancellationToken);
+            Status status = await _statusReadRepository.GetByIdAsync(request.Id, cancellationToken);
 
-            if (state == null)
+            if (status == null)
                 throw new AppException("اطلاعات یافت نشد");
 
-            state.Name = request.Name;
-            state.Code = request.Code;
-            state.Description = request.Description;
-            await _statusWriteRepository.UpdateAsync(state);
+            status.Name = request.Name;
+            status.Code = request.Code;
+            status.Description = request.Description;
+            await _statusWriteRepository.UpdateAsync(status);
             await _statusWriteRepository.SaveChangeAsync();
 
             return Unit.Value;

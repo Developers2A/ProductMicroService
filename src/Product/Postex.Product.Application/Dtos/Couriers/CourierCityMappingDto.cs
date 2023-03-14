@@ -6,7 +6,7 @@
         public int CourierId { get; set; }
         public CourierDto Courier { get; set; }
         public int CityId { get; set; }
-        public int StateId { get; set; }
+        public int ProvinceId { get; set; }
         public int Code { get; set; }
         public string MappedCode { get; set; }
     }

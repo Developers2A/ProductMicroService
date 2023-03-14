@@ -17,13 +17,13 @@ namespace Postex.Product.Application.Features.Cities.Queries.GetCitiesCommon
 
         public async Task<List<CityCommonDto>> Handle(GetCitiesCommonQuery request, CancellationToken cancellationToken)
         {
-            var cities = await _cityReadRepository.TableNoTracking.Include(x => x.State)
-                .Where(x => x.State.Code == request.StateCode)
+            var cities = await _cityReadRepository.TableNoTracking.Include(x => x.Province)
+                .Where(x => x.Province.Code == request.ProvinceCode)
                 .Select(c => new CityCommonDto
                 {
                     Code = c.Code,
                     Name = c.Name,
-                    StateCode = c.State.Code
+                    ProvinceCode = c.Province.Code
                 })
                 .ToListAsync(cancellationToken);
 

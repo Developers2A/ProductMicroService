@@ -14,6 +14,6 @@ namespace Postex.Product.Domain.Offlines
         public decimal SellPrice { get; set; }
         public decimal BuyPrice { get; set; }
         public int Weight { get; set; }
-        public bool SameState { get; set; }
+        public bool SameProvince { get; set; }
     }
 }

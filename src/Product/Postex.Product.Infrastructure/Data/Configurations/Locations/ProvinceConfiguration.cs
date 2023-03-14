@@ -10,7 +10,7 @@ namespace Postex.Product.Infrastructure.Data.Configurations.Locations
         {
             base.Configure(builder);
 
-            builder.ToTable("States");
+            builder.ToTable("Provinces");
 
             builder.Property(i => i.Name)
                 .HasMaxLength(200);

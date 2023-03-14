@@ -6,24 +6,24 @@ namespace Postex.Product.Application.Features.Provinces.Commands.CreateProvince
 {
     public class CreateProvinceCommandHandler : IRequestHandler<CreateProvinceCommand>
     {
-        private readonly IWriteRepository<Province> _stateWriteRepository;
+        private readonly IWriteRepository<Province> _provinceWriteRepository;
 
-        public CreateProvinceCommandHandler(IWriteRepository<Province> stateWriteRepository)
+        public CreateProvinceCommandHandler(IWriteRepository<Province> provinceWriteRepository)
         {
-            _stateWriteRepository = stateWriteRepository;
+            _provinceWriteRepository = provinceWriteRepository;
         }
 
         public async Task<Unit> Handle(CreateProvinceCommand request, CancellationToken cancellationToken)
         {
-            var state = new Province()
+            var province = new Province()
             {
                 Name = request.Name,
                 Code = request.Code,
                 EnglishName = request.EnglishName
             };
 
-            await _stateWriteRepository.AddAsync(state);
-            await _stateWriteRepository.SaveChangeAsync();
+            await _provinceWriteRepository.AddAsync(province);
+            await _provinceWriteRepository.SaveChangeAsync();
             return Unit.Value;
         }
     }

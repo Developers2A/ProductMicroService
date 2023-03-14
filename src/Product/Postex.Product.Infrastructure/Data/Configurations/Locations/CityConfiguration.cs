@@ -20,9 +20,9 @@ namespace Postex.Product.Infrastructure.Data.Configurations.Locations
             builder.Property(i => i.RowVersion)
                 .IsRowVersion();
 
-            builder.HasOne(i => i.State)
+            builder.HasOne(i => i.Province)
                .WithMany(i => i.Cities)
-               .HasForeignKey(i => i.StateId);
+               .HasForeignKey(i => i.ProvinceId);
         }
     }
 }

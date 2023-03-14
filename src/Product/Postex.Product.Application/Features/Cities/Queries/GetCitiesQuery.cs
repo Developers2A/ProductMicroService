@@ -29,7 +29,7 @@ namespace Postex.Product.Application.Features.Cities.Queries
                     .Select(c => new CityDto
                     {
                         Id = c.Id,
-                        StateId = c.StateId,
+                        ProvinceId = c.ProvinceId,
                         Name = c.Name,
                         EnglishName = c.EnglishName,
                         Code = c.Code

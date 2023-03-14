@@ -7,6 +7,6 @@ namespace Postex.Product.Application.Features.Cities.Commands.CreateCity
         public string Name { get; set; }
         public int Code { get; set; }
         public string EnglishName { get; set; }
-        public int StateId { get; set; }
+        public int ProvinceId { get; set; }
     }
 }

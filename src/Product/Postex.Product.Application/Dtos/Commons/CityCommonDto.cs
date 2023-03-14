@@ -2,7 +2,7 @@
 {
     public class CityCommonDto
     {
-        public int StateCode { get; set; }
+        public int ProvinceCode { get; set; }
         public string Name { get; set; }
         public int Code { get; set; }
     }

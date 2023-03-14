@@ -8,7 +8,7 @@ namespace Postex.Product.Application.Features.Cities.Commands.CreateCity
         {
             RuleFor(p => p.Name)
                   .NotEmpty().NotNull().WithMessage(" نام الزامی میباشد");
-            RuleFor(p => p.StateId)
+            RuleFor(p => p.ProvinceId)
                  .NotEmpty().NotNull().GreaterThan(0).WithMessage(" استان الزامی میباشد");
         }
     }

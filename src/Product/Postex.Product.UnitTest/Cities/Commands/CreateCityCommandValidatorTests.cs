@@ -32,16 +32,16 @@ namespace Postex.Product.UnitTest.Cities.Commands
         [Theory]
         [InlineData(0)]
         [InlineData(-1)]
-        public async Task ValidateAsync_StateIsNullOrEmpty_ValidationFailed(int stateId)
+        public async Task ValidateAsync_ProvinceIsNullOrEmpty_ValidationFailed(int provinceId)
         {
             CreateCityCommand command = new()
             {
-                StateId = stateId
+                ProvinceId = provinceId
             };
 
             var result = await _commandValidator.ValidateAsync(command);
 
-            Assert.Contains(result.Errors, o => o.PropertyName == nameof(command.StateId));
+            Assert.Contains(result.Errors, o => o.PropertyName == nameof(command.ProvinceId));
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Postex.Product.Application.Features.ServiceProviders.PishroPost.Querie
                 }
 
                 var res = await response.Content.ReadAsStringAsync();
-                var resModel = JsonConvert.DeserializeObject<ChaparGetCityResponse>(res);
+                var resModel = JsonConvert.DeserializeObject<ChaparGetCitiesResponse>(res);
                 if (resModel.result)
                 {
                     return new(true, "success", resModel.Objects.city);

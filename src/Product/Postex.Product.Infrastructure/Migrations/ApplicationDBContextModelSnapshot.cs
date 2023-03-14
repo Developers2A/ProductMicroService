@@ -463,9 +463,6 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Property<int>("ContractInfoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CourierServiceId")
-                        .HasColumnType("int");
-
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -1636,6 +1633,9 @@ namespace Postex.Product.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<int>("ProvinceId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("RemovedOn")
                         .HasColumnType("datetime2");
 
@@ -1645,12 +1645,9 @@ namespace Postex.Product.Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<int>("StateId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("StateId");
+                    b.HasIndex("ProvinceId");
 
                     b.ToTable("Cities", (string)null);
                 });
@@ -1702,7 +1699,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.ToTable("Countries", (string)null);
                 });
 
-            modelBuilder.Entity("Postex.Product.Domain.Locations.State", b =>
+            modelBuilder.Entity("Postex.Product.Domain.Locations.Province", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1748,7 +1745,7 @@ namespace Postex.Product.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("States", (string)null);
+                    b.ToTable("Provinces", (string)null);
                 });
 
             modelBuilder.Entity("Postex.Product.Domain.Locations.Zone", b =>
@@ -1933,7 +1930,7 @@ namespace Postex.Product.Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<bool>("SameState")
+                    b.Property<bool>("SameProvince")
                         .HasColumnType("bit");
 
                     b.Property<decimal>("SellPrice")
@@ -2000,7 +1997,7 @@ namespace Postex.Product.Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<bool>("SameState")
+                    b.Property<bool>("SameProvince")
                         .HasColumnType("bit");
 
                     b.Property<int>("ToCity")
@@ -2559,13 +2556,13 @@ namespace Postex.Product.Infrastructure.Migrations
 
             modelBuilder.Entity("Postex.Product.Domain.Locations.City", b =>
                 {
-                    b.HasOne("Postex.Product.Domain.Locations.State", "State")
+                    b.HasOne("Postex.Product.Domain.Locations.Province", "Province")
                         .WithMany("Cities")
-                        .HasForeignKey("StateId")
+                        .HasForeignKey("ProvinceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("State");
+                    b.Navigation("Province");
                 });
 
             modelBuilder.Entity("Postex.Product.Domain.Offlines.CourierZone", b =>
@@ -2720,7 +2717,7 @@ namespace Postex.Product.Infrastructure.Migrations
                     b.Navigation("PostCityShops");
                 });
 
-            modelBuilder.Entity("Postex.Product.Domain.Locations.State", b =>
+            modelBuilder.Entity("Postex.Product.Domain.Locations.Province", b =>
                 {
                     b.Navigation("Cities");
                 });

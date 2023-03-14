@@ -77,8 +77,8 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
 
         private async Task<List<ServicePrice>> GetPrice(CourierCode courierCode)
         {
-            int fromCityId = GetCityId(_query.SenderCity);
-            var toCityId = GetCityId(_query.ReceiverCity);
+            int fromCityId = GetCityId(_query.SenderCityCode);
+            var toCityId = GetCityId(_query.ReceiverCityCode);
             int fromZoneId = GetZoneId(courierCode, fromCityId);
             int toZoneId = GetZoneId(courierCode, toCityId);
             SetFromAndToZoneDefaultIfZero(ref fromZoneId, ref toZoneId);
@@ -134,7 +134,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
         {
             return await _mediator.Send(new GetCitiesQuery()
             {
-                CityCodes = new List<int> { _query.SenderCity, _query.ReceiverCity }
+                CityCodes = new List<int> { _query.SenderCityCode, _query.ReceiverCityCode }
             });
         }
     }

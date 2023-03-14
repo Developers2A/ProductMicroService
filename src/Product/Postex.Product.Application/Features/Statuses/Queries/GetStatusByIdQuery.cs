@@ -14,9 +14,9 @@ namespace Postex.Product.Application.Features.Statuses.Queries
         {
             private readonly IReadRepository<Status> _statusRepository;
 
-            public Handler(IReadRepository<Status> stateRepository)
+            public Handler(IReadRepository<Status> statusRepository)
             {
-                _statusRepository = stateRepository;
+                _statusRepository = statusRepository;
             }
 
             public async Task<StatusDto> Handle(GetStatusByIdQuery request, CancellationToken cancellationToken)

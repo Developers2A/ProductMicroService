@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Postex.Product.UnitTest.States.Commands
+namespace Postex.Product.UnitTest.Provinces.Commands
 {
     public class CreateProvinceCommandValidatorTests
     {

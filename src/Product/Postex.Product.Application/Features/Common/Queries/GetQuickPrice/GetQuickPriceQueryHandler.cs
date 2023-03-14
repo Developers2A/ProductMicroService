@@ -83,7 +83,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetQuickPrice
                 var collectionDistributionPrice = await _mediator.Send(new GetPeykOfflinePricesQuery()
                 {
                     CourierCode = query.CourierCode,
-                    SenderCity = query.CourierCode,
+                    SenderCityCode = query.SenderCityCode,
                 });
 
                 if (query.HasCollection)

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Postex.Product.UnitTest.States.Commands
+namespace Postex.Product.UnitTest.Provinces.Commands
 {
     public class UpdateProvinceCommandValidatorTests
     {
@@ -17,14 +17,14 @@ namespace Postex.Product.UnitTest.States.Commands
         [InlineData(null)]
         public async Task ValidateAsync_NameIsNullOrEmpty_ValidationFailed(string name)
         {
-            UpdateProvinceCommand updateStateCommand = new()
+            UpdateProvinceCommand updateProvinceCommand = new()
             {
                 Name = name
             };
 
-            var result = await _commandValidator.ValidateAsync(updateStateCommand);
+            var result = await _commandValidator.ValidateAsync(updateProvinceCommand);
 
-            Assert.Contains(result.Errors, o => o.PropertyName == nameof(updateStateCommand.Name));
+            Assert.Contains(result.Errors, o => o.PropertyName == nameof(updateProvinceCommand.Name));
         }
 
         [Theory]
@@ -32,15 +32,15 @@ namespace Postex.Product.UnitTest.States.Commands
         [InlineData(-1)]
         public async Task ValidateAsync_IdIsDefault_ValidationFailed(int id)
         {
-            UpdateProvinceCommand updateStateCommand = new()
+            UpdateProvinceCommand updateProvinceCommand = new()
             {
                 Name = "test",
                 Id = id
             };
 
-            var result = await _commandValidator.ValidateAsync(updateStateCommand);
+            var result = await _commandValidator.ValidateAsync(updateProvinceCommand);
 
-            Assert.Contains(result.Errors, o => o.PropertyName == nameof(updateStateCommand.Id));
+            Assert.Contains(result.Errors, o => o.PropertyName == nameof(updateProvinceCommand.Id));
         }
     }
 }

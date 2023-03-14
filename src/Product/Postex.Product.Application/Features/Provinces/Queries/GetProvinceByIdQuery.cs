@@ -12,16 +12,16 @@ namespace Postex.Product.Application.Features.Provinces.Queries
 
         public class Handler : IRequestHandler<GetProvinceByIdQuery, ProvinceDto>
         {
-            private readonly IReadRepository<Province> _stateRepository;
+            private readonly IReadRepository<Province> _provinceRepository;
 
-            public Handler(IReadRepository<Province> stateRepository)
+            public Handler(IReadRepository<Province> provinceRepository)
             {
-                _stateRepository = stateRepository;
+                _provinceRepository = provinceRepository;
             }
 
             public async Task<ProvinceDto> Handle(GetProvinceByIdQuery request, CancellationToken cancellationToken)
             {
-                var state = await _stateRepository.Table
+                var province = await _provinceRepository.Table
                     .Select(c => new ProvinceDto
                     {
                         Id = c.Id,
@@ -31,7 +31,7 @@ namespace Postex.Product.Application.Features.Provinces.Queries
                     })
                     .FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
 
-                return state;
+                return province;
             }
         }
     }

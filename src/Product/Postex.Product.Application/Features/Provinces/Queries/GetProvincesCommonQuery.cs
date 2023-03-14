@@ -10,16 +10,16 @@ namespace Postex.Product.Application.Features.Provinces.Queries
     {
         public class Handler : IRequestHandler<GetProvincesCommonQuery, List<ProvinceCommonDto>>
         {
-            private readonly IReadRepository<Province> _stateRepository;
+            private readonly IReadRepository<Province> _provinceRepository;
 
-            public Handler(IReadRepository<Province> stateRepository)
+            public Handler(IReadRepository<Province> provinceRepository)
             {
-                _stateRepository = stateRepository;
+                _provinceRepository = provinceRepository;
             }
 
             public async Task<List<ProvinceCommonDto>> Handle(GetProvincesCommonQuery request, CancellationToken cancellationToken)
             {
-                var states = await _stateRepository.Table
+                var provinces = await _provinceRepository.TableNoTracking
                     .Select(c => new ProvinceCommonDto
                     {
                         Code = c.Code,
@@ -27,7 +27,7 @@ namespace Postex.Product.Application.Features.Provinces.Queries
                     })
                     .ToListAsync(cancellationToken);
 
-                return states;
+                return provinces;
             }
         }
     }
