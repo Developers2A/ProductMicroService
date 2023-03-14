@@ -42,14 +42,31 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         public async Task<BaseResponse<GetPriceResponse>> Handle(GetPriceQuery query, CancellationToken cancellationToken)
         {
             _query = query;
-            var tasviePrice = await ApplyPayType();
-            _customerId = await GetCustomerId();
-            if (_customerId == 0)
+            try
             {
-                _customerId = null;
-                //mina for test throw new AppException($"شناسه مشتری یافت نشد");
+                await SetCourierCityMappings();
+                var tasviePrice = await ApplyPayType();
+                _customerId = await GetCustomerId();
+                if (_customerId == 0)
+                {
+                    _customerId = null;
+                    //mina for test throw new AppException($"شناسه مشتری یافت نشد");
+                }
+                return await GetPrice();
             }
-            return await GetPrice();
+            catch (Exception ex)
+            {
+                return new BaseResponse<GetPriceResponse>(false, ex.Message);
+            }
+        }
+
+        private async Task SetCourierCityMappings()
+        {
+            _courierCityMappings = await GetCourierCityMapping(_query.CourierCode, _query.SenderCityCode, _query.ReceiverCityCode);
+            if (_courierCityMappings == null || !_courierCityMappings.Any())
+            {
+                throw new Exception("برای این شهرها نگاشتی یافت نشد");
+            }
         }
 
         private async Task<int> ApplyPayType()
@@ -92,7 +109,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             {
                 CustomerId = _customerId,
                 CityId = _courierCityMappings.FirstOrDefault().CityId,
-                ProvinceId = _courierCityMappings.FirstOrDefault().StateId,
+                ProvinceId = _courierCityMappings.FirstOrDefault().ProvinceId,
                 ValuePrice = _query.Value
             });
 
@@ -114,7 +131,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             {
                 CustomerId = _customerId,
                 CityId = _courierCityMappings.FirstOrDefault().CityId,
-                ProvinceId = _courierCityMappings.FirstOrDefault().StateId,
+                ProvinceId = _courierCityMappings.FirstOrDefault().ProvinceId,
                 ValuePrice = _query.Value
             });
 
@@ -133,6 +150,11 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         {
             // دریافت آی دی مشتری با استفاده از یورآی دی موجود در هدر درخواست
             var userId = GetUserId();
+            if (userId == null)
+            {
+                return 0;
+            }
+
             try
             {
                 var getCustomerResponse = await _mediator.Send(new GetCustomerByUserIdQuery()
@@ -146,7 +168,6 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             }
             catch
             {
-                throw new AppException($"شناسه مشتری یافت نشد");
             }
             return 0;
         }
@@ -160,8 +181,8 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             }
             catch
             {
-                throw new AppException($"شناسه کاربر در هدر درخواست یافت نشد");
             }
+            return null;
         }
 
         public async Task<BaseResponse<GetPriceResponse>> GetPrice()
@@ -169,7 +190,6 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             GetPriceResponse priceResponse = new();
             List<ServicePriceDto> prices = new();
 
-            _courierCityMappings = await GetCourierCityMapping(_query.CourierCode, _query.SenderCityCode, _query.ReceiverCityCode);
 
             if (_query.CourierCode == (int)CourierCode.Kalaresan || _query.CourierCode == (int)CourierCode.All)
             {
@@ -212,7 +232,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                 var collectionDistributionPrice = await _mediator.Send(new GetPeykOfflinePricesQuery()
                 {
                     CourierCode = _query.CourierCode,
-                    SenderCity = _query.CourierCode,
+                    SenderCityCode = _query.SenderCityCode,
                 });
 
                 if (_query.HasCollection && collectionDistributionPrice.CollectionPrices != null)
@@ -251,8 +271,8 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             var boxPrice = await _mediator.Send(new GetByCustomerAndBoxTypeContractBoxPriceQuery()
             {
                 CustomerId = _customerId,
-                CityId = _courierCityMappings.FirstOrDefault().CityId,
-                ProvinceId = _courierCityMappings.FirstOrDefault().StateId,
+                CityId = _courierCityMappings.FirstOrDefault()!.CityId,
+                ProvinceId = _courierCityMappings.FirstOrDefault()!.ProvinceId,
                 BoxTypeId = _query.BoxTypeId
             });
 
@@ -278,8 +298,8 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                     var valueAddedPrice = await _mediator.Send(new GetByCustomerAndValueAddedContractValueAddedQuery()
                     {
                         CustomerId = _customerId,
-                        CityId = _courierCityMappings.FirstOrDefault().CityId,
-                        StateId = _courierCityMappings.FirstOrDefault().StateId,
+                        CityId = _courierCityMappings.FirstOrDefault()!.CityId,
+                        ProvinceId = _courierCityMappings.FirstOrDefault()!.ProvinceId,
                         ValueAddedId = item
                     });
 
@@ -390,10 +410,16 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 
         private async Task<int> GetShopId(int cityCode)
         {
-            return await _mediator.Send(new GetPostShopIdQuery()
+            int shopId = await _mediator.Send(new GetPostShopIdQuery()
             {
                 CityCode = cityCode,
             });
+
+            if (shopId == 0)
+            {
+                throw new AppException("فروشگاهی یافت نشد");
+            }
+            return shopId;
         }
 
         public async Task<ServicePriceDto> MahexPrice()

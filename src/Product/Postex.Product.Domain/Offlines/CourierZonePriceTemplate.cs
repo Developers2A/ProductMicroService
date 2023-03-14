@@ -13,6 +13,6 @@ namespace Postex.Product.Domain.Offlines
         public int FromCourierZoneId { get; set; }
         public int ToCourierZoneId { get; set; }
         public int Weight { get; set; }
-        public bool SameState { get; set; }
+        public bool SameProvince { get; set; }
     }
 }

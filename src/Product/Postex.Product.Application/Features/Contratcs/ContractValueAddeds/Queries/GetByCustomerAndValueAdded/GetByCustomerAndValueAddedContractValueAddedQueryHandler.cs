@@ -79,7 +79,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
             }
 
             var itemProvince = await _readRepository.Table
-             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.ProvinceId == request.StateId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ValueAddedTypeId == request.ValueAddedId)
+             .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.ProvinceId == request.ProvinceId && c.ContractInfo.CityId == 0 && c.ContractInfo.CustomerId == 0 && c.ContractInfo.StartDate <= DateTime.Now && c.ValueAddedTypeId == request.ValueAddedId)
               .Select(c => new ValueAddedPriceDto
               {
                   ContractId = c.ContractInfoId,

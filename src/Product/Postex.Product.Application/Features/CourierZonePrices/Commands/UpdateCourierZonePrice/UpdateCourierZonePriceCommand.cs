@@ -10,6 +10,6 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Commands.UpdateC
         public decimal SellPrice { get; set; }
         public decimal BuyPrice { get; set; }
         public int Weight { get; set; }
-        public bool SameState { get; set; }
+        public bool SameProvince { get; set; }
     }
 }

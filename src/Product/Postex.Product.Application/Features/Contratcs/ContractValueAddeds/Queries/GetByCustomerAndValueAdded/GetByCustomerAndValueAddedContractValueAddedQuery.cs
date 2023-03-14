@@ -7,7 +7,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Quer
     {
         public int ValueAddedId { get; set; }
         public int? CustomerId { get; set; }
-        public int? StateId { get; set; }
+        public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
     }
 }

@@ -49,7 +49,7 @@ public class SendSmsCommandHandler : IRequestHandler<SendSmsCommand>
             Encoding.UTF8,
             "application/json");
 
-        var pUrl = new Uri($"{_notificationApiUrl}message/sendsms");
+        var pUrl = new Uri($"{_notificationApiUrl}v1/message");
         var response = await client.PostAsync(pUrl, content);
         return response;
     }

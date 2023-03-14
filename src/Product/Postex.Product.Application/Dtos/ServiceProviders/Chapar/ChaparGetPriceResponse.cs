@@ -13,6 +13,7 @@ namespace Postex.Product.Application.Dtos.ServiceProviders.Chapar
         [JsonProperty("objects")]
         public ObjectsGetQuote Objects { get; set; }
     }
+
     public class OrderGetQuote
     {
         [JsonProperty("quote")]

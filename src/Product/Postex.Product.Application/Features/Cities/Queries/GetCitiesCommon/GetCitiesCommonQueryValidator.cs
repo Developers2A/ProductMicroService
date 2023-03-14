@@ -6,7 +6,7 @@ namespace Postex.Product.Application.Features.Cities.Queries.GetCitiesCommon
     {
         public GetCitiesCommonQueryValidator()
         {
-            RuleFor(p => p.StateCode)
+            RuleFor(p => p.ProvinceCode)
                   .NotEmpty().NotNull().WithMessage(" کد استان الزامی میباشد");
         }
     }

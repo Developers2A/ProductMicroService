@@ -380,7 +380,7 @@ namespace Postex.UserManagement.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d57f2b71-bdfd-44ff-b781-6e7cbdc65711"),
+                            Id = new Guid("773394a4-2735-41bc-8fd2-30f270c56829"),
                             CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
                             DefaultAddressId = 0,
                             FirstName = "ادمین",

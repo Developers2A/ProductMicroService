@@ -23,7 +23,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Commands.CreateC
                 Weight = x.Weight,
                 SellPrice = x.SellPrice,
                 BuyPrice = x.BuyPrice,
-                SameState = x.SameState
+                SameProvince = x.SameProvince
             });
 
             await _courierZonePriceWriteRepository.AddRangeAsync(courierZonePrices);

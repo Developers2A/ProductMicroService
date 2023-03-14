@@ -62,6 +62,7 @@ namespace Postex.Product.Application.Features.PostShops.Commands.SyncPostShops
                     {
                         PostShop newPostShop = new();
                         _mapper.Map(item, newPostShop);
+                        newPostShop.Id = 0;
                         insertedShops.Add(newPostShop);
                     }
                 }

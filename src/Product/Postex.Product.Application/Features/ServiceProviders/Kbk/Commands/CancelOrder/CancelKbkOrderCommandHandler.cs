@@ -1,14 +1,14 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using Postex.Product.Application.Dtos.ServiceProviders.Kbk.Dtos;
+using Postex.Product.Application.Dtos.ServiceProviders.Kbk;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Settings;
 using System.Text;
 
 namespace Postex.Product.Application.Features.ServiceProviders.Kbk.Commands.CancelOrder
 {
-    public class CancelKbkOrderCommandHandler : IRequestHandler<CancelKbkOrderCommand, BaseResponse<KbkCancelResponse>>
+    public class CancelKbkOrderCommandHandler : IRequestHandler<CancelKbkOrderCommand, BaseResponse<KbkCancelOrderResponse>>
     {
         private readonly IConfiguration _configuration;
         private readonly CourierConfig _gateway;
@@ -19,9 +19,9 @@ namespace Postex.Product.Application.Features.ServiceProviders.Kbk.Commands.Canc
             _gateway = _configuration.GetSection(nameof(CourierSetting)).Get<CourierSetting>().Kbk;
         }
 
-        public async Task<BaseResponse<KbkCancelResponse>> Handle(CancelKbkOrderCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<KbkCancelOrderResponse>> Handle(CancelKbkOrderCommand request, CancellationToken cancellationToken)
         {
-            BaseResponse<KbkCancelResponse> result = new();
+            BaseResponse<KbkCancelOrderResponse> result = new();
             try
             {
                 HttpResponseMessage response = await SetHttpRequest(request);
@@ -31,7 +31,7 @@ namespace Postex.Product.Application.Features.ServiceProviders.Kbk.Commands.Canc
                 }
 
                 var res = await response.Content.ReadAsStringAsync();
-                var resModel = JsonConvert.DeserializeObject<KbkCancelResponse>(res);
+                var resModel = JsonConvert.DeserializeObject<KbkCancelOrderResponse>(res);
                 if (resModel != null)
                 {
                     return new(true, "success", resModel);

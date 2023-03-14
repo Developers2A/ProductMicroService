@@ -87,7 +87,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             {
                 CustomerId = 0,
                 CityId = 0,
-                StateId = 0,
+                ProvinceId = 0,
                 ValueAddedIds = _command.ValueAddedTypeIds
             });
         }

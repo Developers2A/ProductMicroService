@@ -16,6 +16,10 @@ namespace Postex.Product.Application.Mappings
             CreateMap<Shop, PostShop>()
                 .ForMember(dest => dest.ShopId, y => y.MapFrom(x => x.ID))
                 .ForMember(dest => dest.Id, y => y.MapFrom(x => 0));
+            CreateMap<PostShop, Shop>()
+                .ForMember(dest => dest.CityID, y => y.MapFrom(x => x.CityCode))
+                .ForMember(dest => dest.ProvinceID, y => y.MapFrom(x => x.ProvinceCode))
+                .ReverseMap();
         }
     }
 }

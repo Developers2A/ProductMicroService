@@ -7,10 +7,10 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
     {
         public int CourierCode { get; set; } = 0;
         public int ServiceCode { get; set; } = 0;
-        public int SenderState { get; set; }
-        public int SenderCity { get; set; }
-        public int ReceiverCity { get; set; }
-        public int ReceiverState { get; set; }
+        public int SenderProvinceCode { get; set; }
+        public int SenderCityCode { get; set; }
+        public int ReceiverProvinceCode { get; set; }
+        public int ReceiverCityCode { get; set; }
         public int Weight { get; set; }
         public int Value { get; set; }
         public double Height { get; set; }

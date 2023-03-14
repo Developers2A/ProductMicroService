@@ -1,7 +1,13 @@
-﻿using System.Collections.Generic;
-
-namespace Postex.Product.Application.Dtos.ServiceProviders.Chapar
+﻿namespace Postex.Product.Application.Dtos.ServiceProviders.Chapar
 {
+    /// <summary>
+    /// مدل خروجی متد پیگیری بارنامه یا کالا 
+    ///<para>Status اگر true باشد تابع به درستی انجام شده است در غیر این صورت تابع به هر دلیل خطا داده است</para>
+    ///<para>CodeStatus کد خطای برگشتی</para>
+    ///<para>Message متن برگشتی</para>
+    /// <para>objects آبجکت خروجی</para>
+    /// </summary>
+    /// 
     public class ChaparTrackResponse
     {
         public bool Result { get; set; }
