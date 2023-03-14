@@ -29,7 +29,7 @@ namespace Postex.Product.Application.Mappings
             CreateMap<CreateContractCommand, ContractInfo>();
             CreateMap<UpdateContractCommand, ContractInfo>();
 
-            CreateMap<CreateContractCourierCommand, ContractCourierDto>();
+            CreateMap<CreateContractCourierCommand, ContractCourier>();
             CreateMap<ContractCourier, ContractCourierDto>();
 
             CreateMap<ContractInsurance, ContractInsuranceDto>();

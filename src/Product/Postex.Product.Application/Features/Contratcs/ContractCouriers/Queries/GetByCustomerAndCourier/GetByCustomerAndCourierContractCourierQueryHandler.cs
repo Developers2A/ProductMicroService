@@ -31,7 +31,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractCouriers.Queries
 
 
             var courierCus = await _readRepository.Table
-               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true && c.ContractInfo.CustomerId == request.CustomerId && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == request.CustomerId && c.CourierServiceId == request.CourierServiceId)
+               .Include(c => c.ContractInfo).Where(c => c.ContractInfo.IsActive == true  && c.ContractInfo.StartDate <= DateTime.Now && c.ContractInfo.EndDate >= DateTime.Now && c.ContractInfo.CustomerId == request.CustomerId && c.CourierServiceId == request.CourierServiceId)
                .Select(c => new CourierServicePriceDto
                {
                    ContractId = c.ContractInfoId,
