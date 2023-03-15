@@ -8,8 +8,8 @@ namespace Postex.Product.Domain.Couriers
     {
         public int CourierId { get; set; }
         public Courier Courier { get; set; }
-        public string Name { get; set; }
         public CourierServiceCode Code { get; set; }
+        public string Name { get; set; }
         public bool ForeignPost { get; set; }
         public bool DomesticPost { get; set; }
         public bool HasCollection { get; set; }

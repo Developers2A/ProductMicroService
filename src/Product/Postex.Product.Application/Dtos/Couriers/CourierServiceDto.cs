@@ -1,8 +1,11 @@
-﻿namespace Postex.Product.Application.Dtos.Couriers
+﻿using Postex.SharedKernel.Common.Enums;
+
+namespace Postex.Product.Application.Dtos.Couriers
 {
     public class CourierServiceDto
     {
         public int Id { get; set; }
+        public CourierServiceCode Code { get; set; }
         public string Name { get; set; }
         public bool ForeignPost { get; set; }
         public bool DomesticPost { get; set; }
