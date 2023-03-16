@@ -12,7 +12,7 @@ using Postex.Notification.Infrastructure.Data;
 namespace Postex.Notification.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20230313232542_InitialNotification")]
+    [Migration("20230315225903_InitialNotification")]
     partial class InitialNotification
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

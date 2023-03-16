@@ -26,7 +26,7 @@ public class UserController : BaseApiControllerWithDefaultRoute
         _mediator = mediator;
     }
 
-    [HttpGet("id")]
+    [HttpGet]
     [AllowAnonymous]
     public async Task<ApiResult<UserDto>> Get(Guid id)
     {

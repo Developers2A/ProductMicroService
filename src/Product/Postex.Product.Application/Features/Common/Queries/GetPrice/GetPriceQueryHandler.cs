@@ -4,6 +4,7 @@ using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Application.Dtos.Couriers;
 using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Dtos.ServiceProviders.Mahex.Common;
+using Postex.Product.Application.Features.BoxTypes.Queries;
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomerAndBoxType;
 using Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByCustomerAndValuePrice;
 using Postex.Product.Application.Features.Contratcs.ContractInsurances.Queries.GetByCustomerAndValuePrice;
@@ -44,6 +45,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             _query = query;
             try
             {
+                await SetBoxDimensionsIfNeeded();
                 await SetCourierCityMappings();
                 var tasviePrice = await ApplyPayType();
                 _customerId = await GetCustomerId();
@@ -60,6 +62,21 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             }
         }
 
+        private async Task SetBoxDimensionsIfNeeded()
+        {
+            var boxType = await _mediator.Send(new GetBoxTypeByIdQuery()
+            {
+                Id = _query.BoxTypeId
+            });
+
+            if (boxType != null)
+            {
+                _query.Width = boxType.Width;
+                _query.Height = boxType.Height;
+                _query.Length = boxType.Length;
+            }
+        }
+
         private async Task SetCourierCityMappings()
         {
             _courierCityMappings = await GetCourierCityMapping(_query.CourierCode, _query.SenderCityCode, _query.ReceiverCityCode);
@@ -71,12 +88,11 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 
         private async Task<int> ApplyPayType()
         {
-            var codValues = await GetCodValues();
-            var insuranceValues = await GetInsuranceValues();
-
             //هزینه اعلامی به شرکت پستی : هزینه کالا + حق سی او دی پستکس + حق بیمه پستکس
             if (_query.PayType == (int)PaymentType.Cod)
             {
+                var codValues = await GetCodValues();
+                var insuranceValues = await GetInsuranceValues();
                 _query.Value = Convert.ToInt32(_query.Value + _query.Value * codValues.DefaultFixedPercent / 100 + codValues.DefaultFixedValue +
                     _query.Value * insuranceValues.DefaultFixedPercent / 100 + insuranceValues.DefaultFixedValue);
 

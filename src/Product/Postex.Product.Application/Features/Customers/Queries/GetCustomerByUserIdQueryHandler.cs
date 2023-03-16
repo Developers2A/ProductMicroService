@@ -2,11 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Postex.Product.Application.Dtos.Customers;
-using Postex.Product.Application.Dtos.Users;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Settings;
-using System.Text;
 
 namespace Postex.Product.Application.Features.Customers.Queries;
 
@@ -25,7 +23,6 @@ public class GetCustomerByUserIdQueryHandler : IRequestHandler<GetCustomerByUser
 
     public async Task<BaseResponse<CustomerDto>> Handle(GetCustomerByUserIdQuery request, CancellationToken cancellationToken)
     {
-        BaseResponse<UserDto> result = new();
         try
         {
             HttpResponseMessage response = await SetHttpRequest(request);
@@ -38,8 +35,8 @@ public class GetCustomerByUserIdQueryHandler : IRequestHandler<GetCustomerByUser
             var res = await response.Content.ReadAsStringAsync();
             try
             {
-                var resModel = JsonConvert.DeserializeObject<CustomerDto>(res);
-                return new(true, "success", resModel!);
+                var resModel = JsonConvert.DeserializeObject<BaseResponse<CustomerDto>>(res);
+                return resModel!;
             }
             catch
             {
@@ -61,13 +58,8 @@ public class GetCustomerByUserIdQueryHandler : IRequestHandler<GetCustomerByUser
 
         HttpClient client = HttpClientUtilities.SetHttpClient(_customerApiUrl);
 
-        var serializedModel = JsonConvert.SerializeObject(request);
-        var content = new StringContent(serializedModel,
-            Encoding.UTF8,
-            "application/json");
-
-        var pUrl = new Uri($"{_customerApiUrl}customer/GetByUserId?userId={request.UserId}");
-        var response = await client.PostAsync(pUrl, content);
+        var pUrl = new Uri($"{_customerApiUrl}v1/customer/GetByUserId?userId={request.UserId}");
+        var response = await client.GetAsync(pUrl);
         return response;
     }
 }

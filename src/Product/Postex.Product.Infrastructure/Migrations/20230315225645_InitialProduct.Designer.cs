@@ -12,7 +12,7 @@ using Postex.Product.Infrastructure.Data;
 namespace Postex.Product.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20230313232116_InitialProduct")]
+    [Migration("20230315225645_InitialProduct")]
     partial class InitialProduct
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -5,7 +5,6 @@ using Postex.Product.Application.Dtos.Users;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Settings;
-using System.Text;
 
 namespace Postex.Product.Application.Features.Users.Queries;
 
@@ -24,7 +23,6 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, BaseRes
 
     public async Task<BaseResponse<UserDto>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        BaseResponse<UserDto> result = new();
         try
         {
             HttpResponseMessage response = await SetHttpRequest(request);
@@ -37,8 +35,8 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, BaseRes
             var res = await response.Content.ReadAsStringAsync();
             try
             {
-                var resModel = JsonConvert.DeserializeObject<UserDto>(res);
-                return new(true, "success", resModel!);
+                var resModel = JsonConvert.DeserializeObject<BaseResponse<UserDto>>(res);
+                return resModel!;
             }
             catch
             {
@@ -47,7 +45,7 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, BaseRes
         }
         catch (Exception ex)
         {
-            return new(false, "An error has occurred in the Service user management " + ex.Message);
+            return new(false, "An error has occurred in the Service UserManagement " + ex.Message);
         }
     }
 
@@ -60,13 +58,8 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, BaseRes
 
         HttpClient client = HttpClientUtilities.SetHttpClient(_userApiUrl);
 
-        var serializedModel = JsonConvert.SerializeObject(request);
-        var content = new StringContent(serializedModel,
-            Encoding.UTF8,
-            "application/json");
-
-        var pUrl = new Uri($"{_userApiUrl}user?id={request.UserId}");
-        var response = await client.PostAsync(pUrl, content);
+        var pUrl = new Uri($"{_userApiUrl}v1/user?id={request.UserId}");
+        var response = await client.GetAsync(pUrl);
         return response;
     }
 }

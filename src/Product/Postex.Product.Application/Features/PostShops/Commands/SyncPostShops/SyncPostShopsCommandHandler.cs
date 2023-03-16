@@ -61,9 +61,47 @@ namespace Postex.Product.Application.Features.PostShops.Commands.SyncPostShops
                     else
                     {
                         PostShop newPostShop = new();
-                        _mapper.Map(item, newPostShop);
-                        newPostShop.Id = 0;
-                        insertedShops.Add(newPostShop);
+                        insertedShops.Add(new PostShop()
+                        {
+                            ShopId = item.ID,
+                            PostalCode = item.PostalCode,
+                            ProvinceCode = item.ProvinceID,
+                            Province = item.Province,
+                            PostUnitID = item.PostUnitID,
+                            CityCode = item.CityID,
+                            City = item.City,
+                            PostnodeID = item.PostnodeID,
+                            Postnode = item.Postnode,
+                            PostUnit = item.PostUnit,
+                            CompanyDiscountPercent = item.CompanyDiscountPercent,
+                            CollectTypeID = item.CollectTypeID,
+                            ShopCreateDate = item.CreateDateTime,
+                            ContractEndDate = item.ContractEndDate,
+                            CompanyPricePlanID = item.CompanyPricePlanID,
+                            ShopDiscountPercent = item.ShopDiscountPercent,
+                            ManagerBirthDate = item.ManagerBirthDate,
+                            ManagerCertNumber = item.ManagerCertNumber,
+                            ManagerCertSerial = item.ManagerCertSerial,
+                            ManagerFatherName = item.ManagerFatherName,
+                            ManagerFirstName = item.ManagerFirstName,
+                            ManagerLastName = item.ManagerLastName,
+                            ManagerNationalID = item.ManagerNationalID,
+                            ManagerCertSeries = item.ManagerCertSeries,
+                            ManagerNationalIDSerial = item.ManagerNationalIDSerial,
+                            AccountBank = item.AccountBank,
+                            AccountNumber = item.AccountNumber,
+                            AccountIban = item.AccountIban,
+                            AccountBranchName = item.AccountBranchName,
+                            AdminAccepet = item.AdminAccepet,
+                            Enabled = item.Enabled,
+                            Phone = item.Phone,
+                            PricePlanID = item.PricePlanID,
+                            Email = item.Email,
+                            Mob = item.Mob,
+                            Name = item.Name,
+                            WebSiteURL = item.WebSiteURL,
+                            ShopAddress = item.ShopAddress,
+                        });
                     }
                 }
 

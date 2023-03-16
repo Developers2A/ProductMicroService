@@ -65,7 +65,7 @@ public class GetPudoPriceQueryHandler : IRequestHandler<GetPudoPriceQuery, BaseR
             Encoding.UTF8,
             "application/json");
 
-        var pUrl = new Uri($"{_productApiUrl}price/pudo-price?cityName={request.CityName}");
+        var pUrl = new Uri($"{_productApiUrl}v1/price/pudo-price?cityName={request.CityName}");
         var response = await client.PostAsync(pUrl, content);
         return response;
     }

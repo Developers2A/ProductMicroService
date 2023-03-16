@@ -224,7 +224,7 @@ namespace Postex.UserManagement.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "DefaultAddressId", "Email", "FirstName", "IbanNumber", "IsActive", "IsRemoved", "IsVerified", "LastName", "Mobile", "ModifiedBy", "ModifiedOn", "NationalCode", "Password", "RefreshToken", "RefreshTokenExpiryTime", "RemovedOn", "UserName" },
-                values: new object[] { new Guid("773394a4-2735-41bc-8fd2-30f270c56829"), null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 0, null, "ادمین", null, false, false, false, "سیستم", "09394066727", null, null, null, "123", null, null, null, "Admin" });
+                values: new object[] { new Guid("df615569-a082-4ca9-9621-f6ec6056b56a"), null, new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified), 0, null, "ادمین", null, false, false, false, "سیستم", "09394066727", null, null, null, "123", null, null, null, "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CustomerCods_CustomerId",
