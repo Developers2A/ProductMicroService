@@ -1,19 +1,20 @@
 ﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Dtos.Commons.CreateOrder.Response
 {
     public class CourierResponseDto
     {
-        [JsonProperty("courier")]
+        [JsonPropertyName("courier")]
         public string Courier { get; set; }
 
-        [JsonProperty("service")]
+        [JsonPropertyName("service")]
         public string Service { get; set; }
 
-        [JsonProperty("transit_time")]
+        [JsonPropertyName("transit_time")]
         public string TransitTime { get; set; }
 
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
     }
 }

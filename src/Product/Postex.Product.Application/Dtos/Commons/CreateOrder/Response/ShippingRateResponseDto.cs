@@ -1,25 +1,26 @@
 ﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Dtos.Commons.CreateOrder.Response
 {
     public class ShippingRateResponseDto
     {
-        [JsonProperty("currency")]
+        [JsonPropertyName("currency")]
         public string Currency { get; set; }
 
-        [JsonProperty("discount")]
+        [JsonPropertyName("discount")]
         public int Discount { get; set; }
 
-        [JsonProperty("vat")]
+        [JsonPropertyName("vat")]
         public int Vat { get; set; }
 
-        [JsonProperty("sale_price")]
+        [JsonPropertyName("sale_price")]
         public int SalePrice { get; set; }
 
-        [JsonProperty("buy_price")]
+        [JsonPropertyName("buy_price")]
         public int BuyPrice { get; set; }
 
-        [JsonProperty("post_price")]
+        [JsonPropertyName("post_price")]
         public PostPriceResponseDto PostPrice { get; set; }
     }
 }

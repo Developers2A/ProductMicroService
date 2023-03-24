@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Dtos.Commons.CreateOrder.Request
 {
@@ -8,19 +9,19 @@ namespace Postex.Product.Application.Dtos.Commons.CreateOrder.Request
         public int Width { get; set; }
         public int Height { get; set; }
 
-        [JsonProperty("total_weight")]
+        [JsonPropertyName("total_weight")]
         public int TotalWeight { get; set; }
 
-        [JsonProperty("is_fragile")]
+        [JsonPropertyName("is_fragile")]
         public bool IsFragile { get; set; }
 
-        [JsonProperty("is_liquid")]
+        [JsonPropertyName("is_liquid")]
         public bool IsLiquid { get; set; }
 
-        [JsonProperty("total_value")]
+        [JsonPropertyName("total_value")]
         public int TotalValue { get; set; }
 
-        [JsonProperty("item_name")]
+        [JsonPropertyName("item_name")]
         public string ItemName { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Dtos.Commons.CreateOrder.Request
 {
@@ -6,7 +7,7 @@ namespace Postex.Product.Application.Dtos.Commons.CreateOrder.Request
     {
         public int Request { get; set; }
 
-        [JsonProperty("date_on_utc")]
+        [JsonPropertyName("date_on_utc")]
         public DateTime Date { get; set; }
     }
 }

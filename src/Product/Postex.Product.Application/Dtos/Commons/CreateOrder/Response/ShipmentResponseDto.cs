@@ -1,19 +1,20 @@
 ﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Dtos.Commons.CreateOrder.Response
 {
     public class ShipmentResponseDto
     {
-        [JsonProperty("step")]
+        [JsonPropertyName("step")]
         public int Step { get; set; }
 
-        [JsonProperty("courier")]
+        [JsonPropertyName("courier")]
         public CourierResponseDto Courier { get; set; }
 
-        [JsonProperty("tracking")]
+        [JsonPropertyName("tracking")]
         public TrackingResponseDto Tracking { get; set; }
 
-        [JsonProperty("shipping_rate")]
+        [JsonPropertyName("shipping_rate")]
         public ShippingRateResponseDto ShippingRate { get; set; }
     }
 }

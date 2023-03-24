@@ -1,28 +1,29 @@
 ﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Dtos.Commons.CreateOrder.Request
 {
     public class ContactDto
     {
-        [JsonProperty("first_name")]
+        [JsonPropertyName("first_name")]
         public string FirstName { get; set; }
 
-        [JsonProperty("last_name")]
+        [JsonPropertyName("last_name")]
         public string LastName { get; set; }
 
-        [JsonProperty("mobile_no")]
+        [JsonPropertyName("mobile_no")]
         public string Mobile { get; set; }
 
-        [JsonProperty("telephone_no")]
+        [JsonPropertyName("telephone_no")]
         public string? Phone { get; set; }
 
-        [JsonProperty("email_address")]
+        [JsonPropertyName("email_address")]
         public string? Email { get; set; }
 
-        [JsonProperty("company_name")]
+        [JsonPropertyName("company_name")]
         public string? Company { get; set; }
 
-        [JsonProperty("national_code")]
+        [JsonPropertyName("national_code")]
         public string? NationalCode { get; set; }
     }
 }
