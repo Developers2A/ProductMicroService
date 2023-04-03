@@ -93,8 +93,8 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             return new(true, "success", new TrackingMapResponse()
             {
                 CourierStatusMappingId = tracking.Id,
-                TrackingCode = tracking.Code.ToString(),
-                TrackingStatusNote = tracking.Name,
+                TrackCode = tracking.Code.ToString(),
+                TrackStatus = tracking.Name,
                 CourierStatus = tracking.Description,
                 Date = date.ToString()
             });
@@ -131,8 +131,8 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             return new(true, "success", new TrackingMapResponse()
             {
                 CourierStatusMappingId = tracking.Id,
-                TrackingCode = tracking.Code.ToString(),
-                TrackingStatusNote = tracking.Name,
+                TrackCode = tracking.Code.ToString(),
+                TrackStatus = tracking.Name,
                 CourierStatus = tracking.Description,
                 Date = date.ToString()
             });
@@ -190,8 +190,8 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             return new(true, "success", new TrackingMapResponse()
             {
                 CourierStatusMappingId = tracking.Id,
-                TrackingCode = tracking.Code.ToString(),
-                TrackingStatusNote = tracking.Name,
+                TrackCode = tracking.Code.ToString(),
+                TrackStatus = tracking.Name,
                 CourierStatus = tracking.Description,
                 Date = date
             });
@@ -221,8 +221,8 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             return new(true, "success", new TrackingMapResponse()
             {
                 CourierStatusMappingId = tracking.Id,
-                TrackingCode = tracking.Code.ToString(),
-                TrackingStatusNote = tracking.Name,
+                TrackCode = tracking.Code.ToString(),
+                TrackStatus = tracking.Name,
                 CourierStatus = tracking.Description,
                 Date = date.ToString()
             });
@@ -251,8 +251,8 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 return new(true, "success", new TrackingMapResponse()
                 {
                     CourierStatusMappingId = tracking.Id,
-                    TrackingCode = tracking.Code.ToString(),
-                    TrackingStatusNote = tracking.Name,
+                    TrackCode = tracking.Code.ToString(),
+                    TrackStatus = tracking.Name,
                     CourierStatus = tracking.Description,
                     Date = date
                 });
@@ -284,8 +284,8 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 return new(true, "success", new TrackingMapResponse()
                 {
                     CourierStatusMappingId = tracking.Id,
-                    TrackingCode = tracking.Code.ToString(),
-                    TrackingStatusNote = tracking.Name,
+                    TrackCode = tracking.Code.ToString(),
+                    TrackStatus = tracking.Name,
                     CourierStatus = tracking.Description,
                     Date = date
                 });
@@ -326,8 +326,8 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             return new(true, "success", new TrackingMapResponse()
             {
                 CourierStatusMappingId = tracking.Id,
-                TrackingCode = tracking.Code.ToString(),
-                TrackingStatusNote = tracking.Name,
+                TrackCode = tracking.Code.ToString(),
+                TrackStatus = tracking.Name,
                 CourierStatus = tracking.Description,
                 Date = date
             });
@@ -366,8 +366,8 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             return new(true, "success", new TrackingMapResponse()
             {
                 CourierStatusMappingId = tracking.Id,
-                TrackingCode = tracking.Code.ToString(),
-                TrackingStatusNote = tracking.Name,
+                TrackCode = tracking.Code.ToString(),
+                TrackStatus = tracking.Name,
                 CourierStatus = tracking.Description,
                 Date = date
             });
@@ -394,8 +394,8 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 return new(true, "success", new TrackingMapResponse()
                 {
                     CourierStatusMappingId = tracking.Id,
-                    TrackingCode = tracking.Code.ToString(),
-                    TrackingStatusNote = tracking.Name,
+                    TrackCode = tracking.Code.ToString(),
+                    TrackStatus = tracking.Name,
                     CourierStatus = tracking.Description,
                     Date = date
                 });

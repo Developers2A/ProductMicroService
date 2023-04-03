@@ -10,8 +10,8 @@ namespace Postex.Product.Application.Features.Common.Commands.EditWeight
         [JsonPropertyName("courier_code")]
         public int CourierCode { get; set; }
 
-        [JsonPropertyName("parcel_id")]
-        public string ParcelId { get; set; }
+        [JsonPropertyName("parcel_code")]
+        public string ParcelCode { get; set; }
 
         [JsonPropertyName("sender_mobile")]
         public string SenderMobile { get; set; }

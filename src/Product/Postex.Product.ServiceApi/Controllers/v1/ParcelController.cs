@@ -20,12 +20,10 @@ namespace Postex.Product.ServiceApi.Controllers.v1
     public class ParcelController : BaseApiControllerWithDefaultRoute
     {
         private readonly IMediator _mediator;
-        private readonly HttpContext _httpContext;
 
-        public ParcelController(IMediator mediator, HttpContext httpContext)
+        public ParcelController(IMediator mediator)
         {
             _mediator = mediator;
-            _httpContext = httpContext;
         }
 
         [HttpGet("track")]

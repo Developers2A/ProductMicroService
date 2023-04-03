@@ -40,12 +40,12 @@ namespace Postex.Product.Application.Features.Common.Commands.EditOrder
                 CustomerName = _command.To.Contact.FirstName,
                 CustomerFamily = _command.To.Contact.LastName,
                 CustomerAddress = _command.To.Location.Address,
-                ParcelContent = _command.Content,
+                ParcelContent = _command.Parcel.ItemName,
                 CustomerMobile = _command.To.Contact.Mobile,
                 CustomerPostalCode = _command.To.Location.PostCode,
                 CustomerEmail = _command.To.Contact.Email,
                 CustomerNID = _command.To.Contact.NationalCode,
-                ParcelCode = _command.ParcelId,
+                ParcelCode = _command.Parcel.ParcelCode,
                 ShopID = shopId
             };
             var result = await _mediator.Send(createPostOrderCommand);

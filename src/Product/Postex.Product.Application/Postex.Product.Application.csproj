@@ -24,6 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Dtos\Commons\EditOrder\Response\" />
 	  <Folder Include="Features\ServiceProviders\Pde\Commands\" />
 	  <Folder Include="Features\ServiceProviders\Pde\Queries\" />
 	  <Folder Include="Features\ServiceProviders\Yarbox\Commands\" />

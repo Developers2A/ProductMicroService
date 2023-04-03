@@ -6,7 +6,7 @@ namespace Postex.Product.Application.Features.Common.Commands.EditWeight
     {
         public EditWeightCommandValidator()
         {
-            RuleFor(p => p.ParcelId)
+            RuleFor(p => p.ParcelCode)
                 .NotNull().NotEmpty().WithMessage(" کد پارسل الزامی میباشد");
             RuleFor(p => p.SenderMobile)
                 .NotNull().NotEmpty().WithMessage(" موبایل فرستنده الزامی میباشد");

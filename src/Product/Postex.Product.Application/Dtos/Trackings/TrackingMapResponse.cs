@@ -3,8 +3,8 @@
     public class TrackingMapResponse
     {
         public long CourierStatusMappingId { get; set; }
-        public string TrackingCode { get; set; }
-        public string TrackingStatusNote { get; set; }
+        public string TrackCode { get; set; }
+        public string TrackStatus { get; set; }
         public string CourierStatus { get; set; }
         public string Date { get; set; }
     }

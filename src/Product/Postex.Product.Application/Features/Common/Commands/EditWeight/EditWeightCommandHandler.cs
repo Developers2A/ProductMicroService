@@ -36,7 +36,7 @@ namespace Postex.Product.Application.Features.Common.Commands.EditWeight
             var shopId = await GetShopIdBySenderMobile();
             var createPostOrderCommand = new UpdatePostWeightCommand()
             {
-                ParcelCode = _command.ParcelId,
+                ParcelCode = _command.ParcelCode,
                 Weight = _command.Weight,
                 ShopID = shopId,
                 ParcelValue = _command.ParcelValue,
