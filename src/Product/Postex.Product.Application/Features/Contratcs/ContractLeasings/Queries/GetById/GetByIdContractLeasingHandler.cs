@@ -3,11 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetById
 {
@@ -25,7 +20,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries
                 .Select(c => new ContractLeasingDto
                 {
                     Id = c.Id,
-                    CustomerId = c.CustomerId,
+                    UserId = c.UserId,
                     Amount = c.Amount,
                     ReturnRate = c.ReturnRate,
                     WithdrawRate = c.WithdrawRate,

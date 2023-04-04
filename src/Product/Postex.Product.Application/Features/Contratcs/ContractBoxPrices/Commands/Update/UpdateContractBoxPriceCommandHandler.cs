@@ -4,11 +4,6 @@ using Postex.Product.Application.Dtos.Contratcs;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Commands.Update
 {
@@ -36,7 +31,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Comman
             contractBoxType.BoxTypeId = request.BoxTypeId;
             contractBoxType.CityId = request.CityId;
             contractBoxType.ProvinceId = request.ProvinceId;
-            contractBoxType.CustomerId = request.CustomerId;
+            contractBoxType.UserId = request.UserId;
             contractBoxType.SalePrice = request.SalePrice;
             contractBoxType.BuyPrice = request.BuyPrice;
             contractBoxType.Description = request.Description;

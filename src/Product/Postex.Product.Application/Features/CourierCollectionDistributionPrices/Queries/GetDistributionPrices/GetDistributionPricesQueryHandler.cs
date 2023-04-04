@@ -88,7 +88,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
         private BoxSizeDto? GetPriceByVolume(BoxPrice parcel)
         {
             var price = _query.CollectionDistributionPrices.Where(x =>
-                x.CityType == parcel.DestinationCityTypeCode &&
+                x.CityType == parcel.DestinationCityType &&
                 x.Volume >= parcel.GetVolume()).FirstOrDefault();
 
             if (price != null)

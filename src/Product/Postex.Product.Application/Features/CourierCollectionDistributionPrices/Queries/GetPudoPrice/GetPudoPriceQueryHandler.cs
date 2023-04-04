@@ -4,49 +4,44 @@ using Postex.Product.Application.Dtos.CollectionDistributionPrices.Basket;
 using Postex.Product.Domain.CollectionDistributionPrices;
 using Postex.Product.Domain.Offlines;
 using Postex.SharedKernel.Common.Enums;
+using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries.GetPudoPrice
 {
     public class GetPudoPriceQueryHandler : IRequestHandler<GetPudoPriceQuery, PudoPriceResponseDto>
     {
-        private readonly IMediator _mediator;
         private readonly IReadRepository<CourierZoneCityMapping> _courierZoneCityMappingRepository;
         private readonly IReadRepository<CourierZoneCollectionDistributionPrice> _courierZoneCollectionDistributionPriceRepository;
-        private readonly IReadRepository<CourierZone> _courierZoneRepository;
 
-        public GetPudoPriceQueryHandler(IMediator mediator, IReadRepository<CourierZoneCollectionDistributionPrice> courierZoneCollectionDistributionPriceRepository,
-            IReadRepository<CourierZoneCityMapping> courierZoneCityMappingRepository, IReadRepository<CourierZone> courierZoneRepository)
+        public GetPudoPriceQueryHandler(IReadRepository<CourierZoneCollectionDistributionPrice> courierZoneCollectionDistributionPriceRepository,
+            IReadRepository<CourierZoneCityMapping> courierZoneCityMappingRepository)
         {
-            _mediator = mediator;
             _courierZoneCityMappingRepository = courierZoneCityMappingRepository;
             _courierZoneCollectionDistributionPriceRepository = courierZoneCollectionDistributionPriceRepository;
-            _courierZoneRepository = courierZoneRepository;
         }
 
         public async Task<PudoPriceResponseDto> Handle(GetPudoPriceQuery query, CancellationToken cancellationToken)
         {
             int courierZoneId = 0;
-            var courierZoneCity = await _courierZoneCityMappingRepository.TableNoTracking.FirstOrDefaultAsync(x => x.CourierZone.Courier.Code == CourierCode.Pudo);
-            if (courierZoneCity != null)
+            var courierZoneCity = await _courierZoneCityMappingRepository.TableNoTracking.Include(x => x.City).Include(x => x.CourierZone).FirstOrDefaultAsync(x => x.CourierZone.Courier.Code == CourierCode.Pudo && x.CityId == query.CityId);
+            if (courierZoneCity == null)
             {
-                courierZoneId = courierZoneCity.CourierZoneId;
+                throw new AppException("برای این شهر در سرویس پودو زون تعریف نشده است");
             }
+            courierZoneId = courierZoneCity.CourierZoneId;
             var price = await _courierZoneCollectionDistributionPriceRepository.TableNoTracking
                  .FirstOrDefaultAsync(x => x.CourierZoneId == courierZoneId);
 
             if (price == null)
             {
-                return new PudoPriceResponseDto()
-                {
-                    City = query.CityName,
-                    Price = 0
-                };
+                throw new AppException("برای این شهر در این زون قیمتی تعریف نشده است");
             }
 
             return new PudoPriceResponseDto()
             {
-                City = query.CityName,
+                City = courierZoneCity!.City.Name,
+                Zone = courierZoneCity.CourierZone.Name,
                 Price = price.SellPrice
             };
         }

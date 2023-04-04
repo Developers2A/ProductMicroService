@@ -35,7 +35,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTempla
                 var contractAccountingTemplate = new ContractAccountingTemplate
                 {
                     ContractInfoId = item.ContractInfoId,
-                    CustomerId = item.CustomerId,
+                    UserId = item.UserId,
                     ContractDetailType = item.ContractDetailType,
                     ContractDetailId = item.ContractDetailId,
                     PercentValue = item.PercentValue,

@@ -38,7 +38,7 @@ public class UserController : BaseApiControllerWithDefaultRoute
 
     [HttpPost("register")]
     [AllowAnonymous]
-    public async Task<ApiResult<MobileDto>> Register([FromBody] CreateUserCommand command)
+    public async Task<ApiResult<MobileDto>> Register([FromBody] RegisterUserCommand command)
     {
         return await _mediator.Send(command);
     }

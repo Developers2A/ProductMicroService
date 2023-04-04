@@ -6,7 +6,7 @@ public class GetValueAddedPricesQueryValidator : AbstractValidator<GetValueAdded
 {
     public GetValueAddedPricesQueryValidator()
     {
-        RuleFor(p => p.CustomerId)
+        RuleFor(p => p.UserId)
             .NotNull().NotEmpty().WithMessage(" شناسه مشتری الزامی میباشد");
         RuleFor(p => p.CityId)
             .NotNull().NotEmpty().WithMessage(" شناسه شهر الزامی میباشد");

@@ -1,22 +1,17 @@
 ﻿using FluentValidation;
 
-namespace Postex.UserManagement.Application.Features.Users.Commands.CreateUser;
-
-public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+namespace Postex.UserManagement.Application.Features.Users.Commands.Create
 {
-    public CreateUserCommandValidator()
+    public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     {
-        RuleFor(p => p.Mobile)
-             .NotEmpty().NotNull().WithMessage(" شماره موبایل الزامی میباشد");
-        RuleFor(p => p.Mobile)
-             .MaximumLength(11).MinimumLength(10).WithMessage(" شماره موبایل حداکثر 11 رقمی می باشد");
-        RuleFor(p => p.Password)
-             .NotEmpty().WithMessage(" رمز عبور الزامی میباشد");
-        RuleFor(p => p.RePassword)
-            .NotEmpty().WithMessage(" تکرا رمز عبور الزامی میباشد");
-        RuleFor(p => p.FirstName)
-            .NotEmpty().WithMessage(" نام الزامی میباشد");
-        RuleFor(p => p.LastName)
-            .NotEmpty().WithMessage(" نام خانوادگی الزامی میباشد");
+        public CreateUserCommandValidator()
+        {
+            RuleFor(p => p.FirstName).
+                NotEmpty().NotNull().WithMessage("نام الزامی می باشد");
+            RuleFor(p => p.FirstName).
+                NotEmpty().NotNull().WithMessage("نام خانوادگی الزامی می باشد");
+            RuleFor(p => p.Email)
+               .EmailAddress().WithMessage("فرمت آدرس ایمیل معتبر نمی باشد");
+        }
     }
 }

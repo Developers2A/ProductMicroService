@@ -21,8 +21,6 @@ namespace Postex.Product.Application.Mappings
             CreateMap<Courier, CourierDto>();
             CreateMap<CourierStatusMapping, CourierStatusMappingDto>();
             CreateMap<CourierCityMapping, CourierCityMappingDto>().ReverseMap();
-
-
         }
     }
 }

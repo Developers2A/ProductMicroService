@@ -1,17 +1,12 @@
 ﻿using Postex.Product.Application.Contracts;
 using Postex.Product.Application.Dtos.Contratcs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractLeasings.Commands.Update
 {
     public class UpdateContractLeasingCommand : ITransactionRequest<ContractLeasingDto>
     {
         public int Id { get; set; }
-        public int CustomerId { get; set; }
+        public Guid UserId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Amount { get; set; }

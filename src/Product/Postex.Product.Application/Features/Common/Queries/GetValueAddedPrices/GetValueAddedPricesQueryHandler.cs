@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Postex.Product.Application.Dtos.ServiceProviders.Common;
-using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByCustomerAndValueAdded;
+using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByUserAndValueAdded;
 
 namespace Postex.Product.Application.Features.Common.Queries.GetValueAddedPrices;
 
@@ -29,9 +29,9 @@ public class GetValueAddedPricesQueryHandler : IRequestHandler<GetValueAddedPric
         {
             foreach (var item in _query.ValueAddedIds)
             {
-                var valueAddedPrice = await _mediator.Send(new GetByCustomerAndValueAddedContractValueAddedQuery()
+                var valueAddedPrice = await _mediator.Send(new GetByUserAndValueAddedContractValueAddedQuery()
                 {
-                    CustomerId = _query.CustomerId,
+                    UserId = _query.UserId,
                     CityId = _query.CityId,
                     ProvinceId = _query.ProvinceId,
                     ValueAddedId = item

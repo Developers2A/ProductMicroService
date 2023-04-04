@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Features.Contratcs.ContractInsurances.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractInsurances.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractInsurances.Queries.GetByContractId;
-using Postex.Product.Application.Features.Contratcs.ContractInsurances.Queries.GetByCustomer;
-using Postex.Product.Application.Features.Contratcs.ContractInsurances.Queries.GetByCustomerAndValuePrice;
+using Postex.Product.Application.Features.Contratcs.ContractInsurances.Queries.GetByUser;
+using Postex.Product.Application.Features.Contratcs.ContractInsurances.Queries.GetByUserAndValuePrice;
 using Postex.SharedKernel.Api;
 
 namespace Postex.Product.Api.Controllers.v1.Contracts
@@ -39,15 +39,16 @@ namespace Postex.Product.Api.Controllers.v1.Contracts
             return Ok(await _mediator.Send(new GetByContractIdContractInsuranceQuery { ContractInfoId = contractInfoId }));
         }
 
-        [HttpGet("GetByCustomer")]
-        public async Task<IActionResult> GetByCustomer(int? customerId, int? provinceId, int? cityId)
+        [HttpGet("GetByUser")]
+        public async Task<IActionResult> GetByUser(Guid? userId, int? provinceId, int? cityId)
         {
-            return Ok(await _mediator.Send(new GetByCustomerContractInsuranceQuery { CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
+            return Ok(await _mediator.Send(new GetByUserContractInsuranceQuery { UserId = userId, ProvinceId = provinceId, CityId = cityId }));
         }
-        [HttpGet("GetByCustomerAndValuePrice")]
-        public async Task<IActionResult> GetByCustomerAndValuePrice(double valuePrice, int? customerId, int? provinceId, int? cityId)
+
+        [HttpGet("GetByUserAndValuePrice")]
+        public async Task<IActionResult> GetByUserAndValuePrice(double valuePrice, Guid? userId, int? provinceId, int? cityId)
         {
-            return Ok(await _mediator.Send(new GetByCustomerAndValuePriceContractInsuranceQuery { ValuePrice = valuePrice, CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
+            return Ok(await _mediator.Send(new GetByUserAndValuePriceContractInsuranceQuery { ValuePrice = valuePrice, UserId = userId, ProvinceId = provinceId, CityId = cityId }));
         }
     }
 }

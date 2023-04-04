@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Postex.Product.Application.Dtos.CourierStatus;
 using Postex.Product.Domain.Couriers;
@@ -16,12 +15,10 @@ namespace Postex.Product.Application.Features.CourierStatusMappings.Queries
         public class Handler : IRequestHandler<GetCourierStatusMappingByCourierAndStatusQuery, CourierStatusMappingDto>
         {
             private readonly IReadRepository<CourierStatusMapping> _courierStatusMappingReadRepository;
-            private readonly IMapper _mapper;
 
-            public Handler(IReadRepository<CourierStatusMapping> courierStatusMappingReadRepository, IMapper mapper)
+            public Handler(IReadRepository<CourierStatusMapping> courierStatusMappingReadRepository)
             {
                 _courierStatusMappingReadRepository = courierStatusMappingReadRepository;
-                _mapper = mapper;
             }
 
             public async Task<CourierStatusMappingDto> Handle(GetCourierStatusMappingByCourierAndStatusQuery request, CancellationToken cancellationToken)
@@ -37,7 +34,15 @@ namespace Postex.Product.Application.Features.CourierStatusMappings.Queries
                     courierStatusMappingQuery = courierStatusMappingQuery.Where(x => x.Code == request.CourierStatus);
                 }
                 var courierStatusMapping = await courierStatusMappingQuery.Include(x => x.Status).FirstOrDefaultAsync();
-                return _mapper.Map<CourierStatusMappingDto>(courierStatusMapping);
+                return new CourierStatusMappingDto()
+                {
+                    Id = courierStatusMapping.Id,
+                    StatusId = courierStatusMapping.StatusId,
+                    Code = courierStatusMapping.Code,
+                    Name = courierStatusMapping.Status.Description,
+                    CourierId = courierStatusMapping.CourierId,
+                    Description = courierStatusMapping.Description,
+                };
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Postex.Product.Domain.Contracts
         public ContractInfo ContractInfo { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
-        public int? CustomerId { get; set; }
+        public Guid? UserId { get; set; }
         public decimal SalePrice { get; set; }
         public decimal BuyPrice { get; set; }
         public string Description { get; set; }

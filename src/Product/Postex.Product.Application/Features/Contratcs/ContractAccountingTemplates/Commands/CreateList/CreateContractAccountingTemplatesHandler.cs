@@ -1,11 +1,6 @@
 ﻿using MediatR;
 using Postex.Product.Domain.Contracts;
 using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTemplates.Commands.CreateList
 {
@@ -24,7 +19,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractAccountingTempla
                 var contractAccountingTemplate = new ContractAccountingTemplate
                 {
                     ContractInfoId = item.ContractInfoId,
-                    CustomerId = item.CustomerId,
+                    UserId = item.UserId,
                     ContractDetailType = item.ContractDetailType,
                     ContractDetailId = item.ContractDetailId,
                     PercentValue = item.PercentValue,

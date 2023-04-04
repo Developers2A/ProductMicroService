@@ -2,7 +2,7 @@
 using Postex.Product.Application.Dtos.Couriers;
 using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Dtos.ServiceProviders.Mahex.Common;
-using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomerAndBoxType;
+using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByUserAndBoxType;
 using Postex.Product.Application.Features.CourierCityMappings.Queries;
 using Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries.GetPeykOfflinePrices;
 using Postex.Product.Application.Features.PostShops.Queries;
@@ -103,7 +103,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetQuickPrice
 
         private async Task GetBoxPrice()
         {
-            var boxPrice = await _mediator.Send(new GetByCustomerAndBoxTypeContractBoxPriceQuery()
+            var boxPrice = await _mediator.Send(new GetByUserAndBoxTypeContractBoxPriceQuery()
             {
                 BoxTypeId = _query.BoxTypeId
             });

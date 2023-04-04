@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Features.Contratcs.ContractLeasings.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractLeasings.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetAll;
-using Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetByCustomer;
 using Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetById;
+using Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetByUser;
 using Postex.SharedKernel.Api;
 
 namespace Postex.Product.Api.Controllers.v1.Contracts
@@ -45,10 +45,10 @@ namespace Postex.Product.Api.Controllers.v1.Contracts
             return Ok(await mediator.Send(new GetByIdContractLeasingCommand { Id = id }));
         }
 
-        [HttpGet("GetByCustomer")]
-        public async Task<IActionResult> GetByCustomer(int customerId)
+        [HttpGet("GetByUser")]
+        public async Task<IActionResult> GetByUser(Guid userId)
         {
-            return Ok(await mediator.Send(new GetByCustomerContractLeasingCommand { CustomerId = customerId }));
+            return Ok(await mediator.Send(new GetByUserContractLeasingCommand { UserId = userId }));
         }
     }
 }

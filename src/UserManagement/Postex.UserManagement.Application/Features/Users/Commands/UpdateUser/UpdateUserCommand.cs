@@ -1,11 +1,20 @@
 ﻿using Postex.UserManagement.Application.Contracts;
+using Postex.UserManagement.Domain.Users;
 
-namespace Postex.UserManagement.Application.Features.Users.Commands.UpdateUser;
-
-public class UpdateUserCommand : ITransactionRequest
+namespace Postex.UserManagement.Application.Features.Users.Commands.Update
 {
-    public int Id { get; set; }
-    public string UserName { get; set; }
-    public string Password { get; set; }
-    public bool IsActive { get; set; }
+    public class UpdateUserCommand : ITransactionRequest<User>
+    {
+        public Guid Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FatherName { get; set; }
+        public string NationalCode { get; set; }
+        public string Email { get; set; }
+        public string MobileNo { get; set; }
+        public string PostalCode { get; set; }
+        public bool IsShahkarValidate { get; set; }
+        public Guid UserId { get; set; }
+        public bool IsActive { get; set; }
+    }
 }

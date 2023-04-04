@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByContractId;
-using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByCustomer;
-using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByCustomerAndValueAdded;
+using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByUser;
+using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByUserAndValueAdded;
 using Postex.SharedKernel.Api;
 
 namespace Postex.Product.Api.Controllers.v1.Contracts
@@ -39,15 +39,16 @@ namespace Postex.Product.Api.Controllers.v1.Contracts
             return Ok(await mediator.Send(new GetByContractIdContractValueAddedQuery { ContractInfoId = contractInfoId }));
         }
 
-        [HttpGet("GetByCustomer")]
-        public async Task<IActionResult> GetByCustomer(int? customerId, int? provinceId, int? cityId)
+        [HttpGet("GetByUser")]
+        public async Task<IActionResult> GetByUser(Guid? userId, int? provinceId, int? cityId)
         {
-            return Ok(await mediator.Send(new GetByCustomerContractValueAddedQuery { CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
+            return Ok(await mediator.Send(new GetByUserContractValueAddedQuery { UserId = userId, ProvinceId = provinceId, CityId = cityId }));
         }
-        [HttpGet("GetByCustomerAndValueAdded")]
-        public async Task<IActionResult> GetByCustomerAndValueAdded(int ValueAddedId, int? customerId, int? provinceId, int? cityId)
+
+        [HttpGet("GetByUserAndValueAdded")]
+        public async Task<IActionResult> GetByCustomerAndValueAdded(int ValueAddedId, Guid? userId, int? provinceId, int? cityId)
         {
-            return Ok(await mediator.Send(new GetByCustomerAndValueAddedContractValueAddedQuery { ValueAddedId = ValueAddedId, CustomerId = customerId, ProvinceId = provinceId, CityId = cityId }));
+            return Ok(await mediator.Send(new GetByUserAndValueAddedContractValueAddedQuery { ValueAddedId = ValueAddedId, UserId = userId, ProvinceId = provinceId, CityId = cityId }));
         }
     }
 }

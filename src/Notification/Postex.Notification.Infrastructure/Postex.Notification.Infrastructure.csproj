@@ -18,7 +18,4 @@
 	  <ProjectReference Include="..\..\SharedKernel\Postex.SharedKernel\Postex.SharedKernel.csproj" />
 	  <ProjectReference Include="..\Postex.Notification.Domain\Postex.Notification.Domain.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Migrations\" />
-	</ItemGroup>
 </Project>

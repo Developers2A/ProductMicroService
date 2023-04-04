@@ -30,7 +30,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Querie
                     BoxTypeId = c.BoxTypeId,
                     CityId = c.CityId,
                     ProvinceId = c.ProvinceId,
-                    CustomerId = c.CustomerId,
+                    UserId = c.UserId,
                     SalePrice = c.SalePrice,
                     BuyPrice = c.BuyPrice,
                     BoxName = c.BoxType.Name,

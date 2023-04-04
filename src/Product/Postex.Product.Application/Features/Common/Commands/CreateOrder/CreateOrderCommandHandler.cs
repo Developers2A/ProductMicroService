@@ -85,7 +85,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
         {
             return await _mediator.Send(new GetValueAddedPricesQuery()
             {
-                CustomerId = 0,
+                UserId = null,
                 CityId = 0,
                 ProvinceId = 0,
                 ValueAddedIds = _command.ValueAddedTypeIds

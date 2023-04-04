@@ -138,7 +138,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
 
             for (int i = 0; i < _basket.Parcels.Count; i++)
             {
-                if (!_courierZoneCollectionDistributionPrices.Any(x => x.CityType == _basket.Parcels[i].DestinationCityTypeCode))
+                if (!_courierZoneCollectionDistributionPrices.Any(x => x.CityType == _basket.Parcels[i].DestinationCityType))
                 {
                     response.ErrorResponse = "کوریر در شهر درخواستی سرویس نمی دهد ";
                     response.CollectionPrice = null;

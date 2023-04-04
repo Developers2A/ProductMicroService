@@ -1,15 +1,10 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Postex.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Postex.SharedKernel.Utilities;
-using Postex.Product.Domain.Contracts;
 using Postex.Product.Application.Dtos.Contratcs;
+using Postex.Product.Domain.Contracts;
+using Postex.SharedKernel.Interfaces;
+using Postex.SharedKernel.Utilities;
+using System.Globalization;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries.GetAll
 {
@@ -29,7 +24,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractLeasings.Queries
                 (c => new ContractLeasingDto
                 {
                     Id = c.Id,
-                    CustomerId = c.CustomerId,
+                    UserId = c.UserId,
                     Amount = c.Amount,
                     ReturnRate = c.ReturnRate,
                     WithdrawRate = c.WithdrawRate,

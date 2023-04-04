@@ -28,7 +28,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractLeasings.Command
             if (contractLeasing == null)
                 throw new AppException("اطلاعات مورد نظر یافت نشد");
 
-            contractLeasing.CustomerId = request.CustomerId;
+            contractLeasing.UserId = request.UserId;
             contractLeasing.StartDate = request.StartDate;
             contractLeasing.EndDate = request.EndDate;
             contractLeasing.IsActive = request.IsActive;

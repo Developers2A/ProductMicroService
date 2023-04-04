@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Features.Contratcs.ContractInfos.Commands.Create;
 using Postex.Product.Application.Features.Contratcs.ContractInfos.Commands.Update;
 using Postex.Product.Application.Features.Contratcs.ContractInfos.Queries.GetAll;
-using Postex.Product.Application.Features.Contratcs.ContractInfos.Queries.GetContractByCustomer;
 using Postex.Product.Application.Features.Contratcs.ContractInfos.Queries.GetContractById;
+using Postex.Product.Application.Features.Contratcs.ContractInfos.Queries.GetContractByUser;
 using Postex.SharedKernel.Api;
 
 namespace Postex.Product.Api.Controllers.v1.Contracts
@@ -36,19 +36,19 @@ namespace Postex.Product.Api.Controllers.v1.Contracts
         [HttpGet("All")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await mediator.Send(new GetAllContractInfoCommand()));
+            return Ok(await mediator.Send(new GetAllContractInfoQuery()));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            return Ok(await mediator.Send(new GetContractById { Id = id }));
+            return Ok(await mediator.Send(new GetContractByIdQuery { Id = id }));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetByCustomer(int customerId, int? provinceId, int? cityId)
+        public async Task<IActionResult> GetByUser(Guid userId, int? provinceId, int? cityId)
         {
-            return Ok(await mediator.Send(new GetContractByCustomer { CustomerId = customerId, CityId = cityId, ProvinceId = provinceId }));
+            return Ok(await mediator.Send(new GetContractByUserQuery { UserId = userId, CityId = cityId, ProvinceId = provinceId }));
         }
     }
 }

@@ -1,15 +1,17 @@
 ﻿using FluentValidation;
 
-namespace Postex.UserManagement.Application.Features.Users.Commands.UpdateUser;
-
-public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
+namespace Postex.UserManagement.Application.Features.Users.Commands.Update
 {
-    public UpdateUserCommandValidator()
+    public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
     {
-        RuleFor(p => p.Id)
-            .NotEmpty().WithMessage(" شناسه الزامی میباشد");
-
-        RuleFor(p => p.UserName)
-              .NotEmpty().WithMessage(" نام کاربری الزامی میباشد");
+        public UpdateUserCommandValidator()
+        {
+            RuleFor(p => p.FirstName).
+                NotEmpty().NotNull().WithMessage("نام الزامی می باشد");
+            RuleFor(p => p.FirstName).
+                NotEmpty().NotNull().WithMessage("نام خانوادگی الزامی می باشد");
+            RuleFor(p => p.Email)
+                .EmailAddress().WithMessage("فرمت آدرس ایمیل معتبر نمی باشد");
+        }
     }
 }

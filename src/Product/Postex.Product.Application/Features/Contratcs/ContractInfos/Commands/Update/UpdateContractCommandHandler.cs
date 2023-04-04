@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
-using Postex.SharedKernel.Interfaces;
-using Postex.SharedKernel.Exceptions;
-using Postex.Product.Domain.Contracts;
 using Postex.Product.Application.Dtos.Contratcs;
+using Postex.Product.Domain.Contracts;
+using Postex.SharedKernel.Exceptions;
+using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.Contratcs.ContractInfos.Commands.Update
 {
@@ -36,7 +36,7 @@ namespace Postex.Product.Application.Features.Contratcs.ContractInfos.Commands.U
             contractInfo.RegisterDate = request.RegisterDate;
             contractInfo.IsActive = request.IsActive;
 
-            contractInfo.CustomerId = request.CustomerId;
+            contractInfo.UserId = request.UserId;
 
             await _writeRepository.UpdateAsync(contractInfo);
             await _writeRepository.SaveChangeAsync();

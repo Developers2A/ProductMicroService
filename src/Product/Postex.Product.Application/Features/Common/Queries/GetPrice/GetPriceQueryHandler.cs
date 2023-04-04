@@ -5,13 +5,12 @@ using Postex.Product.Application.Dtos.Couriers;
 using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Dtos.ServiceProviders.Mahex.Common;
 using Postex.Product.Application.Features.BoxTypes.Queries;
-using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByCustomerAndBoxType;
-using Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByCustomerAndValuePrice;
-using Postex.Product.Application.Features.Contratcs.ContractInsurances.Queries.GetByCustomerAndValuePrice;
-using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByCustomerAndValueAdded;
+using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByUserAndBoxType;
+using Postex.Product.Application.Features.Contratcs.ContractCods.Queries.GetByUserAndValuePrice;
+using Postex.Product.Application.Features.Contratcs.ContractInsurances.Queries.GetByUserAndValuePrice;
+using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByUserAndValueAdded;
 using Postex.Product.Application.Features.CourierCityMappings.Queries;
 using Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries.GetPeykOfflinePrices;
-using Postex.Product.Application.Features.Customers.Queries;
 using Postex.Product.Application.Features.PostShops.Queries;
 using Postex.Product.Application.Features.ServiceProviders.Chapar.Queries.GetPrice;
 using Postex.Product.Application.Features.ServiceProviders.Kbk.Queries.GetPrice;
@@ -32,7 +31,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         private readonly HttpContext _httpContext;
         private List<CourierCityMappingDto> _courierCityMappings;
         private GetPriceQuery _query;
-        private int? _customerId;
+        private Guid? _userId;
 
         public GetPriceQueryHandler(IMediator mediator, IHttpContextAccessor contextAccessor)
         {
@@ -48,12 +47,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                 await SetBoxDimensionsIfNeeded();
                 await SetCourierCityMappings();
                 var tasviePrice = await ApplyPayType();
-                _customerId = await GetCustomerId();
-                if (_customerId == 0)
-                {
-                    _customerId = null;
-                    //mina for test throw new AppException($"شناسه مشتری یافت نشد");
-                }
+                _userId = GetUserId();
                 return await GetPrice();
             }
             catch (Exception ex)
@@ -121,9 +115,9 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         private async Task<CodPriceDto> GetCodValues()
         {
             //مقدار پیشرض و مقدار کانترکت برحسب شهر، استان و مشتری
-            var boxPrice = await _mediator.Send(new GetByCustomerAndValuePriceContractCodQuery()
+            var boxPrice = await _mediator.Send(new GetByUserAndValuePriceContractCodQuery()
             {
-                CustomerId = _customerId,
+                UserId = _userId,
                 CityId = _courierCityMappings.FirstOrDefault().CityId,
                 ProvinceId = _courierCityMappings.FirstOrDefault().ProvinceId,
                 ValuePrice = _query.Parcel.TotalValue
@@ -143,9 +137,9 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         private async Task<InsurancePriceDto> GetInsuranceValues()
         {
             //مقدار پیشرض و مقدار کانترکت برحسب شهر، استان و مشتری
-            var insurancePrice = await _mediator.Send(new GetByCustomerAndValuePriceContractInsuranceQuery()
+            var insurancePrice = await _mediator.Send(new GetByUserAndValuePriceContractInsuranceQuery()
             {
-                CustomerId = _customerId,
+                UserId = _userId,
                 CityId = _courierCityMappings.FirstOrDefault().CityId,
                 ProvinceId = _courierCityMappings.FirstOrDefault().ProvinceId,
                 ValuePrice = _query.Parcel.TotalValue
@@ -160,32 +154,6 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                 ContractFixedPercent = insurancePrice.ContractFixedPercent,
                 ContractFixedValue = insurancePrice.ContractFixedValue,
             };
-        }
-
-        private async Task<int> GetCustomerId()
-        {
-            // دریافت آی دی مشتری با استفاده از یورآی دی موجود در هدر درخواست
-            var userId = GetUserId();
-            if (userId == null)
-            {
-                return 0;
-            }
-
-            try
-            {
-                var getCustomerResponse = await _mediator.Send(new GetCustomerByUserIdQuery()
-                {
-                    UserId = userId!.Value
-                });
-                if (getCustomerResponse.IsSuccess)
-                {
-                    return getCustomerResponse.Data.Id;
-                }
-            }
-            catch
-            {
-            }
-            return 0;
         }
 
         private Guid? GetUserId()
@@ -284,9 +252,9 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         private async Task<ContractPriceDto> GetBoxPrice()
         {
             //مقدار پیشرض و مقدار کانترکت برحسب شهر، استان و مشتری
-            var boxPrice = await _mediator.Send(new GetByCustomerAndBoxTypeContractBoxPriceQuery()
+            var boxPrice = await _mediator.Send(new GetByUserAndBoxTypeContractBoxPriceQuery()
             {
-                CustomerId = _customerId,
+                UserId = _userId,
                 CityId = _courierCityMappings.FirstOrDefault()!.CityId,
                 ProvinceId = _courierCityMappings.FirstOrDefault()!.ProvinceId,
                 BoxTypeId = _query.Parcel.BoxTypeId
@@ -311,9 +279,9 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             {
                 foreach (var item in _query.ValueAddedTypeIds)
                 {
-                    var valueAddedPrice = await _mediator.Send(new GetByCustomerAndValueAddedContractValueAddedQuery()
+                    var valueAddedPrice = await _mediator.Send(new GetByUserAndValueAddedContractValueAddedQuery()
                     {
-                        CustomerId = _customerId,
+                        UserId = _userId,
                         CityId = _courierCityMappings.FirstOrDefault()!.CityId,
                         ProvinceId = _courierCityMappings.FirstOrDefault()!.ProvinceId,
                         ValueAddedId = item
