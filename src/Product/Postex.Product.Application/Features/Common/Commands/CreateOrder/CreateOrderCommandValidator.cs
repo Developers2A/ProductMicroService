@@ -30,7 +30,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                 .NotNull().NotEmpty().WithMessage(" آدرس فرستنده الزامی میباشد");
             RuleFor(p => p.From.Location.PostCode)
                 .NotNull().NotEmpty().WithMessage(" کدپستی فرستنده الزامی میباشد");
-            RuleFor(p => p.From.Location.CityId)
+            RuleFor(p => p.From.Location.CityCode)
                 .NotNull().NotEmpty().WithMessage(" شهر فرستنده الزامی میباشد");
 
             RuleFor(p => p.To)
@@ -50,7 +50,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                 .NotNull().NotEmpty().WithMessage(" آدرس گیرنده الزامی میباشد");
             RuleFor(p => p.To.Location.PostCode)
                 .NotNull().NotEmpty().WithMessage(" کدپستی گیرنده الزامی میباشد");
-            RuleFor(p => p.To.Location.CityId)
+            RuleFor(p => p.To.Location.CityCode)
                 .NotNull().NotEmpty().WithMessage(" شهر گیرنده الزامی میباشد");
 
             RuleFor(p => p.Parcel)

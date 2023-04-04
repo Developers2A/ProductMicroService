@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Dtos.Commons;
 using Postex.Product.Application.Dtos.Couriers;
 using Postex.Product.Application.Dtos.CourierStatus;
+using Postex.Product.Application.Dtos.ValueAddeds;
 using Postex.Product.Application.Features.BoxTypes.Queries;
 using Postex.Product.Application.Features.Cities.Queries.GetCitiesCommon;
 using Postex.Product.Application.Features.Couriers.Queries;
@@ -10,6 +11,7 @@ using Postex.Product.Application.Features.CourierServices.Queries;
 using Postex.Product.Application.Features.CourierStatusMappings.Queries;
 using Postex.Product.Application.Features.PostShops.Commands.SyncPostShops;
 using Postex.Product.Application.Features.Provinces.Queries;
+using Postex.Product.Application.Features.ValueAddedTypes.Queries;
 using Postex.Product.ServiceApi.Filters;
 using Postex.SharedKernel.Api;
 using Postex.SharedKernel.Common.Enums;
@@ -55,6 +57,12 @@ namespace Postex.Product.ServiceApi.Controllers.v1
         public async Task<ApiResult<List<BoxTypeDto>>> GetBoxTypes()
         {
             return await _mediator.Send(new GetBoxTypesQuery());
+        }
+
+        [HttpGet("value-added-types")]
+        public async Task<ApiResult<List<ValueAddedTypeDto>>> GetValueAddedTypes()
+        {
+            return await _mediator.Send(new GetValueAddedTypesQuery());
         }
 
         [HttpGet("status-mappings/{courierCode}")]

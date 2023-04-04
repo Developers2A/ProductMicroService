@@ -51,7 +51,7 @@ namespace Postex.Product.ServiceApi.Controllers.v1
         }
 
         [HttpPost("basket-price")]
-        public async Task<ApiResult<PriceResponseDto>> BasketPrice(Basket basket)
+        public async Task<ApiResult<PriceResponseDto>> BasketPrice(BasketDto basket)
         {
             return await _mediator.Send(new GetBasketPricesQuery()
             {

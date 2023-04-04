@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Dtos.Commons.CreateOrder.Request
 {
@@ -10,8 +9,8 @@ namespace Postex.Product.Application.Dtos.Commons.CreateOrder.Request
 
         public string? Country { get; set; }
 
-        [JsonPropertyName("city_id")]
-        public int CityId { get; set; }
+        [JsonPropertyName("city_code")]
+        public int CityCode { get; set; }
 
         [JsonPropertyName("city_name")]
         public string? CityName { get; set; }

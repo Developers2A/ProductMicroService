@@ -5,6 +5,6 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
 {
     public class GetBasketPricesQuery : IRequest<PriceResponseDto>
     {
-        public Basket Basket { get; set; }
+        public BasketDto Basket { get; set; }
     }
 }

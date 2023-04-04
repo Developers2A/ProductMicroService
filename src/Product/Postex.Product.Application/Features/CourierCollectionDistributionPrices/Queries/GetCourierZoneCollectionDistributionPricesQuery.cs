@@ -4,15 +4,16 @@ using Postex.Product.Application.Dtos.CollectionDistributionPrices;
 using Postex.Product.Domain.CollectionDistributionPrices;
 using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Interfaces;
+using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries
 {
     public class GetCourierZoneCollectionDistributionPricesQuery : IRequest<List<CourierCityTypePriceDto>>
     {
+        [JsonPropertyName("courier_code")]
         public int CourierCode { get; set; }
         public int CourierZoneId { get; set; }
         public int Volume { get; set; }
-        public string City { get; set; }
 
         public class Handler : IRequestHandler<GetCourierZoneCollectionDistributionPricesQuery, List<CourierCityTypePriceDto>>
         {

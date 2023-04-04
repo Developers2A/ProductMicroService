@@ -23,7 +23,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             return CalculateCollection(_query.Basket);
         }
 
-        private PriceResponseDto CalculateCollection(Basket basket)
+        private PriceResponseDto CalculateCollection(BasketDto basket)
         {
             var validatePriceResponse = ValidateBasketSellPrice(basket);
             if (validatePriceResponse != null)
@@ -45,12 +45,12 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             }
             else
             {
-                var basketNoCancel = new Basket()
+                var basketNoCancel = new BasketDto()
                 {
                     BasketId = basket.BasketId,
                     CourierCode = basket.CourierCode,
                     CityTypeCode = basket.CityTypeCode,
-                    ServiceCode = basket.ServiceCode,
+                    ServiceType = basket.ServiceType,
                     Parcels = basket.Parcels.Where(x => x.IsCanceled == false).ToList()
                 };
 
@@ -115,7 +115,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             return priceResponse;
         }
 
-        private PriceResponseDto? ValidateBasketSellPrice(Basket basket)
+        private PriceResponseDto? ValidateBasketSellPrice(BasketDto basket)
         {
             foreach (var parcelsInBasket in basket.Parcels)
             {
@@ -156,7 +156,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             return null;
         }
 
-        private CollectionDistributionPriceDto GetMaxVolume(Basket basket)
+        private CollectionDistributionPriceDto GetMaxVolume(BasketDto basket)
         {
             var price = _query.CollectionDistributionPrices.Where(x =>
                x.CityType == basket.CityTypeCode).LastOrDefault()!;
@@ -189,7 +189,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             return 0;
         }
 
-        private PriceResponseDto CalculateDistributionAndCollectionPrice(Basket basket)
+        private PriceResponseDto CalculateDistributionAndCollectionPrice(BasketDto basket)
         {
             var response = new PriceResponseDto
             {
@@ -209,7 +209,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             return response;
         }
 
-        private decimal CalculateCollection(Basket basket, PriceResponseDto response, double volumeOfAllItemInBasket, decimal finalPriceCollection, CollectionDistributionPriceDto maxVolumePrice, double maxVolume)
+        private decimal CalculateCollection(BasketDto basket, PriceResponseDto response, double volumeOfAllItemInBasket, decimal finalPriceCollection, CollectionDistributionPriceDto maxVolumePrice, double maxVolume)
         {
             if (volumeOfAllItemInBasket >= maxVolume)
             {
@@ -287,7 +287,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             return finalPriceCollection;
         }
 
-        private decimal CalculateDistribution(Basket basket, PriceResponseDto response, decimal finalPriceDistribution)
+        private decimal CalculateDistribution(BasketDto basket, PriceResponseDto response, decimal finalPriceDistribution)
         {
             for (int i = 0; i < basket.Parcels.Count; i++)
             {

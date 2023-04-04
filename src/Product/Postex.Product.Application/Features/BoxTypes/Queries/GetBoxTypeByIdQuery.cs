@@ -24,8 +24,8 @@ namespace Postex.Product.Application.Features.BoxTypes.Queries
 
             public async Task<BoxTypeDto> Handle(GetBoxTypeByIdQuery request, CancellationToken cancellationToken)
             {
-                var boxPrice = await _boxTypeRepository.TableNoTracking.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
-                return _mapper.Map<BoxTypeDto>(boxPrice);
+                var boxType = await _boxTypeRepository.TableNoTracking.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
+                return _mapper.Map<BoxTypeDto>(boxType);
             }
         }
     }

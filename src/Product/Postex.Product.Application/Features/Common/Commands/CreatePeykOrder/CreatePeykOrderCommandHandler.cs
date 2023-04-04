@@ -122,7 +122,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
                             mobile = _command.From.Contact.Mobile,
                             person = _command.From.Contact.FirstName + " " + _command.From.Contact.LastName,
                             telephone = _command.From.Contact.Mobile,
-                            city_no = GetCityMappedCode(CourierCode.PishroPost, _command.From.Location.CityId),
+                            city_no = GetCityMappedCode(CourierCode.PishroPost, _command.From.Location.CityCode),
                             company = _command.From.Contact.Company,
                             email = _command.From.Contact.Email,
                         },
@@ -132,7 +132,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
                             mobile = _command.From.Contact.Mobile,
                             person = _command.From.Contact.FirstName + " " + _command.From.Contact.LastName,
                             telephone = _command.From.Contact.Mobile,
-                            city_no = GetCityMappedCode(CourierCode.PishroPost, _command.From.Location.CityId),
+                            city_no = GetCityMappedCode(CourierCode.PishroPost, _command.From.Location.CityCode),
                             company = _command.From.Contact.Company,
                             email = _command.From.Contact.Email,
                         },
@@ -159,7 +159,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
 
         private CreateTaroffOrderCommand CreateTarrofCommand()
         {
-            var cityCode = GetCityMappedCode(CourierCode.Taroff, _command.To.Location.CityId);
+            var cityCode = GetCityMappedCode(CourierCode.Taroff, _command.To.Location.CityCode);
             return new CreateTaroffOrderCommand()
             {
                 FirstName = _command.To.Contact.FirstName,
@@ -272,7 +272,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             return await _mediator.Send(new GetCourierCityMappingsByCourierAndCitiesQuery()
             {
                 CourierCode = (int)courierCode,
-                CityCodes = new List<int> { _command.From.Location.CityId, _command.To.Location.CityId }
+                CityCodes = new List<int> { _command.From.Location.CityCode, _command.To.Location.CityCode }
             });
         }
     }

@@ -36,7 +36,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
             _sameProvince = _cities.Select(x => x.ProvinceId).Distinct().Count() == 1 ? true : false;
             _courierZoneCityMappings = await GetCourierZoneCityMappings();
 
-            if (request.CourierCode == (int)CourierCode.All || request.CourierCode == (int)CourierCode.Post)
+            if (request.Courier.CourierCode == (int)CourierCode.All || request.Courier.CourierCode == (int)CourierCode.Post)
             {
                 var postPrices = await PostPrice();
                 if (postPrices != null)
@@ -45,7 +45,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
                 }
             }
 
-            if (request.CourierCode == (int)CourierCode.All || request.CourierCode == (int)CourierCode.Chapar)
+            if (request.Courier.CourierCode == (int)CourierCode.All || request.Courier.CourierCode == (int)CourierCode.Chapar)
             {
                 var postPrices = await PostPrice();
                 if (postPrices != null)
@@ -61,7 +61,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
         {
             return await _mediator.Send(new GetCitiesQuery()
             {
-                CityCodes = new List<int> { _query.SenderCityCode, _query.ReceiverCityCode }
+                CityCodes = new List<int> { _query.Sender.CityCode, _query.Receiver.CityCode }
             });
         }
 
@@ -75,15 +75,15 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
 
         private async Task<List<ServicePrice>> PostPrice()
         {
-            int fromCityId = GetCityId(CourierCode.Post, _query.SenderCityCode);
-            var toCityId = GetCityId(CourierCode.Post, _query.ReceiverCityCode);
+            int fromCityId = GetCityId(CourierCode.Post, _query.Sender.CityCode);
+            var toCityId = GetCityId(CourierCode.Post, _query.Receiver.CityCode);
             int fromZoneId = GetZoneId(CourierCode.Post, fromCityId);
             int toZoneId = GetZoneId(CourierCode.Post, toCityId);
             SetFromAndToZoneDefaultIfZero(ref fromZoneId, ref toZoneId);
 
             if (fromZoneId > 0 && toZoneId > 0)
             {
-                var postPrice = await _courierZonePriceReadRepository.TableNoTracking.Include(x => x.CourierService).Where(x => x.SameProvince == _sameProvince && x.FromCourierZoneId == fromZoneId && x.ToCourierZoneId == toZoneId && x.Weight >= _query.Weight).GroupBy(x => x.CourierServiceId)
+                var postPrice = await _courierZonePriceReadRepository.TableNoTracking.Include(x => x.CourierService).Where(x => x.SameProvince == _sameProvince && x.FromCourierZoneId == fromZoneId && x.ToCourierZoneId == toZoneId && x.Weight >= _query.Parcel.TotalWeight).GroupBy(x => x.CourierServiceId)
                     .Select(group => new
                     {
                         CourierServiceId = group.Key,
@@ -104,15 +104,15 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
 
         private async Task<List<ServicePrice>> ChaparPrice()
         {
-            int fromCityId = GetCityId(CourierCode.Post, _query.SenderCityCode);
-            var toCityId = GetCityId(CourierCode.Post, _query.ReceiverCityCode);
+            int fromCityId = GetCityId(CourierCode.Post, _query.Sender.CityCode);
+            var toCityId = GetCityId(CourierCode.Post, _query.Receiver.CityCode);
             int fromZoneId = GetZoneId(CourierCode.Post, fromCityId);
             int toZoneId = GetZoneId(CourierCode.Post, toCityId);
             SetFromAndToZoneDefaultIfZero(ref fromZoneId, ref toZoneId);
 
             if (fromZoneId > 0 && toZoneId > 0)
             {
-                var postPrice = await _courierZonePriceReadRepository.TableNoTracking.Include(x => x.CourierService).Where(x => x.FromCourierZoneId == fromZoneId && x.ToCourierZoneId == toZoneId && x.Weight >= _query.Weight).GroupBy(x => x.CourierServiceId)
+                var postPrice = await _courierZonePriceReadRepository.TableNoTracking.Include(x => x.CourierService).Where(x => x.FromCourierZoneId == fromZoneId && x.ToCourierZoneId == toZoneId && x.Weight >= _query.Parcel.TotalWeight).GroupBy(x => x.CourierServiceId)
                     .Select(group => new
                     {
                         CourierServiceId = group.Key,

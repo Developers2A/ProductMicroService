@@ -1,4 +1,5 @@
 ﻿using Postex.SharedKernel.Common.Enums;
+using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Dtos.CollectionDistributionPrices.Basket
 {
@@ -12,7 +13,9 @@ namespace Postex.Product.Application.Dtos.CollectionDistributionPrices.Basket
         public decimal? DistributionPrice { get; set; } = 0;
         public decimal BuyPrice { get; set; }
         public decimal SellPrice { get; set; }
-        public CityTypeCode DestinationCityTypeCode { get; set; }
+
+        [JsonPropertyName("destination_city_type")]
+        public CityTypeCode DestinationCityType { get; set; }
         public bool IsNew { get; set; }
         public bool IsCanceled { get; set; }
         public bool HasCollection { get; set; }

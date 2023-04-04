@@ -12,7 +12,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
     public class GetBasketPricesQueryHandler : IRequestHandler<GetBasketPricesQuery, PriceResponseDto>
     {
         private readonly IMediator _mediator;
-        private Basket _basket;
+        private BasketDto _basket;
         private List<CollectionDistributionPriceDto> _courierZoneCollectionDistributionPrices;
 
         public GetBasketPricesQueryHandler(IMediator mediator)
@@ -30,7 +30,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
                 return basketValidate;
             }
 
-            switch (_basket.ServiceCode)
+            switch (_basket.ServiceType)
             {
                 case ServiceType.DistributionAndCollectionService:
                     {

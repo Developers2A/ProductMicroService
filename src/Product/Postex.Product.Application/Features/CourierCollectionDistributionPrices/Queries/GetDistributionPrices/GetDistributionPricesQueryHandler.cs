@@ -20,7 +20,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             return Task.FromResult(CalculateDistribution(_query.Basket));
         }
 
-        private PriceResponseDto CalculateDistribution(Basket basket)
+        private PriceResponseDto CalculateDistribution(BasketDto basket)
         {
             var priceResponse = new PriceResponseDto
             {

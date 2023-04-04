@@ -16,7 +16,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             RuleFor(p => p.Basket.CityTypeCode)
                 .NotNull().NotEmpty().WithMessage(" نوع شهر الزامی میباشد");
 
-            RuleFor(p => p.Basket.ServiceCode)
+            RuleFor(p => p.Basket.ServiceType)
                .NotEmpty().NotNull().WithMessage(" کد سرویس الزامی میباشد");
 
             RuleFor(p => p.Basket.BasketId)
