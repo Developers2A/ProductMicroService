@@ -10,7 +10,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
     public class GetCourierZoneCollectionDistributionPricesFilterQuery : IRequest<List<CollectionDistributionPriceDto>>
     {
         public CityTypeCode? CityType { get; set; }
-        public CourierCode? CourierCode { get; set; }
+        public SharedKernel.Common.Enums.CourierCode? CourierCode { get; set; }
 
         public class Handler : IRequestHandler<GetCourierZoneCollectionDistributionPricesFilterQuery, List<CollectionDistributionPriceDto>>
         {

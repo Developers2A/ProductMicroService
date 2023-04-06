@@ -2,9 +2,9 @@
 
 namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 {
-    public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
+    public class CreateParcelCommandValidator : AbstractValidator<CreateParcelCommand>
     {
-        public CreateOrderCommandValidator()
+        public CreateParcelCommandValidator()
         {
             RuleFor(p => p.Courier)
                 .NotNull().NotEmpty().WithMessage(" اطلاعات کوریر الزامی میباشد");

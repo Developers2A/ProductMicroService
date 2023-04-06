@@ -30,39 +30,39 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
         public async Task<BaseResponse<TrackingMapResponse>> Handle(GetTrackQuery query, CancellationToken cancellationToken)
         {
             _query = query;
-            if (_query.CourierCode == (int)CourierCode.Post)
+            if (_query.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Post)
             {
                 return await PostTrack();
             }
-            if (_query.CourierCode == (int)CourierCode.Chapar)
+            if (_query.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Chapar)
             {
                 return await ChaparTrack();
             }
-            if (_query.CourierCode == (int)CourierCode.Mahex)
+            if (_query.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Mahex)
             {
                 return await MahexTrack();
             }
-            if (_query.CourierCode == (int)CourierCode.Kalaresan)
+            if (_query.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Kalaresan)
             {
                 return await KbkTrack();
             }
-            if (_query.CourierCode == (int)CourierCode.Link)
+            if (_query.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Link)
             {
                 return await LinkTrack();
             }
-            if (_query.CourierCode == (int)CourierCode.Taroff)
+            if (_query.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Taroff)
             {
                 return await TaroffTrack();
             }
-            if (_query.CourierCode == (int)CourierCode.PishroPost)
+            if (_query.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.PishroPost)
             {
                 return await PishroPostTrack();
             }
-            if (_query.CourierCode == (int)CourierCode.Speed)
+            if (_query.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Speed)
             {
                 return await SpeedTrack();
             }
-            if (_query.CourierCode == (int)CourierCode.EcoPeyk)
+            if (_query.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.EcoPeyk)
             {
                 return await EcoPeykTrack();
             }
@@ -84,7 +84,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var status = result.Data.FirstOrDefault().ParcelStatusID;
             var date = result.Data.FirstOrDefault().UpdateDateTime;
 
-            var tracking = await GetPostexStatus(CourierCode.Post, status.ToString());
+            var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Post, status.ToString());
             if (tracking == null)
             {
                 return new(false, "Post Mappping is not set in database");
@@ -122,7 +122,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
 
             var finalStatus = status.Split(" ")[0];
 
-            var tracking = await GetPostexStatus(CourierCode.Chapar, finalStatus);
+            var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Chapar, finalStatus);
             if (tracking == null)
             {
                 return new(false, "Chapar Mappping is not set in database");
@@ -139,7 +139,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
 
         }
 
-        private async Task<CourierStatusMappingDto> GetPostexStatus(CourierCode courierCode, string courierStatus)
+        private async Task<CourierStatusMappingDto> GetPostexStatus(SharedKernel.Common.Enums.CourierCode courierCode, string courierStatus)
         {
             var courierStatusMapping = await _mediator.Send(new GetCourierStatusMappingByCourierAndStatusQuery()
             {
@@ -181,7 +181,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var status = result.Data.Data.CurrentState;
             var date = result.Data.Data.UpdateDate;
 
-            var tracking = await GetPostexStatus(CourierCode.Mahex, status);
+            var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Mahex, status);
             if (tracking == null)
             {
                 return new(false, "Mahex Mappping is not set in database : " + status);
@@ -212,7 +212,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var status = result.Data.Status;
             var date = "";
 
-            var tracking = await GetPostexStatus(CourierCode.Kalaresan, status.ToString());
+            var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Kalaresan, status.ToString());
             if (tracking == null)
             {
                 return new(false, "Kbk Mappping is not set in database for kbk status :" + status);
@@ -245,7 +245,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var status = result.Data.Result.State;
             var date = result.Data.Result.DoneDate.ToString();
 
-            var tracking = await GetPostexStatus(CourierCode.Link, status.ToString());
+            var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Link, status.ToString());
             if (tracking != null)
             {
                 return new(true, "success", new TrackingMapResponse()
@@ -278,7 +278,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var status = result.Data.StateId;
             var date = "";
 
-            var tracking = await GetPostexStatus(CourierCode.Taroff, status.ToString());
+            var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Taroff, status.ToString());
             if (tracking != null)
             {
                 return new(true, "success", new TrackingMapResponse()
@@ -318,7 +318,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
 
             var finalStatus = status.Split(" ")[0];
 
-            var tracking = await GetPostexStatus(CourierCode.PishroPost, finalStatus);
+            var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.PishroPost, finalStatus);
             if (tracking == null)
             {
                 return new(false, "Pishro Post Mappping is not set in database");
@@ -358,7 +358,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 }
             }
 
-            var tracking = await GetPostexStatus(CourierCode.Speed, status);
+            var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Speed, status);
             if (tracking == null)
             {
                 return new(false, "Speed Mappping is not set in database");
@@ -388,7 +388,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var status = result.Data.StatusCode;
             var date = "";
 
-            var tracking = await GetPostexStatus(CourierCode.EcoPeyk, status.ToString());
+            var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.EcoPeyk, status.ToString());
             if (tracking != null)
             {
                 return new(true, "success", new TrackingMapResponse()

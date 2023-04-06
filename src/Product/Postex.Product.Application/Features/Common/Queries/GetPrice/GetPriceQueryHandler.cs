@@ -11,14 +11,12 @@ using Postex.Product.Application.Features.Contratcs.ContractInsurances.Queries.G
 using Postex.Product.Application.Features.Contratcs.ContractValueAddeds.Queries.GetByUserAndValueAdded;
 using Postex.Product.Application.Features.CourierCityMappings.Queries;
 using Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries.GetPeykOfflinePrices;
-using Postex.Product.Application.Features.PostShops.Queries;
 using Postex.Product.Application.Features.ServiceProviders.Chapar.Queries.GetPrice;
 using Postex.Product.Application.Features.ServiceProviders.Kbk.Queries.GetPrice;
 using Postex.Product.Application.Features.ServiceProviders.Mahex.Queries.GetPrice;
 using Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetPrice;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Common.Enums;
-using Postex.SharedKernel.Exceptions;
 
 namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 {
@@ -31,7 +29,6 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         private readonly HttpContext _httpContext;
         private List<CourierCityMappingDto> _courierCityMappings;
         private GetPriceQuery _query;
-        private Guid? _userId;
 
         public GetPriceQueryHandler(IMediator mediator, IHttpContextAccessor contextAccessor)
         {
@@ -47,7 +44,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                 await SetBoxDimensionsIfNeeded();
                 await SetCourierCityMappings();
                 var tasviePrice = await ApplyPayType();
-                _userId = GetUserId();
+ 
                 return await GetPrice();
             }
             catch (Exception ex)
@@ -117,7 +114,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             //مقدار پیشرض و مقدار کانترکت برحسب شهر، استان و مشتری
             var boxPrice = await _mediator.Send(new GetByUserAndValuePriceContractCodQuery()
             {
-                UserId = _userId,
+                UserId = _query.UserID,
                 CityId = _courierCityMappings.FirstOrDefault().CityId,
                 ProvinceId = _courierCityMappings.FirstOrDefault().ProvinceId,
                 ValuePrice = _query.Parcel.TotalValue
@@ -139,7 +136,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             //مقدار پیشرض و مقدار کانترکت برحسب شهر، استان و مشتری
             var insurancePrice = await _mediator.Send(new GetByUserAndValuePriceContractInsuranceQuery()
             {
-                UserId = _userId,
+                UserId = _query.UserID,
                 CityId = _courierCityMappings.FirstOrDefault().CityId,
                 ProvinceId = _courierCityMappings.FirstOrDefault().ProvinceId,
                 ValuePrice = _query.Parcel.TotalValue
@@ -156,26 +153,13 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             };
         }
 
-        private Guid? GetUserId()
-        {
-            // دریافت شناسه جی یو آی دی مشتری با هدر درخواست
-            try
-            {
-                return Guid.Parse(_httpContext.Request.Headers["x-userid"]);
-            }
-            catch
-            {
-            }
-            return null;
-        }
-
         public async Task<BaseResponse<GetPriceResponse>> GetPrice()
         {
             GetPriceResponse priceResponse = new();
             List<ServicePriceDto> prices = new();
 
 
-            if (_query.Courier.CourierCode == (int)CourierCode.Kalaresan || _query.Courier.CourierCode == (int)CourierCode.All)
+            if (_query.Courier.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Kalaresan || _query.Courier.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.All)
             {
                 var kbkResponse = await KbkPrice();
                 if (kbkResponse != null)
@@ -184,7 +168,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                 }
             }
 
-            if (_query.Courier.CourierCode == (int)CourierCode.Mahex || _query.Courier.CourierCode == (int)CourierCode.All)
+            if (_query.Courier.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Mahex || _query.Courier.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.All)
             {
                 var mahexResponse = await MahexPrice();
                 if (mahexResponse != null)
@@ -193,7 +177,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                 }
             }
 
-            if (_query.Courier.CourierCode == (int)CourierCode.Chapar || _query.Courier.CourierCode == (int)CourierCode.All)
+            if (_query.Courier.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Chapar || _query.Courier.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.All)
             {
                 var chaparResponse = await ChaparPrice();
                 if (chaparResponse != default)
@@ -202,7 +186,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                 }
             }
 
-            if (_query.Courier.CourierCode == (int)CourierCode.Post || _query.Courier.CourierCode == (int)CourierCode.All)
+            if (_query.Courier.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Post || _query.Courier.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.All)
             {
                 var postResponse = await PostPrice();
                 if (postResponse != default)
@@ -254,7 +238,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             //مقدار پیشرض و مقدار کانترکت برحسب شهر، استان و مشتری
             var boxPrice = await _mediator.Send(new GetByUserAndBoxTypeContractBoxPriceQuery()
             {
-                UserId = _userId,
+                UserId = _query.UserID,
                 CityId = _courierCityMappings.FirstOrDefault()!.CityId,
                 ProvinceId = _courierCityMappings.FirstOrDefault()!.ProvinceId,
                 BoxTypeId = _query.Parcel.BoxTypeId
@@ -281,7 +265,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                 {
                     var valueAddedPrice = await _mediator.Send(new GetByUserAndValueAddedContractValueAddedQuery()
                     {
-                        UserId = _userId,
+                        UserId = _query.UserID,
                         CityId = _courierCityMappings.FirstOrDefault()!.CityId,
                         ProvinceId = _courierCityMappings.FirstOrDefault()!.ProvinceId,
                         ValueAddedId = item
@@ -333,8 +317,8 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 
         public async Task<ServicePriceDto> KbkPrice()
         {
-            string senderCityCode = GetCityMappedCode(CourierCode.Kalaresan, _query.Sender.CityCode);
-            string receiverCityCode = GetCityMappedCode(CourierCode.Kalaresan, _query.Receiver.CityCode);
+            string senderCityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Kalaresan, _query.Sender.CityCode);
+            string receiverCityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Kalaresan, _query.Receiver.CityCode);
 
             var priceRequest = new GetKbkPriceQuery()
             {
@@ -355,15 +339,15 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             {
                 return new ServicePriceDto()
                 {
-                    PostexPrice = ChangePrice(CourierCode.Kalaresan, result.Data.ShipmentCost * 10),
+                    PostexPrice = ChangePrice(SharedKernel.Common.Enums.CourierCode.Kalaresan, result.Data.ShipmentCost * 10),
                     CourierName = "کالارسان",
-                    CourierCode = (int)CourierCode.Kalaresan
+                    CourierCode = (int)SharedKernel.Common.Enums.CourierCode.Kalaresan
                 };
             }
             return null;
         }
 
-        private long ChangePrice(CourierCode courierCode, long price)
+        private long ChangePrice(SharedKernel.Common.Enums.CourierCode courierCode, long price)
         {
             var courier = _courierCityMappings.FirstOrDefault(x => x.Courier.Code == courierCode).Courier;
             double taxChangePercent = 0;
@@ -382,7 +366,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             }
         }
 
-        private string GetCityMappedCode(CourierCode courierCode, int cityCode)
+        private string GetCityMappedCode(SharedKernel.Common.Enums.CourierCode courierCode, int cityCode)
         {
             var city = _courierCityMappings.FirstOrDefault(x => x.Courier.Code == courierCode && x.Code == cityCode);
             if (city == null)
@@ -392,24 +376,10 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             return city.MappedCode;
         }
 
-        private async Task<int> GetShopId(int cityCode)
-        {
-            int shopId = await _mediator.Send(new GetPostShopIdQuery()
-            {
-                CityCode = cityCode,
-            });
-
-            if (shopId == 0)
-            {
-                throw new AppException("فروشگاهی یافت نشد");
-            }
-            return shopId;
-        }
-
         public async Task<ServicePriceDto> MahexPrice()
         {
-            string senderCityCode = GetCityMappedCode(CourierCode.Mahex, _query.Sender.CityCode);
-            string receiverCityCode = GetCityMappedCode(CourierCode.Mahex, _query.Receiver.CityCode);
+            string senderCityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Mahex, _query.Sender.CityCode);
+            string receiverCityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Mahex, _query.Receiver.CityCode);
 
             var priceRequest = new GetMahexPriceQuery()
             {
@@ -436,9 +406,9 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
             {
                 return new ServicePriceDto()
                 {
-                    PostexPrice = ChangePrice(CourierCode.Mahex, Convert.ToInt64(result.Data.Data.Rate.Amount)),
+                    PostexPrice = ChangePrice(SharedKernel.Common.Enums.CourierCode.Mahex, Convert.ToInt64(result.Data.Data.Rate.Amount)),
                     CourierName = "ماهکس",
-                    CourierCode = (int)CourierCode.Mahex
+                    CourierCode = (int)SharedKernel.Common.Enums.CourierCode.Mahex
                 };
             }
             return null;
@@ -447,8 +417,8 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         public async Task<List<ServicePriceDto>> ChaparPrice()
         {
             List<ServicePriceDto> priceResult = new();
-            string senderCityCode = GetCityMappedCode(CourierCode.Chapar, _query.Sender.CityCode);
-            string receiverCityCode = GetCityMappedCode(CourierCode.Chapar, _query.Receiver.CityCode);
+            string senderCityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Chapar, _query.Sender.CityCode);
+            string receiverCityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Chapar, _query.Receiver.CityCode);
             string method = "11";
             string courier = "";
 
@@ -483,7 +453,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                     {
                         PostexPrice = Convert.ToInt64(result.Data.Objects.Order.Quote),
                         CourierName = courier,
-                        CourierCode = (int)CourierCode.Chapar
+                        CourierCode = (int)SharedKernel.Common.Enums.CourierCode.Chapar
                     });
                 }
                 method = "6";
@@ -494,9 +464,9 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
         public async Task<List<ServicePriceDto>> PostPrice()
         {
             List<ServicePriceDto> priceResult = new();
-            string senderCityCode = GetCityMappedCode(CourierCode.Post, _query.Sender.CityCode);
-            string receiverCityCode = GetCityMappedCode(CourierCode.Post, _query.Receiver.CityCode);
-            var shopId = await GetShopId(int.Parse(senderCityCode));
+            string senderCityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Post, _query.Sender.CityCode);
+            string receiverCityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Post, _query.Receiver.CityCode);
+            var shopId = _query.PostEcommerceShopID;
             int serviceTypeId = 0;
             string courier = "";
 
@@ -517,7 +487,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                 }
                 var priceRequest = new GetPostPriceQuery()
                 {
-                    ShopID = shopId,
+                    ShopID = Convert.ToInt32(shopId),
                     ToCityID = Convert.ToInt32(receiverCityCode),
                     ServiceTypeID = serviceTypeId,
                     PayTypeID = 0,
@@ -536,7 +506,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                         TotalPrice = Convert.ToInt64(result.Data.PostPrice * 1.09),
                         CourierTax = result.Data.Tax,
                         CourierName = courier,
-                        CourierCode = (int)CourierCode.Post,
+                        CourierCode = (int)SharedKernel.Common.Enums.CourierCode.Post,
                         DiscountAmount = result.Data.DiscountAmount,
                         InsurancePrice = result.Data.InsurancePrice
                     };

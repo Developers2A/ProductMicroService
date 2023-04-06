@@ -16,11 +16,11 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Commands.CreateO
 
         public async Task<Unit> Handle(CreateOfflineCourierZonePriceCommand request, CancellationToken cancellationToken)
         {
-            if (request.CourierCode == (int)CourierCode.All || request.CourierCode == (int)CourierCode.Chapar)
+            if (request.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.All || request.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Chapar)
             {
                 await _mediator.Send(new CreateChaparCourierZonePriceCommand(), cancellationToken);
             }
-            if (request.CourierCode == (int)CourierCode.All || request.CourierCode == (int)CourierCode.Post)
+            if (request.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.All || request.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Post)
             {
                 await _mediator.Send(new CreatePostCourierZonePriceCommand(), cancellationToken);
             }

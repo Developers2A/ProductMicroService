@@ -27,56 +27,92 @@ namespace Postex.Product.ServiceApi.Controllers.v1
         }
 
         [HttpGet("track")]
-        public async Task<ApiResult<TrackingMapResponse>> Track(int courierCode, string trackCode)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TrackingMapResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ApiResult))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(string))]
+        public async Task<IActionResult> Track(
+            int courierCode,
+            string trackCode,
+            [FromHeader(Name = "x-correlation-id")] Guid correlationId,
+            [FromHeader(Name = "x-user-id")] Guid userId)
         {
             var result = await _mediator.Send(new GetTrackQuery()
             {
                 CourierCode = courierCode,
                 TrackCode = trackCode
             });
-            return new ApiResult<TrackingMapResponse>(result.IsSuccess, result.Data, result.Message);
+
+            if (result.IsSuccess)
+                return Ok(result.Data);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpPost]
-        public async Task<ApiResult<CreateOrderResponseDto>> CreateOrder(CreateOrderCommand request)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateParcelResponseDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ApiResult))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(string))]
+        public async Task<IActionResult> Create(
+            [FromBody] CreateParcelCommand request,
+            [FromHeader(Name = "x-correlation-id")] Guid correlationId,
+            [FromHeader(Name = "x-user-id")] Guid userId)
         {
+            request.UserID = userId;
             var result = await _mediator.Send(request);
-            return new ApiResult<CreateOrderResponseDto>(result.IsSuccess, result.Data, result.Message);
+          
+            if (result.IsSuccess)
+                return Ok(result.Data);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
+        }
+
+        [HttpPut("edit-weight")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EditOrderResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ApiResult))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(string))]
+        public async Task<IActionResult> EditWeight(
+            [FromBody] EditWeightCommand request,
+            [FromHeader(Name = "x-correlation-id")] Guid correlationId,
+            [FromHeader(Name = "x-user-id")] Guid userId)
+        {
+            request.UserID = userId;
+            var result = await _mediator.Send(request);
+            if (result.IsSuccess)
+                return Ok(result.Data);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpPut]
-        public async Task<ApiResult<EditOrderResponse>> EditOrder(EditOrderCommand request)
+        public async Task<ApiResult<EditOrderResponse>> Edit(
+            [FromBody] EditOrderCommand request,
+            [FromHeader(Name = "x-correlation-id")] Guid correlationId,
+            [FromHeader(Name = "x-user-id")] Guid userId)
         {
+            request.UserID = User;
             var result = await _mediator.Send(request);
             return new ApiResult<EditOrderResponse>(result.IsSuccess, result.Data, result.Message);
         }
 
         [HttpPost("cancel")]
-        public async Task<ApiResult<CancelOrderResponse>> CancelOrder(CancelOrderCommand request)
+        public async Task<ApiResult<CancelOrderResponse>> Cancel(CancelOrderCommand request)
         {
             var result = await _mediator.Send(request);
             return new ApiResult<CancelOrderResponse>(result.IsSuccess, result.Data, result.Message);
         }
 
         [HttpPost("ready")]
-        public async Task<ApiResult<ReadyOrderResponse>> ReadyOrder(ReadyOrderCommand request)
+        public async Task<ApiResult<ReadyOrderResponse>> Ready(ReadyOrderCommand request)
         {
             var result = await _mediator.Send(request);
             return new ApiResult<ReadyOrderResponse>(result.IsSuccess, result.Data, result.Message);
         }
 
         [HttpDelete]
-        public async Task<ApiResult<DeleteOrderResponse>> DeleteOrder(DeleteOrderCommand request)
+        public async Task<ApiResult<DeleteOrderResponse>> Delete(DeleteOrderCommand request)
         {
             var result = await _mediator.Send(request);
             return new ApiResult<DeleteOrderResponse>(result.IsSuccess, result.Data, result.Message);
-        }
-
-        [HttpPut("edit-weight")]
-        public async Task<ApiResult<EditOrderResponse>> EditWeight(EditWeightCommand request)
-        {
-            var result = await _mediator.Send(request);
-            return new ApiResult<EditOrderResponse>(result.IsSuccess, result.Data, result.Message);
         }
     }
 }

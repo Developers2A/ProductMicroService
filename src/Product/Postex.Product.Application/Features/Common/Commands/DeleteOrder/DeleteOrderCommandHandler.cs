@@ -20,11 +20,11 @@ namespace Postex.Product.Application.Features.Common.Commands.DeleteOrder
         public async Task<BaseResponse<DeleteOrderResponse>> Handle(DeleteOrderCommand command, CancellationToken cancellationToken)
         {
             _command = command;
-            if (_command.CourierCode == (int)CourierCode.Post)
+            if (_command.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Post)
             {
                 return await DeletePostOrder();
             }
-            if (_command.CourierCode == (int)CourierCode.Taroff)
+            if (_command.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Taroff)
             {
                 return await DeleteTaroffOrder();
             }

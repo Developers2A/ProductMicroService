@@ -32,7 +32,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
 
                 if (request.CourierCode > 0)
                 {
-                    courierCity.Where(x => x.CourierZone.Courier.Code == (CourierCode)request.CourierCode);
+                    courierCity.Where(x => x.CourierZone.Courier.Code == (SharedKernel.Common.Enums.CourierCode)request.CourierCode);
                 }
                 var courierCityTypePrices = await courierCity.Where(x => x.Volume >= request.Volume)
                     .OrderBy(c => c.Volume).ToListAsync();

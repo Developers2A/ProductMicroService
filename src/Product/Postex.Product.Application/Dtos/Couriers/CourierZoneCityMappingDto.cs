@@ -6,6 +6,6 @@ namespace Postex.Product.Application.Dtos.Couriers
     {
         public int CourierZoneId { get; set; }
         public int CityId { get; set; }
-        public CourierCode CourierCode { get; set; }
+        public SharedKernel.Common.Enums.CourierCode CourierCode { get; set; }
     }
 }

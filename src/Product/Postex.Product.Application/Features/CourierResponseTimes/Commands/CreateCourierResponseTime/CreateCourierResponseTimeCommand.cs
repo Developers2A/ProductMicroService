@@ -5,7 +5,7 @@ namespace Postex.Product.Application.Features.CourierResponseTimes.Commands.Crea
 
 public class CreateCourierResponseTimeCommand : ITransactionRequest
 {
-    public CourierCode CourierCode { get; set; }
+    public SharedKernel.Common.Enums.CourierCode CourierCode { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public int ResponseTime { get; set; }

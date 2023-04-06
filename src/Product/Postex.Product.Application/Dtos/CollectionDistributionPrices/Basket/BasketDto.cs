@@ -14,7 +14,7 @@ namespace Postex.Product.Application.Dtos.CollectionDistributionPrices.Basket
         public ServiceType ServiceType { get; set; }
 
         [JsonPropertyName("courier_code")]
-        public CourierCode CourierCode { get; set; }
+        public SharedKernel.Common.Enums.CourierCode CourierCode { get; set; }
         public string BasketId { get; set; }
 
         public BasketDto()

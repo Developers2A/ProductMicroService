@@ -1,33 +1,39 @@
-﻿using Newtonsoft.Json;
-using Postex.Product.Application.Contracts;
+﻿using Postex.Product.Application.Contracts;
 using Postex.Product.Application.Dtos.Commons;
 using Postex.Product.Application.Dtos.Commons.CreateOrder.Request;
 using Postex.Product.Application.Dtos.Commons.CreateOrder.Response;
 using Postex.SharedKernel.Common;
+using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 {
-    public class CreateOrderCommand : ITransactionRequest<BaseResponse<CreateOrderResponseDto>>
+    public class CreateParcelCommand : ITransactionRequest<BaseResponse<CreateParcelResponseDto>>
     {
-        [JsonProperty("from")]
+        [JsonIgnore]
+        public Guid UserID { get; set; }
+
+        [JsonPropertyName("post_ecommerce_shopid")]
+        public string PostEcommerceShopId { get; set; }
+
+        [JsonPropertyName("from")]
         public SenderReceiverDto From { get; set; }
 
-        [JsonProperty("to")]
+        [JsonPropertyName("to")]
         public SenderReceiverDto To { get; set; }
 
-        [JsonProperty("parcel_properties")]
+        [JsonPropertyName("parcel_properties")]
         public ParcelDto Parcel { get; set; }
 
-        [JsonProperty("courier")]
+        [JsonPropertyName("courier")]
         public CourierDto Courier { get; set; }
 
-        [JsonProperty("value_added_service")]
+        [JsonPropertyName("value_added_service")]
         public List<int> ValueAddedTypeIds { get; set; }
 
-        [JsonProperty("request_pickup")]
+        [JsonPropertyName("request_pickup")]
         public DeliveryPickupDto Pickup { get; set; }
 
-        [JsonProperty("request_delivery")]
+        [JsonPropertyName("request_delivery")]
         public DeliveryPickupDto Delivery { get; set; }
     }
 }

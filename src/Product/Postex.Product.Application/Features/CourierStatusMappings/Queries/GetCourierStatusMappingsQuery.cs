@@ -10,7 +10,7 @@ namespace Postex.Product.Application.Features.CourierStatusMappings.Queries
 {
     public class GetCourierStatusMappingsQuery : IRequest<List<CourierStatusMappingDetailsDto>>
     {
-        public CourierCode CourierCode { get; set; }
+        public SharedKernel.Common.Enums.CourierCode CourierCode { get; set; }
 
         public class Handler : IRequestHandler<GetCourierStatusMappingsQuery, List<CourierStatusMappingDetailsDto>>
         {
@@ -26,7 +26,7 @@ namespace Postex.Product.Application.Features.CourierStatusMappings.Queries
             public async Task<List<CourierStatusMappingDetailsDto>> Handle(GetCourierStatusMappingsQuery request, CancellationToken cancellationToken)
             {
                 var courierStatusMappings = _courierStatusMappingReadRepository.TableNoTracking;
-                if (request.CourierCode != CourierCode.All)
+                if (request.CourierCode != SharedKernel.Common.Enums.CourierCode.All)
                 {
                     courierStatusMappings = courierStatusMappings.Where(x => x.Courier.Code == request.CourierCode);
                 }

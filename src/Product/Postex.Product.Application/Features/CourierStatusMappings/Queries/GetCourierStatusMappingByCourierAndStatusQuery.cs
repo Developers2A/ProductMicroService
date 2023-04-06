@@ -10,7 +10,7 @@ namespace Postex.Product.Application.Features.CourierStatusMappings.Queries
     public class GetCourierStatusMappingByCourierAndStatusQuery : IRequest<CourierStatusMappingDto>
     {
         public string CourierStatus { get; set; }
-        public CourierCode Courier { get; set; }
+        public SharedKernel.Common.Enums.CourierCode Courier { get; set; }
 
         public class Handler : IRequestHandler<GetCourierStatusMappingByCourierAndStatusQuery, CourierStatusMappingDto>
         {
@@ -25,7 +25,7 @@ namespace Postex.Product.Application.Features.CourierStatusMappings.Queries
             {
                 var courierStatusMappingQuery = _courierStatusMappingReadRepository.TableNoTracking
                     .Where(x => x.Courier.Code == request.Courier);
-                if (request.Courier == CourierCode.Mahex || request.Courier == CourierCode.Speed)
+                if (request.Courier == SharedKernel.Common.Enums.CourierCode.Mahex || request.Courier == SharedKernel.Common.Enums.CourierCode.Speed)
                 {
                     courierStatusMappingQuery = courierStatusMappingQuery.Where(x => x.Description == request.CourierStatus);
                 }

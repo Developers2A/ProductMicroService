@@ -36,7 +36,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
             _sameProvince = _cities.Select(x => x.ProvinceId).Distinct().Count() == 1 ? true : false;
             _courierZoneCityMappings = await GetCourierZoneCityMappings();
 
-            if (request.Courier.CourierCode == (int)CourierCode.All || request.Courier.CourierCode == (int)CourierCode.Post)
+            if (request.Courier.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.All || request.Courier.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Post)
             {
                 var postPrices = await PostPrice();
                 if (postPrices != null)
@@ -45,7 +45,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
                 }
             }
 
-            if (request.Courier.CourierCode == (int)CourierCode.All || request.Courier.CourierCode == (int)CourierCode.Chapar)
+            if (request.Courier.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.All || request.Courier.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Chapar)
             {
                 var postPrices = await PostPrice();
                 if (postPrices != null)
@@ -75,10 +75,10 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
 
         private async Task<List<ServicePrice>> PostPrice()
         {
-            int fromCityId = GetCityId(CourierCode.Post, _query.Sender.CityCode);
-            var toCityId = GetCityId(CourierCode.Post, _query.Receiver.CityCode);
-            int fromZoneId = GetZoneId(CourierCode.Post, fromCityId);
-            int toZoneId = GetZoneId(CourierCode.Post, toCityId);
+            int fromCityId = GetCityId(SharedKernel.Common.Enums.CourierCode.Post, _query.Sender.CityCode);
+            var toCityId = GetCityId(SharedKernel.Common.Enums.CourierCode.Post, _query.Receiver.CityCode);
+            int fromZoneId = GetZoneId(SharedKernel.Common.Enums.CourierCode.Post, fromCityId);
+            int toZoneId = GetZoneId(SharedKernel.Common.Enums.CourierCode.Post, toCityId);
             SetFromAndToZoneDefaultIfZero(ref fromZoneId, ref toZoneId);
 
             if (fromZoneId > 0 && toZoneId > 0)
@@ -93,7 +93,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
 
                 return postPrice.Select(x => new ServicePrice()
                 {
-                    CourierCode = (int)CourierCode.Post,
+                    CourierCode = (int)Couriers.Post,
                     CourierName = "پست",
                     PostexPrice = Convert.ToInt64(x.Price.BuyPrice),
                     TotalPrice = CalculatePostTotalPrice(x.CourierService, Convert.ToInt64(x.Price.BuyPrice))
@@ -104,10 +104,10 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
 
         private async Task<List<ServicePrice>> ChaparPrice()
         {
-            int fromCityId = GetCityId(CourierCode.Post, _query.Sender.CityCode);
-            var toCityId = GetCityId(CourierCode.Post, _query.Receiver.CityCode);
-            int fromZoneId = GetZoneId(CourierCode.Post, fromCityId);
-            int toZoneId = GetZoneId(CourierCode.Post, toCityId);
+            int fromCityId = GetCityId(SharedKernel.Common.Enums.CourierCode.Post, _query.Sender.CityCode);
+            var toCityId = GetCityId(SharedKernel.Common.Enums.CourierCode.Post, _query.Receiver.CityCode);
+            int fromZoneId = GetZoneId(SharedKernel.Common.Enums.CourierCode.Post, fromCityId);
+            int toZoneId = GetZoneId(SharedKernel.Common.Enums.CourierCode.Post, toCityId);
             SetFromAndToZoneDefaultIfZero(ref fromZoneId, ref toZoneId);
 
             if (fromZoneId > 0 && toZoneId > 0)
@@ -122,7 +122,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
 
                 return postPrice.Select(x => new ServicePrice()
                 {
-                    CourierCode = (int)CourierCode.Chapar,
+                    CourierCode = (int)Couriers.Chapar,
                     CourierName = "چاپار",
                     PostexPrice = Convert.ToInt64(x.Price.BuyPrice),
                     TotalPrice = ChangePrice(x.CourierService, Convert.ToInt64(x.Price.BuyPrice))
@@ -149,7 +149,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
             }
         }
 
-        private int GetZoneId(CourierCode courierCode, int cityId)
+        private int GetZoneId(SharedKernel.Common.Enums.CourierCode courierCode, int cityId)
         {
             var zone = _courierZoneCityMappings.FirstOrDefault(x => x.CourierCode == courierCode && x.CityId == cityId);
             if (zone == null)
@@ -159,7 +159,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
             return zone.CourierZoneId;
         }
 
-        private int GetCityId(CourierCode courierCode, int cityCode)
+        private int GetCityId(SharedKernel.Common.Enums.CourierCode courierCode, int cityCode)
         {
             var city = _cities.FirstOrDefault(x => x.Code == cityCode);
             if (city == null)

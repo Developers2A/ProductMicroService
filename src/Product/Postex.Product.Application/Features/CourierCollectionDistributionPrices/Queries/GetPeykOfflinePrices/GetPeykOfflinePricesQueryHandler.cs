@@ -37,27 +37,27 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             _cities = await GetCities();
             _courierZoneCityMappings = await GetCourierZoneCityMappings();
 
-            if (request.CourierCode == (int)CourierCode.All || request.CourierCode == (int)CourierCode.Link)
+            if (request.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.All || request.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Link)
             {
-                var prices = await GetPrice(CourierCode.Link);
+                var prices = await GetPrice(SharedKernel.Common.Enums.CourierCode.Link);
                 if (prices != null)
                 {
                     response.ServicePrices.AddRange(prices);
                 }
             }
 
-            if (request.CourierCode == (int)CourierCode.All || request.CourierCode == (int)CourierCode.Paykhub)
+            if (request.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.All || request.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Paykhub)
             {
-                var prices = await GetPrice(CourierCode.Paykhub);
+                var prices = await GetPrice(SharedKernel.Common.Enums.CourierCode.Paykhub);
                 if (prices != null)
                 {
                     response.ServicePrices.AddRange(prices);
                 }
             }
 
-            if (request.CourierCode == (int)CourierCode.All || request.CourierCode == (int)CourierCode.Speed)
+            if (request.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.All || request.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Speed)
             {
-                var prices = await GetPrice(CourierCode.Speed);
+                var prices = await GetPrice(SharedKernel.Common.Enums.CourierCode.Speed);
                 if (prices != null)
                 {
                     response.ServicePrices.AddRange(prices);
@@ -75,7 +75,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             });
         }
 
-        private async Task<List<ServicePrice>> GetPrice(CourierCode courierCode)
+        private async Task<List<ServicePrice>> GetPrice(SharedKernel.Common.Enums.CourierCode courierCode)
         {
             int fromCityId = GetCityId(_query.SenderCityCode);
             var toCityId = GetCityId(_query.ReceiverCityCode);
@@ -110,7 +110,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             toZoneId = toZoneId == 0 ? 11 : toZoneId;
         }
 
-        private int GetZoneId(CourierCode courierCode, int cityId)
+        private int GetZoneId(SharedKernel.Common.Enums.CourierCode courierCode, int cityId)
         {
             var zone = _courierZoneCityMappings.FirstOrDefault(x => x.CourierCode == courierCode && x.CityId == cityId);
             if (zone == null)

@@ -23,23 +23,23 @@ namespace Postex.Product.Application.Features.Common.Commands.CancelOrder
         public async Task<BaseResponse<CancelOrderResponse>> Handle(CancelOrderCommand command, CancellationToken cancellationToken)
         {
             _command = command;
-            if (_command.CourierCode == (int)CourierCode.Post)
+            if (_command.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Post)
             {
                 return await CancelPostOrder();
             }
-            if (_command.CourierCode == (int)CourierCode.Speed)
+            if (_command.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Speed)
             {
                 return await CancelSpeedOrder();
             }
-            if (_command.CourierCode == (int)CourierCode.Taroff)
+            if (_command.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Taroff)
             {
                 return await CancelTaroffOrder();
             }
-            if (_command.CourierCode == (int)CourierCode.Kalaresan)
+            if (_command.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Kalaresan)
             {
                 return await CancelKbkOrder();
             }
-            if (_command.CourierCode == (int)CourierCode.PishroPost)
+            if (_command.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.PishroPost)
             {
                 return await CancelPishroPostOrder();
             }

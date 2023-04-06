@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Dtos.Commons.CreateOrder.Response
 {
-    public class CreateOrderResponseDto
+    public class CreateParcelResponseDto
     {
         [JsonPropertyName("is_oversized")]
         public bool IsOversized { get; set; }

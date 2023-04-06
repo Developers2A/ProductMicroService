@@ -20,7 +20,7 @@ namespace Postex.Product.Application.Features.Common.Commands.EditOrder
         public async Task<BaseResponse<EditOrderResponse>> Handle(EditOrderCommand command, CancellationToken cancellationToken)
         {
             _command = command;
-            if (_command.CourierCode == (int)CourierCode.Post)
+            if (_command.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Post)
             {
                 return await EditPostOrder();
             }
