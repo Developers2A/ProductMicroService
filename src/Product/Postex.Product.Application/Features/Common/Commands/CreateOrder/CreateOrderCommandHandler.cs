@@ -44,40 +44,46 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             _command = command;
             await SetCourierInfo();
             BaseResponse<CreateOrderResponseDto> result = new();
-            var valueAddedPriceDtos = await GetValueAddedPrices();
+
             if (_command.Courier.ServiceType == (int)CourierServiceCode.PostSefareshi || _command.Courier.ServiceType == (int)CourierServiceCode.PostVizhe || _command.Courier.ServiceType == (int)CourierServiceCode.PostPishtaz)
             {
                 _userId = GetUserId();
                 _courierCityMappings = await GetCourierCityMapping(CourierCode.Post);
                 result = await CreatePostOrder();
             }
-            if (_command.Courier.ServiceType == (int)CourierServiceCode.Mahex)
+            else if (_command.Courier.ServiceType == (int)CourierServiceCode.Mahex)
             {
                 _courierCityMappings = await GetCourierCityMapping(CourierCode.Mahex);
                 result = await CreateMahexOrder();
             }
-            if (_command.Courier.ServiceType == (int)CourierServiceCode.Chapar || _command.Courier.ServiceType == (int)CourierServiceCode.ChaparExpress)
+            else if (_command.Courier.ServiceType == (int)CourierServiceCode.Chapar || _command.Courier.ServiceType == (int)CourierServiceCode.ChaparExpress)
             {
                 _courierCityMappings = await GetCourierCityMapping(CourierCode.Chapar);
                 result = await CreateChaparOrder();
             }
-            if (_command.Courier.ServiceType == (int)CourierServiceCode.Kalaresan)
+            else if (_command.Courier.ServiceType == (int)CourierServiceCode.Kalaresan)
             {
                 _courierCityMappings = await GetCourierCityMapping(CourierCode.Kalaresan);
                 result = await CreateKbkOrder();
             }
-            result = await CreatePeykOrder();
-
-            result.Data.ValueAddedService = valueAddedPriceDtos.Select(x => new ValueAddedServiceResponseDto()
+            else
             {
-                BuyPrice = Convert.ToInt32(x.ContractBuyPrice),
-                SalePrice = Convert.ToInt32(x.ContractSalePrice),
-                ContractId = x.ContractId,
-                ContractDetailId = x.ContractValueAddedId,
-                ValueTypeId = x.ContractValueAddedId,
-                ValueTypeName = x.ValueTypeName
-            }).ToList();
+                result = await CreatePeykOrder();
+            }
 
+            if (result.Data != null && _command.ValueAddedTypeIds != null && _command.ValueAddedTypeIds.Any())
+            {
+                var valueAddedPriceDtos = await GetValueAddedPrices();
+                result.Data.ValueAddedService = valueAddedPriceDtos.Select(x => new ValueAddedServiceResponseDto()
+                {
+                    BuyPrice = Convert.ToInt32(x.ContractBuyPrice),
+                    SalePrice = Convert.ToInt32(x.ContractSalePrice),
+                    ContractId = x.ContractId,
+                    ContractDetailId = x.ContractValueAddedId,
+                    ValueTypeId = x.ContractValueAddedId,
+                    ValueTypeName = x.ValueTypeName
+                }).ToList();
+            }
             return result;
         }
 
@@ -85,9 +91,9 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
         {
             return await _mediator.Send(new GetValueAddedPricesQuery()
             {
-                UserId = null,
-                CityId = 0,
-                ProvinceId = 0,
+                UserId = _userId,
+                CityId = _courierCityMappings.FirstOrDefault()!.CityId,
+                ProvinceId = _courierCityMappings.FirstOrDefault()!.ProvinceId,
                 ValueAddedIds = _command.ValueAddedTypeIds
             });
         }

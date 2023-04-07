@@ -25,10 +25,14 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, UserDto
             UserName = user.UserName,
             FirstName = user.FirstName,
             LastName = user.LastName,
+            FatherName = user.FatherName,
             NationalCode = user.NationalCode,
+            PostalCode = user.PostalCode,
             IbanNumber = user.IbanNumber,
             IsVerified = user.IsVerified,
             IsActive = user.IsActive,
+            IsShahkarValidate = user.IsShahkarValidate,
+            CreatedOn = user.CreatedOn,
         };
     }
 }

@@ -12,7 +12,7 @@ using Postex.Notification.Infrastructure.Data;
 namespace Postex.Notification.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20230404181305_InitialNotification")]
+    [Migration("20230407094213_InitialNotification")]
     partial class InitialNotification
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,6 +109,9 @@ namespace Postex.Notification.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCustom")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");

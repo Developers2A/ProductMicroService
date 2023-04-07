@@ -10,5 +10,6 @@ public class UpdateTemplateCommand : ITransactionRequest<Template>
     public string Name { get; set; }
     public string? Content { get; set; }
     public TemplateType TemplateType { get; set; }
+    public bool IsCustom { get; set; }
     public List<TemplateParameterDto> Parameters { get; set; }
 }

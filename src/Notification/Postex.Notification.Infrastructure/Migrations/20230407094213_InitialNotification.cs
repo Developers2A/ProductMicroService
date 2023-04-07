@@ -18,6 +18,7 @@ namespace Postex.Notification.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     TemplateType = table.Column<int>(type: "int", nullable: false),
+                    IsCustom = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),

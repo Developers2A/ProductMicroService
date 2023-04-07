@@ -108,6 +108,9 @@ namespace Postex.Notification.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsCustom")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 

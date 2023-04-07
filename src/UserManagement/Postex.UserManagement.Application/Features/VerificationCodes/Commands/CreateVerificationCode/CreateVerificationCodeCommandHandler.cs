@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Postex.SharedKernel.Interfaces;
 using Postex.SharedKernel.Settings;
 using Postex.UserManagement.Application.Features.Messages.Commands;
@@ -11,23 +11,25 @@ public class CreateVerificationCodeCommandHandler : IRequestHandler<CreateVerifi
 {
     private readonly IWriteRepository<VerificationCode> _writeRepository;
     private readonly IReadRepository<VerificationCode> _readRepository;
-    private readonly IConfiguration _configuration;
     private readonly TemplateSetting _templateSetting;
     private readonly IMediator _mediator;
 
-    public CreateVerificationCodeCommandHandler(IWriteRepository<VerificationCode> writeRepository, IReadRepository<VerificationCode> readRepository, IMediator mediator, IConfiguration configuration)
+    public CreateVerificationCodeCommandHandler(
+        IWriteRepository<VerificationCode> writeRepository,
+        IReadRepository<VerificationCode> readRepository,
+        IMediator mediator,
+        IOptions<TemplateSetting> templateSetting)
     {
         _writeRepository = writeRepository;
         _readRepository = readRepository;
         _mediator = mediator;
-        _configuration = configuration;
-        _templateSetting = _configuration.GetSection(nameof(TemplateSetting)).Get<TemplateSetting>();
+        _templateSetting = templateSetting.Value;
     }
 
     public async Task<Unit> Handle(CreateVerificationCodeCommand request, CancellationToken cancellationToken)
     {
         Random generator = new Random();
-        int code = generator.Next(100000, 1000000);
+        int code = generator.Next(1000, 10000);
 
         if (!request.Mobile.StartsWith("0"))
         {
@@ -35,7 +37,7 @@ public class CreateVerificationCodeCommandHandler : IRequestHandler<CreateVerifi
         }
         var verificationCode = new VerificationCode()
         {
-            Code = 1111,
+            Code = code,
             Mobile = request.Mobile,
             VerificationCodeType = request.VerificationCodeType,
             IsUsed = false
@@ -49,7 +51,7 @@ public class CreateVerificationCodeCommandHandler : IRequestHandler<CreateVerifi
 
     private async Task SendSms(CreateVerificationCodeCommand request, int code)
     {
-        int template = GetSmsTemplate(request);
+        string template = GetSmsTemplate(request);
         var smsParameters = new Dictionary<string, string>();
         smsParameters.Add("code", code.ToString());
 
@@ -57,11 +59,11 @@ public class CreateVerificationCodeCommandHandler : IRequestHandler<CreateVerifi
         {
             Parameters = smsParameters,
             Mobile = request.Mobile,
-            Template = template
+            TemplateName = template
         });
     }
 
-    private int GetSmsTemplate(CreateVerificationCodeCommand request)
+    private string GetSmsTemplate(CreateVerificationCodeCommand request)
     {
         if (request.VerificationCodeType == VerificationCodeType.Register)
         {
@@ -75,7 +77,7 @@ public class CreateVerificationCodeCommandHandler : IRequestHandler<CreateVerifi
         {
             return _templateSetting.SmsForgetPassword;
         }
-        return 1;
+        return "";
     }
 }
 

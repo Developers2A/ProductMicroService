@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -24,7 +23,7 @@ namespace Postex.Notification.Api.Extensions
         {
             var info = new OpenApiInfo()
             {
-                Title = "ProductCourier Services",
+                Title = "Notification Apis",
                 Version = description.ApiVersion.ToString(),
             };
 

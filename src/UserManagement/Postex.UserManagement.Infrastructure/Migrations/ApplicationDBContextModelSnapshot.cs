@@ -161,7 +161,7 @@ namespace Postex.UserManagement.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("49eb3ff2-5b82-4422-9b7e-b416e4f3a992"),
+                            Id = new Guid("393e6ae2-995e-46df-bb36-885b371b359e"),
                             CreatedOn = new DateTime(2022, 12, 12, 12, 12, 0, 0, DateTimeKind.Unspecified),
                             DefaultAddressId = 0,
                             FirstName = "ادمین",

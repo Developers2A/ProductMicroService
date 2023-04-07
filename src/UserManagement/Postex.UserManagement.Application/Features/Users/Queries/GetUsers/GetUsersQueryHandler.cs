@@ -30,10 +30,14 @@ public class Handler : IRequestHandler<GetUsersQuery, PagedList<UserDto>>
             UserName = x.UserName,
             FirstName = x.FirstName,
             LastName = x.LastName,
+            FatherName = x.FatherName,
             NationalCode = x.NationalCode,
+            PostalCode = x.PostalCode,
             IbanNumber = x.IbanNumber,
             IsVerified = x.IsVerified,
             IsActive = x.IsActive,
+            IsShahkarValidate = x.IsShahkarValidate,
+            CreatedOn = x.CreatedOn,
         }).OrderByDescending(x => x.Id)
         .ToPagedListAsync(request.PageIndex, request.PageSize);
     }

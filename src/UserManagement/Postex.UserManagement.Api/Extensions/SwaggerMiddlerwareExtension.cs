@@ -1,7 +1,6 @@
 ﻿using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Postex.SharedKernel.Swagger;
@@ -38,6 +37,49 @@ namespace Postex.UserManagement.Api.Extensions
         }
 
         public static void AddCustomSwagger(this IServiceCollection services)
+        {
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.AddSwaggerGen(options =>
+            {
+                options.OperationFilter<SwaggerDefaultValues>();
+                options.OperationFilter<SwaggerCustomeHeaders>();
+                options.DocumentFilter<CustomSwaggerFilter>();
+                options.SchemaFilter<AddReadOnlyPropertiesFilter>();
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Enter 'Bearer' [space] and then your valid token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
+                });
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = JwtBearerDefaults.AuthenticationScheme
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
+            });
+
+            services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+            });
+
+            services.AddFluentValidationRulesToSwagger();
+        }
+
+        public static void AddCustomSwaggerApiKey(this IServiceCollection services)
         {
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 

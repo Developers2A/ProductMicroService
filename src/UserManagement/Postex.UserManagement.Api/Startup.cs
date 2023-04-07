@@ -22,9 +22,11 @@ namespace Postex.UserManagement.Api
             services.AddControllers();
             services.AddCustomVersioningSwagger();
             services.AddApplicationCore(Configuration);
+            services.AddOptions();
             services.Configure<JwtSetting>(Configuration.GetSection("JwtSetting"));
             services.Configure<ApiSetting>(Configuration.GetSection("ApiSetting"));
             services.Configure<CodeExpirationSetting>(Configuration.GetSection("CodeExpirationSetting"));
+            services.Configure<TemplateSetting>(Configuration.GetSection("TemplateSetting"));
         }
 
         public void Configure(IApplicationBuilder app)

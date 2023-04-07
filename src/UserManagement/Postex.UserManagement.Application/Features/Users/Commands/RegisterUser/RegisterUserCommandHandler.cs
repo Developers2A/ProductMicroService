@@ -50,39 +50,47 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, A
 
     private async Task<User> CreateUser()
     {
-        var user = await _userReadRepository.TableNoTracking.FirstOrDefaultAsync(x => x.Mobile == _command.Mobile);
-        if (user != null && user.IsVerified)
+        try
         {
-            throw new AppException($"کاربری با این شماره موبایل {_command.Mobile} در سیستم وجود دارد");
-        }
-
-        var passwordHasher = new PasswordHasher();
-        var hashedPassword = passwordHasher.HashPassword(_command.Password);
-        if (user == null)
-        {
-            user = new User()
+            var user = await _userReadRepository.TableNoTracking.FirstOrDefaultAsync(x => x.Mobile == _command.Mobile);
+            if (user != null && user.IsVerified)
             {
-                UserName = _command.Mobile,
-                FirstName = _command.FirstName,
-                LastName = _command.LastName,
-                Password = hashedPassword,
-                Mobile = _command.Mobile,
-                IsVerified = false,
-                IsActive = false
-            };
-        }
-        else
-        {
-            user.UserName = _command.Mobile;
-            user.Password = hashedPassword;
-            user.FirstName = _command.FirstName;
-            user.LastName = _command.LastName;
-            user.IsVerified = false;
-        }
+                throw new AppException($"کاربری با این شماره موبایل {_command.Mobile} در سیستم وجود دارد");
+            }
 
-        _userWriteRepository.Update(user);
-        await _userWriteRepository.SaveChangeAsync();
-        return user;
+            var passwordHasher = new PasswordHasher();
+            var hashedPassword = passwordHasher.HashPassword(_command.Password);
+            if (user == null)
+            {
+                user = new User()
+                {
+                    UserName = _command.Mobile,
+                    FirstName = _command.FirstName,
+                    LastName = _command.LastName,
+                    Password = hashedPassword,
+                    Mobile = _command.Mobile,
+                    IsVerified = false,
+                    IsActive = false
+                };
+            }
+            else
+            {
+                user.UserName = _command.Mobile;
+                user.Password = hashedPassword;
+                user.FirstName = _command.FirstName;
+                user.LastName = _command.LastName;
+                user.IsVerified = false;
+            }
+
+            _userWriteRepository.Update(user);
+            await _userWriteRepository.SaveChangeAsync();
+            return user;
+        }
+        catch (Exception ex)
+        {
+            var msg = ex.Message;
+        }
+        return new User();
     }
 
     private async Task CreateAndSendVerificationCode()

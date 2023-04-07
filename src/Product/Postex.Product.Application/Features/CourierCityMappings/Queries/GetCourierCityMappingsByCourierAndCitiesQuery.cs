@@ -33,8 +33,23 @@ namespace Postex.Product.Application.Features.CourierCityMappings.Queries
                     courierCityMappingQuery = courierCityMappingQuery.Where(x => x.Courier.Code == (CourierCode)request.CourierCode);
                 }
 
-                var courierCities = await courierCityMappingQuery.Include(x => x.Courier).ToListAsync();
-                return _mapper.Map<List<CourierCityMappingDto>>(courierCities);
+                var courierCities = await courierCityMappingQuery.Include(x => x.Courier).Include(x => x.City).ToListAsync();
+                return courierCities.Select(x => new CourierCityMappingDto()
+                {
+                    Id = x.Id,
+                    CityId = x.CityId,
+                    ProvinceId = x.City.ProvinceId,
+                    Code = x.City.Code,
+                    MappedCode = x.MappedCode,
+                    CourierId = x.CourierId,
+                    Courier = new CourierDto()
+                    {
+                        Id = x.Courier.Id,
+                        Code = x.Courier.Code,
+                        IsActive = x.Courier.IsActive,
+                        Name = x.Courier.Name
+                    },
+                }).ToList();
             }
         }
     }

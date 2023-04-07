@@ -22,7 +22,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
         public CourierDto Courier { get; set; }
 
         [JsonProperty("value_added_service")]
-        public List<int> ValueAddedTypeIds { get; set; }
+        public List<int>? ValueAddedTypeIds { get; set; }
 
         [JsonProperty("request_pickup")]
         public DeliveryPickupDto Pickup { get; set; }

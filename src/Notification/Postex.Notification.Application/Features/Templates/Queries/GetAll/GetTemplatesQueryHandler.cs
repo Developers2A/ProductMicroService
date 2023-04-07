@@ -22,7 +22,10 @@ public class GetTemplatesQueryHandler : IRequestHandler<GetTemplatesQuery, List<
         {
             templateQuery = templateQuery.Where(x => x.TemplateType == (TemplateType)request.TemplateType);
         }
-
+        if (!string.IsNullOrEmpty(request.Name))
+        {
+            templateQuery = templateQuery.Where(x => x.Name == request.Name.Trim());
+        }
         var templates = await templateQuery.Include(x => x.Parameters).Select
             (c => new TemplateDto
             {
@@ -30,6 +33,7 @@ public class GetTemplatesQueryHandler : IRequestHandler<GetTemplatesQuery, List<
                 Name = c.Name,
                 Content = c.Content,
                 TemplateType = c.TemplateType,
+                IsCustom = c.IsCustom,
                 Parameters = c.Parameters.Select(x => new TemplateParameterDto()
                 {
                     Key = x.Key,

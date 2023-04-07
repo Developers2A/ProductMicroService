@@ -2,8 +2,8 @@
 {
     public class TemplateSetting
     {
-        public int SmsRegister { get; set; }
-        public int SmsForgetPassword { get; set; }
-        public int SmsOtp { get; set; }
+        public string SmsRegister { get; set; }
+        public string SmsForgetPassword { get; set; }
+        public string SmsOtp { get; set; }
     }
 }

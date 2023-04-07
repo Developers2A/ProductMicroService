@@ -16,9 +16,10 @@ namespace Postex.Notification.Api.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendSms(SendSmsCommand command)
+        public async Task<ApiResult> SendSms(SendSmsCommand command)
         {
-            return Ok(await mediator.Send(command));
+            await mediator.Send(command);
+            return Ok();
         }
     }
 }

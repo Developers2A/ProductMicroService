@@ -23,6 +23,8 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
               .NotNull().NotEmpty().WithMessage(" نام فرستنده الزامی میباشد");
             RuleFor(p => p.From.Contact.LastName)
                 .NotNull().NotEmpty().WithMessage(" نام خانوادگی فرستنده الزامی میباشد");
+            RuleFor(p => p.From.Contact.NationalCode)
+              .Length(10).WithMessage(" کدملی فرستنده را به درستی وارد نمایید");
 
             RuleFor(p => p.From.Location)
              .NotNull().NotEmpty().WithMessage(" اطلاعات آدرس فرستنده الزامی میباشد");
@@ -32,6 +34,8 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                 .NotNull().NotEmpty().WithMessage(" کدپستی فرستنده الزامی میباشد");
             RuleFor(p => p.From.Location.CityCode)
                 .NotNull().NotEmpty().WithMessage(" شهر فرستنده الزامی میباشد");
+            RuleFor(p => p.From.Contact.Email)
+                .EmailAddress().WithMessage(" ایمیل فرستنده را به درستی وارد نمایید");
 
             RuleFor(p => p.To)
                .NotNull().NotEmpty().WithMessage(" اطلاعات گیرنده الزامی میباشد");
@@ -41,8 +45,12 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                 .NotNull().NotEmpty().WithMessage(" نام گیرنده الزامی میباشد");
             RuleFor(p => p.To.Contact.LastName)
                 .NotNull().NotEmpty().WithMessage(" نام خانوادگی گیرنده الزامی میباشد");
+            RuleFor(p => p.From.Contact.NationalCode)
+                .Length(10).WithMessage(" کدملی گیرنده را به درستی وارد نمایید");
             RuleFor(p => p.To.Contact.Mobile)
                 .NotNull().NotEmpty().WithMessage(" شماره موبایل گیرنده الزامی میباشد");
+            RuleFor(p => p.To.Contact.Email)
+                .EmailAddress().WithMessage(" ایمیل گیرنده را به درستی وارد نمایید");
 
             RuleFor(p => p.To.Location)
                 .NotNull().NotEmpty().WithMessage(" اطلاعات آدرس گیرنده الزامی میباشد");

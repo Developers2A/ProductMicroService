@@ -37,16 +37,19 @@ public class GetValueAddedPricesQueryHandler : IRequestHandler<GetValueAddedPric
                     ValueAddedId = item
                 });
 
-                valueAddedPriceGetDtos.Add(new ContractValueAddedPriceDto()
+                if (valueAddedPrice != null)
                 {
-                    ContractId = valueAddedPrice.ContractId,
-                    ContractValueAddedId = valueAddedPrice.ContractValueAddedId,
-                    ValueTypeName = valueAddedPrice.ValueAddedTypeName,
-                    DefaultBuyPrice = valueAddedPrice.DefaultBuyPrice,
-                    DefaultSalePrice = valueAddedPrice.DefaultSalePrice,
-                    ContractBuyPrice = valueAddedPrice.ContractBuyPrice,
-                    ContractSalePrice = valueAddedPrice.ContractSalePrice,
-                });
+                    valueAddedPriceGetDtos.Add(new ContractValueAddedPriceDto()
+                    {
+                        ContractId = valueAddedPrice.ContractId,
+                        ContractValueAddedId = valueAddedPrice.ContractValueAddedId,
+                        ValueTypeName = valueAddedPrice.ValueAddedTypeName,
+                        DefaultBuyPrice = valueAddedPrice.DefaultBuyPrice,
+                        DefaultSalePrice = valueAddedPrice.DefaultSalePrice,
+                        ContractBuyPrice = valueAddedPrice.ContractBuyPrice,
+                        ContractSalePrice = valueAddedPrice.ContractSalePrice,
+                    });
+                }
             }
         }
 

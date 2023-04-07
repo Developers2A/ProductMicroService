@@ -71,15 +71,15 @@ public class UserController : BaseApiControllerWithDefaultRoute
         return await _mediator.Send(command);
     }
 
-    [AllowAnonymous]
+    [Authorize]
     [HttpPost("change-password")]
     public async Task<ApiResult<TokenDto>> ChangePassword([FromBody] ChangePasswordCommand command)
     {
         return await _mediator.Send(command);
     }
 
-    [HttpPost]
-    [Route("refresh-token")]
+    [HttpPost("refresh-token")]
+    [AllowAnonymous]
     public async Task<ApiResult<TokenDto>> RefreshToken(RefreshTokenCommand command)
     {
         return await _mediator.Send(command);

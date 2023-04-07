@@ -7,6 +7,7 @@ namespace Postex.Notification.Application.Dtos.Templates
         public int Id { get; set; }
         public string Name { get; set; }
         public string? Content { get; set; }
+        public bool IsCustom { get; set; }
         public TemplateType TemplateType { get; set; }
         public List<TemplateParameterDto> Parameters { get; set; }
     }

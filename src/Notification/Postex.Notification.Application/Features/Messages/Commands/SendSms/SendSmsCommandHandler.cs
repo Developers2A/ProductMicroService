@@ -1,8 +1,10 @@
 ﻿using Kavenegar.Core.Models;
 using MediatR;
-using Postex.Notification.Application.Features.Templates.Queries.GetById;
+using Postex.Notification.Application.Dtos.Templates;
+using Postex.Notification.Application.Features.Templates.Queries.GetAll;
 using Postex.Notification.Application.Services;
 using Postex.Notification.Domain.Messages;
+using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Notification.Application.Features.Messages.Commands.SendSms;
@@ -22,17 +24,36 @@ public class SendSmsCommandHandler : IRequestHandler<SendSmsCommand>
 
     public async Task<Unit> Handle(SendSmsCommand request, CancellationToken cancellationToken)
     {
-        var templateName = await GetTemplate(request);
         SendResult sendResult = new();
-
-        if (request.Parameters != null && request.Parameters.Any())
+        var template = await GetTemplate(request);
+        if (template == null)
         {
-            sendResult = await _smsSender.SendSms(new List<string>() { request.Mobile }, templateName, request.Parameters);
+            if (string.IsNullOrEmpty(request.Message))
+            {
+                throw new AppException("لطفا متن پیام را وارد نمایید");
+            }
+            sendResult = await _smsSender.SendSms(new List<string>() { request.Mobile }, request.Message!);
         }
         else
         {
-            sendResult = await _smsSender.SendSms(new List<string>() { request.Mobile }, request.Message!);
+            if (!template!.IsCustom)
+            {
+                sendResult = await _smsSender.SendSms(new List<string>() { request.Mobile }, template.Name, request.Parameters);
+            }
+            else
+            {
+                //TODO : make custom message with template and parameters
+                // messages = 
+                //sendResult = await _smsSender.SendSms(new List<string>() { request.Mobile }, request.Message!);
+            }
         }
+
+        await CreateMessage(sendResult);
+        return Unit.Value;
+    }
+
+    private async Task CreateMessage(SendResult sendResult)
+    {
         await _writeRepository.AddAsync(new Message()
         {
             Sender = sendResult.Sender,
@@ -43,24 +64,22 @@ public class SendSmsCommandHandler : IRequestHandler<SendSmsCommand>
             Status = sendResult.Status,
             StatusText = sendResult.StatusText
         });
-
-        return Unit.Value;
     }
 
-    private async Task<string> GetTemplate(SendSmsCommand request)
+    private async Task<TemplateDto?> GetTemplate(SendSmsCommand request)
     {
-        if (request.TemplateId.HasValue)
+        if (!string.IsNullOrEmpty(request.TemplateName))
         {
-            var template = await _mediator.Send(new GetTemplateByIdQuery()
+            var template = await _mediator.Send(new GetTemplatesQuery()
             {
-                Id = request.TemplateId.Value
+                Name = request.TemplateName
             });
 
-            if (template != null)
+            if (template != null || template!.Any())
             {
-                return template.Name;
+                return template!.FirstOrDefault();
             }
         }
-        return "rahgiry";
+        return null;
     }
 }

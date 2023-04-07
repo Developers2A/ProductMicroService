@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Exceptions;
@@ -10,15 +10,17 @@ namespace Postex.UserManagement.Application.Features.Messages.Commands;
 
 public class SendSmsCommandHandler : IRequestHandler<SendSmsCommand>
 {
-    private readonly IConfiguration _configuration;
     private readonly IMediator _mediator;
+    private readonly ApiSetting _apiSetting;
     private readonly string? _notificationApiUrl;
 
-    public SendSmsCommandHandler(IConfiguration configuration, IMediator mediator)
+    public SendSmsCommandHandler(
+        IMediator mediator,
+        IOptions<ApiSetting> apiSetting)
     {
-        _configuration = configuration;
-        _notificationApiUrl = _configuration.GetSection(nameof(ApiSetting)).Get<ApiSetting>().NotificationApi;
         _mediator = mediator;
+        _apiSetting = apiSetting.Value;
+        _notificationApiUrl = _apiSetting.NotificationApi;
     }
 
     public async Task<Unit> Handle(SendSmsCommand request, CancellationToken cancellationToken)
