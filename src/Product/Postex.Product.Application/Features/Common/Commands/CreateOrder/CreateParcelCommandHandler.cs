@@ -11,35 +11,30 @@ using Postex.Product.Application.Features.Common.Commands.CreatePeykOrder;
 using Postex.Product.Application.Features.Common.Queries.GetValueAddedPrices;
 using Postex.Product.Application.Features.CourierCityMappings.Queries;
 using Postex.Product.Application.Features.CourierServices.Queries;
-using Postex.Product.Application.Features.PostShops.Queries;
 using Postex.Product.Application.Features.ServiceProviders.Chapar.Commands.CreateOrder;
 using Postex.Product.Application.Features.ServiceProviders.Kbk.Commands.CreateOrder;
 using Postex.Product.Application.Features.ServiceProviders.Mahex.Commands.CreateOrder;
 using Postex.Product.Application.Features.ServiceProviders.Post.Commands.CreateOrder;
 using Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetPrice;
-using Postex.Product.Application.Features.Users.Queries;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Exceptions;
 
 namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 {
-    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, BaseResponse<CreateOrderResponseDto>>
+    public class CreateParcelCommandHandler : IRequestHandler<CreateParcelCommand, BaseResponse<CreateParcelResponseDto>>
     {
         private readonly IMediator _mediator;
-        private readonly HttpContext _httpContext;
-        private CreateOrderCommand _command;
+        private CreateParcelCommand _command;
         private List<CourierCityMappingDto> _courierCityMappings;
-        private Guid? _userId;
         private CourierServiceCommonDto _courierInfo;
 
-        public CreateOrderCommandHandler(IMediator mediator, IHttpContextAccessor contextAccessor)
+        public CreateParcelCommandHandler(IMediator mediator, IHttpContextAccessor contextAccessor)
         {
             _mediator = mediator;
-            _httpContext = contextAccessor.HttpContext;
         }
 
-        public async Task<BaseResponse<CreateOrderResponseDto>> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
+        public async Task<BaseResponse<CreateParcelResponseDto>> Handle(CreateParcelCommand command, CancellationToken cancellationToken)
         {
             _command = command;
             await SetCourierInfo();
@@ -47,23 +42,22 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 
             if (_command.Courier.ServiceType == (int)CourierServiceCode.PostSefareshi || _command.Courier.ServiceType == (int)CourierServiceCode.PostVizhe || _command.Courier.ServiceType == (int)CourierServiceCode.PostPishtaz)
             {
-                _userId = GetUserId();
-                _courierCityMappings = await GetCourierCityMapping(CourierCode.Post);
+                _courierCityMappings = await GetCourierCityMapping(SharedKernel.Common.Enums.CourierCode.Post);
                 result = await CreatePostOrder();
             }
             else if (_command.Courier.ServiceType == (int)CourierServiceCode.Mahex)
             {
-                _courierCityMappings = await GetCourierCityMapping(CourierCode.Mahex);
+                _courierCityMappings = await GetCourierCityMapping(SharedKernel.Common.Enums.CourierCode.Mahex);
                 result = await CreateMahexOrder();
             }
             else if (_command.Courier.ServiceType == (int)CourierServiceCode.Chapar || _command.Courier.ServiceType == (int)CourierServiceCode.ChaparExpress)
             {
-                _courierCityMappings = await GetCourierCityMapping(CourierCode.Chapar);
+                _courierCityMappings = await GetCourierCityMapping(SharedKernel.Common.Enums.CourierCode.Chapar);
                 result = await CreateChaparOrder();
             }
             else if (_command.Courier.ServiceType == (int)CourierServiceCode.Kalaresan)
             {
-                _courierCityMappings = await GetCourierCityMapping(CourierCode.Kalaresan);
+                _courierCityMappings = await GetCourierCityMapping(SharedKernel.Common.Enums.CourierCode.Kalaresan);
                 result = await CreateKbkOrder();
             }
             else
@@ -98,7 +92,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             });
         }
 
-        public async Task<List<CourierCityMappingDto>> GetCourierCityMapping(CourierCode courierCode)
+        public async Task<List<CourierCityMappingDto>> GetCourierCityMapping(SharedKernel.Common.Enums.CourierCode courierCode)
         {
             return await _mediator.Send(new GetCourierCityMappingsByCourierAndCitiesQuery()
             {
@@ -107,7 +101,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             });
         }
 
-        private async Task<BaseResponse<CreateOrderResponseDto>> CreatePeykOrder()
+        private async Task<BaseResponse<CreateParcelResponseDto>> CreatePeykOrder()
         {
             return await _mediator.Send(new CreatePeykOrderCommand()
             {
@@ -120,18 +114,6 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             });
         }
 
-        private Guid? GetUserId()
-        {
-            try
-            {
-                return Guid.Parse(_httpContext.Request.Headers["x-userid"]);
-            }
-            catch (Exception ex)
-            {
-                throw new AppException($"شناسه کاربر الزامی می باشد");
-            }
-        }
-
         private async Task SetCourierInfo()
         {
             var couriers = await _mediator.Send(new GetCourierServicesCommonQuery
@@ -142,9 +124,9 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             _courierInfo = couriers.FirstOrDefault()!;
         }
 
-        private async Task<BaseResponse<CreateOrderResponseDto>> CreatePostOrder()
+        private async Task<BaseResponse<CreateParcelResponseDto>> CreatePostOrder()
         {
-            var shopId = await GetShopIdByUserName();
+            var shopId = Convert.ToInt32(_command.PostEcommerceShopId);
             if (shopId == 0)
             {
                 throw new AppException($"برای این شخص  {_command.From.Contact.Mobile} شاپ یافت نشد");
@@ -154,22 +136,22 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
 
             if (!getPostPrice.IsSuccess)
             {
-                return new BaseResponse<CreateOrderResponseDto>()
+                return new BaseResponse<CreateParcelResponseDto>()
                 {
                     IsSuccess = getPostPrice.IsSuccess,
                     Message = getPostPrice.Message,
                 };
             }
 
-            CreatePostOrderCommand createPostOrderCommand = CreatePostOrderCommand(getPostPriceQuery);
+            var createPostOrderCommand = CreatePostOrderCommand(getPostPriceQuery);
             var result = await _mediator.Send(createPostOrderCommand);
             if (result.IsSuccess && result.Data != null)
             {
-                return new BaseResponse<CreateOrderResponseDto>()
+                return new BaseResponse<CreateParcelResponseDto>()
                 {
                     IsSuccess = result.IsSuccess,
                     Message = result.Message,
-                    Data = new CreateOrderResponseDto()
+                    Data = new CreateParcelResponseDto()
                     {
                         AdditionalData = new AdditionalDataResponseDto()
                         {
@@ -224,7 +206,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                     }
                 };
             }
-            return new BaseResponse<CreateOrderResponseDto>()
+            return new BaseResponse<CreateParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
@@ -269,7 +251,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             });
         }
 
-        private string GetCityMappedCode(CourierCode courierCode, int cityId)
+        private string GetCityMappedCode(SharedKernel.Common.Enums.CourierCode courierCode, int cityId)
         {
             var city = _courierCityMappings.FirstOrDefault(x => x.Courier.Code == courierCode && x.Code == Convert.ToInt32(cityId));
             if (city == null)
@@ -277,34 +259,6 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                 throw new AppException("نگاشت شهر به کوریر درخواستی یافت نشد");
             }
             return city.MappedCode;
-        }
-
-        private async Task<int> GetShopIdByUserName()
-        {
-            //if (string.IsNullOrEmpty(_command.Sender.Mobile))
-            //{
-            //    throw new AppException("نام کاربری الزامی می باشد");
-            //}
-            var mobile = await GetUserMobile();
-            return await _mediator.Send(new GetPostShopIdQuery()
-            {
-                Mobile = mobile,
-                CityCode = _command.From.Location.CityCode,
-            });
-        }
-
-        private async Task<string> GetUserMobile()
-        {
-            var user = await _mediator.Send(new GetUserByIdQuery()
-            {
-                UserId = _userId.Value
-            });
-
-            if (!user.IsSuccess || user.Data == null)
-            {
-                throw new AppException("فروشگاهی برای این کاربر یافت نشد");
-            }
-            return user.Data.Mobile;
         }
 
         private int GetPostServiceId()
@@ -338,7 +292,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             return new GetPostPriceQuery()
             {
                 ParcelValue = _command.Parcel.TotalValue,
-                ToCityID = Convert.ToInt32(GetCityMappedCode(CourierCode.Post, _command.To.Location.CityCode)),
+                ToCityID = Convert.ToInt32(GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Post, _command.To.Location.CityCode)),
                 Weight = _command.Parcel.TotalWeight,
                 SMSService = false,
                 ShopID = shopId,
@@ -347,14 +301,14 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             };
         }
 
-        private async Task<BaseResponse<CreateOrderResponseDto>> CreateMahexOrder()
+        private async Task<BaseResponse<CreateParcelResponseDto>> CreateMahexOrder()
         {
             var result = await _mediator.Send(CreateMahexCommand());
-            return new BaseResponse<CreateOrderResponseDto>()
+            return new BaseResponse<CreateParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateOrderResponseDto()
+                Data = new CreateParcelResponseDto()
                 {
                     //ParcelCode = result.Data != null ? result.Data.Data.ShipmentUuid : ""
                 }
@@ -379,7 +333,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                     Organization = _command.To.Contact.Company,
                     Type = "LEGAL",
                     Phone = _command.To.Contact.Phone,
-                    CityCode = GetCityMappedCode(CourierCode.Mahex, _command.To.Location.CityCode)
+                    CityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Mahex, _command.To.Location.CityCode)
                 },
                 FromAddress = new MahexAddressDetails()
                 {
@@ -392,7 +346,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                     NationalId = _command.From.Contact.NationalCode,
                     Organization = _command.From.Contact.Company,
                     Type = "LEGAL",
-                    CityCode = GetCityMappedCode(CourierCode.Mahex, _command.From.Location.CityCode)
+                    CityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Mahex, _command.From.Location.CityCode)
                 },
                 Parcels = new List<MahexGetPriceParcel>()
                 {
@@ -411,14 +365,14 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             };
         }
 
-        private async Task<BaseResponse<CreateOrderResponseDto>> CreateChaparOrder()
+        private async Task<BaseResponse<CreateParcelResponseDto>> CreateChaparOrder()
         {
             var result = await _mediator.Send(CreateChaparCommand());
-            return new BaseResponse<CreateOrderResponseDto>()
+            return new BaseResponse<CreateParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateOrderResponseDto()
+                Data = new CreateParcelResponseDto()
                 {
                     AdditionalData = new AdditionalDataResponseDto()
                     {
@@ -485,7 +439,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                             mobile = _command.From.Contact.Mobile,
                             person = _command.From.Contact.FirstName + " " + _command.From.Contact.LastName,
                             telephone = _command.From.Contact.Mobile,
-                            city_no = GetCityMappedCode(CourierCode.Chapar, _command.From.Location.CityCode),
+                            city_no = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Chapar, _command.From.Location.CityCode),
                             postcode = _command.From.Location.PostCode,
                             company = _command.From.Contact.Company,
                             email = _command.From.Contact.Email
@@ -496,7 +450,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
                             mobile = _command.To.Contact.Mobile,
                             person = _command.To.Contact.FirstName + " " + _command.To.Contact.LastName,
                             telephone = _command.To.Contact.Mobile,
-                            city_no =  GetCityMappedCode(CourierCode.Chapar, _command.To.Location.CityCode),
+                            city_no =  GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Chapar, _command.To.Location.CityCode),
                             postcode = _command.To.Location.PostCode,
                             company = _command.To.Contact.Company,
                             email = _command.To.Contact.Email
@@ -521,14 +475,14 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             };
         }
 
-        private async Task<BaseResponse<CreateOrderResponseDto>> CreateKbkOrder()
+        private async Task<BaseResponse<CreateParcelResponseDto>> CreateKbkOrder()
         {
             var result = await _mediator.Send(CreateKbkCommand());
-            return new BaseResponse<CreateOrderResponseDto>()
+            return new BaseResponse<CreateParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateOrderResponseDto()
+                Data = new CreateParcelResponseDto()
                 {
                     //ParcelCode = result.Data != null ? result.Data.ShipmentCode : ""
                 }
@@ -540,8 +494,8 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateOrder
             return new CreateKbkOrderCommand()
             {
                 PostexShipmentCode = "1",
-                OriginCity = Convert.ToInt32(GetCityMappedCode(CourierCode.Kalaresan, _command.From.Location.CityCode)),
-                DestinationCity = Convert.ToInt32(GetCityMappedCode(CourierCode.Kalaresan, _command.To.Location.CityCode)),
+                OriginCity = Convert.ToInt32(GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Kalaresan, _command.From.Location.CityCode)),
+                DestinationCity = Convert.ToInt32(GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Kalaresan, _command.To.Location.CityCode)),
                 SenderName = _command.From.Contact.FirstName + " " + _command.From.Contact.LastName,
                 SenderPhone = _command.From.Contact.Mobile,
                 SenderAddr = _command.From.Location.Address,

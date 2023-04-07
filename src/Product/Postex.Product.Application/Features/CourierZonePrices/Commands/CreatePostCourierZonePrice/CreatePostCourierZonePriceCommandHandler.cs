@@ -28,7 +28,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Commands.CreateP
         public async Task<Unit> Handle(CreatePostCourierZonePriceCommand request, CancellationToken cancellationToken)
         {
             var postTemplates = await _courierZonePriceTemplateRepository.TableNoTracking.Include(x => x.CourierService)
-                .Where(x => x.CourierService.Courier.Code == CourierCode.Post).ToListAsync();
+                .Where(x => x.CourierService.Courier.Code == Couriers.Post).ToListAsync();
             await SavePrices(postTemplates);
             return Unit.Value;
         }

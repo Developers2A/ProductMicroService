@@ -30,7 +30,7 @@ namespace Postex.Product.Application.Features.CourierCityMappings.Queries
                     .Include(x => x.Courier).Where(x => request.CityCodes.Contains(x.Code));
                 if (request.CourierCode > 0)
                 {
-                    courierCityMappingQuery = courierCityMappingQuery.Where(x => x.Courier.Code == (CourierCode)request.CourierCode);
+                    courierCityMappingQuery = courierCityMappingQuery.Where(x => x.Courier.Code == (SharedKernel.Common.Enums.CourierCode)request.CourierCode);
                 }
 
                 var courierCities = await courierCityMappingQuery.Include(x => x.Courier).Include(x => x.City).ToListAsync();

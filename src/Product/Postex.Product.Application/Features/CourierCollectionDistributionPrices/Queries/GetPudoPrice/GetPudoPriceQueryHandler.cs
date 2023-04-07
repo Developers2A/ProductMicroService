@@ -24,7 +24,7 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
         public async Task<PudoPriceResponseDto> Handle(GetPudoPriceQuery query, CancellationToken cancellationToken)
         {
             int courierZoneId = 0;
-            var courierZoneCity = await _courierZoneCityMappingRepository.TableNoTracking.Include(x => x.City).Include(x => x.CourierZone).FirstOrDefaultAsync(x => x.CourierZone.Courier.Code == CourierCode.Pudo && x.CityId == query.CityId);
+            var courierZoneCity = await _courierZoneCityMappingRepository.TableNoTracking.Include(x => x.City).Include(x => x.CourierZone).FirstOrDefaultAsync(x => x.CourierZone.Courier.Code == SharedKernel.Common.Enums.CourierCode.Pudo && x.CityId == query.CityId);
             if (courierZoneCity == null)
             {
                 throw new AppException("برای این شهر در سرویس پودو زون تعریف نشده است");

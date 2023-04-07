@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Postex.Product.Application.Dtos.ServiceProviders.Common;
-using Postex.Product.Application.Features.PostShops.Queries;
 using Postex.Product.Application.Features.ServiceProviders.Post.Commands.UpdateWeight;
 using Postex.SharedKernel.Common;
 using Postex.SharedKernel.Common.Enums;
@@ -20,25 +19,33 @@ namespace Postex.Product.Application.Features.Common.Commands.EditWeight
         public async Task<BaseResponse<EditOrderResponse>> Handle(EditWeightCommand command, CancellationToken cancellationToken)
         {
             _command = command;
-            if (_command.CourierCode == (int)CourierCode.Post)
+
+            if (_command.CourierCode != (int)SharedKernel.Common.Enums.CourierCode.Post)
             {
-                return await EditPostOrder();
+                return new BaseResponse<EditOrderResponse>()
+                {
+                    IsSuccess = false,
+                    Message = "این کوریر این امکان را ندارد"
+                };
             }
-            return new BaseResponse<EditOrderResponse>()
-            {
-                IsSuccess = false,
-                Message = "این کوریر این امکان را ندارد"
-            };
+
+            if (string.IsNullOrWhiteSpace(_command.PostEcommerceUserID))
+                return new BaseResponse<EditOrderResponse>()
+                {
+                    IsSuccess=false,
+                    Message="post ecommerce shop id is missing"
+                };
+
+            return await EditPostOrder();
         }
 
         private async Task<BaseResponse<EditOrderResponse>> EditPostOrder()
         {
-            var shopId = await GetShopIdBySenderMobile();
             var createPostOrderCommand = new UpdatePostWeightCommand()
             {
                 ParcelCode = _command.ParcelCode,
                 Weight = _command.Weight,
-                ShopID = shopId,
+                ShopID = Convert.ToInt32(_command.PostEcommerceUserID),
                 ParcelValue = _command.ParcelValue,
                 NonStandardPackage = _command.NonStandardPackage
             };
@@ -49,19 +56,6 @@ namespace Postex.Product.Application.Features.Common.Commands.EditWeight
                 IsSuccess = result.IsSuccess,
                 Message = result.Message
             };
-        }
-
-        private async Task<int> GetShopIdBySenderMobile()
-        {
-            var postShops = await _mediator.Send(new GetPostShopsQuery()
-            {
-                Mobile = _command.SenderMobile
-            });
-            if (postShops.Any())
-            {
-                return postShops.FirstOrDefault()!.ShopId;
-            }
-            return 0;
         }
     }
 }

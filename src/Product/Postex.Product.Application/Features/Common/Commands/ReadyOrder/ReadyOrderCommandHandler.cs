@@ -20,11 +20,11 @@ namespace Postex.Product.Application.Features.Common.Commands.ReadyOrder
         public async Task<BaseResponse<ReadyOrderResponse>> Handle(ReadyOrderCommand command, CancellationToken cancellationToken)
         {
             _command = command;
-            if (_command.CourierCode == (int)CourierCode.Post)
+            if (_command.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Post)
             {
                 return await ReadyPostOrder();
             }
-            if (_command.CourierCode == (int)CourierCode.Taroff)
+            if (_command.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Taroff)
             {
                 return await ReadyTaroffOrder();
             }

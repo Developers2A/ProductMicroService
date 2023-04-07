@@ -264,11 +264,11 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
             }
 
             //  مجانی شدن جمع آوری برای 10 بسته در هر سبد سفارش برای پیکهاب ، لینک اکپرس ، اسپید و تعارف
-            if (basket.Parcels.Count >= 10 && (basket.CourierCode == CourierCode.Paykhub ||
-                                               basket.CourierCode == CourierCode.Taroff ||
-                                               basket.CourierCode == CourierCode.Link ||
-                                               basket.CourierCode == CourierCode.Speed ||
-                                               basket.CourierCode == CourierCode.PishroPost))
+            if (basket.Parcels.Count >= 10 && (basket.CourierCode == SharedKernel.Common.Enums.CourierCode.Paykhub ||
+                                               basket.CourierCode == SharedKernel.Common.Enums.CourierCode.Taroff ||
+                                               basket.CourierCode == SharedKernel.Common.Enums.CourierCode.Link ||
+                                               basket.CourierCode == SharedKernel.Common.Enums.CourierCode.Speed ||
+                                               basket.CourierCode == SharedKernel.Common.Enums.CourierCode.PishroPost))
             {
                 response.CollectionPrice = 0;
             }

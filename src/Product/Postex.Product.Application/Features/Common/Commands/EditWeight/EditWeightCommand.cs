@@ -7,6 +7,12 @@ namespace Postex.Product.Application.Features.Common.Commands.EditWeight
 {
     public class EditWeightCommand : ITransactionRequest<BaseResponse<EditOrderResponse>>
     {
+        [JsonIgnore]
+        public Guid UserID { get; set; }
+
+        [JsonPropertyName("post_ecommerce_userid")]
+        public string PostEcommerceUserID { get; set; }
+
         [JsonPropertyName("courier_code")]
         public int CourierCode { get; set; }
 

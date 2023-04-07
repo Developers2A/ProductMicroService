@@ -14,7 +14,7 @@ using System.Globalization;
 
 namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
 {
-    public class CreatePeykOrderCommandHandler : IRequestHandler<CreatePeykOrderCommand, BaseResponse<CreateOrderResponseDto>>
+    public class CreatePeykOrderCommandHandler : IRequestHandler<CreatePeykOrderCommand, BaseResponse<CreateParcelResponseDto>>
     {
         private readonly IMediator _mediator;
         private CreatePeykOrderCommand _command;
@@ -25,7 +25,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             _mediator = mediator;
         }
 
-        public async Task<BaseResponse<CreateOrderResponseDto>> Handle(CreatePeykOrderCommand command, CancellationToken cancellationToken)
+        public async Task<BaseResponse<CreateParcelResponseDto>> Handle(CreatePeykOrderCommand command, CancellationToken cancellationToken)
         {
             _command = command;
 
@@ -41,13 +41,13 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
 
             if (_command.Courier.ServiceType == (int)CourierServiceCode.Taroff)
             {
-                _courierCityMappings = await GetCourierCityMapping(CourierCode.Taroff);
+                _courierCityMappings = await GetCourierCityMapping(SharedKernel.Common.Enums.CourierCode.Taroff);
                 return await CreateTaroffOrder();
             }
 
             if (_command.Courier.ServiceType == (int)CourierServiceCode.PishroPost)
             {
-                _courierCityMappings = await GetCourierCityMapping(CourierCode.PishroPost);
+                _courierCityMappings = await GetCourierCityMapping(SharedKernel.Common.Enums.CourierCode.PishroPost);
                 return await CreatePishroPostOrder();
             }
 
@@ -56,21 +56,21 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
                 return await CreateEcoPeykOrder();
             }
 
-            return new BaseResponse<CreateOrderResponseDto>()
+            return new BaseResponse<CreateParcelResponseDto>()
             {
                 IsSuccess = false,
                 Message = "برای این کوریر ثبت سفارش پیاده سازی نشده است"
             };
         }
 
-        private async Task<BaseResponse<CreateOrderResponseDto>> CreateLinkOrder()
+        private async Task<BaseResponse<CreateParcelResponseDto>> CreateLinkOrder()
         {
             var result = await _mediator.Send(CreateLinkOrderCommand());
-            return new BaseResponse<CreateOrderResponseDto>()
+            return new BaseResponse<CreateParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateOrderResponseDto()
+                Data = new CreateParcelResponseDto()
                 {
                     //ParcelCode = result.Data.TrackingCode
                 }
@@ -98,10 +98,10 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             };
         }
 
-        private async Task<BaseResponse<CreateOrderResponseDto>> CreatePishroPostOrder()
+        private async Task<BaseResponse<CreateParcelResponseDto>> CreatePishroPostOrder()
         {
             var result = await _mediator.Send(CreatePishroPostCommand());
-            return new BaseResponse<CreateOrderResponseDto>()
+            return new BaseResponse<CreateParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message
@@ -122,7 +122,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
                             mobile = _command.From.Contact.Mobile,
                             person = _command.From.Contact.FirstName + " " + _command.From.Contact.LastName,
                             telephone = _command.From.Contact.Mobile,
-                            city_no = GetCityMappedCode(CourierCode.PishroPost, _command.From.Location.CityCode),
+                            city_no = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.PishroPost, _command.From.Location.CityCode),
                             company = _command.From.Contact.Company,
                             email = _command.From.Contact.Email,
                         },
@@ -132,7 +132,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
                             mobile = _command.From.Contact.Mobile,
                             person = _command.From.Contact.FirstName + " " + _command.From.Contact.LastName,
                             telephone = _command.From.Contact.Mobile,
-                            city_no = GetCityMappedCode(CourierCode.PishroPost, _command.From.Location.CityCode),
+                            city_no = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.PishroPost, _command.From.Location.CityCode),
                             company = _command.From.Contact.Company,
                             email = _command.From.Contact.Email,
                         },
@@ -147,10 +147,10 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             };
         }
 
-        private async Task<BaseResponse<CreateOrderResponseDto>> CreateTaroffOrder()
+        private async Task<BaseResponse<CreateParcelResponseDto>> CreateTaroffOrder()
         {
             var result = await _mediator.Send(CreateTarrofCommand());
-            return new BaseResponse<CreateOrderResponseDto>()
+            return new BaseResponse<CreateParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message
@@ -159,7 +159,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
 
         private CreateTaroffOrderCommand CreateTarrofCommand()
         {
-            var cityCode = GetCityMappedCode(CourierCode.Taroff, _command.To.Location.CityCode);
+            var cityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Taroff, _command.To.Location.CityCode);
             return new CreateTaroffOrderCommand()
             {
                 FirstName = _command.To.Contact.FirstName,
@@ -179,14 +179,14 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             };
         }
 
-        private async Task<BaseResponse<CreateOrderResponseDto>> CreateSpeedOrder()
+        private async Task<BaseResponse<CreateParcelResponseDto>> CreateSpeedOrder()
         {
             var result = await _mediator.Send(CreateSpeedCommand());
-            return new BaseResponse<CreateOrderResponseDto>()
+            return new BaseResponse<CreateParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateOrderResponseDto()
+                Data = new CreateParcelResponseDto()
                 {
                     //ParcelCode = result.Data != null ? result.Data.Barcode.ToString() : ""
                 }
@@ -217,10 +217,10 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             };
         }
 
-        private async Task<BaseResponse<CreateOrderResponseDto>> CreateEcoPeykOrder()
+        private async Task<BaseResponse<CreateParcelResponseDto>> CreateEcoPeykOrder()
         {
             var result = await _mediator.Send(CreateEcoPeykCommand());
-            return new BaseResponse<CreateOrderResponseDto>()
+            return new BaseResponse<CreateParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message
@@ -257,7 +257,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             };
         }
 
-        private string GetCityMappedCode(CourierCode courierCode, int cityCode)
+        private string GetCityMappedCode(SharedKernel.Common.Enums.CourierCode courierCode, int cityCode)
         {
             var city = _courierCityMappings.FirstOrDefault(x => x.Courier.Code == courierCode && x.Code == Convert.ToInt32(cityCode));
             if (city == null)
@@ -267,7 +267,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             return city.MappedCode;
         }
 
-        public async Task<List<CourierCityMappingDto>> GetCourierCityMapping(CourierCode courierCode)
+        public async Task<List<CourierCityMappingDto>> GetCourierCityMapping(SharedKernel.Common.Enums.CourierCode courierCode)
         {
             return await _mediator.Send(new GetCourierCityMappingsByCourierAndCitiesQuery()
             {

@@ -2,6 +2,7 @@
 using Postex.Product.Application.Dtos.Commons.EditOrder.Request;
 using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.SharedKernel.Common;
+using System.Security.Claims;
 using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Features.Common.Commands.EditOrder
@@ -15,5 +16,8 @@ namespace Postex.Product.Application.Features.Common.Commands.EditOrder
         [JsonPropertyName("sender_mobile")]
         public string SenderMobile { get; set; }
         public ReceiverEditDto To { get; set; }
+
+        [JsonIgnore]
+        public ClaimsPrincipal UserID { get; set; }
     }
 }

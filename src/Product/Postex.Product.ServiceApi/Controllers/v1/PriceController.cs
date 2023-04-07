@@ -25,14 +25,14 @@ namespace Postex.Product.ServiceApi.Controllers.v1
             _mediator = mediator;
         }
 
-        [HttpPost("online-price")]
+        [HttpPost("online")]
         public async Task<ApiResult<GetPriceResponse>> GetOnlinePrice(GetPriceQuery request)
         {
             var result = await _mediator.Send(request);
             return new ApiResult<GetPriceResponse>(result.IsSuccess, result.Data, result.Message);
         }
 
-        [HttpPost("offline-price")]
+        [HttpPost("offline")]
         public async Task<ApiResult<GetQuickPriceResponse>> GetOfflinePrice(GetOfflinePricesQuery request)
         {
             return await _mediator.Send(request);

@@ -6,7 +6,7 @@ namespace Postex.Product.Domain.Couriers
 {
     public class Courier : BaseEntity<int>
     {
-        public CourierCode Code { get; set; }
+        public SharedKernel.Common.Enums.CourierCode Code { get; set; }
         public string Name { get; set; }
         public string? Company { get; set; }
         public bool IsActive { get; set; }

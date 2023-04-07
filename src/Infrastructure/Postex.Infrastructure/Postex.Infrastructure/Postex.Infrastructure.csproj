@@ -7,9 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="File\" />
-    <Folder Include="Persistence\" />
-    <Folder Include="Services\" />
+    <Compile Remove="File\**" />
+    <Compile Remove="Persistence\**" />
+    <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="File\**" />
+    <EmbeddedResource Remove="Persistence\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="File\**" />
+    <None Remove="Persistence\**" />
+    <None Remove="Services\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,7 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Application\Postex.Application\Postex.Application.csproj" />
     <ProjectReference Include="..\..\..\SharedKernel\Postex.SharedKernel\Postex.SharedKernel.csproj" />
   </ItemGroup>
 
