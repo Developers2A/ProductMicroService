@@ -1,9 +1,8 @@
-﻿using Newtonsoft.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Dtos.Commons.CreateParcel.Response
 {
-    public class CreateParcelResponseDto
+    public class ParcelResponseDto
     {
         [JsonPropertyName("is_oversized")]
         public bool IsOversized { get; set; }

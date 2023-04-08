@@ -7,7 +7,7 @@ namespace Postex.Product.Application.Features.ServiceProviders.Post.Commands.Upd
     public class UpdatePostWeightCommand : ITransactionRequest<BaseResponse<PostEditWeightResponse>>
     {
         public int ShopID { get; set; }
-        public string SenderMobile { get; set; }
+        //public string SenderMobile { get; set; }
         public string ParcelCode { get; set; }
         public int Weight { get; set; }
         public long ParcelValue { get; set; }

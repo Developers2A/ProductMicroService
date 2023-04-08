@@ -13,7 +13,7 @@ namespace Postex.Product.Application.Couriers
     {
         CourierCode Courier { get; set; }
         Task<BaseResponse<GetPriceResponse>> GetPrice(GetPriceQuery request);
-        Task<BaseResponse<CreateParcelResponseDto>> CreateParcel(CreateParcelCommand request);
+        Task<BaseResponse<ParcelResponseDto>> CreateParcel(CreateParcelCommand request);
         Task<BaseResponse<TrackingMapResponse>> TrackParcel(GetTrackQuery request);
     }
 }

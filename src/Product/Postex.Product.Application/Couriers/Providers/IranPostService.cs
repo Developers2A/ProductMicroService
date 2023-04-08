@@ -21,7 +21,7 @@ namespace Postex.Product.Application.Couriers.Providers
 
         public CourierCode Courier { get; set; }
 
-        public Task<BaseResponse<CreateParcelResponseDto>> CreateParcel(CreateParcelCommand request)
+        public Task<BaseResponse<ParcelResponseDto>> CreateParcel(CreateParcelCommand request)
         {
             throw new NotImplementedException();
         }

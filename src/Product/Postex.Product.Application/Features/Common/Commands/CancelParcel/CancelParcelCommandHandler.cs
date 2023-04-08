@@ -42,7 +42,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CancelParcel
             {
                 return await CancelPishroPostOrder();
             }
-            return new BaseResponse<CancelOrderResponse>()
+            return new BaseResponse<CancelParcelResponse>()
             {
                 IsSuccess = false,
                 Message = "این کوریر امکان کنسل کردن سفارش را ندارد"
@@ -55,7 +55,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CancelParcel
             {
                 ParcelCodes = new List<string>() { _command.TrackCode }
             });
-            return new BaseResponse<CancelOrderResponse>()
+            return new BaseResponse<CancelParcelResponse>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message

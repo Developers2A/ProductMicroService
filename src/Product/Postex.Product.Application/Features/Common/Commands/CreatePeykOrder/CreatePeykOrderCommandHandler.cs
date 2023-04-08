@@ -14,7 +14,7 @@ using System.Globalization;
 
 namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
 {
-    public class CreatePeykOrderCommandHandler : IRequestHandler<CreatePeykOrderCommand, BaseResponse<CreateParcelResponseDto>>
+    public class CreatePeykOrderCommandHandler : IRequestHandler<CreatePeykOrderCommand, BaseResponse<ParcelResponseDto>>
     {
         private readonly IMediator _mediator;
         private CreatePeykOrderCommand _command;
@@ -25,7 +25,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             _mediator = mediator;
         }
 
-        public async Task<BaseResponse<CreateParcelResponseDto>> Handle(CreatePeykOrderCommand command, CancellationToken cancellationToken)
+        public async Task<BaseResponse<ParcelResponseDto>> Handle(CreatePeykOrderCommand command, CancellationToken cancellationToken)
         {
             _command = command;
 
@@ -56,21 +56,21 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
                 return await CreateEcoPeykOrder();
             }
 
-            return new BaseResponse<CreateParcelResponseDto>()
+            return new BaseResponse<ParcelResponseDto>()
             {
                 IsSuccess = false,
                 Message = "برای این کوریر ثبت سفارش پیاده سازی نشده است"
             };
         }
 
-        private async Task<BaseResponse<CreateParcelResponseDto>> CreateLinkOrder()
+        private async Task<BaseResponse<ParcelResponseDto>> CreateLinkOrder()
         {
             var result = await _mediator.Send(CreateLinkOrderCommand());
-            return new BaseResponse<CreateParcelResponseDto>()
+            return new BaseResponse<ParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateParcelResponseDto()
+                Data = new ParcelResponseDto()
                 {
                     //ParcelCode = result.Data.TrackingCode
                 }
@@ -98,10 +98,10 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             };
         }
 
-        private async Task<BaseResponse<CreateParcelResponseDto>> CreatePishroPostOrder()
+        private async Task<BaseResponse<ParcelResponseDto>> CreatePishroPostOrder()
         {
             var result = await _mediator.Send(CreatePishroPostCommand());
-            return new BaseResponse<CreateParcelResponseDto>()
+            return new BaseResponse<ParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message
@@ -147,10 +147,10 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             };
         }
 
-        private async Task<BaseResponse<CreateParcelResponseDto>> CreateTaroffOrder()
+        private async Task<BaseResponse<ParcelResponseDto>> CreateTaroffOrder()
         {
             var result = await _mediator.Send(CreateTarrofCommand());
-            return new BaseResponse<CreateParcelResponseDto>()
+            return new BaseResponse<ParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message
@@ -179,14 +179,14 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             };
         }
 
-        private async Task<BaseResponse<CreateParcelResponseDto>> CreateSpeedOrder()
+        private async Task<BaseResponse<ParcelResponseDto>> CreateSpeedOrder()
         {
             var result = await _mediator.Send(CreateSpeedCommand());
-            return new BaseResponse<CreateParcelResponseDto>()
+            return new BaseResponse<ParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateParcelResponseDto()
+                Data = new ParcelResponseDto()
                 {
                     //ParcelCode = result.Data != null ? result.Data.Barcode.ToString() : ""
                 }
@@ -217,10 +217,10 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
             };
         }
 
-        private async Task<BaseResponse<CreateParcelResponseDto>> CreateEcoPeykOrder()
+        private async Task<BaseResponse<ParcelResponseDto>> CreateEcoPeykOrder()
         {
             var result = await _mediator.Send(CreateEcoPeykCommand());
-            return new BaseResponse<CreateParcelResponseDto>()
+            return new BaseResponse<ParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message

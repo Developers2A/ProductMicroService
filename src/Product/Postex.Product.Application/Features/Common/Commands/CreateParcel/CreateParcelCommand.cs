@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
 {
-    public class CreateParcelCommand : ITransactionRequest<BaseResponse<CreateParcelResponseDto>>
+    public class CreateParcelCommand : ITransactionRequest<BaseResponse<ParcelResponseDto>>
     {
         [JsonIgnore]
         public Guid UserID { get; set; }

@@ -6,7 +6,7 @@ using Postex.SharedKernel.Common;
 
 namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
 {
-    public class CreatePeykOrderCommand : ITransactionRequest<BaseResponse<CreateParcelResponseDto>>
+    public class CreatePeykOrderCommand : ITransactionRequest<BaseResponse<ParcelResponseDto>>
     {
         public SenderReceiverDto From { get; set; }
         public SenderReceiverDto To { get; set; }

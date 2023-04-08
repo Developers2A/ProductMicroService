@@ -37,10 +37,10 @@ namespace Postex.Product.Application.Features.ServiceProviders.Post.Commands.Upd
                 var res = await response.Content.ReadAsStringAsync();
                 try
                 {
-                    var resModel = JsonConvert.DeserializeObject<PostEditWeightResponse>(res);
+                    var resModel = JsonConvert.DeserializeObject<PostResponse<PostEditWeightResponse>>(res);
                     if (resModel!.ResCode == 0)
                     {
-                        return new(true, "success");
+                        return new(true, "success", resModel.Data!);
                     }
 
                     return new(false, resModel.ResMsg!);

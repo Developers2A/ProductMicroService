@@ -22,7 +22,7 @@ using Postex.SharedKernel.Exceptions;
 
 namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
 {
-    public class CreateParcelCommandHandler : IRequestHandler<CreateParcelCommand, BaseResponse<CreateParcelResponseDto>>
+    public class CreateParcelCommandHandler : IRequestHandler<CreateParcelCommand, BaseResponse<ParcelResponseDto>>
     {
         private readonly IMediator _mediator;
         private CreateParcelCommand _command;
@@ -34,11 +34,11 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
             _mediator = mediator;
         }
 
-        public async Task<BaseResponse<CreateParcelResponseDto>> Handle(CreateParcelCommand command, CancellationToken cancellationToken)
+        public async Task<BaseResponse<ParcelResponseDto>> Handle(CreateParcelCommand command, CancellationToken cancellationToken)
         {
             _command = command;
             await SetCourierInfo();
-            BaseResponse<CreateParcelResponseDto> result = new();
+            BaseResponse<ParcelResponseDto> result = new();
 
             if (_command.Courier.ServiceType == (int)CourierServiceCode.PostSefareshi || _command.Courier.ServiceType == (int)CourierServiceCode.PostVizhe || _command.Courier.ServiceType == (int)CourierServiceCode.PostPishtaz)
             {
@@ -101,7 +101,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
             });
         }
 
-        private async Task<BaseResponse<CreateParcelResponseDto>> CreatePeykOrder()
+        private async Task<BaseResponse<ParcelResponseDto>> CreatePeykOrder()
         {
             return await _mediator.Send(new CreatePeykOrderCommand()
             {
@@ -124,7 +124,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
             _courierInfo = couriers.FirstOrDefault()!;
         }
 
-        private async Task<BaseResponse<CreateParcelResponseDto>> CreatePostOrder()
+        private async Task<BaseResponse<ParcelResponseDto>> CreatePostOrder()
         {
             var shopId = Convert.ToInt32(_command.PostEcommerceShopId);
             if (shopId == 0)
@@ -136,7 +136,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
 
             if (!getPostPrice.IsSuccess)
             {
-                return new BaseResponse<CreateParcelResponseDto>()
+                return new BaseResponse<ParcelResponseDto>()
                 {
                     IsSuccess = getPostPrice.IsSuccess,
                     Message = getPostPrice.Message,
@@ -147,11 +147,11 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
             var result = await _mediator.Send(createPostOrderCommand);
             if (result.IsSuccess && result.Data != null)
             {
-                return new BaseResponse<CreateParcelResponseDto>()
+                return new BaseResponse<ParcelResponseDto>()
                 {
                     IsSuccess = result.IsSuccess,
                     Message = result.Message,
-                    Data = new CreateParcelResponseDto()
+                    Data = new ParcelResponseDto()
                     {
                         AdditionalData = new AdditionalDataResponseDto()
                         {
@@ -206,7 +206,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
                     }
                 };
             }
-            return new BaseResponse<CreateParcelResponseDto>()
+            return new BaseResponse<ParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
@@ -301,14 +301,14 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
             };
         }
 
-        private async Task<BaseResponse<CreateParcelResponseDto>> CreateMahexOrder()
+        private async Task<BaseResponse<ParcelResponseDto>> CreateMahexOrder()
         {
             var result = await _mediator.Send(CreateMahexCommand());
-            return new BaseResponse<CreateParcelResponseDto>()
+            return new BaseResponse<ParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateParcelResponseDto()
+                Data = new ParcelResponseDto()
                 {
                     //ParcelCode = result.Data != null ? result.Data.Data.ShipmentUuid : ""
                 }
@@ -365,14 +365,14 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
             };
         }
 
-        private async Task<BaseResponse<CreateParcelResponseDto>> CreateChaparOrder()
+        private async Task<BaseResponse<ParcelResponseDto>> CreateChaparOrder()
         {
             var result = await _mediator.Send(CreateChaparCommand());
-            return new BaseResponse<CreateParcelResponseDto>()
+            return new BaseResponse<ParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateParcelResponseDto()
+                Data = new ParcelResponseDto()
                 {
                     AdditionalData = new AdditionalDataResponseDto()
                     {
@@ -475,14 +475,14 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
             };
         }
 
-        private async Task<BaseResponse<CreateParcelResponseDto>> CreateKbkOrder()
+        private async Task<BaseResponse<ParcelResponseDto>> CreateKbkOrder()
         {
             var result = await _mediator.Send(CreateKbkCommand());
-            return new BaseResponse<CreateParcelResponseDto>()
+            return new BaseResponse<ParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new CreateParcelResponseDto()
+                Data = new ParcelResponseDto()
                 {
                     //ParcelCode = result.Data != null ? result.Data.ShipmentCode : ""
                 }

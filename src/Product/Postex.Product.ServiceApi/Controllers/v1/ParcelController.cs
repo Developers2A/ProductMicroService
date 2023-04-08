@@ -49,7 +49,7 @@ namespace Postex.Product.ServiceApi.Controllers.v1
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateParcelResponseDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ParcelResponseDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ApiResult))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(string))]
         public async Task<IActionResult> Create(
@@ -67,7 +67,7 @@ namespace Postex.Product.ServiceApi.Controllers.v1
         }
 
         [HttpPut("edit-weight")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EditParcelResponse))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ParcelResponseDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ApiResult))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(string))]
         public async Task<IActionResult> EditWeight(
