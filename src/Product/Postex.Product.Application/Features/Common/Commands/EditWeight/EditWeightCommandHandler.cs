@@ -89,9 +89,12 @@ namespace Postex.Product.Application.Features.Common.Commands.EditWeight
                                 },
                                 ShippingRate = new ShippingRateResponseDto()
                                 {
-                                    BuyPrice = result.Data!.PostFare,
-                                    SalePrice = result.Data.TotalPrice,
-                                    Vat = result.Data.Tax,
+                                    //BuyPrice = result.Data!.PostFare,
+                                    //SalePrice = result.Data.TotalPrice,
+                                    //Vat = result.Data.Tax,
+                                     BuyPrice = result.Data.TotalPrice,//PostFare,
+                                    SalePrice = result.Data.PostPrice,//TotalPrice,
+                                    Vat =Convert.ToInt32(result.Data.PostPrice * 0.09),
                                     PostPrice = new PostPriceResponseDto()
                                     {
                                         PostFare =  result.Data.PostFare,

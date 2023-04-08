@@ -176,9 +176,9 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
                                 },
                                 ShippingRate = new ShippingRateResponseDto()
                                 {
-                                    BuyPrice = result.Data.Price.PostFare,
-                                    SalePrice = result.Data.Price.TotalPrice,
-                                    Vat = result.Data.Price.Tax,
+                                    BuyPrice = result.Data.Price.TotalPrice,//PostFare,
+                                    SalePrice = result.Data.Price.PostPrice,//TotalPrice,
+                                    Vat =Convert.ToInt32(result.Data.Price.PostPrice * 0.09), //result.Data.Price.Tax,
                                     PostPrice = new PostPriceResponseDto()
                                     {
                                         PostFare =  result.Data.Price.PostFare,
