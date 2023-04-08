@@ -93,7 +93,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
 
                 return postPrice.Select(x => new ServicePrice()
                 {
-                    CourierCode = (int)Couriers.Post,
+                    CourierCode = (int)CourierCode.Post,
                     CourierName = "پست",
                     PostexPrice = Convert.ToInt64(x.Price.BuyPrice),
                     TotalPrice = CalculatePostTotalPrice(x.CourierService, Convert.ToInt64(x.Price.BuyPrice))
@@ -122,7 +122,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Queries.GetOffli
 
                 return postPrice.Select(x => new ServicePrice()
                 {
-                    CourierCode = (int)Couriers.Chapar,
+                    CourierCode = (int)CourierCode.Chapar,
                     CourierName = "چاپار",
                     PostexPrice = Convert.ToInt64(x.Price.BuyPrice),
                     TotalPrice = ChangePrice(x.CourierService, Convert.ToInt64(x.Price.BuyPrice))

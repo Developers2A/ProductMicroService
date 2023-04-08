@@ -1,7 +1,7 @@
 ﻿using Postex.Product.Application.Contracts;
 using Postex.Product.Application.Dtos.Commons;
-using Postex.Product.Application.Dtos.Commons.CreateOrder.Request;
-using Postex.Product.Application.Dtos.Commons.CreateOrder.Response;
+using Postex.Product.Application.Dtos.Commons.CreateParcel.Request;
+using Postex.Product.Application.Dtos.Commons.CreateParcel.Response;
 using Postex.SharedKernel.Common;
 
 namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder

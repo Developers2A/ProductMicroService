@@ -6,6 +6,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetQuickPrice
 {
     public class GetQuickPriceQuery : ITransactionRequest<BaseResponse<GetQuickPriceResponse>>
     {
+        public int ShopId { get; set; } = 0;
         public int CourierCode { get; set; } = 0;
         public int ServiceCode { get; set; } = 0;
         public int SenderProvinceCode { get; set; }

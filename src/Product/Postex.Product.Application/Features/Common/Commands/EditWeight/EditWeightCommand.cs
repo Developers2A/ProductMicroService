@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Features.Common.Commands.EditWeight
 {
-    public class EditWeightCommand : ITransactionRequest<BaseResponse<EditOrderResponse>>
+    public class EditWeightCommand : ITransactionRequest<BaseResponse<EditParcelResponse>>
     {
         [JsonIgnore]
         public Guid UserID { get; set; }

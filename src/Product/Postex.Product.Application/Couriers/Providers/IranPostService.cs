@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using Postex.Product.Application.Dtos.Commons.CreateOrder.Response;
+using Postex.Product.Application.Dtos.Commons.CreateParcel.Response;
 using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Dtos.Trackings;
-using Postex.Product.Application.Features.Common.Commands.CreateOrder;
+using Postex.Product.Application.Features.Common.Commands.CreateParcel;
 using Postex.Product.Application.Features.Common.Queries.GetPrice;
 using Postex.Product.Application.Features.Common.Queries.Track;
 using Postex.SharedKernel.Common;

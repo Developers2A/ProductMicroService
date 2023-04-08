@@ -5,13 +5,11 @@ using Postex.Product.Application.Dtos.ServiceProviders.Mahex.Common;
 using Postex.Product.Application.Features.Contratcs.ContractBoxPrices.Queries.GetByUserAndBoxType;
 using Postex.Product.Application.Features.CourierCityMappings.Queries;
 using Postex.Product.Application.Features.CourierCollectionDistributionPrices.Queries.GetPeykOfflinePrices;
-using Postex.Product.Application.Features.PostShops.Queries;
 using Postex.Product.Application.Features.ServiceProviders.Chapar.Queries.GetPrice;
 using Postex.Product.Application.Features.ServiceProviders.Kbk.Queries.GetPrice;
 using Postex.Product.Application.Features.ServiceProviders.Mahex.Queries.GetPrice;
 using Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetPrice;
 using Postex.SharedKernel.Common;
-using Postex.SharedKernel.Common.Enums;
 
 namespace Postex.Product.Application.Features.Common.Queries.GetQuickPrice
 {
@@ -322,7 +320,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetQuickPrice
             List<ServicePrice> priceResult = new();
             string senderCityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Post, request.SenderCityCode);
             string receiverCityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Post, request.ReceiverCityCode);
-            var shopId = await GetShopId(int.Parse(senderCityCode));
+            var shopId = request.ShopId;// await GetShopId(int.Parse(senderCityCode));
             int serviceTypeId = 0;
             string courier = "";
 

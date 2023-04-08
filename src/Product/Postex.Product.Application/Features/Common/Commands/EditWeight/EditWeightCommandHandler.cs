@@ -6,7 +6,7 @@ using Postex.SharedKernel.Common.Enums;
 
 namespace Postex.Product.Application.Features.Common.Commands.EditWeight
 {
-    public class EditWeightCommandHandler : IRequestHandler<EditWeightCommand, BaseResponse<EditOrderResponse>>
+    public class EditWeightCommandHandler : IRequestHandler<EditWeightCommand, BaseResponse<EditParcelResponse>>
     {
         private readonly IMediator _mediator;
         private EditWeightCommand _command;
@@ -16,13 +16,13 @@ namespace Postex.Product.Application.Features.Common.Commands.EditWeight
             _mediator = mediator;
         }
 
-        public async Task<BaseResponse<EditOrderResponse>> Handle(EditWeightCommand command, CancellationToken cancellationToken)
+        public async Task<BaseResponse<EditParcelResponse>> Handle(EditWeightCommand command, CancellationToken cancellationToken)
         {
             _command = command;
 
             if (_command.CourierCode != (int)SharedKernel.Common.Enums.CourierCode.Post)
             {
-                return new BaseResponse<EditOrderResponse>()
+                return new BaseResponse<EditParcelResponse>()
                 {
                     IsSuccess = false,
                     Message = "این کوریر این امکان را ندارد"
@@ -30,7 +30,7 @@ namespace Postex.Product.Application.Features.Common.Commands.EditWeight
             }
 
             if (string.IsNullOrWhiteSpace(_command.PostEcommerceUserID))
-                return new BaseResponse<EditOrderResponse>()
+                return new BaseResponse<EditParcelResponse>()
                 {
                     IsSuccess=false,
                     Message="post ecommerce shop id is missing"
@@ -39,7 +39,7 @@ namespace Postex.Product.Application.Features.Common.Commands.EditWeight
             return await EditPostOrder();
         }
 
-        private async Task<BaseResponse<EditOrderResponse>> EditPostOrder()
+        private async Task<BaseResponse<EditParcelResponse>> EditPostOrder()
         {
             var createPostOrderCommand = new UpdatePostWeightCommand()
             {
@@ -51,7 +51,7 @@ namespace Postex.Product.Application.Features.Common.Commands.EditWeight
             };
             var result = await _mediator.Send(createPostOrderCommand);
 
-            return new BaseResponse<EditOrderResponse>()
+            return new BaseResponse<EditParcelResponse>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message

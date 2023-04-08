@@ -30,7 +30,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Dtos\Commons\EditOrder\Response\" />
+	  <Folder Include="Dtos\Commons\EditParcel\Response\" />
 	  <Folder Include="Couriers\IranPost\" />
 	  <Folder Include="Couriers\Mahex\" />
 	  <Folder Include="Couriers\Chapar\" />

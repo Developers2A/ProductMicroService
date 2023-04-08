@@ -1,4 +1,4 @@
-﻿using Postex.Product.Application.Dtos.Commons.CreateOrder.Request;
+﻿using Postex.Product.Application.Dtos.Commons.CreateParcel.Request;
 
 namespace Postex.Product.Application.Dtos.Commons
 {

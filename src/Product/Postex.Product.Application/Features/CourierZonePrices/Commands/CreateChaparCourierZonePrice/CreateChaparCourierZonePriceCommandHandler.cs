@@ -25,7 +25,7 @@ namespace Postex.Product.Application.Features.CourierZonePrices.Commands.CreateC
         public async Task<Unit> Handle(CreateChaparCourierZonePriceCommand request, CancellationToken cancellationToken)
         {
             var chaparTemplates = await _courierZonePriceTemplateRepository.TableNoTracking.Include(x => x.CourierService)
-                .Where(x => x.CourierService.Courier.Code == Couriers.Chapar).ToListAsync();
+                .Where(x => x.CourierService.Courier.Code == CourierCode.Chapar).ToListAsync();
             if (chaparTemplates != null && chaparTemplates.Any())
             {
                 await SavePrices(chaparTemplates);
