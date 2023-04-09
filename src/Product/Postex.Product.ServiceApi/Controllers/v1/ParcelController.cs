@@ -66,7 +66,7 @@ namespace Postex.Product.ServiceApi.Controllers.v1
                 return BadRequest(new ApiResult(false, result.Message));
         }
 
-        [HttpPut("edit-weight")]
+        [HttpPost("edit-weight")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ParcelResponseDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ApiResult))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(string))]
