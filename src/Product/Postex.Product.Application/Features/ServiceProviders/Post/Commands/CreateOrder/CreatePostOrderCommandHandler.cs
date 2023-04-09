@@ -50,7 +50,7 @@ namespace Postex.Product.Application.Features.ServiceProviders.Post.Commands.Cre
                     var resModel = JsonConvert.DeserializeObject<PostEmptyResponse>(res);
                     if (resModel!.ResCode == 2)
                     {
-                        return new(false, resModel.Data != null ? string.Join<string>(",", resModel.Data!.Select(x => x.ErrorMessage)) : resModel.ResMsg!);
+                        return new(false, resModel.Data != null ? string.Join<string>(",", resModel.Data!.Select(x => x.FieldName + " : " + x.ErrorMessage)) : resModel.ResMsg!);
                     }
                     return new(false, resModel.ResMsg!);
                 }

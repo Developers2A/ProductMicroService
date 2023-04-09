@@ -32,6 +32,8 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
                 .NotNull().NotEmpty().WithMessage(" آدرس فرستنده الزامی میباشد");
             RuleFor(p => p.From.Location.PostCode)
                 .NotNull().NotEmpty().WithMessage(" کدپستی فرستنده الزامی میباشد");
+            RuleFor(p => p.From.Location.PostCode)
+                .Length(10).WithMessage(" کدپستی فرستنده ده رقمی میباشد");
             RuleFor(p => p.From.Location.CityCode)
                 .NotNull().NotEmpty().WithMessage(" شهر فرستنده الزامی میباشد");
             RuleFor(p => p.From.Contact.Email)

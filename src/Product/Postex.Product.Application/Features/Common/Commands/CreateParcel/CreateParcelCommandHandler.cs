@@ -7,6 +7,7 @@ using Postex.Product.Application.Dtos.ServiceProviders.Chapar.Common;
 using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Dtos.ServiceProviders.Mahex.Common;
 using Postex.Product.Application.Features.Cities.Queries;
+using Postex.Product.Application.Features.CityZipCodes.Queries;
 using Postex.Product.Application.Features.Common.Commands.CreatePeykOrder;
 using Postex.Product.Application.Features.Common.Queries.GetValueAddedPrices;
 using Postex.Product.Application.Features.CourierCityMappings.Queries;
@@ -28,6 +29,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
         private CreateParcelCommand _command;
         private List<CourierCityMappingDto> _courierCityMappings;
         private CourierServiceCommonDto _courierInfo;
+        private string _generatedPostCode;
 
         public CreateParcelCommandHandler(IMediator mediator, IHttpContextAccessor contextAccessor)
         {
@@ -145,6 +147,15 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
 
             var createPostOrderCommand = CreatePostOrderCommand(getPostPriceQuery);
             var result = await _mediator.Send(createPostOrderCommand);
+            if (!result.IsSuccess && result.Message.ToLower().Contains("postalcode"))
+            {
+                await GenerateValidPostCode();
+                if (!string.IsNullOrEmpty(_generatedPostCode))
+                {
+                    createPostOrderCommand.CustomerPostalCode = _generatedPostCode;
+                    result = await _mediator.Send(createPostOrderCommand);
+                }
+            }
             if (result.IsSuccess && result.Data != null)
             {
                 return new BaseResponse<ParcelResponseDto>()
@@ -155,7 +166,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
                     {
                         AdditionalData = new AdditionalDataResponseDto()
                         {
-                            GeneratedPostCode = result.Data != null ? result.Data.ParcelCode : ""
+                            GeneratedPostCode = _generatedPostCode
                         },
                         Shipments = new List<ShipmentResponseDto>()
                         {
@@ -211,6 +222,20 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
             };
+        }
+
+        private async Task GenerateValidPostCode()
+        {
+            var cityZipCodes = await _mediator.Send(new GetCityZipCodesQuery()
+            {
+                CityCode = _command.To.Location.CityCode
+            });
+            if (cityZipCodes == null || !cityZipCodes.Any())
+            {
+                _generatedPostCode = "";
+                return;
+            }
+            _generatedPostCode = cityZipCodes!.FirstOrDefault()!.ZipCode;
         }
 
         private CreatePostOrderCommand CreatePostOrderCommand(GetPostPriceQuery priceQuery)
@@ -376,7 +401,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
                 {
                     AdditionalData = new AdditionalDataResponseDto()
                     {
-                        GeneratedPostCode = ""
+                        GeneratedPostCode = _generatedPostCode
                     },
                     Shipments = new List<ShipmentResponseDto>()
                     {

@@ -9,6 +9,7 @@ namespace Postex.Product.Application.Mappings
     {
         public PostMapping()
         {
+            CreateMap<CityZipCodeDto, CityZipCode>().ReverseMap();
             CreateMap<PostShopDto, PostShop>().ReverseMap();
             CreateMap<PostCityShopDto, PostCityShop>().ReverseMap();
             CreateMap<PostShop, Shop>()
