@@ -9,7 +9,7 @@ namespace Postex.Product.Application.Dtos.Commons.CreateParcel.Request
 
         public string? Country { get; set; }
 
-        [JsonPropertyName("city_code")]
+        [JsonPropertyName("city_id")]
         public int CityCode { get; set; }
 
         [JsonPropertyName("city_name")]
