@@ -58,8 +58,6 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
                 .NotNull().NotEmpty().WithMessage(" اطلاعات آدرس گیرنده الزامی میباشد");
             RuleFor(p => p.To.Location.Address)
                 .NotNull().NotEmpty().WithMessage(" آدرس گیرنده الزامی میباشد");
-            RuleFor(p => p.To.Location.PostCode)
-                .NotNull().NotEmpty().WithMessage(" کدپستی گیرنده الزامی میباشد");
             RuleFor(p => p.To.Location.CityCode)
                 .NotNull().NotEmpty().WithMessage(" شهر گیرنده الزامی میباشد");
 

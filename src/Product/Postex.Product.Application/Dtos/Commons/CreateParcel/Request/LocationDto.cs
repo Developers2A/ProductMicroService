@@ -5,7 +5,7 @@ namespace Postex.Product.Application.Dtos.Commons.CreateParcel.Request
     public class LocationDto
     {
         [JsonPropertyName("post_code")]
-        public string PostCode { get; set; }
+        public string? PostCode { get; set; }
 
         public string? Country { get; set; }
 
