@@ -5,6 +5,6 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
 {
     public class GetPudoPriceQuery : IRequest<PudoPriceResponseDto>
     {
-        public int CityId { get; set; }
+        public int CityCode { get; set; }
     }
 }

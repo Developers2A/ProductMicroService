@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Postex.Product.Application.Dtos.CollectionDistributionPrices.Basket;
 using Postex.Product.Domain.CollectionDistributionPrices;
 using Postex.Product.Domain.Offlines;
-using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Exceptions;
 using Postex.SharedKernel.Interfaces;
 
@@ -24,10 +23,10 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
         public async Task<PudoPriceResponseDto> Handle(GetPudoPriceQuery query, CancellationToken cancellationToken)
         {
             int courierZoneId = 0;
-            var courierZoneCity = await _courierZoneCityMappingRepository.TableNoTracking.Include(x => x.City).Include(x => x.CourierZone).FirstOrDefaultAsync(x => x.CourierZone.Courier.Code == SharedKernel.Common.Enums.CourierCode.Pudo && x.CityId == query.CityId);
+            var courierZoneCity = await _courierZoneCityMappingRepository.TableNoTracking.Include(x => x.City).Include(x => x.CourierZone).FirstOrDefaultAsync(x => x.CourierZone.Courier.Code == SharedKernel.Common.Enums.CourierCode.Pudo && x.City.Code == query.CityCode);
             if (courierZoneCity == null)
             {
-                throw new AppException("برای این شهر در سرویس پودو زون تعریف نشده است");
+                throw new AppException("برای این شهر سرویس پودو فعال نمی باشد");
             }
             courierZoneId = courierZoneCity.CourierZoneId;
             var price = await _courierZoneCollectionDistributionPriceRepository.TableNoTracking
@@ -35,14 +34,15 @@ namespace Postex.Product.Application.Features.CourierCollectionDistributionPrice
 
             if (price == null)
             {
-                throw new AppException("برای این شهر در این زون قیمتی تعریف نشده است");
+                throw new AppException("برای این شهر قیمتی برای پودو تعریف نشده است");
             }
 
             return new PudoPriceResponseDto()
             {
                 City = courierZoneCity!.City.Name,
                 Zone = courierZoneCity.CourierZone.Name,
-                Price = price.SellPrice
+                SellPrice = price.SellPrice,
+                BuyPrice = price.BuyPrice
             };
         }
     }

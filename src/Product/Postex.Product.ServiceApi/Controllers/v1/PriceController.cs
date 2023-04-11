@@ -59,12 +59,12 @@ namespace Postex.Product.ServiceApi.Controllers.v1
             });
         }
 
-        [HttpGet("pudo-price/{cityId}")]
-        public async Task<ApiResult<PudoPriceResponseDto>> PudoPrice(int cityId)
+        [HttpGet("pudo-price/{cityCode}")]
+        public async Task<ApiResult<PudoPriceResponseDto>> PudoPrice(int cityCode)
         {
             var result = await _mediator.Send(new GetPudoPriceQuery()
             {
-                CityId = cityId
+                CityCode = cityCode
             });
             return new ApiResult<PudoPriceResponseDto>(true, result);
         }

@@ -19,5 +19,6 @@ namespace Postex.SharedKernel.Common.Enums
         [Description("پیک هاب")] Paykhub = 12,
         [Description("آرامکس")] Aramex = 13,
         [Description("اکوپیک")] EcoPeyk = 14,
+        [Description("پودو")] Pudo = 15,
     }
 }
