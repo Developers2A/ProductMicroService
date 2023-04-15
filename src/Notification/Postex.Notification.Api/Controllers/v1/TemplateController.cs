@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Postex.Notification.Application.Dtos.Templates;
 using Postex.Notification.Application.Features.Templates.Commands.Create;
 using Postex.Notification.Application.Features.Templates.Commands.Update;
+using Postex.Notification.Application.Features.Templates.Queries.GetAll;
 using Postex.Notification.Application.Features.Templates.Queries.GetById;
 using Postex.SharedKernel.Api;
 
@@ -19,15 +20,17 @@ namespace Postex.Notification.Api.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateTemplateCommand command)
+        public async Task<ApiResult<TemplateDto>> Create(CreateTemplateCommand command)
         {
-            return Ok(await mediator.Send(command));
+            var template = await mediator.Send(command);
+            return new ApiResult<TemplateDto>(true, template, "");
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(UpdateTemplateCommand command)
+        public async Task<ApiResult<TemplateDto>> Put(UpdateTemplateCommand command)
         {
-            return Ok(await mediator.Send(command));
+            var template = await mediator.Send(command);
+            return new ApiResult<TemplateDto>(true, template, "");
         }
 
         [HttpGet("GetById")]
@@ -39,6 +42,13 @@ namespace Postex.Notification.Api.Controllers.v1
                 return new ApiResult<TemplateDto>(true, null, "اطلاعاتی پیدا نشد");
             }
             return new ApiResult<TemplateDto>(true, result, "");
+        }
+
+        [HttpGet]
+        public async Task<ApiResult<List<TemplateDto>>> Get()
+        {
+            var result = await mediator.Send(new GetTemplatesQuery());
+            return new ApiResult<List<TemplateDto>>(true, result, "");
         }
     }
 }

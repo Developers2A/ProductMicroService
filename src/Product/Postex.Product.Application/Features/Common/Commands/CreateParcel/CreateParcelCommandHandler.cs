@@ -1,12 +1,9 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
-using Postex.Product.Application.Dtos.Commons;
 using Postex.Product.Application.Dtos.Commons.CreateParcel.Response;
 using Postex.Product.Application.Dtos.Couriers;
 using Postex.Product.Application.Dtos.ServiceProviders.Chapar.Common;
 using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Dtos.ServiceProviders.Mahex.Common;
-using Postex.Product.Application.Features.Cities.Queries;
 using Postex.Product.Application.Features.CityZipCodes.Queries;
 using Postex.Product.Application.Features.Common.Commands.CreatePeykOrder;
 using Postex.Product.Application.Features.Common.Queries.GetValueAddedPrices;
@@ -31,7 +28,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
         private CourierServiceCommonDto _courierInfo;
         private string _generatedPostCode;
 
-        public CreateParcelCommandHandler(IMediator mediator, IHttpContextAccessor contextAccessor)
+        public CreateParcelCommandHandler(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -134,6 +131,8 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
             {
                 throw new AppException($"برای این شخص  {_command.From.Contact.Mobile} شاپ یافت نشد");
             }
+
+            //دریافت قیمت از پست
             GetPostPriceQuery getPostPriceQuery = CreatePostGetPriceQuery(shopId);
             var getPostPrice = await _mediator.Send(getPostPriceQuery);
 
@@ -148,6 +147,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
 
             var createPostOrderCommand = CreatePostOrderCommand(getPostPriceQuery);
 
+            // اگر کد پستی گیرنده خالی بود، با توجه به شهر یک کد پستی از جدول CityZipCodes جایگزین می شود
             if (string.IsNullOrEmpty(_command.To.Location.PostCode) || _command.To.Location.PostCode.Trim().Length != 10)
             {
                 await GenerateValidPostCode();
@@ -226,6 +226,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
             };
         }
 
+        // به دست آوردن کد پستی معتبر از جدول CityZipCodes
         private async Task GenerateValidPostCode()
         {
             var cityZipCodes = await _mediator.Send(new GetCityZipCodesQuery()
@@ -270,14 +271,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
             return createPostOrderCommand;
         }
 
-        public async Task<List<CityDto>> GetCities()
-        {
-            return await _mediator.Send(new GetCitiesQuery()
-            {
-                CityCodes = new List<int> { _command.From.Location.CityCode, _command.To.Location.CityCode }
-            });
-        }
-
+        // استخراج کد نگاشت شده شهر با توجه به کوریر 
         private string GetCityMappedCode(SharedKernel.Common.Enums.CourierCode courierCode, int cityId)
         {
             var city = _courierCityMappings.FirstOrDefault(x => x.Courier.Code == courierCode && x.Code == Convert.ToInt32(cityId));
@@ -411,10 +405,10 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
                         {
                             Courier = new CourierResponseDto()
                             {
-                                Courier = "post",
-                                Service = "",
-                                TransitTime = "",
-                                Description = "",
+                                 Courier = _courierInfo.CourierName,
+                                 Service = _courierInfo.CourierServiceName,
+                                 TransitTime = _courierInfo.Days,
+                                 Description = "",
                             },
                             Step = 1,
                             Tracking = new TrackingResponseDto()

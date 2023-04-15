@@ -20,10 +20,21 @@ public class GetTemplateByIdQueryHandler : IRequestHandler<GetTemplateByIdQuery,
 
     public async Task<TemplateDto> Handle(GetTemplateByIdQuery request, CancellationToken cancellationToken)
     {
-        var template = await _readRepository.TableNoTracking
-            .Where(c => c.Id == request.Id)
-            .FirstOrDefaultAsync(cancellationToken);
-        var templateDto = _mapper.Map<TemplateDto>(template);
+        var template = await _readRepository.TableNoTracking.Include(x => x.Parameters)
+            .FirstOrDefaultAsync(c => c.Id == request.Id);
+
+        var templateDto = new TemplateDto()
+        {
+            Id = template!.Id,
+            Name = template.Name,
+            Content = template.Content,
+            TemplateType = template.TemplateType,
+            IsCustom = template.IsCustom,
+            Parameters = template.Parameters != null ? template.Parameters.Select(x => new TemplateParameterDto()
+            {
+                Key = x.Key,
+            }).ToList() : new List<TemplateParameterDto>()
+        };
         return templateDto;
     }
 }

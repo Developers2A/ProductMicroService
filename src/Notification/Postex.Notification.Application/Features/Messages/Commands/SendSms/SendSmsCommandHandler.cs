@@ -24,6 +24,10 @@ public class SendSmsCommandHandler : IRequestHandler<SendSmsCommand>
 
     public async Task<Unit> Handle(SendSmsCommand request, CancellationToken cancellationToken)
     {
+        //اگر در درخواست مقدار TemplateName خالی باشددر این حالت متن موجود در Message ارسال می گردد
+        //اگر مقدار TemplateName پر باشد و IsCustom = false باشد در این حالت الگو در سامانه پیامکی باید وجود داشته باشد
+        //اگر مقدار TemplateName پر باشد و IsCustom = true باشد در این حالت الگو در سیستم پستکس باید وجود داشته باشد
+
         SendResult sendResult = new();
         var template = await GetTemplate(request);
         if (template == null)
@@ -43,7 +47,6 @@ public class SendSmsCommandHandler : IRequestHandler<SendSmsCommand>
             else
             {
                 //TODO : make custom message with template and parameters
-                // messages = 
                 //sendResult = await _smsSender.SendSms(new List<string>() { request.Mobile }, request.Message!);
             }
         }
