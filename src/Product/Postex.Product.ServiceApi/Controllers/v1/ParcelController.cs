@@ -27,7 +27,7 @@ namespace Postex.Product.ServiceApi.Controllers.v1
         }
 
         [HttpGet("track")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TrackingMapResponse))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TrackResponseDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ApiResult))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(string))]
         public async Task<IActionResult> Track(

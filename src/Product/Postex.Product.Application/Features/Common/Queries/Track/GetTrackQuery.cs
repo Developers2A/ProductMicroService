@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Postex.Product.Application.Features.Common.Queries.Track
 {
-    public class GetTrackQuery : ITransactionRequest<BaseResponse<TrackingMapResponse>>
+    public class GetTrackQuery : ITransactionRequest<BaseResponse<TrackResponseDto>>
     {
         [JsonPropertyName("courier_code")]
         public int CourierCode { get; set; }

@@ -5,7 +5,7 @@ using Postex.SharedKernel.Common;
 
 namespace Postex.Product.Application.Features.ServiceProviders.Post.Queries.Track
 {
-    public class GetPostTrackQuery : ITransactionRequest<BaseResponse<PostTrackResponse>>
+    public class GetPostTrackQuery : ITransactionRequest<BaseResponse<List<PostTrackResponse>>>
     {
         [JsonProperty("parcelCode")]
         public string ParcelCode { get; set; }

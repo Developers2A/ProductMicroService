@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Postex.Product.Application.Dtos.CourierStatus;
 using Postex.Product.Domain.Couriers;
-using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Interfaces;
 
 namespace Postex.Product.Application.Features.CourierStatusMappings.Queries
@@ -38,10 +37,11 @@ namespace Postex.Product.Application.Features.CourierStatusMappings.Queries
                 {
                     Id = courierStatusMapping.Id,
                     StatusId = courierStatusMapping.StatusId,
-                    Code = courierStatusMapping.Code,
-                    Name = courierStatusMapping.Status.Description,
+                    StatusName = courierStatusMapping.Status.Description,
+                    StatusCode = courierStatusMapping.Status.Code,
                     CourierId = courierStatusMapping.CourierId,
-                    Description = courierStatusMapping.Description,
+                    CourierStatusName = courierStatusMapping.Description,
+                    CourierStatusCode = courierStatusMapping.Code,
                 };
             }
         }

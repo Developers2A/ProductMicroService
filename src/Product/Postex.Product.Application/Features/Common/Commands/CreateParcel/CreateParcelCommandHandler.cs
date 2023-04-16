@@ -125,11 +125,10 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
 
         private async Task<BaseResponse<ParcelResponseDto>> CreatePostOrder()
         {
-
             var shopId = Convert.ToInt32(_command.PostEcommerceShopId);
             if (shopId == 0)
             {
-                throw new AppException($"برای این شخص  {_command.From.Contact.Mobile} شاپ یافت نشد");
+                throw new AppException($"آی دی فروشگاه الزامی می باشد");
             }
 
             //دریافت قیمت از پست
@@ -158,6 +157,16 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
             }
             var result = await _mediator.Send(createPostOrderCommand);
 
+            //اگر ای پی آی پست خطای کد پستی برگرداند، کد پستی گیرنده جایگزین می شود و درخواست دوباره ارسال می گردد
+            if (!result.IsSuccess && result.Message.ToLower().Contains("postalcode"))
+            {
+                await GenerateValidPostCode();
+                if (!string.IsNullOrEmpty(_generatedPostCode))
+                {
+                    createPostOrderCommand.CustomerPostalCode = _generatedPostCode;
+                    result = await _mediator.Send(createPostOrderCommand);
+                }
+            }
             if (result.IsSuccess && result.Data != null)
             {
                 return new BaseResponse<ParcelResponseDto>()

@@ -8,7 +8,7 @@ using Postex.SharedKernel.Settings;
 
 namespace Postex.Product.Application.Features.ServiceProviders.Post.Queries.Track
 {
-    public class GetPostTrackQueryHandler : IRequestHandler<GetPostTrackQuery, BaseResponse<PostTrackResponse>>
+    public class GetPostTrackQueryHandler : IRequestHandler<GetPostTrackQuery, BaseResponse<List<PostTrackResponse>>>
     {
         private readonly IConfiguration _configuration;
         private readonly CourierConfig _gateway;
@@ -21,7 +21,7 @@ namespace Postex.Product.Application.Features.ServiceProviders.Post.Queries.Trac
             _mediator = mediator;
         }
 
-        public async Task<BaseResponse<PostTrackResponse>> Handle(GetPostTrackQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<List<PostTrackResponse>>> Handle(GetPostTrackQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace Postex.Product.Application.Features.ServiceProviders.Post.Queries.Trac
                 var res = await response.Content.ReadAsStringAsync();
                 try
                 {
-                    var resModel = JsonConvert.DeserializeObject<PostResponse<PostTrackResponse>>(res);
+                    var resModel = JsonConvert.DeserializeObject<PostResponse<List<PostTrackResponse>>>(res);
                     if (resModel!.ResCode == 0)
                     {
                         return new(true, "success", resModel.Data!);

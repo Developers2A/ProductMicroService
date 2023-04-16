@@ -12,12 +12,11 @@ using Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetStatu
 using Postex.Product.Application.Features.ServiceProviders.Speed.Queries.Track;
 using Postex.Product.Application.Features.ServiceProviders.Taroff.Queries.Track;
 using Postex.SharedKernel.Common;
-using Postex.SharedKernel.Common.Enums;
 using Postex.SharedKernel.Utilities;
 
 namespace Postex.Product.Application.Features.Common.Queries.Track
 {
-    public class GetTrackQueryHandler : IRequestHandler<GetTrackQuery, BaseResponse<TrackingMapResponse>>
+    public class GetTrackQueryHandler : IRequestHandler<GetTrackQuery, BaseResponse<TrackResponseDto>>
     {
         private readonly IMediator _mediator;
         private GetTrackQuery _query;
@@ -27,7 +26,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             _mediator = mediator;
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> Handle(GetTrackQuery query, CancellationToken cancellationToken)
+        public async Task<BaseResponse<TrackResponseDto>> Handle(GetTrackQuery query, CancellationToken cancellationToken)
         {
             _query = query;
             if (_query.CourierCode == (int)SharedKernel.Common.Enums.CourierCode.Post)
@@ -69,7 +68,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             return new(false, "امکان ترک کدهای این کوریر وجود ندارد");
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> PostTrack()
+        public async Task<BaseResponse<TrackResponseDto>> PostTrack()
         {
             var trackRequest = new GetPostStatusQuery()
             {
@@ -90,17 +89,17 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 return new(false, "Post Mappping is not set in database");
             }
 
-            return new(true, "success", new TrackingMapResponse()
+            return new(true, "success", new TrackResponseDto()
             {
-                CourierStatusMappingId = tracking.Id,
-                TrackCode = tracking.Code.ToString(),
-                TrackStatus = tracking.Name,
-                CourierStatus = tracking.Description,
+                PostexStatusCode = tracking.StatusCode.ToString(),
+                PostexStatus = tracking.StatusName,
+                CourierStatusCode = status.ToString(),
+                CourierStatus = tracking.CourierStatusName,
                 Date = date.ToString()
             });
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> ChaparTrack()
+        public async Task<BaseResponse<TrackResponseDto>> ChaparTrack()
         {
             var trackRequest = new GetChaparTrackQuery()
             {
@@ -128,17 +127,18 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 return new(false, "Chapar Mappping is not set in database");
             }
 
-            return new(true, "success", new TrackingMapResponse()
+            return new(true, "success", new TrackResponseDto()
             {
-                CourierStatusMappingId = tracking.Id,
-                TrackCode = tracking.Code.ToString(),
-                TrackStatus = tracking.Name,
-                CourierStatus = tracking.Description,
+                PostexStatusCode = tracking.StatusCode.ToString(),
+                PostexStatus = tracking.StatusName,
+                CourierStatusCode = tracking.CourierStatusCode,
+                CourierStatus = tracking.CourierStatusName,
                 Date = date.ToString()
             });
 
         }
 
+        // پیدا کردن نگاشت وضعیت کوریر به وضعیت های پستکس 
         private async Task<CourierStatusMappingDto> GetPostexStatus(SharedKernel.Common.Enums.CourierCode courierCode, string courierStatus)
         {
             var courierStatusMapping = await _mediator.Send(new GetCourierStatusMappingByCourierAndStatusQuery()
@@ -149,7 +149,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             return courierStatusMapping;
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> MahexTrack()
+        public async Task<BaseResponse<TrackResponseDto>> MahexTrack()
         {
             var trackRequest = new GetMahexTrackQuery()
             {
@@ -187,17 +187,17 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 return new(false, "Mahex Mappping is not set in database : " + status);
             }
 
-            return new(true, "success", new TrackingMapResponse()
+            return new(true, "success", new TrackResponseDto()
             {
-                CourierStatusMappingId = tracking.Id,
-                TrackCode = tracking.Code.ToString(),
-                TrackStatus = tracking.Name,
-                CourierStatus = tracking.Description,
+                PostexStatusCode = tracking.StatusCode.ToString(),
+                PostexStatus = tracking.StatusName,
+                CourierStatusCode = status.ToString(),
+                CourierStatus = tracking.CourierStatusName,
                 Date = date
             });
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> KbkTrack()
+        public async Task<BaseResponse<TrackResponseDto>> KbkTrack()
         {
             var trackRequest = new GetKbkTrackQuery()
             {
@@ -218,18 +218,18 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 return new(false, "Kbk Mappping is not set in database for kbk status :" + status);
             }
 
-            return new(true, "success", new TrackingMapResponse()
+            return new(true, "success", new TrackResponseDto()
             {
-                CourierStatusMappingId = tracking.Id,
-                TrackCode = tracking.Code.ToString(),
-                TrackStatus = tracking.Name,
-                CourierStatus = tracking.Description,
+                PostexStatusCode = tracking.StatusCode.ToString(),
+                PostexStatus = tracking.StatusName,
+                CourierStatusCode = tracking.CourierStatusCode,
+                CourierStatus = tracking.CourierStatusName,
                 Date = date.ToString()
             });
         }
 
 
-        public async Task<BaseResponse<TrackingMapResponse>> LinkTrack()
+        public async Task<BaseResponse<TrackResponseDto>> LinkTrack()
         {
             var trackRequest = new GetLinkTrackQuery()
             {
@@ -248,12 +248,12 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Link, status.ToString());
             if (tracking != null)
             {
-                return new(true, "success", new TrackingMapResponse()
+                return new(true, "success", new TrackResponseDto()
                 {
-                    CourierStatusMappingId = tracking.Id,
-                    TrackCode = tracking.Code.ToString(),
-                    TrackStatus = tracking.Name,
-                    CourierStatus = tracking.Description,
+                    PostexStatusCode = tracking.StatusCode.ToString(),
+                    PostexStatus = tracking.StatusName,
+                    CourierStatusCode = tracking.CourierStatusCode,
+                    CourierStatus = tracking.CourierStatusName,
                     Date = date
                 });
             }
@@ -263,7 +263,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             }
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> TaroffTrack()
+        public async Task<BaseResponse<TrackResponseDto>> TaroffTrack()
         {
             var trackRequest = new GetTaroffTrackQuery()
             {
@@ -281,12 +281,12 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Taroff, status.ToString());
             if (tracking != null)
             {
-                return new(true, "success", new TrackingMapResponse()
+                return new(true, "success", new TrackResponseDto()
                 {
-                    CourierStatusMappingId = tracking.Id,
-                    TrackCode = tracking.Code.ToString(),
-                    TrackStatus = tracking.Name,
-                    CourierStatus = tracking.Description,
+                    PostexStatusCode = tracking.StatusCode.ToString(),
+                    PostexStatus = tracking.StatusName,
+                    CourierStatusCode = tracking.CourierStatusCode,
+                    CourierStatus = tracking.CourierStatusName,
                     Date = date
                 });
             }
@@ -296,7 +296,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             }
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> PishroPostTrack()
+        public async Task<BaseResponse<TrackResponseDto>> PishroPostTrack()
         {
             var trackRequest = new GetPishroPostTrackQuery()
             {
@@ -323,17 +323,17 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             {
                 return new(false, "Pishro Post Mappping is not set in database");
             }
-            return new(true, "success", new TrackingMapResponse()
+            return new(true, "success", new TrackResponseDto()
             {
-                CourierStatusMappingId = tracking.Id,
-                TrackCode = tracking.Code.ToString(),
-                TrackStatus = tracking.Name,
-                CourierStatus = tracking.Description,
+                PostexStatusCode = tracking.StatusCode.ToString(),
+                PostexStatus = tracking.StatusName,
+                CourierStatusCode = tracking.CourierStatusCode,
+                CourierStatus = tracking.CourierStatusName,
                 Date = date
             });
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> SpeedTrack()
+        public async Task<BaseResponse<TrackResponseDto>> SpeedTrack()
         {
             var trackRequest = new GetSpeedTrackQuery()
             {
@@ -363,17 +363,17 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             {
                 return new(false, "Speed Mappping is not set in database");
             }
-            return new(true, "success", new TrackingMapResponse()
+            return new(true, "success", new TrackResponseDto()
             {
-                CourierStatusMappingId = tracking.Id,
-                TrackCode = tracking.Code.ToString(),
-                TrackStatus = tracking.Name,
-                CourierStatus = tracking.Description,
+                PostexStatusCode = tracking.StatusCode.ToString(),
+                PostexStatus = tracking.StatusName,
+                CourierStatusCode = tracking.CourierStatusCode,
+                CourierStatus = tracking.CourierStatusName,
                 Date = date
             });
         }
 
-        public async Task<BaseResponse<TrackingMapResponse>> EcoPeykTrack()
+        public async Task<BaseResponse<TrackResponseDto>> EcoPeykTrack()
         {
             var trackRequest = new GetEcoPeykStatusQuery()
             {
@@ -391,12 +391,12 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.EcoPeyk, status.ToString());
             if (tracking != null)
             {
-                return new(true, "success", new TrackingMapResponse()
+                return new(true, "success", new TrackResponseDto()
                 {
-                    CourierStatusMappingId = tracking.Id,
-                    TrackCode = tracking.Code.ToString(),
-                    TrackStatus = tracking.Name,
-                    CourierStatus = tracking.Description,
+                    PostexStatusCode = tracking.StatusCode.ToString(),
+                    PostexStatus = tracking.StatusName,
+                    CourierStatusCode = tracking.CourierStatusCode,
+                    CourierStatus = tracking.CourierStatusName,
                     Date = date
                 });
             }

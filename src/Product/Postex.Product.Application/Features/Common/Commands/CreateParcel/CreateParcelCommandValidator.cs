@@ -6,6 +6,8 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
     {
         public CreateParcelCommandValidator()
         {
+            RuleFor(p => p.PostEcommerceShopId)
+                .NotNull().NotEmpty().WithMessage(" آی دی فروشگاه الزامی میباشد");
             RuleFor(p => p.Courier)
                 .NotNull().NotEmpty().WithMessage(" اطلاعات کوریر الزامی میباشد");
             RuleFor(p => p.Courier.ServiceType)

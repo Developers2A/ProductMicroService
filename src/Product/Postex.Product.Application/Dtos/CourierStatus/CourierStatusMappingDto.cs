@@ -5,8 +5,25 @@
         public int Id { get; set; }
         public int CourierId { get; set; }
         public int StatusId { get; set; }
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+
+        /// <summary>
+        /// کد وضعیت پستکس
+        /// </summary>
+        public string StatusCode { get; set; }
+
+        /// <summary>
+        /// وضعیت پستکس
+        /// </summary>
+        public string StatusName { get; set; }
+
+        /// <summary>
+        /// کد وضعیت کوریر
+        /// </summary>
+        public string CourierStatusCode { get; set; }
+
+        /// <summary>
+        ///  وضعیت کوریر
+        /// </summary>
+        public string CourierStatusName { get; set; }
     }
 }

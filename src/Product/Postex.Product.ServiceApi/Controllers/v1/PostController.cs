@@ -90,28 +90,40 @@ namespace Postex.Product.ServiceApi.Controllers.v1
         public async Task<ApiResult<PostGetPriceResponse>> GetPrice(GetPostPriceQuery request)
         {
             var result = await _mediator.Send(request);
-            return new ApiResult<PostGetPriceResponse>(result.IsSuccess, result.Data, result.Message);
+            if (result.IsSuccess)
+                return new ApiResult<PostGetPriceResponse>(result.IsSuccess, result.Data, result.Message);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpPost("create-order")]
         public async Task<ApiResult<PostCreateOrderResponse>> CreateOrder(CreatePostOrderCommand request)
         {
             var result = await _mediator.Send(request);
-            return new ApiResult<PostCreateOrderResponse>(result.IsSuccess, result.Data, result.Message);
+            if (result.IsSuccess)
+                return new ApiResult<PostCreateOrderResponse>(result.IsSuccess, result.Data, result.Message);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpPost("edit-order")]
         public async Task<ApiResult<PostEditOrderResponse>> EditOrder(UpdatePostOrderCommand request)
         {
             var result = await _mediator.Send(request);
-            return new ApiResult<PostEditOrderResponse>(result.IsSuccess, result.Data, result.Message);
+            if (result.IsSuccess)
+                return new ApiResult<PostEditOrderResponse>(result.IsSuccess, result.Data, result.Message);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpPost("edit-weight")]
         public async Task<ApiResult<PostEditWeightResponse>> EditOrder(UpdatePostWeightCommand request)
         {
             var result = await _mediator.Send(request);
-            return new ApiResult<PostEditWeightResponse>(result.IsSuccess, result.Data, result.Message);
+            if (result.IsSuccess)
+                return new ApiResult<PostEditWeightResponse>(result.IsSuccess, result.Data, result.Message);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpPost("suspend-order")]
@@ -122,7 +134,10 @@ namespace Postex.Product.ServiceApi.Controllers.v1
                 ParcelCodes = parcelCodes
             };
             var result = await _mediator.Send(request);
-            return new ApiResult<List<PostSuspendOrderResponse>>(result.IsSuccess, result.Data, result.Message);
+            if (result.IsSuccess)
+                return new ApiResult<List<PostSuspendOrderResponse>>(result.IsSuccess, result.Data, result.Message);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpPost("delete-order")]
@@ -133,7 +148,10 @@ namespace Postex.Product.ServiceApi.Controllers.v1
                 ParcelCodes = parcelCodes
             };
             var result = await _mediator.Send(request);
-            return new ApiResult<List<PostDeleteOrderResponse>>(result.IsSuccess, result.Data, result.Message);
+            if (result.IsSuccess)
+                return new ApiResult<List<PostDeleteOrderResponse>>(result.IsSuccess, result.Data, result.Message);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpPost("readyToCollect")]
@@ -144,7 +162,10 @@ namespace Postex.Product.ServiceApi.Controllers.v1
                 ParcelCodes = parcelCodes
             };
             var result = await _mediator.Send(request);
-            return new ApiResult<List<PostReadyToCollectResponse>>(result.IsSuccess, result.Data, result.Message);
+            if (result.IsSuccess)
+                return new ApiResult<List<PostReadyToCollectResponse>>(result.IsSuccess, result.Data, result.Message);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpPost("order-status")]
@@ -155,14 +176,20 @@ namespace Postex.Product.ServiceApi.Controllers.v1
                 ParcelCodes = parcelCodes
             };
             var result = await _mediator.Send(request);
-            return new ApiResult<List<PostOrderStatusResponse>>(result.IsSuccess, result.Data, result.Message);
+            if (result.IsSuccess)
+                return new ApiResult<List<PostOrderStatusResponse>>(result.IsSuccess, result.Data, result.Message);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpPost("track")]
-        public async Task<ApiResult<PostTrackResponse>> Track(GetPostTrackQuery request)
+        public async Task<ApiResult<List<PostTrackResponse>>> Track(GetPostTrackQuery request)
         {
             var result = await _mediator.Send(request);
-            return new ApiResult<PostTrackResponse>(result.IsSuccess, result.Data, result.Message);
+            if (result.IsSuccess)
+                return new ApiResult<List<PostTrackResponse>>(result.IsSuccess, result.Data, result.Message);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpPost("sync-shops")]

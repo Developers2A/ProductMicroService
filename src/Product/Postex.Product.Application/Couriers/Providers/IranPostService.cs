@@ -31,7 +31,7 @@ namespace Postex.Product.Application.Couriers.Providers
             throw new NotImplementedException();
         }
 
-        public Task<BaseResponse<TrackingMapResponse>> TrackParcel(GetTrackQuery request)
+        public Task<BaseResponse<TrackResponseDto>> TrackParcel(GetTrackQuery request)
         {
             throw new NotImplementedException();
         }
