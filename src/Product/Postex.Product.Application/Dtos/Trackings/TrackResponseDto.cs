@@ -30,8 +30,9 @@ namespace Postex.Product.Application.Dtos.Trackings
         public string PostexStatus { get; set; }
 
         /// <summary>
-        /// تاریخ
+        /// تاریخ وضعیت
         /// </summary>
-        public string Date { get; set; }
+        [JsonPropertyName("update_date")]
+        public string UpdateDate { get; set; }
     }
 }

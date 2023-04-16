@@ -7,12 +7,12 @@
         public int StatusId { get; set; }
 
         /// <summary>
-        /// کد وضعیت پستکس
+        /// کد پنج رقمی وضعیت پستکس
         /// </summary>
         public string StatusCode { get; set; }
 
         /// <summary>
-        /// وضعیت پستکس
+        /// شرح وضعیت پستکس
         /// </summary>
         public string StatusName { get; set; }
 
@@ -22,7 +22,7 @@
         public string CourierStatusCode { get; set; }
 
         /// <summary>
-        ///  وضعیت کوریر
+        ///  شرح وضعیت کوریر
         /// </summary>
         public string CourierStatusName { get; set; }
     }

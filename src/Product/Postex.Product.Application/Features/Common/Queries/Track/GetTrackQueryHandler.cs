@@ -95,7 +95,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 PostexStatus = tracking.StatusName,
                 CourierStatusCode = status.ToString(),
                 CourierStatus = tracking.CourierStatusName,
-                Date = date.ToString()
+                UpdateDate = date.ToString()
             });
         }
 
@@ -133,7 +133,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 PostexStatus = tracking.StatusName,
                 CourierStatusCode = tracking.CourierStatusCode,
                 CourierStatus = tracking.CourierStatusName,
-                Date = date.ToString()
+                UpdateDate = date.ToString()
             });
 
         }
@@ -193,7 +193,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 PostexStatus = tracking.StatusName,
                 CourierStatusCode = status.ToString(),
                 CourierStatus = tracking.CourierStatusName,
-                Date = date
+                UpdateDate = date
             });
         }
 
@@ -224,7 +224,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 PostexStatus = tracking.StatusName,
                 CourierStatusCode = tracking.CourierStatusCode,
                 CourierStatus = tracking.CourierStatusName,
-                Date = date.ToString()
+                UpdateDate = date.ToString()
             });
         }
 
@@ -254,7 +254,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                     PostexStatus = tracking.StatusName,
                     CourierStatusCode = tracking.CourierStatusCode,
                     CourierStatus = tracking.CourierStatusName,
-                    Date = date
+                    UpdateDate = date
                 });
             }
             else
@@ -287,7 +287,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                     PostexStatus = tracking.StatusName,
                     CourierStatusCode = tracking.CourierStatusCode,
                     CourierStatus = tracking.CourierStatusName,
-                    Date = date
+                    UpdateDate = date
                 });
             }
             else
@@ -329,7 +329,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 PostexStatus = tracking.StatusName,
                 CourierStatusCode = tracking.CourierStatusCode,
                 CourierStatus = tracking.CourierStatusName,
-                Date = date
+                UpdateDate = date
             });
         }
 
@@ -369,7 +369,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                 PostexStatus = tracking.StatusName,
                 CourierStatusCode = tracking.CourierStatusCode,
                 CourierStatus = tracking.CourierStatusName,
-                Date = date
+                UpdateDate = date
             });
         }
 
@@ -397,7 +397,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
                     PostexStatus = tracking.StatusName,
                     CourierStatusCode = tracking.CourierStatusCode,
                     CourierStatus = tracking.CourierStatusName,
-                    Date = date
+                    UpdateDate = date
                 });
             }
             else
