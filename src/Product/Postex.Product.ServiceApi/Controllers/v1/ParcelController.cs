@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Postex.Product.Application.Dtos.Commons.CreateParcel.Response;
-using Postex.Product.Application.Dtos.ServiceProviders.Common;
 using Postex.Product.Application.Dtos.Trackings;
 using Postex.Product.Application.Features.Common.Commands.CancelParcel;
 using Postex.Product.Application.Features.Common.Commands.CreateParcel;
@@ -84,35 +83,60 @@ namespace Postex.Product.ServiceApi.Controllers.v1
         }
 
         [HttpPut]
-        public async Task<ApiResult<EditParcelResponse>> Edit(
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ParcelResponseDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ApiResult))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(string))]
+        public async Task<IActionResult> Edit(
             [FromBody] EditParcelCommand request,
             [FromHeader(Name = "x-correlation-id")] Guid correlationId,
             [FromHeader(Name = "x-user-id")] Guid userId)
         {
-            request.UserID = User;
+            request.UserID = userId;
             var result = await _mediator.Send(request);
-            return new ApiResult<EditParcelResponse>(result.IsSuccess, result.Data, result.Message);
+
+            if (result.IsSuccess)
+                return Ok(result.Data);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpPost("cancel")]
-        public async Task<ApiResult<CancelParcelResponse>> Cancel(CancelParcelCommand request)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ParcelResponseDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ApiResult))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(string))]
+        public async Task<IActionResult> Cancel(CancelParcelCommand request)
         {
             var result = await _mediator.Send(request);
-            return new ApiResult<CancelParcelResponse>(result.IsSuccess, result.Data, result.Message);
+            if (result.IsSuccess)
+                return Ok(result.Data);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpPost("ready")]
-        public async Task<ApiResult<ReadyParcelResponse>> Ready(ReadyParcelCommand request)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ParcelResponseDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ApiResult))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(string))]
+        public async Task<IActionResult> Ready(ReadyParcelCommand request)
         {
             var result = await _mediator.Send(request);
-            return new ApiResult<ReadyParcelResponse>(result.IsSuccess, result.Data, result.Message);
+            if (result.IsSuccess)
+                return Ok(result.Data);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
 
         [HttpDelete]
-        public async Task<ApiResult<DeleteParcelResponse>> Delete(DeleteParcelCommand request)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ParcelResponseDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ApiResult))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(string))]
+        public async Task<IActionResult> Delete(DeleteParcelCommand request)
         {
             var result = await _mediator.Send(request);
-            return new ApiResult<DeleteParcelResponse>(result.IsSuccess, result.Data, result.Message);
+            if (result.IsSuccess)
+                return Ok(result.Data);
+            else
+                return BadRequest(new ApiResult(false, result.Message));
         }
     }
 }

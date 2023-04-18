@@ -12,6 +12,7 @@ using Postex.Product.Application.Features.CourierServices.Queries;
 using Postex.Product.Application.Features.ServiceProviders.Chapar.Commands.CreateOrder;
 using Postex.Product.Application.Features.ServiceProviders.Kbk.Commands.CreateOrder;
 using Postex.Product.Application.Features.ServiceProviders.Mahex.Commands.CreateOrder;
+using Postex.Product.Application.Features.ServiceProviders.Mahex.Queries.GetPrice;
 using Postex.Product.Application.Features.ServiceProviders.Post.Commands.CreateOrder;
 using Postex.Product.Application.Features.ServiceProviders.Post.Queries.GetPrice;
 using Postex.SharedKernel.Common;
@@ -64,6 +65,8 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
                 result = await CreatePeykOrder();
             }
 
+            SetCourierInfoToResult(result);
+
             if (result.Data != null && _command.ValueAddedTypeIds != null && _command.ValueAddedTypeIds.Any())
             {
                 var valueAddedPriceDtos = await GetValueAddedPrices();
@@ -78,6 +81,21 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
                 }).ToList();
             }
             return result;
+        }
+
+        private void SetCourierInfoToResult(BaseResponse<ParcelResponseDto> result)
+        {
+            if (result.Data != null)
+            {
+                var courier = new CourierResponseDto()
+                {
+                    Courier = _courierInfo.CourierName,
+                    Service = _courierInfo.CourierServiceName,
+                    TransitTime = _courierInfo.Days,
+                    Description = "",
+                };
+                result.Data.Shipments.ForEach(x => x.Courier = courier);
+            }
         }
 
         private async Task<List<ContractValueAddedPriceDto>> GetValueAddedPrices()
@@ -200,7 +218,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
                                 {
                                     BuyPrice = result.Data.Price.TotalPrice,//PostFare,
                                     SalePrice = result.Data.Price.PostPrice,//TotalPrice,
-                                    Vat =Convert.ToInt32(result.Data.Price.PostPrice * 0.09), //result.Data.Price.Tax,
+                                    Vat = Convert.ToInt32(result.Data.Price.PostPrice * 0.09), //result.Data.Price.Tax,
                                     PostPrice = new PostPriceResponseDto()
                                     {
                                         PostFare =  result.Data.Price.PostFare,
@@ -333,15 +351,117 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
 
         private async Task<BaseResponse<ParcelResponseDto>> CreateMahexOrder()
         {
+            //دریافت قیمت از ماهکس
+            GetMahexPriceQuery getMahexPriceQuery = CreateMahexGetPriceQuery();
+            var getMahexPrice = await _mediator.Send(getMahexPriceQuery);
+
+            if (!getMahexPrice.IsSuccess || getMahexPrice.Data.Data == null)
+            {
+                return new BaseResponse<ParcelResponseDto>()
+                {
+                    IsSuccess = getMahexPrice.IsSuccess,
+                    Message = getMahexPrice.Message,
+                };
+            }
+
             var result = await _mediator.Send(CreateMahexCommand());
+
+            if (result.IsSuccess && result.Data != null)
+            {
+                return new BaseResponse<ParcelResponseDto>()
+                {
+                    IsSuccess = result.IsSuccess,
+                    Message = result.Message,
+                    Data = new ParcelResponseDto()
+                    {
+                        AdditionalData = new AdditionalDataResponseDto()
+                        {
+                            GeneratedPostCode = _generatedPostCode
+                        },
+                        Shipments = new List<ShipmentResponseDto>()
+                        {
+                            new ShipmentResponseDto()
+                            {
+                                Courier = new CourierResponseDto()
+                                {
+                                     Courier = _courierInfo.CourierName,
+                                     Service = _courierInfo.CourierServiceName,
+                                     TransitTime = _courierInfo.Days,
+                                     Description = "",
+                                },
+                                Step = 1,
+                                Tracking = new TrackingResponseDto()
+                                {
+                                    Barcode = result.Data.Data != null ? result.Data.Data.ShipmentUuid :"",
+                                    TrackingNumber = result.Data.Data != null ? result.Data.Data.ShipmentUuid :"",
+                                },
+                                ShippingRate = new ShippingRateResponseDto()
+                                {
+                                    PostPrice = new PostPriceResponseDto()
+                                    {
+                                        PostFare =  0,
+                                        TotalPrice = Convert.ToInt32(getMahexPrice.Data.Data.Rate.Amount),
+                                        COD = 0,
+                                        DeliveryNotifyPrice = 0,
+                                        DiscountAmount = 0,
+                                        DiscountPercent = 0,
+                                        EcommercePrice = 0,
+                                        ElectronicIDPrice = 0,
+                                        InsurancePrice = 0,
+                                        NonStandardPrice = 0,
+                                        PostPayFarePrice = 0,
+                                        PostPrice = 0,
+                                        SendPlacePrice = 0,
+                                        Tax = 0,
+                                        SMSPrice = 0
+                                    }
+                                }
+                            }
+                        },
+                        IsOversized = false,
+                        ServiceCategory = getMahexPrice.Data.Data.DeliveryWindow,
+                        ValueAddedService = new List<ValueAddedServiceResponseDto>()
+                    }
+                };
+            }
             return new BaseResponse<ParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,
-                Data = new ParcelResponseDto()
+            };
+        }
+
+        private GetMahexPriceQuery CreateMahexGetPriceQuery()
+        {
+            return new GetMahexPriceQuery()
+            {
+                ToAddress = new MahexAddress()
                 {
-                    //ParcelCode = result.Data != null ? result.Data.Data.ShipmentUuid : ""
-                }
+                    Street = _command.To.Location.Address,
+                    PostalCode = _command.To.Location.PostCode,
+                    CityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Mahex, _command.To.Location.CityCode)
+                },
+                FromAddress = new MahexAddress()
+                {
+                    Street = _command.From.Location.Address,
+                    PostalCode = _command.From.Location.PostCode,
+                    CityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Mahex, _command.From.Location.CityCode)
+                },
+                Parcels = new List<MahexGetPriceParcel>()
+                {
+                    new MahexGetPriceParcel()
+                    {
+                        Id = "1", // یک عدد ثابت به عنوان سناسه بسته
+                        Weight = (decimal)_command.Parcel.TotalWeight / 1000,
+                        Content = _command.Parcel.ItemName,
+                        DeclaredValue = _command.Parcel.TotalValue,
+                        Height = _command.Parcel.Height,
+                        Length = _command.Parcel.Length,
+                        Width = _command.Parcel.Width,
+                        PackageType = "",
+                    }
+                },
+                DeclaredValue = _command.Parcel.TotalValue.ToString()
             };
         }
 
@@ -361,7 +481,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
                     ClientId = "",
                     NationalId = _command.To.Contact.NationalCode,
                     Organization = _command.To.Contact.Company,
-                    Type = "LEGAL",
+                    Type = "LEGAL", //این مقدار همیشه ثابت می باشد
                     Phone = _command.To.Contact.Phone,
                     CityCode = GetCityMappedCode(SharedKernel.Common.Enums.CourierCode.Mahex, _command.To.Location.CityCode)
                 },

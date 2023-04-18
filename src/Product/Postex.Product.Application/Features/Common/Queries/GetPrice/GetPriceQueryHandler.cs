@@ -44,7 +44,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
                 await SetBoxDimensionsIfNeeded();
                 await SetCourierCityMappings();
                 var tasviePrice = await ApplyPayType();
- 
+
                 return await GetPrice();
             }
             catch (Exception ex)
@@ -383,6 +383,7 @@ namespace Postex.Product.Application.Features.Common.Queries.GetPrice
 
             var priceRequest = new GetMahexPriceQuery()
             {
+                DeclaredValue = _query.Parcel.TotalValue.ToString(),
                 FromAddress = new MahexAddress()
                 {
                     CityCode = senderCityCode

@@ -19,6 +19,6 @@ namespace Postex.Product.Application.Features.Common.Commands.EditParcel
         public ReceiverEditDto To { get; set; }
 
         [JsonIgnore]
-        public ClaimsPrincipal UserID { get; set; }
+        public Guid UserID { get; set; }
     }
 }

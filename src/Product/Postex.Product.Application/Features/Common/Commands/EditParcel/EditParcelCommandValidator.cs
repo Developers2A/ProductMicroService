@@ -18,6 +18,8 @@ namespace Postex.Product.Application.Features.Common.Commands.EditParcel
                 .NotNull().NotEmpty().WithMessage(" شماره موبایل گیرنده الزامی میباشد");
             RuleFor(p => p.To.Location.PostCode)
                 .NotNull().NotEmpty().WithMessage(" کد پستی گیرنده الزامی میباشد");
+            RuleFor(p => p.To.Contact.Email)
+                .EmailAddress().WithMessage(" ایمیل گیرنده را به درستی وارد نمایید");
         }
     }
 }

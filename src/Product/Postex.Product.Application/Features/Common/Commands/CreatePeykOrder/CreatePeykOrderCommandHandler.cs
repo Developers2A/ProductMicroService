@@ -150,10 +150,66 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
         private async Task<BaseResponse<ParcelResponseDto>> CreateTaroffOrder()
         {
             var result = await _mediator.Send(CreateTarrofCommand());
+            if (result.IsSuccess && result.Data != null)
+            {
+                return new BaseResponse<ParcelResponseDto>()
+                {
+                    IsSuccess = result.IsSuccess,
+                    Message = result.Message,
+                    Data = new ParcelResponseDto()
+                    {
+                        AdditionalData = new AdditionalDataResponseDto()
+                        {
+                            GeneratedPostCode = ""
+                        },
+                        Shipments = new List<ShipmentResponseDto>()
+                        {
+                            new ShipmentResponseDto()
+                            {
+                                Courier = new CourierResponseDto(),
+                                Step = 1,
+                                Tracking = new TrackingResponseDto()
+                                {
+                                    Barcode = result.Data != null ? result.Data.Id.ToString() : "",
+                                    TrackingNumber = result.Data != null ? result.Data.Id.ToString() : ""
+                                },
+                                ShippingRate = new ShippingRateResponseDto()
+                                {
+                                    BuyPrice = 0,
+                                    SalePrice = 0,
+                                    Vat = result.Data.Tax,
+                                    PostPrice = new PostPriceResponseDto()
+                                    {
+                                        PostFare =  0,
+                                        TotalPrice = 0,
+                                        COD = 0,
+                                        DeliveryNotifyPrice = 0,
+                                        DiscountAmount = 0,
+                                        DiscountPercent = 0,
+                                        EcommercePrice = 0,
+                                        ElectronicIDPrice = 0,
+                                        InsurancePrice = 0,
+                                        NonStandardPrice = 0,
+                                        PostPayFarePrice = 0,
+                                        PostPrice = 0,
+                                        SendPlacePrice = 0,
+                                        Tax = 0,
+                                        SMSPrice = 0
+                                    }
+
+                                }
+                            }
+                        },
+                        IsOversized = false,
+                        ServiceCategory = "",
+                        ValueAddedService = new List<ValueAddedServiceResponseDto>()
+                    }
+                };
+            }
             return new BaseResponse<ParcelResponseDto>()
             {
                 IsSuccess = result.IsSuccess,
-                Message = result.Message
+                Message = result.Message,
             };
         }
 
@@ -171,11 +227,10 @@ namespace Postex.Product.Application.Features.Common.Commands.CreatePeykOrder
                 TotalWeight = _command.Parcel.TotalWeight,
                 TotalPrice = _command.Parcel.TotalValue,
                 Note = _command.Parcel.ItemName,
-                DeliverTime = _command.Delivery.Date.ToString("HH:mm"),
                 Email = _command.To.Contact.Email,
                 PaymentMethodId = _command.Courier.PaymentType == (int)PaymentType.Cod ? 1212 : 1213,
-                CarrierId = 153,
-                CityId = cityCode != "0" ? Convert.ToInt32(cityCode) : 1,
+                CarrierId = 153, // پیک تعارف
+                CityId = cityCode != "0" ? cityCode : "1",
             };
         }
 

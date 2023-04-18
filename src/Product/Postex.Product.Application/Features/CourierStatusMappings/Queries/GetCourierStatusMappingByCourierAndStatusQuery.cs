@@ -33,16 +33,21 @@ namespace Postex.Product.Application.Features.CourierStatusMappings.Queries
                     courierStatusMappingQuery = courierStatusMappingQuery.Where(x => x.Code == request.CourierStatus);
                 }
                 var courierStatusMapping = await courierStatusMappingQuery.Include(x => x.Status).FirstOrDefaultAsync();
-                return new CourierStatusMappingDto()
+
+                if (courierStatusMapping != null)
                 {
-                    Id = courierStatusMapping.Id,
-                    StatusId = courierStatusMapping.StatusId,
-                    StatusName = courierStatusMapping.Status.Description,
-                    StatusCode = courierStatusMapping.Status.Code,
-                    CourierId = courierStatusMapping.CourierId,
-                    CourierStatusName = courierStatusMapping.Description,
-                    CourierStatusCode = courierStatusMapping.Code,
-                };
+                    return new CourierStatusMappingDto()
+                    {
+                        Id = courierStatusMapping.Id,
+                        StatusId = courierStatusMapping.StatusId,
+                        StatusName = courierStatusMapping.Status.Description,
+                        StatusCode = courierStatusMapping.Status.Code,
+                        CourierId = courierStatusMapping.CourierId,
+                        CourierStatusName = courierStatusMapping.Description,
+                        CourierStatusCode = courierStatusMapping.Code,
+                    };
+                }
+                return null;
             }
         }
     }

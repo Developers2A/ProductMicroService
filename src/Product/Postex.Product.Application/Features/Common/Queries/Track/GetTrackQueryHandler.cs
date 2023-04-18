@@ -86,7 +86,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Post, status.ToString());
             if (tracking == null)
             {
-                return new(false, "Post Mappping is not set in database");
+                return new(false, "نگاشتی برای وضعیت " + status + " یافت نشد ");
             }
 
             return new(true, "success", new TrackResponseDto()
@@ -124,7 +124,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Chapar, finalStatus);
             if (tracking == null)
             {
-                return new(false, "Chapar Mappping is not set in database");
+                return new(false, "نگاشتی برای وضعیت " + status + " یافت نشد ");
             }
 
             return new(true, "success", new TrackResponseDto()
@@ -184,7 +184,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Mahex, status);
             if (tracking == null)
             {
-                return new(false, "Mahex Mappping is not set in database : " + status);
+                return new(false, "نگاشتی برای وضعیت " + status + " یافت نشد ");
             }
 
             return new(true, "success", new TrackResponseDto()
@@ -215,7 +215,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Kalaresan, status.ToString());
             if (tracking == null)
             {
-                return new(false, "Kbk Mappping is not set in database for kbk status :" + status);
+                return new(false, "نگاشتی برای وضعیت " + status + " یافت نشد ");
             }
 
             return new(true, "success", new TrackResponseDto()
@@ -246,21 +246,19 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var date = result.Data.Result.DoneDate.ToString();
 
             var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Link, status.ToString());
-            if (tracking != null)
+            if (tracking == null)
             {
-                return new(true, "success", new TrackResponseDto()
-                {
-                    PostexStatusCode = tracking.StatusCode.ToString(),
-                    PostexStatus = tracking.StatusName,
-                    CourierStatusCode = tracking.CourierStatusCode,
-                    CourierStatus = tracking.CourierStatusName,
-                    UpdateDate = date
-                });
+                return new(false, "نگاشتی برای وضعیت " + status + " یافت نشد ");
             }
-            else
+
+            return new(true, "success", new TrackResponseDto()
             {
-                return new(false, "Link Mappping is not set in database");
-            }
+                PostexStatusCode = tracking.StatusCode.ToString(),
+                PostexStatus = tracking.StatusName,
+                CourierStatusCode = tracking.CourierStatusCode,
+                CourierStatus = tracking.CourierStatusName,
+                UpdateDate = date
+            });
         }
 
         public async Task<BaseResponse<TrackResponseDto>> TaroffTrack()
@@ -279,21 +277,19 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var date = "";
 
             var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Taroff, status.ToString());
-            if (tracking != null)
+            if (tracking == null)
             {
-                return new(true, "success", new TrackResponseDto()
-                {
-                    PostexStatusCode = tracking.StatusCode.ToString(),
-                    PostexStatus = tracking.StatusName,
-                    CourierStatusCode = tracking.CourierStatusCode,
-                    CourierStatus = tracking.CourierStatusName,
-                    UpdateDate = date
-                });
+                return new(false, "نگاشتی برای وضعیت " + status + " یافت نشد ");
             }
-            else
+
+            return new(true, "success", new TrackResponseDto()
             {
-                return new(false, "Tarrof Mappping is not set in database");
-            }
+                PostexStatusCode = tracking.StatusCode.ToString(),
+                PostexStatus = tracking.StatusName,
+                CourierStatusCode = tracking.CourierStatusCode,
+                CourierStatus = tracking.CourierStatusName,
+                UpdateDate = date
+            });
         }
 
         public async Task<BaseResponse<TrackResponseDto>> PishroPostTrack()
@@ -321,7 +317,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.PishroPost, finalStatus);
             if (tracking == null)
             {
-                return new(false, "Pishro Post Mappping is not set in database");
+                return new(false, "نگاشتی برای وضعیت " + status + " یافت نشد ");
             }
             return new(true, "success", new TrackResponseDto()
             {
@@ -348,6 +344,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             string status = "";
             string date = "";
 
+            // یافتن آخرین وضعیت از لیست وضعیتها
             for (int i = 0; i < result.Data.ResultJson.Length; i++)
             {
                 if (i == result.Data.ResultJson.Length - 1)
@@ -361,7 +358,7 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.Speed, status);
             if (tracking == null)
             {
-                return new(false, "Speed Mappping is not set in database");
+                return new(false, "نگاشتی برای وضعیت " + status + " یافت نشد ");
             }
             return new(true, "success", new TrackResponseDto()
             {
@@ -389,21 +386,19 @@ namespace Postex.Product.Application.Features.Common.Queries.Track
             var date = "";
 
             var tracking = await GetPostexStatus(SharedKernel.Common.Enums.CourierCode.EcoPeyk, status.ToString());
-            if (tracking != null)
+            if (tracking == null)
             {
-                return new(true, "success", new TrackResponseDto()
-                {
-                    PostexStatusCode = tracking.StatusCode.ToString(),
-                    PostexStatus = tracking.StatusName,
-                    CourierStatusCode = tracking.CourierStatusCode,
-                    CourierStatus = tracking.CourierStatusName,
-                    UpdateDate = date
-                });
+                return new(false, "نگاشتی برای وضعیت " + status + " یافت نشد ");
             }
-            else
+
+            return new(true, "success", new TrackResponseDto()
             {
-                return new(false, "EcoPeyk Mappping is not set in database");
-            }
+                PostexStatusCode = tracking.StatusCode.ToString(),
+                PostexStatus = tracking.StatusName,
+                CourierStatusCode = tracking.CourierStatusCode,
+                CourierStatus = tracking.CourierStatusName,
+                UpdateDate = date
+            });
         }
     }
 }

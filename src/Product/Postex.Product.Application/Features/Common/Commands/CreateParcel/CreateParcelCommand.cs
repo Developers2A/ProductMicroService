@@ -28,7 +28,7 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
         public CourierDto Courier { get; set; }
 
         [JsonPropertyName("value_added_service")]
-        public List<int> ValueAddedTypeIds { get; set; }
+        public List<int>? ValueAddedTypeIds { get; set; }
 
         [JsonPropertyName("request_pickup")]
         public DeliveryPickupDto Pickup { get; set; }

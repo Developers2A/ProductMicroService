@@ -75,6 +75,11 @@ namespace Postex.Product.Application.Features.Common.Commands.CreateParcel
                 .NotNull().NotEmpty().GreaterThan(0).WithMessage(" وزن بسته الزامی میباشد");
             RuleFor(p => p.Parcel.TotalValue)
                .NotNull().NotEmpty().GreaterThan(0).WithMessage(" ارزش بسته الزامی میباشد");
+            RuleFor(x => x.ValueAddedTypeIds)
+              .ForEach(value =>
+              {
+                  value.Must(v => v > 0).WithMessage("مقدار سرویس های ارزش افزوده نمی تواند صفر باشد");
+              });
         }
     }
 }
